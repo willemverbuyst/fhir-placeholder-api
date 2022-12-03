@@ -1,25 +1,7 @@
-import {
-  example_1,
-  example_2,
-  example_3,
-  example_4,
-  example_5,
-  example_6,
-  example_7,
-} from '../examples';
+import { examples } from '../examples';
 import { Bundle } from '../interfaces/bundle';
 import { ValueSet } from '../interfaces/general';
 import { Item, Questionnaire } from '../interfaces/questionnaire';
-
-const examples: Array<Questionnaire | Bundle> = [
-  example_1,
-  // example_2,
-  // example_3,
-  // example_4,
-  // example_5,
-  // example_6,
-  // example_7,
-];
 
 const flattenQuestionnaire = (obj: Item, flatQ: Record<PropertyKey, any>) => {
   Object.keys(obj).forEach((prop) => {

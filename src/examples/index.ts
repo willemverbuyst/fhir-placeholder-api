@@ -1,7 +1,19 @@
-export * from './example_1';
-export * from './example_2';
-export * from './example_3';
-export * from './example_4';
-export * from './example_5';
-export * from './example_6';
-export * from './example_7';
+import { Bundle } from '../interfaces/bundle';
+import { Questionnaire } from '../interfaces/questionnaire';
+import { example_1 } from './example_1';
+import { example_2 } from './example_2';
+import { example_3 } from './example_3';
+import { example_4 } from './example_4';
+import { example_5 } from './example_5';
+import { example_6 } from './example_6';
+import { example_7 } from './example_7';
+
+export const examples: Array<Questionnaire | Bundle> = [
+  example_1,
+  example_2,
+  example_3,
+  example_4,
+  example_5,
+  example_6,
+  example_7,
+];

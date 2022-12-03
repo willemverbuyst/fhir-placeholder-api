@@ -6,10 +6,10 @@ import {
   example_5,
   example_6,
   example_7,
-} from './examples';
-import { Bundle } from './interfaces/bundle';
-import { ValueSet } from './interfaces/general';
-import { Item, Questionnaire } from './interfaces/questionnaire';
+} from '../examples';
+import { Bundle } from '../interfaces/bundle';
+import { ValueSet } from '../interfaces/general';
+import { Item, Questionnaire } from '../interfaces/questionnaire';
 
 const examples: Array<Questionnaire | Bundle> = [
   example_1,
@@ -23,7 +23,9 @@ const examples: Array<Questionnaire | Bundle> = [
 
 const flattenQuestionnaire = (obj: Item, flatQ: Record<PropertyKey, any>) => {
   Object.keys(obj).forEach((prop) => {
+    //@ts-ignore
     if (typeof obj[prop] === 'object') {
+      //@ts-ignore
       flattenQuestionnaire(obj[prop], flatQ);
     } else {
       if (prop == 'linkId') {

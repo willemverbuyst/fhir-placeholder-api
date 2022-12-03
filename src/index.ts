@@ -13,12 +13,12 @@ import { Item, Questionnaire } from './interfaces/questionnaire';
 
 const examples: Array<Questionnaire | Bundle> = [
   example_1,
-  example_2,
-  example_3,
-  example_4,
-  example_5,
-  example_6,
-  example_7,
+  // example_2,
+  // example_3,
+  // example_4,
+  // example_5,
+  // example_6,
+  // example_7,
 ];
 
 const flattenQuestionnaire = (obj: Item, flatQ: Record<PropertyKey, any>) => {
@@ -27,7 +27,8 @@ const flattenQuestionnaire = (obj: Item, flatQ: Record<PropertyKey, any>) => {
       flattenQuestionnaire(obj[prop], flatQ);
     } else {
       if (prop == 'linkId') {
-        flatQ[`Q.${prop.toUpperCase()}_${obj[prop]}`] = obj[prop];
+        const { item, ...objectWithoutItemProp } = obj;
+        flatQ[`Q.${prop.toUpperCase()}_${obj[prop]}`] = objectWithoutItemProp;
       }
     }
   });
@@ -62,6 +63,6 @@ const handleResource = (
 examples.forEach((example) => {
   const flatQ = {};
   handleResource(example, flatQ);
-  console.log(flatQ);
+  console.log(JSON.stringify(flatQ, null, 4));
   console.log('*'.repeat(40));
 });

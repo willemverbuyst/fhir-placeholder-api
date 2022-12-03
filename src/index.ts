@@ -16,37 +16,53 @@ const examples: Record<any, any> = [
   example_7,
 ];
 
-const flattenQuestionnaire = (obj: Record<PropertyKey, any>) => {
+const flattenQuestionnaire = (
+  obj: Record<PropertyKey, any>,
+  flatQ: Record<PropertyKey, any>
+) => {
   Object.keys(obj).forEach((prop) => {
     if (typeof obj[prop] === 'object') {
-      flattenQuestionnaire(obj[prop]);
+      flattenQuestionnaire(obj[prop], flatQ);
     } else {
       if (prop == 'linkId') {
-        console.log(prop.toUpperCase() + ': ' + obj[prop]);
+        flatQ[`Q.${prop.toUpperCase()}_${obj[prop]}`] = obj[prop];
       }
     }
   });
 };
 
-const handleQuestionnaires = (questionnaire: Record<PropertyKey, any>) => {
-  console.log('*'.repeat(50));
-  questionnaire.item.filter((i) => flattenQuestionnaire(i));
+const handleQuestionnaires = (
+  questionnaire: Record<PropertyKey, any>,
+  flatQ: Record<PropertyKey, any>
+) => {
+  questionnaire.item.map((i) => flattenQuestionnaire(i, flatQ));
 };
 
-const handleBundle = (bundle: Record<PropertyKey, any>) => {
+const handleBundle = (
+  bundle: Record<PropertyKey, any>,
+  flatQ: Record<PropertyKey, any>
+) => {
   const entries = bundle.entry || [];
   const resources = entries.map((entry) => entry.resource);
-  resources.forEach((resource) => handleResource(resource));
+  resources.forEach((resource) => handleResource(resource, flatQ));
 };
 
-const handleResource = (resource: Record<PropertyKey, any>) => {
+const handleResource = (
+  resource: Record<PropertyKey, any>,
+  flatQ: Record<PropertyKey, any>
+) => {
   if (resource.resourceType === 'Questionnaire') {
-    handleQuestionnaires(resource);
+    return handleQuestionnaires(resource, flatQ);
   } else if (resource.resourceType === 'Bundle') {
-    handleBundle(resource);
+    handleBundle(resource, flatQ);
   } else {
     console.warn(`resourceType: ${resource.resourceType} not handled`);
   }
 };
 
-examples.forEach((example) => handleResource(example));
+examples.forEach((example) => {
+  const flatQ = {};
+  handleResource(example, flatQ);
+  console.log(flatQ);
+  console.log('*'.repeat(40));
+});

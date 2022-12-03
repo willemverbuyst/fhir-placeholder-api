@@ -3,6 +3,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { main } from '../business';
 import { examples } from '../examples';
 import { Item } from '../interfaces/questionnaire';
+import { Text } from './text';
 
 export const ButtonRow = () => {
   const [questionnaire, setQuestionnaire] = useState<{
@@ -26,7 +27,18 @@ export const ButtonRow = () => {
         ))}
       </Row>
       <Row>
-        <pre>{JSON.stringify(questionnaire, null, 4)}</pre>
+        {/* <pre>{JSON.stringify(questionnaire, null, 4)}</pre> */}
+        {questionnaire &&
+          Object.values(questionnaire).map((q) => (
+            <Text
+              text={
+                q.text ||
+                (q.code && q.code[0].display) ||
+                (q.code && q.code[0].code) ||
+                'nothing to show'
+              }
+            />
+          ))}
       </Row>
     </>
   );

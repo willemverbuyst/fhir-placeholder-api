@@ -44,9 +44,10 @@ const handleResource = (
   }
 };
 
-examples.forEach((example) => {
+export const main = (
+  resource: Questionnaire | Bundle | ValueSet
+): { [key: PropertyKey]: Item } => {
   const flatQ = {};
-  handleResource(example, flatQ);
-  console.log(JSON.stringify(flatQ, null, 4));
-  console.log('*'.repeat(40));
-});
+  handleResource(resource, flatQ);
+  return flatQ;
+};

@@ -1,5 +1,5 @@
 import { Container, Row } from 'react-bootstrap';
-import { ButtonRow } from './components/buttonRow';
+import { Cockpit } from './components/cockpit';
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <Row style={{ textAlign: 'center' }} className="m-3">
         <h1>Questionnaires</h1>
       </Row>
-      <ButtonRow />
+      <Cockpit />
     </Container>
   );
 }

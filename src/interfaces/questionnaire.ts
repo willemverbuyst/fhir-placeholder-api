@@ -79,7 +79,7 @@ export interface Item {
   extension?: any;
 }
 
-export interface Questionnaire {
+interface QuestionnaireBase {
   resourceType: 'Questionnaire';
   id: string;
   meta?: any;
@@ -107,5 +107,12 @@ export interface Questionnaire {
   lastReviewDate?: string;
   effectivePeriod?: any;
   code?: Coding[];
+}
+
+export interface Questionnaire extends QuestionnaireBase {
   item: Item[];
+}
+
+export interface FlatQuestionnaire extends QuestionnaireBase {
+  item: { [key: string]: Item };
 }

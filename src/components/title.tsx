@@ -1,7 +1,7 @@
 import React from 'react';
-import { Questionnaire } from '../interfaces/questionnaire';
+import { FlatQuestionnaire } from '../interfaces/questionnaire';
 
-export const Title: React.FC<{ questionnaire: { [key: string]: any } }> = ({
+export const Title: React.FC<{ questionnaire: FlatQuestionnaire }> = ({
   questionnaire,
 }) => {
   const title = questionnaire.title

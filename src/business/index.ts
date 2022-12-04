@@ -1,7 +1,10 @@
-import { examples } from '../examples';
 import { Bundle } from '../interfaces/bundle';
 import { ValueSet } from '../interfaces/general';
-import { Item, Questionnaire } from '../interfaces/questionnaire';
+import {
+  FlatQuestionnaire,
+  Item,
+  Questionnaire,
+} from '../interfaces/questionnaire';
 
 const flattenQuestionnaire = (obj: Item, flatQ: Record<PropertyKey, any>) => {
   Object.keys(obj).forEach((prop) => {
@@ -33,21 +36,31 @@ const handleBundle = (bundle: Bundle, flatQ: Record<PropertyKey, any>) => {
 
 const handleResource = (
   resource: Questionnaire | Bundle | ValueSet,
-  flatQ: Record<PropertyKey, any>
+  items: Record<PropertyKey, any>
 ) => {
   if (resource.resourceType === 'Questionnaire') {
-    return handleQuestionnaires(resource, flatQ);
+    return handleQuestionnaires(resource, items);
   } else if (resource.resourceType === 'Bundle') {
-    handleBundle(resource, flatQ);
+    handleBundle(resource, items);
   } else {
     console.warn('Resource could not be processed');
   }
 };
 
+export const flattenItems = (
+  resource: Questionnaire | Bundle | ValueSet
+): { [key: string]: Item } => {
+  const items: { [key: string]: Item } = {};
+  handleResource(resource, items);
+  return items;
+};
+
 export const main = (
   resource: Questionnaire | Bundle | ValueSet
-): { [key: PropertyKey]: Item } => {
-  const flatQ = {};
-  handleResource(resource, flatQ);
-  return flatQ;
+): FlatQuestionnaire | null => {
+  const itemFlattened = flattenItems(resource);
+  if (resource.resourceType === 'Questionnaire') {
+    return { ...resource, item: itemFlattened };
+  }
+  return null;
 };

@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../store';
 import { Checkbox } from './checkbox';
+import { Choice } from './choice';
 import { Text } from './text';
 import { TextInput } from './textInput';
 
@@ -10,16 +11,17 @@ export const Form = () => {
 
   return (
     <ExampleContext.Provider value={questionnaire}>
-      <Container style={{ backgroundColor: '#ddd' }}>
+      <Container className="p-3" style={{ backgroundColor: '#eee' }}>
         <Row>
-          {/* <pre>{JSON.stringify(questionnaire, null, 4)}</pre> */}
           <Col>
             {questionnaire
               ? Object.values(questionnaire).map((q, idx) =>
                   q?.type === 'boolean' ? (
-                    <Checkbox item={q} />
+                    <Checkbox key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'string' ? (
-                    <TextInput item={q} />
+                    <TextInput key={q?.linkId || idx} item={q} />
+                  ) : q?.type === 'choice' ? (
+                    <Choice key={q?.linkId || idx} item={q} />
                   ) : (
                     <Text
                       key={q?.linkId || idx}
@@ -33,6 +35,16 @@ export const Form = () => {
                   )
                 )
               : null}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <pre
+              className="p-2"
+              style={{ backgroundColor: '#333', color: '#fff' }}
+            >
+              {JSON.stringify(questionnaire, null, 4)}
+            </pre>
           </Col>
         </Row>
       </Container>

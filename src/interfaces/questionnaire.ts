@@ -46,12 +46,12 @@ export type Initial =
   | { valueReference: any };
 
 export type AnswerOption =
-  | { valueInteger: number }
-  | { valueDate: Date }
-  | { valueTime: string }
-  | { valueString: string }
-  | { valueCoding: Coding }
-  | { valueReference: any };
+  // | { valueInteger: number }
+  // | { valueDate: Date }
+  // | { valueTime: string }
+  // | { valueString: string }
+  { valueCoding: Coding };
+// | { valueReference: any };
 
 export type EnableWhen = {
   question: string;
@@ -72,7 +72,7 @@ export interface Item {
   readOnly?: boolean;
   maxLength?: number;
   answerValueSet?: any;
-  answerOption?: { initialSelected?: boolean } & AnswerOption[];
+  answerOption?: AnswerOption[];
   initial?: Initial[];
   item?: Item[];
   extension?: any;

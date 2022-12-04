@@ -13,9 +13,7 @@ import { Form } from './form';
 
 export const Cockpit = () => {
   const [checked, setChecked] = useState<string>();
-  const [questionnaire, setQuestionnaire] = useState<ExampleState>({
-    selectedExample: null,
-  });
+  const [questionnaire, setQuestionnaire] = useState<ExampleState>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLElement>, idx: number) => {
     setChecked(e.currentTarget.id);
@@ -45,7 +43,7 @@ export const Cockpit = () => {
           </Col>
         </Row>
       </Container>
-      <Form />
+      {questionnaire && <Form />}
     </ExampleContext.Provider>
   );
 };

@@ -6,6 +6,7 @@ import {
   Item,
 } from '../interfaces/questionnaire';
 import { hardcodedValueSet } from '../constants/answerValueSet';
+import { FormLabel } from './formLabel';
 
 const getValueSetFromContained = (
   answerValueSet: string,
@@ -69,12 +70,12 @@ export const Choice: React.FC<{
 
   return (
     <div className="mb-3">
-      <Form.Label htmlFor="choice">{label}</Form.Label>
+      <FormLabel item={item} />
       {options.map((option) => (
         <Form.Check
           key={`inline-${option}`}
           label={option}
-          name="choiceGroup"
+          name={item.linkId}
           type="radio"
           id={`inline-${option}`}
         />

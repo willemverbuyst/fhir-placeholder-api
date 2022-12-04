@@ -3,11 +3,8 @@ import { Form } from 'react-bootstrap';
 import { getLabel } from '../business/label';
 import { Item } from '../interfaces/questionnaire';
 
-export const Checkbox: React.FC<{ item: Item }> = ({ item }) => {
+export const FormLabel: React.FC<{ item: Item }> = ({ item }) => {
   const label = getLabel(item);
-  return (
-    <div className="mb-3">
-      <Form.Check type="checkbox" id="check" label={label} />
-    </div>
-  );
+
+  return <Form.Label htmlFor={item.linkId}>{label}</Form.Label>;
 };

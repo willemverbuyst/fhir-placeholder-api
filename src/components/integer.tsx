@@ -1,12 +1,13 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { FormLabel } from './formLabel';
 import { Item } from '../interfaces/questionnaire';
 
 export const Integer: React.FC<{ item: Item }> = ({ item }) => {
   return (
     <div className="mb-3">
-      <Form.Label htmlFor="integer">{item.text}</Form.Label>
-      <Form.Control id="integer" type="number" />
+      <FormLabel item={item} />
+      <Form.Control id={item.linkId} type="number" />
     </div>
   );
 };

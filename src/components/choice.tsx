@@ -46,7 +46,7 @@ const getValueSet = (
 export const getAnswerOptions = (answerOption: AnswerOption[]) => {
   return answerOption.map((option) => {
     if ('valueCoding' in option) {
-      option.valueCoding.code?.toLowerCase();
+      return option.valueCoding.code?.toLowerCase();
     }
   });
 };
@@ -73,7 +73,7 @@ export const Choice: React.FC<{
       {options.map((option) => (
         <Form.Check
           key={`inline-${option}`}
-          label={option || 'unknown'}
+          label={option}
           name="choiceGroup"
           type="radio"
           id={`inline-${option}`}

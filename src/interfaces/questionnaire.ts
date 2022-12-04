@@ -1,3 +1,4 @@
+import { answerValueSet } from '../constants/answerValueSet';
 import { Coding, Identifier, Text } from './general';
 
 export type ItemType =
@@ -71,7 +72,7 @@ export interface Item {
   repeats?: boolean;
   readOnly?: boolean;
   maxLength?: number;
-  answerValueSet?: any;
+  answerValueSet?: keyof typeof answerValueSet;
   answerOption?: AnswerOption[];
   initial?: Initial[];
   item?: Item[];

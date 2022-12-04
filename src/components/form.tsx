@@ -3,13 +3,14 @@ import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../store';
 import { Checkbox } from './checkbox';
 import { Text } from './text';
+import { TextInput } from './textInput';
 
 export const Form = () => {
   const questionnaire = useContext(ExampleContext);
 
   return (
     <ExampleContext.Provider value={questionnaire}>
-      <Container>
+      <Container style={{ backgroundColor: '#ddd' }}>
         <Row>
           {/* <pre>{JSON.stringify(questionnaire, null, 4)}</pre> */}
           <Col>
@@ -17,6 +18,8 @@ export const Form = () => {
               ? Object.values(questionnaire).map((q, idx) =>
                   q?.type === 'boolean' ? (
                     <Checkbox item={q} />
+                  ) : q?.type === 'string' ? (
+                    <TextInput item={q} />
                   ) : (
                     <Text
                       key={q?.linkId || idx}

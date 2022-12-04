@@ -1,11 +1,8 @@
 import { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../store';
-import { Checkbox } from './checkbox';
-import { Choice } from './choice';
-import { Integer } from './integer';
+import { TypeBoolean, TypeChoice, TypeInteger, TypeString } from './itemTypes';
 import { Text } from './text';
-import { TextInput } from './textInput';
 import { Title } from './title';
 
 export const Form = () => {
@@ -21,13 +18,13 @@ export const Form = () => {
             {questionnaireItems
               ? Object.values(questionnaireItems).map((q, idx) =>
                   q?.type === 'boolean' ? (
-                    <Checkbox key={q?.linkId || idx} item={q} />
+                    <TypeBoolean key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'string' ? (
-                    <TextInput key={q?.linkId || idx} item={q} />
+                    <TypeString key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'integer' ? (
-                    <Integer key={q?.linkId || idx} item={q} />
+                    <TypeInteger key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'choice' ? (
-                    <Choice
+                    <TypeChoice
                       key={q?.linkId || idx}
                       item={q}
                       questionnaire={questionnaire}

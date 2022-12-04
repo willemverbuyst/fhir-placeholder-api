@@ -4,9 +4,9 @@ import {
   AnswerOption,
   FlatQuestionnaire,
   Item,
-} from '../interfaces/questionnaire';
-import { hardcodedValueSet } from '../constants/answerValueSet';
-import { FormLabel } from './formLabel';
+} from '../../interfaces/questionnaire';
+import { hardcodedValueSet } from '../../constants/answerValueSet';
+import { FormLabel } from '../formLabel';
 
 const getValueSetFromContained = (
   answerValueSet: string,
@@ -52,7 +52,7 @@ export const getAnswerOptions = (answerOption: AnswerOption[]) => {
   });
 };
 
-export const Choice: React.FC<{
+export const TypeChoice: React.FC<{
   item: Item;
   questionnaire: FlatQuestionnaire;
 }> = ({ item, questionnaire }) => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { Item } from '../interfaces/questionnaire';
-import { FormLabel } from './formLabel';
+import { Item } from '../../interfaces/questionnaire';
+import { FormLabel } from '../formLabel';
 
-export const TextInput: React.FC<{ item: Item }> = ({ item }) => {
+export const TypeString: React.FC<{ item: Item }> = ({ item }) => {
   return (
     <div className="mb-3">
       <FormLabel item={item} />

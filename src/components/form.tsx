@@ -24,7 +24,11 @@ export const Form = () => {
                   ) : q?.type === 'string' ? (
                     <TextInput key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'choice' ? (
-                    <Choice key={q?.linkId || idx} item={q} />
+                    <Choice
+                      key={q?.linkId || idx}
+                      item={q}
+                      questionnaire={questionnaire}
+                    />
                   ) : (
                     <Text
                       key={q?.linkId || idx}

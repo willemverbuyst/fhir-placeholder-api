@@ -1,4 +1,3 @@
-import { answerValueSet } from '../constants/answerValueSet';
 import { Coding, Identifier, Text } from './general';
 
 export type ItemType =
@@ -47,12 +46,12 @@ export type Initial =
   | { valueReference: any };
 
 export type AnswerOption =
-  // | { valueInteger: number }
-  // | { valueDate: Date }
-  // | { valueTime: string }
-  // | { valueString: string }
-  { valueCoding: Coding };
-// | { valueReference: any };
+  | { valueInteger: number }
+  | { valueDate: Date }
+  | { valueTime: string }
+  | { valueString: string }
+  | { valueCoding: Coding }
+  | { valueReference: any };
 
 export type EnableWhen = {
   question: string;
@@ -72,7 +71,7 @@ export interface Item {
   repeats?: boolean;
   readOnly?: boolean;
   maxLength?: number;
-  answerValueSet?: keyof typeof answerValueSet;
+  answerValueSet?: string;
   answerOption?: AnswerOption[];
   initial?: Initial[];
   item?: Item[];

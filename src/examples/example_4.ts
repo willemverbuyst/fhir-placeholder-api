@@ -1,6 +1,6 @@
 import { Questionnaire } from '../interfaces/questionnaire';
 
-export const example_4: Questionnaire = {
+export const example_4 = {
   resourceType: 'Questionnaire',
   id: 'gcs',
   text: {

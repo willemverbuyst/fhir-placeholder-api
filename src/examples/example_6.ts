@@ -1,6 +1,6 @@
 import { Bundle } from '../interfaces/bundle';
 
-export const example_6: Bundle = {
+export const example_6 = {
   resourceType: 'Bundle',
   id: 'ussg-fht',
   type: 'transaction',

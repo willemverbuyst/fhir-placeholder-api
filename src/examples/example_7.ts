@@ -1,6 +1,4 @@
-import { Questionnaire } from '../interfaces/questionnaire';
-
-export const example_7: Questionnaire = {
+export const example_7 = {
   resourceType: 'Questionnaire',
   id: 'phq-9-questionnaire',
   meta: {

@@ -1,25 +1,39 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { Item } from '../interfaces/questionnaire';
+import { answerValueSet } from '../constants/answerValueSet';
+
+const getValuesFromValueSet = (url: keyof typeof answerValueSet) => {
+  const valueSet = answerValueSet[url];
+  if (!valueSet) return [];
+  const options = valueSet.map((value) => value.display);
+  return options;
+};
 
 export const Choice: React.FC<{ item: Item }> = ({ item }) => {
-  const answerOption = item.answerOption || [];
-  const options = answerOption.map((option) =>
-    option.valueCoding?.code?.toLowerCase()
-  );
+  const label =
+    item?.text ||
+    (item?.code && item.code[0].display) ||
+    (item?.code && item.code[0].code) ||
+    '';
+
+  const options = item.answerOption
+    ? item.answerOption.map((option) => option.valueCoding?.code?.toLowerCase())
+    : item.answerValueSet
+    ? getValuesFromValueSet(item.answerValueSet)
+    : [];
+
   return (
-    <div>
-      <Form.Label htmlFor="choice">{item.text}</Form.Label>
+    <div className="mb-3">
+      <Form.Label htmlFor="choice">{label}</Form.Label>
       {options.map((option) => (
-        <div key={`inline-${option}`} className="mb-3">
-          <Form.Check
-            inline
-            label={option}
-            name="choice"
-            type="radio"
-            id={`inline-${option}-1`}
-          />
-        </div>
+        <Form.Check
+          key={`inline-${option}`}
+          label={option}
+          name="choiceGroup"
+          type="radio"
+          id={`inline-${option}`}
+        />
       ))}
     </div>
   );

@@ -3,6 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../store';
 import { Checkbox } from './checkbox';
 import { Choice } from './choice';
+import { Integer } from './integer';
 import { Text } from './text';
 import { TextInput } from './textInput';
 import { Title } from './title';
@@ -23,6 +24,8 @@ export const Form = () => {
                     <Checkbox key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'string' ? (
                     <TextInput key={q?.linkId || idx} item={q} />
+                  ) : q?.type === 'integer' ? (
+                    <Integer key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'choice' ? (
                     <Choice
                       key={q?.linkId || idx}

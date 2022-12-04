@@ -4,7 +4,7 @@ import { ButtonRow } from './components/buttonRow';
 function App() {
   return (
     <Container>
-      <Row>
+      <Row style={{ textAlign: 'center' }} className="m-3">
         <h1>Questionnaires</h1>
       </Row>
       <ButtonRow />

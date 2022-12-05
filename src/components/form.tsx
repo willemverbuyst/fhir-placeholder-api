@@ -4,6 +4,7 @@ import ExampleContext from '../store';
 import {
   TypeBoolean,
   TypeChoice,
+  TypeDate,
   TypeGroup,
   TypeInteger,
   TypeString,
@@ -29,6 +30,8 @@ export const Form = () => {
                     <TypeString key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'integer' ? (
                     <TypeInteger key={q?.linkId || idx} item={q} />
+                  ) : q?.type === 'date' ? (
+                    <TypeDate key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'group' ? (
                     <TypeGroup key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'choice' ? (

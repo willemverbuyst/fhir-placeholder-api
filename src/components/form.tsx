@@ -5,6 +5,7 @@ import {
   TypeBoolean,
   TypeChoice,
   TypeDate,
+  TypeDateTime,
   TypeDecimal,
   TypeGroup,
   TypeInteger,
@@ -33,6 +34,8 @@ export const Form = () => {
                     <TypeInteger key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'date' ? (
                     <TypeDate key={q?.linkId || idx} item={q} />
+                  ) : q?.type === 'dateTime' ? (
+                    <TypeDateTime key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'group' ? (
                     <TypeGroup key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'decimal' ? (

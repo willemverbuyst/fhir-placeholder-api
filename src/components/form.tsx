@@ -1,7 +1,13 @@
 import { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../store';
-import { TypeBoolean, TypeChoice, TypeInteger, TypeString } from './itemTypes';
+import {
+  TypeBoolean,
+  TypeChoice,
+  TypeGroup,
+  TypeInteger,
+  TypeString,
+} from './itemTypes';
 import { Text } from './text';
 import { Title } from './title';
 
@@ -23,6 +29,8 @@ export const Form = () => {
                     <TypeString key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'integer' ? (
                     <TypeInteger key={q?.linkId || idx} item={q} />
+                  ) : q?.type === 'group' ? (
+                    <TypeGroup key={q?.linkId || idx} item={q} />
                   ) : q?.type === 'choice' ? (
                     <TypeChoice
                       key={q?.linkId || idx}

@@ -1,5 +1,5 @@
 {
-  "name": "flat-fhir-questionnaire",
+  "name": "fhir-questionnaire",
   "version": "1.0.0",
   "type": "module",
   "author": "Willem Verbuyst",

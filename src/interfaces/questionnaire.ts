@@ -56,7 +56,7 @@ export type AnswerOption =
 
 export type EnableWhen = {
   question: string;
-  operator: typeof questionnairEnableOperator[number];
+  operator: typeof questionnairEnableOperator[number]['code'];
 } & Answer;
 
 export interface Item {

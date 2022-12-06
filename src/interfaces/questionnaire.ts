@@ -1,3 +1,4 @@
+import { questionnairEnableOperator } from '../constants/questionnaireEnableValueSet';
 import { Coding, Identifier, Text } from './general';
 
 export type ItemType =
@@ -55,7 +56,7 @@ export type AnswerOption =
 
 export type EnableWhen = {
   question: string;
-  operator: any;
+  operator: typeof questionnairEnableOperator[number];
 } & Answer;
 
 export interface Item {
@@ -91,7 +92,7 @@ interface QuestionnaireBase {
   name?: string;
   title?: string;
   derivedFrom?: any;
-  status: 'draft' | 'active';
+  status: 'draft' | 'active' | 'retired' | 'unknown';
   experimental?: boolean;
   subjectType: string[];
   date?: string;

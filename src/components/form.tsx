@@ -25,34 +25,34 @@ export const Form = () => {
         <Row>
           <Col>
             {questionnaireItems
-              ? Object.values(questionnaireItems).map((q, idx) =>
-                  q?.type === 'boolean' ? (
-                    <TypeBoolean key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'string' ? (
-                    <TypeString key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'integer' ? (
-                    <TypeInteger key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'date' ? (
-                    <TypeDate key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'dateTime' ? (
-                    <TypeDateTime key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'group' ? (
-                    <TypeGroup key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'decimal' ? (
-                    <TypeDecimal key={q?.linkId || idx} item={q} />
-                  ) : q?.type === 'choice' ? (
+              ? Object.values(questionnaireItems).map(({ item }, idx) =>
+                  item?.type === 'boolean' ? (
+                    <TypeBoolean key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'string' ? (
+                    <TypeString key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'integer' ? (
+                    <TypeInteger key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'date' ? (
+                    <TypeDate key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'dateTime' ? (
+                    <TypeDateTime key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'group' ? (
+                    <TypeGroup key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'decimal' ? (
+                    <TypeDecimal key={item?.linkId || idx} item={item} />
+                  ) : item?.type === 'choice' ? (
                     <TypeChoice
-                      key={q?.linkId || idx}
-                      item={q}
+                      key={item?.linkId || idx}
+                      item={item}
                       questionnaire={questionnaire}
                     />
                   ) : (
                     <Text
-                      key={q?.linkId || idx}
+                      key={item?.linkId || idx}
                       text={
-                        q?.text ||
-                        (q?.code && q.code[0].display) ||
-                        (q?.code && q.code[0].code) ||
+                        item?.text ||
+                        (item?.code && item.code[0].display) ||
+                        (item?.code && item.code[0].code) ||
                         ''
                       }
                     />

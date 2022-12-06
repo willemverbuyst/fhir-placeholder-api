@@ -114,5 +114,5 @@ export interface Questionnaire extends QuestionnaireBase {
 }
 
 export interface FlatQuestionnaire extends QuestionnaireBase {
-  item: { [key: string]: Item };
+  item: { [key: string]: { groupId: string; item: Item } };
 }

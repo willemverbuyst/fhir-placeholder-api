@@ -56,12 +56,6 @@ export const TypeChoice: React.FC<{
   item: Item;
   questionnaire: FlatQuestionnaire;
 }> = ({ item, questionnaire }) => {
-  const label =
-    item?.text ||
-    (item?.code && item.code[0].display) ||
-    (item?.code && item.code[0].code) ||
-    '';
-
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)
     : item.answerValueSet
@@ -71,15 +65,25 @@ export const TypeChoice: React.FC<{
   return (
     <div className="mb-3">
       <FormLabel item={item} />
-      {options.map((option) => (
-        <Form.Check
-          key={`inline-${option}`}
-          label={option}
-          name={item.linkId}
-          type="radio"
-          id={`inline-${option}`}
-        />
-      ))}
+      {options.length < 4 ? (
+        options.map((option) => (
+          <Form.Check
+            key={`inline-${option}`}
+            label={option}
+            name={item.linkId}
+            type="radio"
+            id={`inline-${option}`}
+          />
+        ))
+      ) : (
+        <Form.Select>
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </Form.Select>
+      )}
     </div>
   );
 };

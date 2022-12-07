@@ -80,16 +80,6 @@ export const Form = () => {
               : null}
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <pre
-              className="p-2"
-              style={{ backgroundColor: '#333', color: '#fff' }}
-            >
-              {JSON.stringify(questionnaire, null, 4)}
-            </pre>
-          </Col>
-        </Row>
       </Container>
     </ExampleContext.Provider>
   );

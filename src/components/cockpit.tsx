@@ -9,6 +9,7 @@ import {
 import { main } from '../business';
 import { examples } from '../examples';
 import ExampleContext, { ExampleState } from '../store';
+import { DebugContainer } from './debug';
 import { Form } from './form';
 
 export const Cockpit = () => {
@@ -44,6 +45,7 @@ export const Cockpit = () => {
         </Row>
       </Container>
       {questionnaire && <Form />}
+      <DebugContainer />
     </ExampleContext.Provider>
   );
 };

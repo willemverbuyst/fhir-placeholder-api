@@ -58,7 +58,7 @@ export const TypeChoice: React.FC<{
 }> = ({ item, questionnaire }) => {
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)
-    : item.answerValueSet
+    : item.answerValueSet && questionnaire
     ? getValueSet(item.answerValueSet, questionnaire)
     : [];
 

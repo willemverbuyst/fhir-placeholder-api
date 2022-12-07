@@ -7,24 +7,23 @@ import {
 } from '../interfaces/questionnaire';
 
 const flattenQuestionnaire = (
-  obj: Item,
+  obj: Record<PropertyKey, any>,
   flatQ: Record<PropertyKey, any>,
   groupId = ''
 ) => {
   Object.keys(obj).forEach((prop) => {
     let newGroupId = groupId;
     if (obj.type === 'group') {
-      newGroupId = `GROUPID__${obj.linkId}`;
+      newGroupId = obj.linkId;
     }
-    //@ts-ignore
+
     if (typeof obj[prop] === 'object') {
-      //@ts-ignore
       flattenQuestionnaire(obj[prop], flatQ, newGroupId);
     } else {
       if (prop === 'linkId') {
         const { item, ...objectWithoutItemProp } = obj;
-        flatQ[`ITEMID_${obj[prop]}_${newGroupId}`] = {
-          group: newGroupId,
+        flatQ[`LINKID_${obj[prop]}`] = {
+          meta: { groupId: newGroupId },
           item: objectWithoutItemProp,
         };
       }
@@ -60,8 +59,9 @@ const handleResource = (
 
 export const flattenItems = (
   resource: Questionnaire | Bundle | ValueSet
-): { [key: string]: { groupId: string; item: Item } } => {
-  const items: { [key: string]: { groupId: string; item: Item } } = {};
+): { [key: string]: { meta: { groupId: string }; item: Item } } => {
+  const items: { [key: string]: { meta: { groupId: string }; item: Item } } =
+    {};
   handleResource(resource, items);
   return items;
 };

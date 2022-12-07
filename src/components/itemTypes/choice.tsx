@@ -54,7 +54,7 @@ export const getAnswerOptions = (answerOption: AnswerOption[]) => {
 
 export const TypeChoice: React.FC<{
   item: Item;
-  questionnaire: FlatQuestionnaire;
+  questionnaire?: FlatQuestionnaire;
 }> = ({ item, questionnaire }) => {
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)

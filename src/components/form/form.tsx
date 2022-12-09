@@ -1,28 +1,13 @@
 import { useContext } from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../../store';
 import { Title } from '../title';
-import { InputSwitch } from './inputSwitch';
+
+import { QuestionCard } from './questionCard';
 
 export const Form = () => {
   const questionnaire = useContext(ExampleContext);
   const questionnaireItems = questionnaire?.items;
-
-  const renderInput = (item: any, idx: number) => {
-    const key = item?.linkId || idx;
-    return (
-      <div key={key}>
-        <Card>
-          <Card.Body>
-            <InputSwitch item={item} />
-            <Button variant="primary" type="submit">
-              Continue
-            </Button>
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  };
 
   return (
     <ExampleContext.Provider value={questionnaire}>
@@ -31,9 +16,9 @@ export const Form = () => {
         <Row>
           <Col>
             {questionnaireItems
-              ? Object.values(questionnaireItems).map((item, idx) => {
-                  return renderInput(item, idx);
-                })
+              ? Object.values(questionnaireItems).map((item, idx) => (
+                  <QuestionCard key={idx} item={item} />
+                ))
               : null}
           </Col>
         </Row>

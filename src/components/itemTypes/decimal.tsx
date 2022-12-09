@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { FormLabel } from '../form/formLabel';
-import { Item } from '../../interfaces/questionnaire';
 
 export const TypeDecimal: React.FC<{ item: any }> = ({ item }) => {
   const [isValid, setIsValid] = useState<boolean>(false);
@@ -18,7 +17,7 @@ export const TypeDecimal: React.FC<{ item: any }> = ({ item }) => {
   };
 
   return (
-    <div className="mb-3">
+    <Form.Group className="mb-3">
       <FormLabel item={item} />
       <Form.Control
         id={item.linkId}
@@ -27,6 +26,6 @@ export const TypeDecimal: React.FC<{ item: any }> = ({ item }) => {
         isValid={isValid}
         isInvalid={!isValid}
       />
-    </div>
+    </Form.Group>
   );
 };

@@ -1,6 +1,4 @@
 import React from 'react';
-import { getLabel } from '../../business/label';
-import { Item } from '../../interfaces/questionnaire';
 
 export const TypeGroup: React.FC<{ item: any }> = ({ item }) => {
   return (

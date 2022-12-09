@@ -4,9 +4,9 @@ import { FormLabel } from '../form/formLabel';
 
 export const TypeDateTime: React.FC<{ item: any }> = ({ item }) => {
   return (
-    <div className="mb-3">
+    <Form.Group className="mb-3">
       <FormLabel item={item} />
       <Form.Control id={item.linkId} type="datetime-local" />
-    </div>
+    </Form.Group>
   );
 };

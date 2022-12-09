@@ -10,7 +10,7 @@ import { main } from '../business';
 import { examples } from '../examples';
 import ExampleContext, { ExampleState } from '../store';
 import { DebugContainer } from './debug';
-import { Form } from './form';
+import { Form } from './form/form';
 import { Title } from './title';
 
 export const Cockpit = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { Item } from '../../interfaces/questionnaire';
-import { FormLabel } from '../formLabel';
+import { FormLabel } from '../form/formLabel';
 
 export const TypeString: React.FC<{ item: any }> = ({ item }) => {
   return (

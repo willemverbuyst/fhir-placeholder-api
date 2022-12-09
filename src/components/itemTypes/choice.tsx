@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { FormLabel } from '../formLabel';
+import { FormLabel } from '../form/formLabel';
 
 export const TypeChoice: React.FC<{
   item: any;
@@ -8,7 +8,7 @@ export const TypeChoice: React.FC<{
   const options = item.options || [];
 
   return (
-    <div className="mb-3">
+    <Form.Group className="mb-3">
       <FormLabel item={item} />
       {options.length < 5 ? (
         options.map((option: string) => (
@@ -29,6 +29,6 @@ export const TypeChoice: React.FC<{
           ))}
         </Form.Select>
       )}
-    </div>
+    </Form.Group>
   );
 };

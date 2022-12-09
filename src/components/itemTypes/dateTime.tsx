@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { FormLabel } from '../formLabel';
+import { FormLabel } from '../form/formLabel';
 
 export const TypeDateTime: React.FC<{ item: any }> = ({ item }) => {
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { FormLabel } from '../formLabel';
+import { FormLabel } from '../form/formLabel';
 import { Item } from '../../interfaces/questionnaire';
 
 export const TypeDecimal: React.FC<{ item: any }> = ({ item }) => {

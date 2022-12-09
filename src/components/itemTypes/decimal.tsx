@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { FormLabel } from '../formLabel';
 import { Item } from '../../interfaces/questionnaire';
 
-export const TypeDecimal: React.FC<{ item: Item }> = ({ item }) => {
+export const TypeDecimal: React.FC<{ item: any }> = ({ item }) => {
   const [isValid, setIsValid] = useState<boolean>(false);
   const checkIfValid = (e: any): void => {
     if (

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { FlatQuestionnaire } from '../interfaces/questionnaire';
 
-export type ExampleState = FlatQuestionnaire | null;
+export type ExampleState = any | null;
 
 const initialState: ExampleState = null;
 

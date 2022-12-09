@@ -11,6 +11,7 @@ import { examples } from '../examples';
 import ExampleContext, { ExampleState } from '../store';
 import { DebugContainer } from './debug';
 import { Form } from './form';
+import { Title } from './title';
 
 export const Cockpit = () => {
   const [checked, setChecked] = useState<string>();

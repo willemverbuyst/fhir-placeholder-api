@@ -1,11 +1,5 @@
 import { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { getLabel } from '../business/label';
-import {
-  FlatQuestionnaire,
-  Item,
-  Questionnaire,
-} from '../interfaces/questionnaire';
 import ExampleContext from '../store';
 import {
   TypeBoolean,
@@ -22,11 +16,9 @@ import { Title } from './title';
 
 export const Form = () => {
   const questionnaire = useContext(ExampleContext);
-  const questionnaireItems = questionnaire?.item;
+  const questionnaireItems = questionnaire?.items;
 
-  let orgGroupId = '';
-
-  const renderInput = (item: Item, idx: number) => {
+  const renderInput = (item: any, idx: number) => {
     const key = item?.linkId || idx;
     return item?.type === 'boolean' ? (
       <TypeBoolean key={key} item={item} />
@@ -43,24 +35,9 @@ export const Form = () => {
     ) : item?.type === 'decimal' ? (
       <TypeDecimal key={key} item={item} />
     ) : item?.type === 'choice' && questionnaire ? (
-      <TypeChoice key={key} item={item} questionnaire={questionnaire} />
+      <TypeChoice key={key} item={item} />
     ) : (
-      <Text key={key} text={getLabel(item)} />
-    );
-  };
-
-  const renderSpace = (item: Item, groupId: string, idx: number) => {
-    const diffId = groupId && groupId !== orgGroupId;
-    if (diffId) {
-      orgGroupId = groupId;
-    }
-    return diffId ? (
-      <>
-        <br />
-        {renderInput(item, idx)}
-      </>
-    ) : (
-      <>{renderInput(item, idx)}</>
+      <Text key={key} text={item.label} />
     );
   };
 
@@ -71,12 +48,9 @@ export const Form = () => {
         <Row>
           <Col>
             {questionnaireItems
-              ? Object.values(questionnaireItems).map(
-                  ({ item, meta: { groupId } }, idx) => {
-                    // return renderInput(item);
-                    return renderSpace(item, groupId, idx);
-                  }
-                )
+              ? Object.values(questionnaireItems).map((item, idx) => {
+                  return renderInput(item, idx);
+                })
               : null}
           </Col>
         </Row>

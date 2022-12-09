@@ -1,24 +1,41 @@
 import { questionnairEnableOperator } from '../constants/questionnaireEnableValueSet';
 import { Coding, Identifier, Text } from './general';
 
-export type ItemType =
-  | 'group'
-  | 'display'
-  | 'question'
-  | 'boolean'
-  | 'decimal'
-  | 'integer'
-  | 'date'
-  | 'dateTime'
-  | 'time'
-  | 'string'
-  | 'text'
-  | 'url'
-  | 'choice'
-  | 'open-choice'
-  | 'attachment'
-  | 'reference'
-  | 'quantity';
+export const itemType = {
+  group: 'group',
+  display: 'display',
+  question: 'question',
+  boolean: 'boolean',
+  decimal: 'decimal',
+  integer: 'integer',
+  date: 'date',
+  dateTime: 'dateTime',
+  time: 'time',
+  string: 'string',
+  text: 'text',
+  url: 'url',
+  choice: 'choice',
+  'open-choice': 'open-choice',
+  attachment: 'attachment',
+  reference: 'reference',
+  quantity: 'quantity',
+} as const;
+
+export const enableBehavior = {
+  all: 'all',
+  any: 'any',
+} as const;
+
+export const status = {
+  draft: 'draft',
+  active: 'active',
+  retired: 'retired',
+  unknown: 'unknown',
+} as const;
+
+export type ItemType = keyof typeof itemType;
+export type EnableBehavior = keyof typeof enableBehavior;
+export type Status = keyof typeof status;
 
 export type Answer =
   | { answerBoolean: boolean }
@@ -65,9 +82,9 @@ export interface Item {
   code?: Coding[];
   prefix?: string;
   text?: string;
-  type?: ItemType;
+  type: ItemType;
   enableWhen?: EnableWhen[];
-  enableBehavior?: 'all' | 'any';
+  enableBehavior?: EnableBehavior;
   required?: boolean;
   repeats?: boolean;
   readOnly?: boolean;
@@ -92,7 +109,7 @@ interface QuestionnaireBase {
   name?: string;
   title?: string;
   derivedFrom?: any;
-  status: 'draft' | 'active' | 'retired' | 'unknown';
+  status: Status;
   experimental?: boolean;
   subjectType: string[];
   date?: string;

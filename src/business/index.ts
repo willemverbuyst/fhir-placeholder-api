@@ -2,12 +2,14 @@ import { Bundle } from '../interfaces/bundle';
 import { ValueSet } from '../interfaces/general';
 import {
   AnswerOption,
+  hasProp,
   Item,
   itemType,
   Questionnaire,
 } from '../interfaces/questionnaire';
 import { hardcodedValueSet } from '../constants/answerValueSet';
 import { getLabel } from './label';
+import { Unit } from '../interfaces/unit';
 
 const getValueSetFromContained = (
   answerValueSet: string,
@@ -34,7 +36,7 @@ const getHardcodedValueSet = (
 const getValueSet = (
   answerValueSetkey: string,
   questionnaire: Questionnaire
-) => {
+): string[] => {
   if (answerValueSetkey in hardcodedValueSet) {
     const key = answerValueSetkey as keyof typeof hardcodedValueSet;
     return getHardcodedValueSet(key);
@@ -45,15 +47,16 @@ const getValueSet = (
   }
 };
 
-export const getAnswerOptions = (answerOption: AnswerOption[]) => {
-  return answerOption.map((option) => {
-    if ('valueCoding' in option) {
-      return option.valueCoding.code?.toLowerCase();
-    }
-  });
-};
+export const getAnswerOptions = (answerOption: AnswerOption[]): string[] =>
+  answerOption
+    .map((option) => {
+      if ('valueCoding' in option) {
+        return option.valueCoding?.code?.toLowerCase();
+      }
+    })
+    .filter((i): i is string => !!i);
 
-const getOptions = (item: Item, questionnaire: Questionnaire) => {
+const getOptions = (item: Item, questionnaire: Questionnaire): string[] => {
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)
     : item.answerValueSet && questionnaire
@@ -63,23 +66,21 @@ const getOptions = (item: Item, questionnaire: Questionnaire) => {
   return options;
 };
 
-const flattenQuestionnaire = (item: Item, container: any[]) => {
+const flattenQuestionnaire = (item: Item, container: Item[]): void => {
   Object.keys(item).forEach((prop) => {
-    // @ts-ignore
-    if (typeof item[prop] === 'object') {
-      // @ts-ignore
+    if (hasProp(prop, item) && typeof item[prop] === 'object') {
       flattenQuestionnaire(item[prop], container);
-    } else {
-      if (prop === 'linkId') {
-        container.push(item);
-      }
+    } else if (prop === 'linkId') {
+      container.push(item);
     }
   });
 };
 
-const convertQuestionnaire = (questionnaire: Questionnaire) => {
+const convertQuestionnaire = (
+  questionnaire: Questionnaire
+): { items: Unit[]; meta: string } => {
   const itemorg = questionnaire.item || [];
-  let item: any[] = [];
+  let item: Item[] = [];
   itemorg.forEach((i) => flattenQuestionnaire(i, item));
 
   const items = item
@@ -91,44 +92,49 @@ const convertQuestionnaire = (questionnaire: Questionnaire) => {
   return { items, meta };
 };
 
-const createMetaInfo = (questionnaire: Questionnaire) => {
-  const title = questionnaire.title
+const createMetaInfo = (questionnaire: Questionnaire): string =>
+  questionnaire.title
     ? questionnaire.title
-    : questionnaire.code
+    : questionnaire.code && questionnaire.code[0]?.display
     ? questionnaire.code[0].display
     : '';
 
-  return title;
-};
-
-const createInputUnit = (item: Item, questionnaire: Questionnaire) => {
-  let unit: Record<string, any> = {};
-  let error: string | null = null;
-
+const createInputUnit = (
+  item: Item,
+  questionnaire: Questionnaire
+): { unit: Unit } => {
   if (!item.linkId) {
-    error = 'linkId missing in one the items';
-    console.error(error);
+    throw new Error('linkId missing in one the items');
   }
 
   if (!item.type) {
-    error = 'type missing in one the items';
-    console.error(error);
+    throw new Error('type missing in one the items');
   }
   // required properties
-  unit.linkId = item.linkId;
-  unit.type = item.type;
+  const linkId = item.linkId;
+  const type = item.type;
 
   // optional properties
-  unit.label = getLabel(item);
-  unit.readOnly = item.readOnly;
-  unit.defaultValue = item.initial;
-  unit.required = item.required;
+  const label = getLabel(item);
+  const readOnly = item.readOnly ?? false;
+  const defaultValue = item.initial;
+  const required = item.required ?? false;
 
+  let options;
   if (item.type === itemType.choice) {
-    unit.options = getOptions(item, questionnaire);
+    options = getOptions(item, questionnaire);
   }
 
-  return { unit, error };
+  const unit = {
+    defaultValue,
+    linkId,
+    type,
+    label,
+    required,
+    readOnly,
+  };
+
+  return { unit };
 };
 
 // const handleBundle = (bundle: Bundle, flatQ: Record<PropertyKey, any>) => {
@@ -137,7 +143,9 @@ const createInputUnit = (item: Item, questionnaire: Questionnaire) => {
 //   resources.forEach((resource) => handleResource(resource, flatQ));
 // };
 
-const handleResource = (resource: Questionnaire | Bundle | ValueSet) => {
+const handleResource = (
+  resource: Questionnaire | Bundle | ValueSet
+): { items: Unit[]; meta: string } | void => {
   if (resource.resourceType === 'Questionnaire') {
     return convertQuestionnaire(resource);
     // return handleQuestionnaires(resource, items);
@@ -148,9 +156,11 @@ const handleResource = (resource: Questionnaire | Bundle | ValueSet) => {
   }
 };
 
-export const main = (resource: Questionnaire | Bundle | ValueSet) => {
+export const main = (
+  resource: Questionnaire | Bundle | ValueSet
+): { items: Unit[]; meta: string } | null => {
   const items = handleResource(resource);
-  if (resource.resourceType === 'Questionnaire') {
+  if (items && resource.resourceType === 'Questionnaire') {
     return items;
   }
   return null;

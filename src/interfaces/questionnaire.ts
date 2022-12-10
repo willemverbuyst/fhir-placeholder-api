@@ -1,5 +1,6 @@
 import { questionnairEnableOperator } from '../constants/questionnaireEnableValueSet';
 import { Coding, Identifier, Text } from './general';
+import { Unit } from './unit';
 
 export const itemType = {
   group: 'group',
@@ -133,3 +134,16 @@ export interface Questionnaire extends QuestionnaireBase {
 export interface FlatQuestionnaire extends QuestionnaireBase {
   item: { [key: string]: { meta: { groupId: string }; item: Item } };
 }
+
+export function hasProp<T extends Record<PropertyKey, any>>(
+  key: PropertyKey,
+  obj: T
+): key is keyof T {
+  return key in obj;
+}
+
+export type ConvertedQuestionnaire = {
+  items: Unit[];
+  meta: string | null;
+  error: string | null;
+};

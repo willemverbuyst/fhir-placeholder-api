@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { Row, Stack, Form } from 'react-bootstrap';
-import { AppContext } from '../store';
+import { ActionTypes, AppContext } from '../store';
 
 export const PageTitle = () => {
   const { state, dispatch } = useContext(AppContext);
 
   const handleDebugDisplay = () => {
-    dispatch({ type: 'toggleDebugger', payload: true });
+    dispatch({ type: ActionTypes.ToggleDebugger, payload: true });
   };
   return (
     <Row style={{ textAlign: 'center' }} className="m-3">

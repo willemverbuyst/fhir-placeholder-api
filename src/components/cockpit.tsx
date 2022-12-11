@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 import { main } from '../business';
 import { examples } from '../examples';
-import { AppContext } from '../store';
+import { ActionTypes, AppContext } from '../store';
 import { Form } from './form/form';
 
 export const Cockpit = React.memo(() => {
@@ -18,7 +18,7 @@ export const Cockpit = React.memo(() => {
   const handleChange = (e: React.ChangeEvent<HTMLElement>, idx: number) => {
     setChecked(e.currentTarget.id);
     const qFlat = main(examples[idx]);
-    dispatch({ type: 'setQuestionnaire', payload: qFlat });
+    dispatch({ type: ActionTypes.SetQuestionnaire, payload: qFlat });
   };
 
   return (

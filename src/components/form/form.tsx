@@ -30,13 +30,7 @@ export const Form = () => {
   return (
     <Container className="p-3" style={{ backgroundColor: '#eee' }}>
       {questionnaire && <Title questionnaire={questionnaire} />}
-      {questionnaire && questionnaire.questionnaire?.text?.div ? (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: questionnaire.questionnaire.text?.div,
-          }}
-        ></div>
-      ) : null}
+
       <Row>
         <Col>
           {questionnaireItems ? (

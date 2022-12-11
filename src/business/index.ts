@@ -2,6 +2,7 @@ import { Bundle } from '../interfaces/bundle';
 import { ValueSet } from '../interfaces/general';
 import {
   AnswerOption,
+  ConvertedQuestionnaire,
   hasProp,
   Item,
   itemType,
@@ -169,7 +170,7 @@ const handleResource = (
 
 export const main = (
   resource: Questionnaire | Bundle | ValueSet
-): { items: Unit[]; meta: string; questionnaire: Questionnaire } | null => {
+): ConvertedQuestionnaire | null => {
   const items = handleResource(resource);
   if (items && resource.resourceType === 'Questionnaire') {
     return items;

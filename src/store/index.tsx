@@ -1,8 +1,9 @@
 import React, { createContext, useReducer } from 'react';
+import { ConvertedQuestionnaire } from '../interfaces/questionnaire';
 
 type InitialState = {
   showDebugger: boolean;
-  questionnaire: Record<PropertyKey, any> | null;
+  questionnaire: ConvertedQuestionnaire | null;
 };
 
 const initialState: InitialState = {
@@ -10,12 +11,33 @@ const initialState: InitialState = {
   questionnaire: null,
 };
 
-export type ACTIONTYPES =
-  | {
-      type: 'toggleDebugger';
-      payload: boolean;
-    }
-  | { type: 'setQuestionnaire'; payload: Record<PropertyKey, any> };
+type ActionMap<M extends { [key: string]: any }> = {
+  [Key in keyof M]: M[Key] extends undefined
+    ? {
+        type: Key;
+      }
+    : {
+        type: Key;
+        payload: M[Key];
+      };
+};
+
+export const ActionTypes = {
+  ToggleDebugger: 'TOGGLE_DEBUGGER',
+  SetQuestionnaire: 'SET_QUESTIONNAIRE',
+} as const;
+
+type DebugPayload = {
+  [ActionTypes.ToggleDebugger]: undefined;
+};
+
+type QuestionnairePayload = {
+  [ActionTypes.SetQuestionnaire]: ConvertedQuestionnaire;
+};
+
+export type Actions =
+  | ActionMap<DebugPayload>[keyof ActionMap<DebugPayload>]
+  | ActionMap<QuestionnairePayload>[keyof ActionMap<QuestionnairePayload>];
 
 export const AppContext = createContext<{
   state: InitialState;
@@ -25,12 +47,12 @@ export const AppContext = createContext<{
   dispatch: () => null,
 });
 
-const stateReducer = (state: InitialState, action: ACTIONTYPES) => {
+const stateReducer = (state: InitialState, action: Actions) => {
   switch (action.type) {
-    case 'toggleDebugger':
+    case ActionTypes.ToggleDebugger:
       return { ...state, showDebugger: !state.showDebugger };
 
-    case 'setQuestionnaire':
+    case ActionTypes.SetQuestionnaire:
       return { ...state, questionnaire: action.payload };
 
     default:

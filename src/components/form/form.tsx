@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import ExampleContext from '../../store';
 import { Title } from '../title';
@@ -9,6 +9,10 @@ export const Form = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const questionnaire = useContext(ExampleContext);
   const questionnaireItems = questionnaire?.items;
+
+  useEffect(() => {
+    setCurrentQuestion(0);
+  }, [questionnaire]);
 
   const handleNext = () => {
     if (currentQuestion < questionnaire.items.length - 1) {
@@ -26,6 +30,13 @@ export const Form = () => {
     <ExampleContext.Provider value={questionnaire}>
       <Container className="p-3" style={{ backgroundColor: '#eee' }}>
         {questionnaire && <Title questionnaire={questionnaire} />}
+        {questionnaire && questionnaire.questionnaire?.text?.div ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: questionnaire.questionnaire.text?.div,
+            }}
+          ></div>
+        ) : null}
         <Row>
           <Col>
             {questionnaireItems ? (

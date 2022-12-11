@@ -66,30 +66,38 @@ const getOptions = (item: Item, questionnaire: Questionnaire): string[] => {
   return options;
 };
 
-const flattenQuestionnaire = (item: Item, container: Item[]): void => {
+const flattenQuestionnaire = (
+  item: Item,
+  container: Item[],
+  groupLabel = ''
+): void => {
   Object.keys(item).forEach((prop) => {
+    if (item.type === 'group' && getLabel(item)) {
+      groupLabel = getLabel(item);
+    }
     if (hasProp(prop, item) && typeof item[prop] === 'object') {
-      flattenQuestionnaire(item[prop], container);
+      flattenQuestionnaire(item[prop], container, groupLabel);
     } else if (prop === 'linkId') {
-      container.push(item);
+      container.push({ ...item, groupLabel });
     }
   });
 };
 
 const convertQuestionnaire = (
   questionnaire: Questionnaire
-): { items: Unit[]; meta: string } => {
+): { items: Unit[]; meta: string; questionnaire: Questionnaire } => {
   const itemorg = questionnaire.item || [];
   let item: Item[] = [];
   itemorg.forEach((i) => flattenQuestionnaire(i, item));
 
   const items = item
     .map((i) => createInputUnit(i, questionnaire))
-    .map((i) => i.unit);
+    .map((i) => i.unit)
+    .filter((i) => !(i.type === 'group'));
 
   const meta = createMetaInfo(questionnaire);
 
-  return { items, meta };
+  return { items, meta, questionnaire };
 };
 
 const createMetaInfo = (questionnaire: Questionnaire): string =>
@@ -119,6 +127,7 @@ const createInputUnit = (
   const readOnly = item.readOnly ?? false;
   const defaultValue = item.initial;
   const required = item.required ?? false;
+  const groupLabel = item.groupLabel;
 
   let options;
   if (item.type === itemType.choice) {
@@ -132,6 +141,8 @@ const createInputUnit = (
     label,
     required,
     readOnly,
+    options,
+    groupLabel,
   };
 
   return { unit };
@@ -145,7 +156,7 @@ const createInputUnit = (
 
 const handleResource = (
   resource: Questionnaire | Bundle | ValueSet
-): { items: Unit[]; meta: string } | void => {
+): { items: Unit[]; meta: string; questionnaire: Questionnaire } | void => {
   if (resource.resourceType === 'Questionnaire') {
     return convertQuestionnaire(resource);
     // return handleQuestionnaires(resource, items);
@@ -158,7 +169,7 @@ const handleResource = (
 
 export const main = (
   resource: Questionnaire | Bundle | ValueSet
-): { items: Unit[]; meta: string } | null => {
+): { items: Unit[]; meta: string; questionnaire: Questionnaire } | null => {
   const items = handleResource(resource);
   if (items && resource.resourceType === 'Questionnaire') {
     return items;

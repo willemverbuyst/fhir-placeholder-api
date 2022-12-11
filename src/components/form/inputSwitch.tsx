@@ -25,7 +25,7 @@ export const InputSwitch = ({ item }: any) => {
     case 'decimal':
       return <TypeDecimal item={item} />;
     case 'group':
-      return <TypeGroup item={item} />;
+      return null;
     case 'integer':
       return <TypeInteger item={item} />;
     case 'string':

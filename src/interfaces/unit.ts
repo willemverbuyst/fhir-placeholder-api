@@ -8,4 +8,5 @@ export type Unit = {
   required: boolean;
   readOnly: boolean;
   options?: string[];
+  groupLabel?: string;
 };

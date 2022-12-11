@@ -1,4 +1,5 @@
 import { Card, Button, Stack } from 'react-bootstrap';
+import { TypeGroup } from '../itemTypes';
 import { InputSwitch } from './inputSwitch';
 
 export const QuestionCard = ({
@@ -8,10 +9,12 @@ export const QuestionCard = ({
   displayNext,
   displayPrevious,
 }: any) => {
+  if (!item) return null;
   return (
     <div>
       <Card>
         <Card.Body>
+          {item.groupLabel && <TypeGroup item={item} />}
           <InputSwitch item={item} />
           <Stack direction="horizontal">
             {displayPrevious ? (

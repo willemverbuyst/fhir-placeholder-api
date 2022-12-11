@@ -95,6 +95,7 @@ export interface Item {
   initial?: Initial[];
   item?: Item[];
   extension?: any;
+  groupLabel?: string;
 }
 
 interface QuestionnaireBase {

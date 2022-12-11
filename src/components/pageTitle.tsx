@@ -16,7 +16,7 @@ export const PageTitle = () => {
           <Form.Check
             type="switch"
             checked={state.showDebugger}
-            label="debug mode"
+            label="debugger"
             onChange={handleDebugDisplay}
           />
         </span>

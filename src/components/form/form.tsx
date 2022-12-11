@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import ExampleContext from '../../store';
+import { AppContext } from '../../store';
 import { Title } from '../title';
 
 import { QuestionCard } from './questionCard';
 
 export const Form = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const questionnaire = useContext(ExampleContext);
+  const { state } = useContext(AppContext);
+  const questionnaire = state.questionnaire;
   const questionnaireItems = questionnaire?.items;
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export const Form = () => {
   }, [questionnaire]);
 
   const handleNext = () => {
-    if (currentQuestion < questionnaire.items.length - 1) {
+    if (questionnaire && currentQuestion < questionnaire.items.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
@@ -27,30 +28,28 @@ export const Form = () => {
   };
 
   return (
-    <ExampleContext.Provider value={questionnaire}>
-      <Container className="p-3" style={{ backgroundColor: '#eee' }}>
-        {questionnaire && <Title questionnaire={questionnaire} />}
-        {questionnaire && questionnaire.questionnaire?.text?.div ? (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: questionnaire.questionnaire.text?.div,
-            }}
-          ></div>
-        ) : null}
-        <Row>
-          <Col>
-            {questionnaireItems ? (
-              <QuestionCard
-                item={Object.values(questionnaireItems)[currentQuestion]}
-                onNext={handleNext}
-                onPrevious={handlePrevious}
-                displayNext={currentQuestion < questionnaire.items.length - 1}
-                displayPrevious={currentQuestion > 0}
-              />
-            ) : null}
-          </Col>
-        </Row>
-      </Container>
-    </ExampleContext.Provider>
+    <Container className="p-3" style={{ backgroundColor: '#eee' }}>
+      {questionnaire && <Title questionnaire={questionnaire} />}
+      {questionnaire && questionnaire.questionnaire?.text?.div ? (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: questionnaire.questionnaire.text?.div,
+          }}
+        ></div>
+      ) : null}
+      <Row>
+        <Col>
+          {questionnaireItems ? (
+            <QuestionCard
+              item={Object.values(questionnaireItems)[currentQuestion]}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+              displayNext={currentQuestion < questionnaire.items.length - 1}
+              displayPrevious={currentQuestion > 0}
+            />
+          ) : null}
+        </Col>
+      </Row>
+    </Container>
   );
 };

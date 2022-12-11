@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   ButtonGroup,
   Col,
@@ -8,22 +8,21 @@ import {
 } from 'react-bootstrap';
 import { main } from '../business';
 import { examples } from '../examples';
-import ExampleContext, { ExampleState } from '../store';
-import { DebugContainer } from './debug';
+import { AppContext } from '../store';
 import { Form } from './form/form';
 
-export const Cockpit = () => {
+export const Cockpit = React.memo(() => {
   const [checked, setChecked] = useState<string>();
-  const [questionnaire, setQuestionnaire] = useState<ExampleState>(null);
+  const { state, dispatch } = useContext(AppContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLElement>, idx: number) => {
     setChecked(e.currentTarget.id);
     const qFlat = main(examples[idx]);
-    setQuestionnaire(qFlat);
+    dispatch({ type: 'setQuestionnaire', payload: qFlat });
   };
 
   return (
-    <ExampleContext.Provider value={questionnaire}>
+    <>
       <Container>
         <Row className="m-4">
           <Col className="d-flex justify-content-center">
@@ -44,8 +43,7 @@ export const Cockpit = () => {
           </Col>
         </Row>
       </Container>
-      {questionnaire && <Form />}
-      <DebugContainer />
-    </ExampleContext.Provider>
+      {state.questionnaire && <Form />}
+    </>
   );
-};
+});

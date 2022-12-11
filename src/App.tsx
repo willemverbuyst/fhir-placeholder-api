@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { Cockpit } from './components/cockpit';
-import { Debugger } from './components/debugger';
+import { Debugger } from './components/debugger/debugger';
 import { PageTitle } from './components/pageTitle';
 import { AppProvider } from './store';
 

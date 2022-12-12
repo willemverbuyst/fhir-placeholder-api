@@ -1,9 +1,9 @@
-import { useContext } from 'react';
-import { Container } from 'react-bootstrap';
-import { AppContext } from '../../store';
+import { useContext } from 'react'
+import { Container } from 'react-bootstrap'
+import { AppContext } from '../../store/context'
 
 export const HTML = () => {
-  const { questionnaire } = useContext(AppContext).state;
+  const { questionnaire } = useContext(AppContext).state
 
   return questionnaire?.questionnaire?.text?.div ? (
     <Container
@@ -20,5 +20,5 @@ export const HTML = () => {
         }}
       />
     </Container>
-  ) : null;
-};
+  ) : null
+}

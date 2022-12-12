@@ -1,18 +1,18 @@
-import { useContext, useState } from 'react';
-import { Row, Col, Container, Form } from 'react-bootstrap';
-import { AppContext } from '../../store';
+import { useContext, useState } from 'react'
+import { Row, Col, Container, Form } from 'react-bootstrap'
+import { AppContext } from '../../store/context'
 
-import { ConvertedQuestionnaire } from './convertedQuestionnaire';
-import { HTML } from './html';
-import { OriginalQuestionnaire } from './originalQuestionnaire';
+import { ConvertedQuestionnaire } from './convertedQuestionnaire'
+import { HTML } from './html'
+import { OriginalQuestionnaire } from './originalQuestionnaire'
 
 export const Debugger = () => {
-  const { questionnaire, showDebugger } = useContext(AppContext).state;
-  const [showHTML, setShowHTML] = useState<boolean>(false);
+  const { questionnaire, showDebugger } = useContext(AppContext).state
+  const [showHTML, setShowHTML] = useState<boolean>(false)
   const [showConvertedQuestionnaire, setShowConvertedQuestionnaire] =
-    useState<boolean>(true);
+    useState<boolean>(true)
   const [showOriginalQuestionnaire, setShowOriginalQuestionnaire] =
-    useState<boolean>(false);
+    useState<boolean>(false)
 
   return questionnaire && showDebugger ? (
     <Container
@@ -54,5 +54,5 @@ export const Debugger = () => {
         </Col>
       </Row>
     </Container>
-  ) : null;
-};
+  ) : null
+}

@@ -1,9 +1,9 @@
-import { useContext } from 'react';
-import { Container } from 'react-bootstrap';
-import { AppContext } from '../../store';
+import { useContext } from 'react'
+import { Container } from 'react-bootstrap'
+import { AppContext } from '../../store/context'
 
 export const OriginalQuestionnaire = () => {
-  const { questionnaire } = useContext(AppContext).state;
+  const { questionnaire } = useContext(AppContext).state
 
   return questionnaire?.questionnaire ? (
     <Container
@@ -16,5 +16,5 @@ export const OriginalQuestionnaire = () => {
       <h3>ORIGINAL QUESTIONNAIRE</h3>
       <pre>{JSON.stringify(questionnaire.questionnaire, null, 4)}</pre>
     </Container>
-  ) : null;
-};
+  ) : null
+}

@@ -1,8 +1,8 @@
-import { Container } from 'react-bootstrap';
-import { Cockpit } from './components/cockpit';
-import { Debugger } from './components/debugger/debugger';
-import { PageTitle } from './components/pageTitle';
-import { AppProvider } from './store';
+import { Container } from 'react-bootstrap'
+import { Cockpit } from './components/cockpit'
+import { Debugger } from './components/debugger/debugger'
+import { PageTitle } from './components/pageTitle'
+import { AppProvider } from './store/provider'
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Debugger />
       </Container>
     </AppProvider>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,25 +1,23 @@
-import React, { useContext, useState } from 'react';
-import {
-  ButtonGroup,
-  Col,
-  Container,
-  Row,
-  ToggleButton,
-} from 'react-bootstrap';
-import { main } from '../business';
-import { examples } from '../examples';
-import { ActionTypes, AppContext } from '../store';
-import { Form } from './form/form';
+import React, { useContext, useState } from 'react'
+import { ButtonGroup, Col, Container, Row, ToggleButton } from 'react-bootstrap'
+import { main } from '../business'
+import { examples } from '../examples'
+import { Questionnaire } from '../interfaces/questionnaire'
+import { ActionTypes } from '../store/actions'
+import { AppContext } from '../store/context'
+import { Form } from './form/form'
 
 export const Cockpit = React.memo(() => {
-  const [checked, setChecked] = useState<string>();
-  const { state, dispatch } = useContext(AppContext);
+  const [checked, setChecked] = useState<string>()
+  const { state, dispatch } = useContext(AppContext)
 
   const handleChange = (e: React.ChangeEvent<HTMLElement>, idx: number) => {
-    setChecked(e.currentTarget.id);
-    const qFlat = main(examples[idx]);
-    dispatch({ type: ActionTypes.SetQuestionnaire, payload: qFlat });
-  };
+    setChecked(e.currentTarget.id)
+    //  todo: validate
+    const example = examples[idx] as Questionnaire
+    const qFlat = main(example)
+    dispatch({ type: ActionTypes.SetQuestionnaire, payload: qFlat })
+  }
 
   return (
     <>
@@ -45,5 +43,5 @@ export const Cockpit = React.memo(() => {
       </Container>
       {state.questionnaire && <Form />}
     </>
-  );
-});
+  )
+})

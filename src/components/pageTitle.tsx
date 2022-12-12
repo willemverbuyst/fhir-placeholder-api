@@ -1,13 +1,14 @@
-import { useContext } from 'react';
-import { Row, Stack, Form } from 'react-bootstrap';
-import { ActionTypes, AppContext } from '../store';
+import { useContext } from 'react'
+import { Row, Stack, Form } from 'react-bootstrap'
+import { ActionTypes } from '../store/actions'
+import { AppContext } from '../store/context'
 
 export const PageTitle = () => {
-  const { state, dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext)
 
   const handleDebugDisplay = () => {
-    dispatch({ type: ActionTypes.ToggleDebugger, payload: true });
-  };
+    dispatch({ type: ActionTypes.ToggleDebugger, payload: true })
+  }
   return (
     <Row style={{ textAlign: 'center' }} className="m-3">
       <Stack direction="horizontal" className="justify-content-between">
@@ -22,5 +23,5 @@ export const PageTitle = () => {
         </span>
       </Stack>
     </Row>
-  );
-};
+  )
+}

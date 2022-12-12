@@ -1,31 +1,31 @@
-import { useContext, useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { AppContext } from '../../store';
-import { Title } from '../title';
+import { useContext, useEffect, useState } from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
+import { AppContext } from '../../store/context'
+import { Title } from '../title'
 
-import { QuestionCard } from './questionCard';
+import { QuestionCard } from './questionCard'
 
 export const Form = () => {
-  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
-  const { state } = useContext(AppContext);
-  const questionnaire = state.questionnaire;
-  const questionnaireItems = questionnaire?.items;
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0)
+  const { state } = useContext(AppContext)
+  const questionnaire = state.questionnaire
+  const questionnaireItems = questionnaire?.items
 
   useEffect(() => {
-    setCurrentQuestion(0);
-  }, [questionnaire]);
+    setCurrentQuestion(0)
+  }, [questionnaire])
 
   const handleNext = () => {
     if (questionnaire && currentQuestion < questionnaire.items.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setCurrentQuestion(currentQuestion + 1)
     }
-  };
+  }
 
   const handlePrevious = () => {
     if (currentQuestion > 0) {
-      setCurrentQuestion(currentQuestion - 1);
+      setCurrentQuestion(currentQuestion - 1)
     }
-  };
+  }
 
   return (
     <Container className="p-3" style={{ backgroundColor: '#eee' }}>
@@ -45,5 +45,5 @@ export const Form = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}

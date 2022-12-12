@@ -1,6 +1,4 @@
-import { Questionnaire } from '../interfaces/questionnaire';
-
-export const example_2: Questionnaire = {
+export const example_2 = {
   resourceType: 'Questionnaire',
   id: 'f201',
   text: {
@@ -70,4 +68,4 @@ export const example_2: Questionnaire = {
       ],
     },
   ],
-};
+}

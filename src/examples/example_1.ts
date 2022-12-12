@@ -1,5 +1,3 @@
-import { Questionnaire } from '../interfaces/questionnaire';
-
 export const example_1 = {
   resourceType: 'Questionnaire',
   id: '3141',
@@ -157,4 +155,4 @@ export const example_1 = {
       ],
     },
   ],
-};
+}

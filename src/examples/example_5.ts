@@ -1,6 +1,4 @@
-import { Questionnaire } from '../interfaces/questionnaire';
-
-export const example_5: Questionnaire = {
+export const example_5 = {
   resourceType: 'Questionnaire',
   id: 'zika-virus-exposure-assessment',
   text: {
@@ -157,4 +155,4 @@ export const example_5: Questionnaire = {
       ],
     },
   ],
-};
+}

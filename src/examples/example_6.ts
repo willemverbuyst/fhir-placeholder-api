@@ -1,5 +1,3 @@
-import { Bundle } from '../interfaces/bundle';
-
 export const example_6 = {
   resourceType: 'Bundle',
   id: 'ussg-fht',
@@ -1723,4 +1721,4 @@ export const example_6 = {
       },
     },
   ],
-};
+}

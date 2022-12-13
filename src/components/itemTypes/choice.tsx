@@ -4,21 +4,21 @@ import { Unit } from '../../interfaces/unit'
 import { FormLabel } from '../form/formLabel'
 
 interface Props {
-  item: Unit
+  unit: Unit
 }
 
-export const TypeChoice: React.FC<Props> = ({ item }) => {
-  const options = item.options ?? []
+export const TypeChoice: React.FC<Props> = ({ unit }) => {
+  const options = unit.options ?? []
 
   return (
     <Form.Group className="mb-3">
-      <FormLabel item={item} />
+      <FormLabel unit={unit} />
       {options.length < 5 ? (
         options.map((option: string) => (
           <Form.Check
             key={`inline-${option}`}
             label={option}
-            name={item.linkId}
+            name={unit.linkId}
             type="radio"
             id={`inline-${option}`}
           />

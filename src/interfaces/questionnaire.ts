@@ -114,7 +114,7 @@ export function hasProp<T extends Record<PropertyKey, any>>(
 }
 
 export type ConvertedQuestionnaire = {
-  items: Unit[]
+  units: Unit[]
   meta: string | null
   questionnaire: Questionnaire
 }

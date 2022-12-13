@@ -3,13 +3,13 @@ import { Form } from 'react-bootstrap'
 import { Unit } from '../../interfaces/unit'
 
 interface Props {
-  item: Unit
+  unit: Unit
 }
 
-export const TypeBoolean: React.FC<Props> = ({ item }) => {
+export const TypeBoolean: React.FC<Props> = ({ unit }) => {
   return (
     <Form.Group className="mb-3">
-      <Form.Check type="checkbox" id={item.linkId} label={item.label} />
+      <Form.Check type="checkbox" id={unit.linkId} label={unit.label} />
     </Form.Group>
   )
 }

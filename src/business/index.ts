@@ -1,71 +1,15 @@
 import { Bundle } from '../interfaces/bundle'
 import {
-  AnswerOption,
   ConvertedQuestionnaire,
   hasProp,
   Item,
   Questionnaire,
 } from '../interfaces/questionnaire'
-import { hardcodedValueSet } from '../constants/answerValueSet'
+import { getOptions } from './choice'
 import { getLabel } from './label'
 import { Unit } from '../interfaces/unit'
 import { ItemType } from '../interfaces/constants'
 import { ResourceType } from '../interfaces/resourceType'
-
-const getValueSetFromContained = (
-  answerValueSet: string,
-  questionnaire: Questionnaire
-): string[] => {
-  const contained = questionnaire.contained || []
-  const id = answerValueSet.replace('#', '')
-  const resource = contained.find((c: any) => c.id === id)
-  const valueSet = resource?.compose?.include[0].concept
-  const names = valueSet.map((v: any) => v.display)
-
-  return names
-}
-
-const getHardcodedValueSet = (
-  url: keyof typeof hardcodedValueSet
-): string[] => {
-  const valueSet = hardcodedValueSet[url]
-  if (!valueSet) return []
-  const options = valueSet.map((value) => value.display)
-  return options
-}
-
-const getValueSet = (
-  answerValueSetkey: string,
-  questionnaire: Questionnaire
-): string[] => {
-  if (answerValueSetkey in hardcodedValueSet) {
-    const key = answerValueSetkey as keyof typeof hardcodedValueSet
-    return getHardcodedValueSet(key)
-  } else if (answerValueSetkey.startsWith('#')) {
-    return getValueSetFromContained(answerValueSetkey, questionnaire)
-  } else {
-    return []
-  }
-}
-
-export const getAnswerOptions = (answerOption: AnswerOption[]): string[] =>
-  answerOption
-    .map((option) => {
-      if ('valueCoding' in option) {
-        return option.valueCoding?.code?.toLowerCase()
-      }
-    })
-    .filter((i): i is string => !!i)
-
-const getOptions = (item: Item, questionnaire: Questionnaire): string[] => {
-  const options = item.answerOption
-    ? getAnswerOptions(item.answerOption)
-    : item.answerValueSet && questionnaire
-    ? getValueSet(item.answerValueSet, questionnaire)
-    : []
-
-  return options
-}
 
 const flattenQuestionnaire = (
   item: Item,
@@ -86,19 +30,19 @@ const flattenQuestionnaire = (
 
 const convertQuestionnaire = (
   questionnaire: Questionnaire
-): { items: Unit[]; meta: string; questionnaire: Questionnaire } => {
-  const itemorg = questionnaire.item || []
+): { units: Unit[]; meta: string; questionnaire: Questionnaire } => {
+  const originalItems = questionnaire.item || []
   let item: Item[] = []
-  itemorg.forEach((i) => flattenQuestionnaire(i, item))
+  originalItems.forEach((i) => flattenQuestionnaire(i, item))
 
-  const items = item
+  const units = item
     .map((i) => createInputUnit(i, questionnaire))
     .map((i) => i.unit)
     .filter((i) => !(i.type === ItemType.Group))
 
   const meta = createMetaInfo(questionnaire)
 
-  return { items, meta, questionnaire }
+  return { units, meta, questionnaire }
 }
 
 const createMetaInfo = (questionnaire: Questionnaire): string =>
@@ -162,7 +106,7 @@ const handleBundle = (bundle: Bundle) => {
 
 const handleResource = (
   resource: Questionnaire | Bundle
-): { items: Unit[]; meta: string; questionnaire: Questionnaire } | void => {
+): { units: Unit[]; meta: string; questionnaire: Questionnaire } | void => {
   if (resource.resourceType === ResourceType.Questionnaire) {
     return convertQuestionnaire(resource)
   } else if (resource.resourceType === ResourceType.Bundle) {
@@ -175,13 +119,13 @@ const handleResource = (
 export const main = (
   resource: Questionnaire | Bundle
 ): ConvertedQuestionnaire | null => {
-  const items = handleResource(resource)
+  const convertedQuestionnaire = handleResource(resource)
   if (
-    items &&
+    convertedQuestionnaire &&
     (resource.resourceType === ResourceType.Bundle ||
       resource.resourceType === ResourceType.Questionnaire)
   ) {
-    return items
+    return convertedQuestionnaire
   }
   return null
 }

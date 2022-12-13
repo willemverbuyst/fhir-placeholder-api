@@ -8,14 +8,14 @@ export const Form = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0)
   const { state } = useContext(AppContext)
   const questionnaire = state.questionnaire
-  const questionnaireItems = (questionnaire && questionnaire.items) ?? []
+  const questionnaireItems = (questionnaire && questionnaire.units) ?? []
 
   useEffect(() => {
     setCurrentQuestion(0)
   }, [questionnaire])
 
   const handleNext = () => {
-    if (questionnaire && currentQuestion < questionnaire.items.length - 1) {
+    if (questionnaire && currentQuestion < questionnaire.units.length - 1) {
       setCurrentQuestion(currentQuestion + 1)
     }
   }
@@ -34,10 +34,10 @@ export const Form = () => {
         <Col>
           {questionnaire && questionnaireItems.length ? (
             <QuestionCard
-              item={Object.values(questionnaireItems)[currentQuestion]}
+              unit={Object.values(questionnaireItems)[currentQuestion]}
               onNext={handleNext}
               onPrevious={handlePrevious}
-              displayNext={currentQuestion < questionnaire.items.length - 1}
+              displayNext={currentQuestion < questionnaire.units.length - 1}
               displayPrevious={currentQuestion > 0}
             />
           ) : null}

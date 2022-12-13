@@ -4,14 +4,14 @@ import { Unit } from '../../interfaces/unit'
 import { FormLabel } from '../form/formLabel'
 
 interface Props {
-  item: Unit
+  unit: Unit
 }
 
-export const TypeDate: React.FC<Props> = ({ item }) => {
+export const TypeDate: React.FC<Props> = ({ unit }) => {
   return (
     <Form.Group className="mb-3">
-      <FormLabel item={item} />
-      <Form.Control id={item.linkId} type="date" />
+      <FormLabel unit={unit} />
+      <Form.Control id={unit.linkId} type="date" />
     </Form.Group>
   )
 }

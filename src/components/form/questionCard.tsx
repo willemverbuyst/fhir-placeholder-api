@@ -5,7 +5,7 @@ import { TypeGroup } from '../itemTypes'
 import { InputSwitch } from './inputSwitch'
 
 interface Props {
-  item: Unit
+  unit: Unit
   onNext: () => void
   onPrevious: () => void
   displayNext: boolean
@@ -13,19 +13,19 @@ interface Props {
 }
 
 export const QuestionCard: React.FC<Props> = ({
-  item,
+  unit,
   onNext,
   onPrevious,
   displayNext,
   displayPrevious,
 }) => {
-  if (!item) return null
+  if (!unit) return null
   return (
     <div>
       <Card>
         <Card.Body>
-          {item.groupLabel && <TypeGroup item={item} />}
-          <InputSwitch item={item} />
+          {unit.groupLabel && <TypeGroup unit={unit} />}
+          <InputSwitch unit={unit} />
           <Stack direction="horizontal">
             {displayPrevious ? (
               <Button

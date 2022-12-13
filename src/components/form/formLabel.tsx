@@ -1,6 +1,6 @@
-import React from 'react';
-import { Form } from 'react-bootstrap';
+import React from 'react'
+import { Form } from 'react-bootstrap'
 
-export const FormLabel: React.FC<{ item: any }> = ({ item }) => {
-  return <Form.Label htmlFor={item.linkId}>{item.label}</Form.Label>;
-};
+export const FormLabel: React.FC<{ unit: any }> = ({ unit }) => {
+  return <Form.Label htmlFor={unit.linkId}>{unit.label}</Form.Label>
+}

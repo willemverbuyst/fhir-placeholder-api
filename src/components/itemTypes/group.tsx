@@ -2,13 +2,13 @@ import React from 'react'
 import { Unit } from '../../interfaces/unit'
 
 interface Props {
-  item: Unit
+  unit: Unit
 }
 
-export const TypeGroup: React.FC<Props> = ({ item }) => {
+export const TypeGroup: React.FC<Props> = ({ unit }) => {
   return (
     <div className="mb-3" style={{ color: 'teal' }}>
-      <h5>{item.groupLabel}</h5>
+      <h5>{unit.groupLabel}</h5>
     </div>
   )
 }

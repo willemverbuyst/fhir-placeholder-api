@@ -12,30 +12,30 @@ import {
 import { Text } from './text'
 
 interface Props {
-  item: Unit
+  unit: Unit
 }
 
-export const InputSwitch: React.FC<Props> = ({ item }) => {
-  const { type } = item
+export const InputSwitch: React.FC<Props> = ({ unit }) => {
+  const { type } = unit
 
   switch (type) {
     case ItemType.Boolean:
-      return <TypeBoolean item={item} />
+      return <TypeBoolean unit={unit} />
     case ItemType.Choice:
-      return <TypeChoice item={item} />
+      return <TypeChoice unit={unit} />
     case ItemType.Date:
-      return <TypeDate item={item} />
+      return <TypeDate unit={unit} />
     case ItemType.DateTime:
-      return <TypeDateTime item={item} />
+      return <TypeDateTime unit={unit} />
     case ItemType.Decimal:
-      return <TypeDecimal item={item} />
+      return <TypeDecimal unit={unit} />
     case ItemType.Group:
       return null
     case ItemType.Integer:
-      return <TypeInteger item={item} />
+      return <TypeInteger unit={unit} />
     case ItemType.String:
-      return <TypeString item={item} />
+      return <TypeString unit={unit} />
     default:
-      return <Text text={item.label} />
+      return <Text text={unit.label} />
   }
 }

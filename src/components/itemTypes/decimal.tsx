@@ -4,10 +4,10 @@ import { Unit } from '../../interfaces/unit'
 import { FormLabel } from '../form/formLabel'
 
 interface Props {
-  item: Unit
+  unit: Unit
 }
 
-export const TypeDecimal: React.FC<Props> = ({ item }) => {
+export const TypeDecimal: React.FC<Props> = ({ unit }) => {
   const [isValid, setIsValid] = useState<boolean>(false)
   const checkIfValid = (e: any): void => {
     if (
@@ -23,9 +23,9 @@ export const TypeDecimal: React.FC<Props> = ({ item }) => {
 
   return (
     <Form.Group className="mb-3">
-      <FormLabel item={item} />
+      <FormLabel unit={unit} />
       <Form.Control
-        id={item.linkId}
+        id={unit.linkId}
         onChange={(e) => checkIfValid(e)}
         type="string"
         isValid={isValid}

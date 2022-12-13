@@ -176,7 +176,6 @@ export const main = (
   resource: Questionnaire | Bundle
 ): ConvertedQuestionnaire | null => {
   const items = handleResource(resource)
-  console.log('items :>> ', items)
   if (
     items &&
     (resource.resourceType === ResourceType.Bundle ||

@@ -1,5 +1,4 @@
 import { Bundle } from '../interfaces/bundle'
-import { ValueSet } from '../interfaces/general'
 import {
   AnswerOption,
   ConvertedQuestionnaire,
@@ -11,6 +10,7 @@ import { hardcodedValueSet } from '../constants/answerValueSet'
 import { getLabel } from './label'
 import { Unit } from '../interfaces/unit'
 import { ItemType } from '../interfaces/constants'
+import { ResourceType } from '../interfaces/resourceType'
 
 const getValueSetFromContained = (
   answerValueSet: string,
@@ -73,7 +73,7 @@ const flattenQuestionnaire = (
   groupLabel = ''
 ): void => {
   Object.keys(item).forEach((prop) => {
-    if (item.type === 'group' && getLabel(item)) {
+    if (item.type === ItemType.Group && getLabel(item)) {
       groupLabel = getLabel(item)
     }
     if (hasProp(prop, item) && typeof item[prop] === 'object') {
@@ -94,7 +94,7 @@ const convertQuestionnaire = (
   const items = item
     .map((i) => createInputUnit(i, questionnaire))
     .map((i) => i.unit)
-    .filter((i) => !(i.type === 'group'))
+    .filter((i) => !(i.type === ItemType.Group))
 
   const meta = createMetaInfo(questionnaire)
 
@@ -149,30 +149,39 @@ const createInputUnit = (
   return { unit }
 }
 
-// const handleBundle = (bundle: Bundle, flatQ: Record<PropertyKey, any>) => {
-//   const entries = bundle.entry || [];
-//   const resources = entries.map((entry) => entry.resource);
-//   resources.forEach((resource) => handleResource(resource, flatQ));
-// };
+const handleBundle = (bundle: Bundle) => {
+  const entries = bundle.entry || []
+  const resources = entries.map((entry) => entry.resource)
+  const questionnaire = resources.find(
+    (resource) => resource.resourceType === ResourceType.Questionnaire
+  )
+  if (questionnaire?.resourceType === ResourceType.Questionnaire) {
+    return convertQuestionnaire(questionnaire)
+  }
+}
 
 const handleResource = (
-  resource: Questionnaire | Bundle | ValueSet
+  resource: Questionnaire | Bundle
 ): { items: Unit[]; meta: string; questionnaire: Questionnaire } | void => {
-  if (resource.resourceType === 'Questionnaire') {
+  if (resource.resourceType === ResourceType.Questionnaire) {
     return convertQuestionnaire(resource)
-    // return handleQuestionnaires(resource, items);
-    // } else if (resource.resourceType === 'Bundle') {
-    //   handleBundle(resource, items);
+  } else if (resource.resourceType === ResourceType.Bundle) {
+    return handleBundle(resource)
   } else {
     console.warn('Resource could not be processed')
   }
 }
 
 export const main = (
-  resource: Questionnaire | Bundle | ValueSet
+  resource: Questionnaire | Bundle
 ): ConvertedQuestionnaire | null => {
   const items = handleResource(resource)
-  if (items && resource.resourceType === 'Questionnaire') {
+  console.log('items :>> ', items)
+  if (
+    items &&
+    (resource.resourceType === ResourceType.Bundle ||
+      resource.resourceType === ResourceType.Questionnaire)
+  ) {
     return items
   }
   return null

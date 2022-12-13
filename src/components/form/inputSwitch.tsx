@@ -9,6 +9,7 @@ import {
   TypeInteger,
   TypeString,
 } from '../itemTypes'
+import { TypeTime } from '../itemTypes/time'
 import { Text } from './text'
 
 interface Props {
@@ -35,6 +36,8 @@ export const InputSwitch: React.FC<Props> = ({ unit }) => {
       return <TypeInteger unit={unit} />
     case ItemType.String:
       return <TypeString unit={unit} />
+    case ItemType.Time:
+      return <TypeTime unit={unit} />
     default:
       return <Text text={unit.label} />
   }

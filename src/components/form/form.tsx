@@ -2,14 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { AppContext } from '../../store/context'
 import { Title } from '../title'
-
 import { QuestionCard } from './questionCard'
 
 export const Form = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0)
   const { state } = useContext(AppContext)
   const questionnaire = state.questionnaire
-  const questionnaireItems = questionnaire?.items
+  const questionnaireItems = (questionnaire && questionnaire.items) ?? []
 
   useEffect(() => {
     setCurrentQuestion(0)
@@ -29,11 +28,11 @@ export const Form = () => {
 
   return (
     <Container className="p-3" style={{ backgroundColor: '#eee' }}>
-      {questionnaire && <Title questionnaire={questionnaire} />}
+      {questionnaire ? <Title questionnaire={questionnaire} /> : null}
 
       <Row>
         <Col>
-          {questionnaireItems ? (
+          {questionnaire && questionnaireItems.length ? (
             <QuestionCard
               item={Object.values(questionnaireItems)[currentQuestion]}
               onNext={handleNext}

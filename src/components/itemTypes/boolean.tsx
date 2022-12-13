@@ -1,10 +1,15 @@
-import React from 'react';
-import { Form } from 'react-bootstrap';
+import React from 'react'
+import { Form } from 'react-bootstrap'
+import { Unit } from '../../interfaces/unit'
 
-export const TypeBoolean: React.FC<{ item: any }> = ({ item }) => {
+interface Props {
+  item: Unit
+}
+
+export const TypeBoolean: React.FC<Props> = ({ item }) => {
   return (
     <Form.Group className="mb-3">
       <Form.Check type="checkbox" id={item.linkId} label={item.label} />
     </Form.Group>
-  );
-};
+  )
+}

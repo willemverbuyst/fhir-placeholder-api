@@ -1,18 +1,19 @@
-import { Questionnaire } from './questionnaire';
-import { ValueSet } from './general';
+import { Questionnaire } from './questionnaire'
+import { ValueSet } from './general'
+import { ResourceType } from './resourceType'
 
 export interface Entry {
-  fullUrl: string;
-  resource: Questionnaire | ValueSet;
+  fullUrl: string
+  resource: Questionnaire | ValueSet
   request?: {
-    method: string;
-    url: string;
-  };
+    method: string
+    url: string
+  }
 }
 
 export interface Bundle {
-  resourceType: 'Bundle';
-  id: string;
-  type?: string;
-  entry?: Entry[];
+  resourceType: typeof ResourceType['Bundle']
+  id: string
+  type?: string
+  entry?: Entry[]
 }

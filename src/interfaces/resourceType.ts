@@ -1,14 +1,9 @@
-// export enum ResourceType {
-//   Bundle = 'Bundle',
-//   Organization = 'Organization',
-//   Patient = 'Patient',
-//   Questionnaire = 'Questionnaire',
-// }
-export const resourceType = {
+export const ResourceType = {
   Bundle: 'Bundle',
   Organization: 'Organization',
   Patient: 'Patient',
   Questionnaire: 'Questionnaire',
-} as const;
+  ValueSet: 'ValueSet',
+} as const
 
-export type ResourceType = typeof resourceType[keyof typeof resourceType];
+export type ResourceType = typeof ResourceType[keyof typeof ResourceType]

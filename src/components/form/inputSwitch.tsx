@@ -1,36 +1,41 @@
+import { ItemType } from '../../interfaces/constants'
+import { Unit } from '../../interfaces/unit'
 import {
   TypeBoolean,
   TypeChoice,
   TypeDate,
   TypeDateTime,
   TypeDecimal,
-  TypeGroup,
   TypeInteger,
   TypeString,
-} from '../itemTypes';
-import { Text } from './text';
+} from '../itemTypes'
+import { Text } from './text'
 
-export const InputSwitch = ({ item }: any) => {
-  const { type } = item;
+interface Props {
+  item: Unit
+}
+
+export const InputSwitch: React.FC<Props> = ({ item }) => {
+  const { type } = item
 
   switch (type) {
-    case 'boolean':
-      return <TypeBoolean item={item} />;
-    case 'choice':
-      return <TypeChoice item={item} />;
-    case 'date':
-      return <TypeDate item={item} />;
-    case 'dateTime':
-      return <TypeDateTime item={item} />;
-    case 'decimal':
-      return <TypeDecimal item={item} />;
-    case 'group':
-      return null;
-    case 'integer':
-      return <TypeInteger item={item} />;
-    case 'string':
-      return <TypeString item={item} />;
+    case ItemType.Boolean:
+      return <TypeBoolean item={item} />
+    case ItemType.Choice:
+      return <TypeChoice item={item} />
+    case ItemType.Date:
+      return <TypeDate item={item} />
+    case ItemType.DateTime:
+      return <TypeDateTime item={item} />
+    case ItemType.Decimal:
+      return <TypeDecimal item={item} />
+    case ItemType.Group:
+      return null
+    case ItemType.Integer:
+      return <TypeInteger item={item} />
+    case ItemType.String:
+      return <TypeString item={item} />
     default:
-      return <Text text={item.label} />;
+      return <Text text={item.label} />
   }
-};
+}

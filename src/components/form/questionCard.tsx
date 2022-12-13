@@ -1,15 +1,25 @@
-import { Card, Button, Stack } from 'react-bootstrap';
-import { TypeGroup } from '../itemTypes';
-import { InputSwitch } from './inputSwitch';
+import React from 'react'
+import { Card, Button, Stack } from 'react-bootstrap'
+import { Unit } from '../../interfaces/unit'
+import { TypeGroup } from '../itemTypes'
+import { InputSwitch } from './inputSwitch'
 
-export const QuestionCard = ({
+interface Props {
+  item: Unit
+  onNext: () => void
+  onPrevious: () => void
+  displayNext: boolean
+  displayPrevious: boolean
+}
+
+export const QuestionCard: React.FC<Props> = ({
   item,
   onNext,
   onPrevious,
   displayNext,
   displayPrevious,
-}: any) => {
-  if (!item) return null;
+}) => {
+  if (!item) return null
   return (
     <div>
       <Card>
@@ -41,5 +51,5 @@ export const QuestionCard = ({
         </Card.Body>
       </Card>
     </div>
-  );
-};
+  )
+}

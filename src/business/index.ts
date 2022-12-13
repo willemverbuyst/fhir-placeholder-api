@@ -29,14 +29,15 @@ const flattenQuestionnaire = (
 }
 
 const convertQuestionnaire = (
-  questionnaire: Questionnaire
+  questionnaire: Questionnaire,
+  bundle?: Bundle
 ): { units: Unit[]; meta: string; questionnaire: Questionnaire } => {
   const originalItems = questionnaire.item || []
   let item: Item[] = []
   originalItems.forEach((i) => flattenQuestionnaire(i, item))
 
   const units = item
-    .map((i) => createInputUnit(i, questionnaire))
+    .map((i) => createInputUnit(i, questionnaire, bundle))
     .map((i) => i.unit)
     .filter((i) => !(i.type === ItemType.Group))
 
@@ -54,7 +55,8 @@ const createMetaInfo = (questionnaire: Questionnaire): string =>
 
 const createInputUnit = (
   item: Item,
-  questionnaire: Questionnaire
+  questionnaire: Questionnaire,
+  bundle?: Bundle
 ): { unit: Unit } => {
   if (!item.linkId) {
     throw new Error('linkId missing in one the items')
@@ -76,7 +78,7 @@ const createInputUnit = (
 
   let options
   if (item.type === ItemType.Choice) {
-    options = getOptions(item, questionnaire)
+    options = getOptions(item, questionnaire, bundle)
   }
 
   const unit = {
@@ -100,7 +102,7 @@ const handleBundle = (bundle: Bundle) => {
     (resource) => resource.resourceType === ResourceType.Questionnaire
   )
   if (questionnaire?.resourceType === ResourceType.Questionnaire) {
-    return convertQuestionnaire(questionnaire)
+    return convertQuestionnaire(questionnaire, bundle)
   }
 }
 

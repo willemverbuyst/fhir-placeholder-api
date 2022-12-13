@@ -1,14 +1,16 @@
 import { hardcodedValueSet } from '../constants/answerValueSet'
+import { Bundle } from '../interfaces/bundle'
 import { Questionnaire, AnswerOption, Item } from '../interfaces/questionnaire'
+import { ResourceType } from '../interfaces/resourceType'
 
 const getValueSetFromContained = (
   answerValueSet: string,
-  questionnaire: Questionnaire
+  resource: Questionnaire
 ): string[] => {
-  const contained = questionnaire.contained || []
+  const contained = resource.contained || []
   const id = answerValueSet.replace('#', '')
-  const resource = contained.find((c: any) => c.id === id)
-  const valueSet = resource?.compose?.include[0].concept
+  const containedResource = contained.find((c: any) => c.id === id)
+  const valueSet = containedResource?.compose?.include[0].concept
   const names = valueSet.map((v: any) => v.display)
 
   return names
@@ -23,18 +25,34 @@ const getHardcodedValueSet = (
   return options
 }
 
+const getValueSetFromBundle = (url: string, bundle: Bundle) => {
+  const entries = bundle.entry ?? []
+  const valueSetResource = entries.find(
+    (entry) => entry.fullUrl === url
+  )?.resource
+  const valueSet =
+    valueSetResource?.resourceType === ResourceType.ValueSet
+      ? valueSetResource?.compose?.include[0].concept
+      : []
+  const names = valueSet.map((v: any) => v.display)
+
+  return names
+}
+
 const getValueSet = (
   answerValueSetkey: string,
-  questionnaire: Questionnaire
+  questionnaire: Questionnaire,
+  bundle?: Bundle
 ): string[] => {
   if (answerValueSetkey in hardcodedValueSet) {
     const key = answerValueSetkey as keyof typeof hardcodedValueSet
     return getHardcodedValueSet(key)
   } else if (answerValueSetkey.startsWith('#')) {
     return getValueSetFromContained(answerValueSetkey, questionnaire)
-  } else {
-    return []
+  } else if (bundle) {
+    return getValueSetFromBundle(answerValueSetkey, bundle)
   }
+  throw new Error('no ValueSet found')
 }
 
 const getAnswerOptions = (answerOption: AnswerOption[]): string[] =>
@@ -48,12 +66,13 @@ const getAnswerOptions = (answerOption: AnswerOption[]): string[] =>
 
 export const getOptions = (
   item: Item,
-  questionnaire: Questionnaire
+  questionnaire: Questionnaire,
+  bundle?: Bundle
 ): string[] => {
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)
-    : item.answerValueSet && questionnaire
-    ? getValueSet(item.answerValueSet, questionnaire)
+    : item.answerValueSet
+    ? getValueSet(item.answerValueSet, questionnaire, bundle)
     : []
 
   return options

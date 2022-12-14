@@ -16,7 +16,7 @@ const getValueSetFromContained = (
   return names
 }
 
-const getHardcodedValueSet = (
+export const getHardcodedValueSet = (
   url: keyof typeof hardcodedValueSet
 ): string[] => {
   const valueSet = hardcodedValueSet[url]

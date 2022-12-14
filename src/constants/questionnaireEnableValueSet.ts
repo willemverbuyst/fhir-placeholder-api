@@ -6,4 +6,4 @@ export const questionnairEnableOperator = [
   { code: '>', display: 'Less Than' },
   { code: '>=', display: 'Greater or Equals' },
   { code: '<=', display: 'Less or Equals' },
-] as const;
+] as const

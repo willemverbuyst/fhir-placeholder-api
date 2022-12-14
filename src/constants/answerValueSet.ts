@@ -12,4 +12,14 @@ export const hardcodedValueSet = {
     { code: 2, display: 'More than half the days' },
     { code: 3, display: 'Nearly every day' },
   ],
-};
+  'http://hl7.org/fhir/ValueSet/duration-units': [
+    { code: 'ms', display: 'milliseconds' },
+    { code: 's', display: 'seconds' },
+    { code: 'min', display: 'minutes' },
+    { code: 'h', display: 'hours' },
+    { code: 'd', display: 'days' },
+    { code: 'wk', display: 'weeks' },
+    { code: 'mo', display: 'months' },
+    { code: 'a', display: 'years' },
+  ],
+}

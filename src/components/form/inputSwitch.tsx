@@ -9,6 +9,7 @@ import {
   TypeInteger,
   TypeString,
 } from '../itemTypes'
+import { TypeQuantity } from '../itemTypes/quantity'
 import { TypeTime } from '../itemTypes/time'
 import { Text } from './text'
 
@@ -34,6 +35,8 @@ export const InputSwitch: React.FC<Props> = ({ unit }) => {
       return null
     case ItemType.Integer:
       return <TypeInteger unit={unit} />
+    case ItemType.Quantity:
+      return <TypeQuantity unit={unit} />
     case ItemType.String:
       return <TypeString unit={unit} />
     case ItemType.Time:

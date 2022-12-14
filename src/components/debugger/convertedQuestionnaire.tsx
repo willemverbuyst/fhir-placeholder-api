@@ -5,7 +5,7 @@ import { AppContext } from '../../store/context'
 export const ConvertedQuestionnaire = () => {
   const { questionnaire } = useContext(AppContext).state
 
-  return questionnaire?.units ? (
+  return questionnaire ? (
     <Container
       style={{
         backgroundColor: 'darkorange',
@@ -15,7 +15,13 @@ export const ConvertedQuestionnaire = () => {
       }}
     >
       <h3>CONVERTED QUESTIONNAIRE</h3>
-      <pre>{JSON.stringify(questionnaire.units, null, 4)}</pre>
+      <pre>
+        {JSON.stringify(
+          { units: questionnaire.units, meta: questionnaire.meta },
+          null,
+          4
+        )}
+      </pre>
     </Container>
   ) : null
 }

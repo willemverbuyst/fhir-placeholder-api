@@ -25,6 +25,7 @@ export const TypeDecimal: React.FC<Props> = ({ unit }) => {
     <Form.Group className="mb-3">
       <FormLabel unit={unit} />
       <Form.Control
+        className="m-2"
         id={unit.linkId}
         onChange={(e) => checkIfValid(e)}
         type="string"

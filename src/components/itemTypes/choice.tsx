@@ -16,6 +16,7 @@ export const TypeChoice: React.FC<Props> = ({ unit }) => {
       {options.length < 5 ? (
         options.map((option: string) => (
           <Form.Check
+            className="m-2"
             key={`inline-${option}`}
             label={option}
             name={unit.linkId}
@@ -24,7 +25,7 @@ export const TypeChoice: React.FC<Props> = ({ unit }) => {
           />
         ))
       ) : (
-        <Form.Select>
+        <Form.Select className="m-2">
           {options.map((option: string) => (
             <option key={option} value={option}>
               {option}

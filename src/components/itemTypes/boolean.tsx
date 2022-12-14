@@ -9,7 +9,12 @@ interface Props {
 export const TypeBoolean: React.FC<Props> = ({ unit }) => {
   return (
     <Form.Group className="mb-3">
-      <Form.Check type="checkbox" id={unit.linkId} label={unit.label} />
+      <Form.Check
+        className="m-2"
+        type="checkbox"
+        id={unit.linkId}
+        label={unit.label}
+      />
     </Form.Group>
   )
 }

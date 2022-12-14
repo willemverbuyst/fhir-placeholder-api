@@ -11,7 +11,7 @@ export const TypeDate: React.FC<Props> = ({ unit }) => {
   return (
     <Form.Group className="mb-3">
       <FormLabel unit={unit} />
-      <Form.Control id={unit.linkId} type="date" />
+      <Form.Control className="m-2" id={unit.linkId} type="date" />
     </Form.Group>
   )
 }

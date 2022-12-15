@@ -7,7 +7,7 @@ import {
 } from '../interfaces/questionnaire'
 import { getOptions } from './choice'
 import { getLabel } from './label'
-import { Unit } from '../interfaces/unit'
+import { Meta, Unit } from '../interfaces/unit'
 import { ItemType } from '../interfaces/constants'
 import { ResourceType } from '../interfaces/resourceType'
 
@@ -31,17 +31,27 @@ const flattenQuestionnaire = (
 const convertQuestionnaire = (
   questionnaire: Questionnaire,
   bundle?: Bundle
-): { units: Unit[]; meta: string; questionnaire: Questionnaire } => {
-  const originalItems = questionnaire.item || []
+): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } => {
+  let originalItems = questionnaire.item || []
   let item: Item[] = []
+  let meta: Meta = { title: '', subTitle: '' }
+
+  meta.title = createMetaInfo(questionnaire)
+
+  if (
+    questionnaire.item &&
+    originalItems.length === 1 &&
+    originalItems[0].type === 'group'
+  ) {
+    meta.subTitle = getLabel(originalItems[0])
+    originalItems = questionnaire.item[0].item || []
+  }
   originalItems.forEach((i) => flattenQuestionnaire(i, item))
 
   const units = item
     .map((i) => createInputUnit(i, questionnaire, bundle))
     .map((i) => i.unit)
     .filter((i) => !(i.type === ItemType.Group))
-
-  const meta = createMetaInfo(questionnaire)
 
   return { units, meta, questionnaire }
 }
@@ -108,7 +118,7 @@ const handleBundle = (bundle: Bundle) => {
 
 const handleResource = (
   resource: Questionnaire | Bundle
-): { units: Unit[]; meta: string; questionnaire: Questionnaire } | void => {
+): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } | void => {
   if (resource.resourceType === ResourceType.Questionnaire) {
     return convertQuestionnaire(resource)
   } else if (resource.resourceType === ResourceType.Bundle) {

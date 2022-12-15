@@ -10,3 +10,8 @@ export type Unit = {
   options?: string[]
   groupLabel?: string
 }
+
+export type Meta = {
+  title: string
+  subTitle: string
+}

@@ -2,7 +2,7 @@ import { questionnairEnableOperator } from '../constants/questionnaireEnableValu
 import { ItemType, EnableBehavior, Status } from './constants'
 import { Coding, Identifier, Text } from './general'
 import { ResourceType } from './resourceType'
-import { Unit } from './unit'
+import { Meta, Unit } from './unit'
 
 export type Status = typeof Status[keyof typeof Status]
 export type EnableBehavior = typeof EnableBehavior[keyof typeof EnableBehavior]
@@ -115,6 +115,6 @@ export function hasProp<T extends Record<PropertyKey, any>>(
 
 export type ConvertedQuestionnaire = {
   units: Unit[]
-  meta: string | null
+  meta: Meta
   questionnaire: Questionnaire
 }

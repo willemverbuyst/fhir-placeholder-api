@@ -1,14 +1,14 @@
 import React from 'react'
-import { Unit } from '../../interfaces/unit'
 
 interface Props {
-  unit: Unit
+  text: string
+  color?: string
 }
 
-export const TypeGroup: React.FC<Props> = ({ unit }) => {
+export const TypeGroup: React.FC<Props> = ({ text, color = 'teal' }) => {
   return (
-    <div className="mb-3" style={{ color: 'teal' }}>
-      <h5>{unit.groupLabel}</h5>
+    <div className="mb-3" style={{ color }}>
+      <h5>{text}</h5>
     </div>
   )
 }

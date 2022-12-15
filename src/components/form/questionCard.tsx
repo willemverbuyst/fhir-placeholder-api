@@ -10,6 +10,7 @@ interface Props {
   onPrevious: () => void
   displayNext: boolean
   displayPrevious: boolean
+  subTitle?: string
 }
 
 export const QuestionCard: React.FC<Props> = ({
@@ -18,13 +19,17 @@ export const QuestionCard: React.FC<Props> = ({
   onPrevious,
   displayNext,
   displayPrevious,
+  subTitle,
 }) => {
   if (!unit) return null
   return (
     <div>
       <Card>
         <Card.Body>
-          {unit.groupLabel && <TypeGroup unit={unit} />}
+          {subTitle && (
+            <TypeGroup text={subTitle.toLocaleUpperCase()} color="#aaa" />
+          )}
+          {unit.groupLabel && <TypeGroup text={unit.groupLabel} />}
           <InputSwitch unit={unit} />
           <Stack direction="horizontal">
             {displayPrevious ? (

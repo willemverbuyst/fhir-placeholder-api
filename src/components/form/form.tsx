@@ -39,6 +39,7 @@ export const Form = () => {
               onPrevious={handlePrevious}
               displayNext={currentQuestion < questionnaire.units.length - 1}
               displayPrevious={currentQuestion > 0}
+              subTitle={questionnaire.meta.subTitle}
             />
           ) : null}
         </Col>

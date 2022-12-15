@@ -1,14 +1,14 @@
-import React from 'react'
-import { Form } from 'react-bootstrap'
-import { Unit } from '../../interfaces/unit'
-import { FormLabel } from '../form/formLabel'
+import React from "react";
+import { Form } from "react-bootstrap";
+import { Unit } from "../../interfaces/unit";
+import { FormLabel } from "../form/formLabel";
 
 interface Props {
-  unit: Unit
+  unit: Unit;
 }
 
 export const TypeChoice: React.FC<Props> = ({ unit }) => {
-  const options = unit.options ?? []
+  const options = unit.options ?? [];
 
   return (
     <Form.Group className="mb-3">
@@ -34,5 +34,5 @@ export const TypeChoice: React.FC<Props> = ({ unit }) => {
         </Form.Select>
       )}
     </Form.Group>
-  )
-}
+  );
+};

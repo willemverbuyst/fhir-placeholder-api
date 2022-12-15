@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import { Form } from 'react-bootstrap'
-import { Unit } from '../../interfaces/unit'
-import { FormLabel } from '../form/formLabel'
+import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+import { Unit } from "../../interfaces/unit";
+import { FormLabel } from "../form/formLabel";
 
 interface Props {
-  unit: Unit
+  unit: Unit;
 }
 
 export const TypeDecimal: React.FC<Props> = ({ unit }) => {
-  const [isValid, setIsValid] = useState<boolean>(false)
+  const [isValid, setIsValid] = useState<boolean>(false);
   const checkIfValid = (e: any): void => {
     if (
-      e.target.value.match('-?(0|[1-9][0-9]*)(.[0-9]+)?([eE][+-]?[0-9]+)?') !=
+      e.target.value.match("-?(0|[1-9][0-9]*)(.[0-9]+)?([eE][+-]?[0-9]+)?") !=
       null
     ) {
-      setIsValid(true)
+      setIsValid(true);
     } else {
-      console.log('not valid')
-      setIsValid(false)
+      console.log("not valid");
+      setIsValid(false);
     }
-  }
+  };
 
   return (
     <Form.Group className="mb-3">
@@ -33,5 +33,5 @@ export const TypeDecimal: React.FC<Props> = ({ unit }) => {
         isInvalid={!isValid}
       />
     </Form.Group>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Form } from 'react-bootstrap'
-import { Unit } from '../../interfaces/unit'
+import React from "react";
+import { Form } from "react-bootstrap";
+import { Unit } from "../../interfaces/unit";
 
 interface Props {
-  unit: Unit
+  unit: Unit;
 }
 
 export const TypeBoolean: React.FC<Props> = ({ unit }) => {
@@ -16,5 +16,5 @@ export const TypeBoolean: React.FC<Props> = ({ unit }) => {
         label={unit.label}
       />
     </Form.Group>
-  )
-}
+  );
+};

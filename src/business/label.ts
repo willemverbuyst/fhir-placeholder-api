@@ -1,4 +1,4 @@
-import { Item } from '../interfaces/questionnaire';
+import { Item } from "../interfaces/questionnaire";
 
 export const getLabel = (item: Item) => {
   const prefix = item?.prefix;
@@ -6,6 +6,6 @@ export const getLabel = (item: Item) => {
     item?.text ||
     (item?.code && item.code[0].display) ||
     (item?.code && item.code[0].code) ||
-    '';
-  return [prefix, text].join(' ').trim();
+    "";
+  return [prefix, text].join(" ").trim();
 };

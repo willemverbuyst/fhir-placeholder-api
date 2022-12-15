@@ -1,17 +1,17 @@
-import React from 'react'
-import { Form, Stack } from 'react-bootstrap'
-import { getHardcodedValueSet } from '../../business/choice'
-import { Unit } from '../../interfaces/unit'
-import { FormLabel } from '../form/formLabel'
+import React from "react";
+import { Form, Stack } from "react-bootstrap";
+import { getHardcodedValueSet } from "../../business/choice";
+import { Unit } from "../../interfaces/unit";
+import { FormLabel } from "../form/formLabel";
 
 interface Props {
-  unit: Unit
+  unit: Unit;
 }
 
 export const TypeQuantity: React.FC<Props> = ({ unit }) => {
   const options = getHardcodedValueSet(
-    'http://hl7.org/fhir/ValueSet/duration-units'
-  )
+    "http://hl7.org/fhir/ValueSet/duration-units"
+  );
 
   return (
     <Form.Group className="mb-3">
@@ -27,5 +27,5 @@ export const TypeQuantity: React.FC<Props> = ({ unit }) => {
         </Form.Select>
       </Stack>
     </Form.Group>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import { ItemType } from '../../interfaces/constants'
-import { Unit } from '../../interfaces/unit'
+import { ItemType } from "../../interfaces/constants";
+import { Unit } from "../../interfaces/unit";
 import {
   TypeBoolean,
   TypeChoice,
@@ -8,40 +8,40 @@ import {
   TypeDecimal,
   TypeInteger,
   TypeString,
-} from '../itemTypes'
-import { TypeQuantity } from '../itemTypes/quantity'
-import { TypeTime } from '../itemTypes/time'
-import { Text } from './text'
+} from "../itemTypes";
+import { TypeQuantity } from "../itemTypes/quantity";
+import { TypeTime } from "../itemTypes/time";
+import { Text } from "./text";
 
 interface Props {
-  unit: Unit
+  unit: Unit;
 }
 
 export const InputSwitch: React.FC<Props> = ({ unit }) => {
-  const { type } = unit
+  const { type } = unit;
 
   switch (type) {
     case ItemType.Boolean:
-      return <TypeBoolean unit={unit} />
+      return <TypeBoolean unit={unit} />;
     case ItemType.Choice:
-      return <TypeChoice unit={unit} />
+      return <TypeChoice unit={unit} />;
     case ItemType.Date:
-      return <TypeDate unit={unit} />
+      return <TypeDate unit={unit} />;
     case ItemType.DateTime:
-      return <TypeDateTime unit={unit} />
+      return <TypeDateTime unit={unit} />;
     case ItemType.Decimal:
-      return <TypeDecimal unit={unit} />
+      return <TypeDecimal unit={unit} />;
     case ItemType.Group:
-      return null
+      return null;
     case ItemType.Integer:
-      return <TypeInteger unit={unit} />
+      return <TypeInteger unit={unit} />;
     case ItemType.Quantity:
-      return <TypeQuantity unit={unit} />
+      return <TypeQuantity unit={unit} />;
     case ItemType.String:
-      return <TypeString unit={unit} />
+      return <TypeString unit={unit} />;
     case ItemType.Time:
-      return <TypeTime unit={unit} />
+      return <TypeTime unit={unit} />;
     default:
-      return <Text text={unit.label} />
+      return <Text text={unit.label} />;
   }
-}
+};

@@ -1,16 +1,16 @@
-import { useContext } from 'react'
-import { Container } from 'react-bootstrap'
-import { AppContext } from '../../store/context'
+import { useContext } from "react";
+import { Container } from "react-bootstrap";
+import { AppContext } from "../../store/context";
 
 export const HTML = () => {
-  const { questionnaire } = useContext(AppContext).state
+  const { questionnaire } = useContext(AppContext).state;
 
   return questionnaire?.questionnaire?.text?.div ? (
     <Container
       style={{
-        backgroundColor: 'darkgreen',
-        margin: '1rem 0',
-        padding: '1rem',
+        backgroundColor: "darkgreen",
+        margin: "1rem 0",
+        padding: "1rem",
       }}
     >
       <h3>HTML</h3>
@@ -20,5 +20,5 @@ export const HTML = () => {
         }}
       />
     </Container>
-  ) : null
-}
+  ) : null;
+};

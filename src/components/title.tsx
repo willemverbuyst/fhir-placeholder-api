@@ -1,5 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export const Title: React.FC<{ questionnaire: any }> = ({ questionnaire }) => {
-  return <h2>{questionnaire.meta.title}</h2>
-}
+  return <h2>{questionnaire.meta.title}</h2>;
+};

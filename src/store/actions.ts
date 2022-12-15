@@ -1,29 +1,29 @@
-import { ConvertedQuestionnaire } from '../interfaces/questionnaire'
+import { ConvertedQuestionnaire } from "../interfaces/questionnaire";
 
 type ActionMap<M extends { [key: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {
-        type: Key
+        type: Key;
       }
     : {
-        type: Key
-        payload: M[Key]
-      }
-}
+        type: Key;
+        payload: M[Key];
+      };
+};
 
 export const ActionTypes = {
-  ToggleDebugger: 'TOGGLE_DEBUGGER',
-  SetQuestionnaire: 'SET_QUESTIONNAIRE',
-} as const
+  ToggleDebugger: "TOGGLE_DEBUGGER",
+  SetQuestionnaire: "SET_QUESTIONNAIRE",
+} as const;
 
 type DebugPayload = {
-  [ActionTypes.ToggleDebugger]: undefined
-}
+  [ActionTypes.ToggleDebugger]: undefined;
+};
 
 type QuestionnairePayload = {
-  [ActionTypes.SetQuestionnaire]: ConvertedQuestionnaire
-}
+  [ActionTypes.SetQuestionnaire]: ConvertedQuestionnaire;
+};
 
 export type Actions =
   | ActionMap<DebugPayload>[keyof ActionMap<DebugPayload>]
-  | ActionMap<QuestionnairePayload>[keyof ActionMap<QuestionnairePayload>]
+  | ActionMap<QuestionnairePayload>[keyof ActionMap<QuestionnairePayload>];

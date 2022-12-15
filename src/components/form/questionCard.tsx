@@ -1,16 +1,16 @@
-import React from 'react'
-import { Card, Button, Stack } from 'react-bootstrap'
-import { Unit } from '../../interfaces/unit'
-import { TypeGroup } from '../itemTypes'
-import { InputSwitch } from './inputSwitch'
+import React from "react";
+import { Card, Button, Stack } from "react-bootstrap";
+import { Unit } from "../../interfaces/unit";
+import { TypeGroup } from "../itemTypes";
+import { InputSwitch } from "./inputSwitch";
 
 interface Props {
-  unit: Unit
-  onNext: () => void
-  onPrevious: () => void
-  displayNext: boolean
-  displayPrevious: boolean
-  subTitle?: string
+  unit: Unit;
+  onNext: () => void;
+  onPrevious: () => void;
+  displayNext: boolean;
+  displayPrevious: boolean;
+  subTitle?: string;
 }
 
 export const QuestionCard: React.FC<Props> = ({
@@ -21,7 +21,7 @@ export const QuestionCard: React.FC<Props> = ({
   displayPrevious,
   subTitle,
 }) => {
-  if (!unit) return null
+  if (!unit) return null;
   return (
     <div>
       <Card>
@@ -56,5 +56,5 @@ export const QuestionCard: React.FC<Props> = ({
         </Card.Body>
       </Card>
     </div>
-  )
-}
+  );
+};

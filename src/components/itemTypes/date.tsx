@@ -1,10 +1,10 @@
-import React from 'react'
-import { Form } from 'react-bootstrap'
-import { Unit } from '../../interfaces/unit'
-import { FormLabel } from '../form/formLabel'
+import React from "react";
+import { Form } from "react-bootstrap";
+import { Unit } from "../../interfaces/unit";
+import { FormLabel } from "../form/formLabel";
 
 interface Props {
-  unit: Unit
+  unit: Unit;
 }
 
 export const TypeDate: React.FC<Props> = ({ unit }) => {
@@ -13,5 +13,5 @@ export const TypeDate: React.FC<Props> = ({ unit }) => {
       <FormLabel unit={unit} />
       <Form.Control className="m-2" id={unit.linkId} type="date" />
     </Form.Group>
-  )
-}
+  );
+};

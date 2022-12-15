@@ -1,17 +1,17 @@
-import { useContext } from 'react'
-import { Container } from 'react-bootstrap'
-import { AppContext } from '../../store/context'
+import { useContext } from "react";
+import { Container } from "react-bootstrap";
+import { AppContext } from "../../store/context";
 
 export const ConvertedQuestionnaire = () => {
-  const { questionnaire } = useContext(AppContext).state
+  const { questionnaire } = useContext(AppContext).state;
 
   return questionnaire ? (
     <Container
       style={{
-        backgroundColor: 'darkorange',
-        color: 'black',
-        margin: '1rem 0',
-        padding: '1rem',
+        backgroundColor: "darkorange",
+        color: "black",
+        margin: "1rem 0",
+        padding: "1rem",
       }}
     >
       <h3>CONVERTED QUESTIONNAIRE</h3>
@@ -23,5 +23,5 @@ export const ConvertedQuestionnaire = () => {
         )}
       </pre>
     </Container>
-  ) : null
-}
+  ) : null;
+};

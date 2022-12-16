@@ -1,31 +1,30 @@
 import { hardcodedValueSet } from "../constants/answerValueSet";
 import { Bundle } from "../interfaces/bundle";
+import { Coding } from "../interfaces/general";
 import { Questionnaire, AnswerOption, Item } from "../interfaces/questionnaire";
 import { ResourceType } from "../interfaces/resourceType";
 
 const getValueSetFromContained = (
   answerValueSet: string,
   resource: Questionnaire
-): string[] => {
+): Coding[] => {
   const contained = resource.contained || [];
   const id = answerValueSet.replace("#", "");
   const containedResource = contained.find((c: any) => c.id === id);
   const valueSet = containedResource?.compose?.include[0].concept;
-  const names = valueSet.map((v: any) => v.display);
 
-  return names;
+  return valueSet;
 };
 
 export const getHardcodedValueSet = (
   url: keyof typeof hardcodedValueSet
-): string[] => {
+): Coding[] => {
   const valueSet = hardcodedValueSet[url];
   if (!valueSet) return [];
-  const options = valueSet.map((value) => value.display);
-  return options;
+  return valueSet;
 };
 
-const getValueSetFromBundle = (url: string, bundle: Bundle) => {
+const getValueSetFromBundle = (url: string, bundle: Bundle): Coding[] => {
   const entries = bundle.entry ?? [];
   const valueSetResource = entries.find(
     (entry) => entry.fullUrl === url
@@ -34,16 +33,14 @@ const getValueSetFromBundle = (url: string, bundle: Bundle) => {
     valueSetResource?.resourceType === ResourceType.ValueSet
       ? valueSetResource?.compose?.include[0].concept
       : [];
-  const names = valueSet.map((v: any) => v.display);
-
-  return names;
+  return valueSet;
 };
 
 const getValueSet = (
   answerValueSetkey: string,
   questionnaire: Questionnaire,
   bundle?: Bundle
-): string[] => {
+): Coding[] => {
   if (answerValueSetkey in hardcodedValueSet) {
     const key = answerValueSetkey as keyof typeof hardcodedValueSet;
     return getHardcodedValueSet(key);
@@ -55,20 +52,24 @@ const getValueSet = (
   throw new Error("no ValueSet found");
 };
 
-const getAnswerOptions = (answerOption: AnswerOption[]): string[] =>
+const getAnswerOptions = (answerOption: AnswerOption[]): Coding[] =>
   answerOption
     .map((option) => {
       if ("valueCoding" in option) {
-        return option.valueCoding?.code?.toLowerCase();
+        if (!option.valueCoding.display) {
+          option.valueCoding.display =
+            option.valueCoding.code?.toLocaleLowerCase();
+        }
+        return option.valueCoding;
       }
     })
-    .filter((i): i is string => !!i);
+    .filter((i): i is Coding => !!i);
 
 export const getOptions = (
   item: Item,
   questionnaire: Questionnaire,
   bundle?: Bundle
-): string[] => {
+): Coding[] => {
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)
     : item.answerValueSet

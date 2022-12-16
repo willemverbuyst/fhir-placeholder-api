@@ -1,3 +1,4 @@
+import { Coding } from "./general";
 import { ItemType } from "./questionnaire";
 
 export type Unit = {
@@ -7,7 +8,7 @@ export type Unit = {
   defaultValue?: unknown;
   required: boolean;
   readOnly: boolean;
-  options?: string[];
+  options?: Coding[];
   groupLabel?: string;
 };
 

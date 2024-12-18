@@ -1,17 +1,19 @@
 // @ts-types="npm:@types/express@4.17.15"
 import express from "npm:express@4.18.2";
+import { Low } from "npm:lowdb";
+import { JSONFile } from "npm:lowdb/node";
 import morganMiddleware from "./config/morganMiddleWare.ts";
+import { seedDB } from "./seed.ts";
+import { Data } from "./types.ts";
 
-type Data = {
-  names: string[];
-};
+// Setup adapter and database
+const adapter = new JSONFile<Data>("db.json");
+const defaultData: Data = { patients: [], episodes: [] };
+const db = new Low<Data>(adapter, defaultData);
 
-const defaultData: Data = { names: [] };
-const db = await JSONFilePreset<Data>("db.json", defaultData);
-
-db.data.names.push("foo");
-db.data.names.push("bar");
-db.data.names.push("quux");
+// Initialize database
+await db.read();
+seedDB(db);
 
 const app = express();
 
@@ -22,8 +24,20 @@ app.get("/", (_, res) => {
 });
 
 app.get("/patients", (_, res) => {
-  db.read();
-  res.send(db.data.names);
+  const patients = db.data.patients;
+  res.send(patients);
 });
 
-app.listen(8000);
+app.get("/patients/:id", (req, res) => {
+  const patient = db.data.patients.find((p) => p.id === req.params.id);
+  res.send(patient);
+});
+
+app.get("/episodes", (_, res) => {
+  const episodes = db.data.episodes;
+  res.send(episodes);
+});
+
+app.listen(8000, () => {
+  console.log("listening on port 8000");
+});

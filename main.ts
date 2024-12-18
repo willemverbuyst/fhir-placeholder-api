@@ -50,6 +50,19 @@ app.get("/patients/:id", (req, res) => {
   }
 });
 
+app.get("/patients/:id/episodes", (req, res) => {
+  try {
+    const episodes = db.data.episodes.filter(
+      (e) => e.patient.reference?.split("/")[1] === req.params.id
+    );
+
+    res.send({ status: "success", lengtt: episodes.length, data: episodes });
+  } catch (error) {
+    console.error("Error fetching patient", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
+  }
+});
+
 app.get("/episodes", (_, res) => {
   try {
     const episodes = db.data.episodes;

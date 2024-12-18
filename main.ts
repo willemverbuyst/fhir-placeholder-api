@@ -8,7 +8,7 @@ import { Data } from "./types.ts";
 
 // Setup adapter and database
 const adapter = new JSONFile<Data>("db.json");
-const defaultData: Data = { patients: [], episodes: [] };
+const defaultData: Data = { patients: [], episodes: [], conditions: [] };
 const db = new Low<Data>(adapter, defaultData);
 
 // Initialize database

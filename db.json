@@ -1,120 +1,120 @@
 {
   "patients": [
     {
-      "id": "18bb2eef-4676-47f7-8fc2-863c4aad3513",
+      "id": "09bd83f0-d128-4334-b8bd-a2980eda70b4",
       "name": [
         {
-          "family": "Bauch",
+          "family": "Hintz",
           "given": [
-            "Dorris"
+            "Rosalia"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511",
+      "id": "6f5e952e-35d2-4ceb-b37f-2df4fa99d681",
       "name": [
         {
-          "family": "Gusikowski",
+          "family": "Dach",
           "given": [
-            "Lavada"
+            "Cyrus"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "ccba6c4e-a501-4f4a-a154-6a82fc8e4c86",
+      "id": "33d79fcd-2a27-4e6d-bfd1-1841f47548ee",
       "name": [
         {
-          "family": "Sporer",
+          "family": "Rau-Crooks",
           "given": [
-            "Kiara"
+            "Aniya"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "70c9ad0c-c17f-4e3e-90df-219e66af1929",
+      "id": "171019fc-aaac-4904-83d2-676205c73f9a",
       "name": [
         {
-          "family": "Krajcik",
+          "family": "Witting",
           "given": [
-            "Leonardo"
+            "Dax"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "250b03e3-6434-4a8c-89fc-070ca73df5cd",
+      "id": "e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0",
       "name": [
         {
-          "family": "Huel",
+          "family": "Auer",
           "given": [
-            "Cordell"
+            "Melvin"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "973fa710-e165-4872-b0fe-2307e2162393",
+      "id": "6cf459aa-0807-469b-8198-61cb0335ae09",
       "name": [
         {
-          "family": "Bogan",
+          "family": "Hyatt",
           "given": [
-            "Ruben"
+            "Alvina"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "512b3c38-38d3-4a58-ae26-937e69ed424f",
+      "id": "fb45d493-e857-44f4-9379-c45977a5a052",
       "name": [
         {
-          "family": "Satterfield",
+          "family": "Strosin",
           "given": [
-            "Rowan"
+            "Wendy"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "c756e05d-0377-49bb-93ed-31aef9df179f",
+      "id": "5a68dff4-e4ff-4c4e-806b-dfc3f384c52c",
       "name": [
         {
-          "family": "Herman",
+          "family": "Steuber",
           "given": [
-            "Erich"
+            "Amie"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "b4d2feea-efe5-44f3-ab6f-e59f29738541",
+      "id": "ee30bef6-039c-4ab1-81be-b8e83fb7338e",
       "name": [
         {
-          "family": "Heidenreich",
+          "family": "Quigley",
           "given": [
-            "Kathryn"
+            "Jamey"
           ]
         }
       ],
       "resourceType": "Patient"
     },
     {
-      "id": "ce882d3f-5977-45f0-a048-72f27b0b0b49",
+      "id": "11d2df93-3923-4aaa-bca3-a769c4ae1b3c",
       "name": [
         {
-          "family": "Murazik",
+          "family": "Schumm",
           "given": [
-            "Evan"
+            "Mathew"
           ]
         }
       ],
@@ -123,403 +123,875 @@
   ],
   "episodes": [
     {
-      "id": "32e629dc-ecf9-4916-9562-84f462c20c74",
+      "id": "19c51389-cb04-4bf2-b69f-728439291426",
       "resourceType": "EpisodeOfCare",
       "status": "active",
       "patient": {
-        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+        "reference": "Patient/6f5e952e-35d2-4ceb-b37f-2df4fa99d681"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/d3a92ec5-0e38-4c33-9af3-3e1d4e6cf873"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3c120dbd-b098-4670-819b-7dc1bd8ec2ca",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6f5e952e-35d2-4ceb-b37f-2df4fa99d681"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/d3a92ec5-0e38-4c33-9af3-3e1d4e6cf873"
+          }
+        }
+      ]
+    },
+    {
+      "id": "91be171e-d22b-45a9-9fd8-c523399b38bd",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6f5e952e-35d2-4ceb-b37f-2df4fa99d681"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/d3a92ec5-0e38-4c33-9af3-3e1d4e6cf873"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6828a003-f2ff-4625-8763-d241c72f9ee8",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6f5e952e-35d2-4ceb-b37f-2df4fa99d681"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/d3a92ec5-0e38-4c33-9af3-3e1d4e6cf873"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f92c52e9-c5e3-45a1-b211-5f94392b9803",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6f5e952e-35d2-4ceb-b37f-2df4fa99d681"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/d3a92ec5-0e38-4c33-9af3-3e1d4e6cf873"
+          }
+        }
+      ]
+    },
+    {
+      "id": "a30b2f24-36a3-4f3a-b0ed-f717ba41af63",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/33d79fcd-2a27-4e6d-bfd1-1841f47548ee"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7f3d45f9-4975-4e77-a41a-c383bb33d2ad"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4aea14eb-2b01-4aab-9e8d-71face9857e7",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/33d79fcd-2a27-4e6d-bfd1-1841f47548ee"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7f3d45f9-4975-4e77-a41a-c383bb33d2ad"
+          }
+        }
+      ]
+    },
+    {
+      "id": "bb317eee-8a24-43f9-b001-232fa80fbd42",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/33d79fcd-2a27-4e6d-bfd1-1841f47548ee"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7f3d45f9-4975-4e77-a41a-c383bb33d2ad"
+          }
+        }
+      ]
+    },
+    {
+      "id": "358d8eee-f8fe-438f-b9c9-b044a4d01fbc",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/33d79fcd-2a27-4e6d-bfd1-1841f47548ee"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7f3d45f9-4975-4e77-a41a-c383bb33d2ad"
+          }
+        }
+      ]
+    },
+    {
+      "id": "52f5fa08-6fa5-4413-a2da-b05e3ca1cad1",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/33d79fcd-2a27-4e6d-bfd1-1841f47548ee"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7f3d45f9-4975-4e77-a41a-c383bb33d2ad"
+          }
+        }
+      ]
+    },
+    {
+      "id": "043357d7-dec4-4ff8-926b-1bb1660ce48e",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/171019fc-aaac-4904-83d2-676205c73f9a"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/a001174d-e82e-493b-bccc-a7a647090b57"
+          }
+        }
+      ]
+    },
+    {
+      "id": "25df5e94-b3ab-4891-852d-f743c5164dc7",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/171019fc-aaac-4904-83d2-676205c73f9a"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/a001174d-e82e-493b-bccc-a7a647090b57"
+          }
+        }
+      ]
+    },
+    {
+      "id": "c72e50d7-cd2c-410f-9e72-7820f5ef5df8",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/171019fc-aaac-4904-83d2-676205c73f9a"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/a001174d-e82e-493b-bccc-a7a647090b57"
+          }
+        }
+      ]
+    },
+    {
+      "id": "9c72f03b-28b5-4b79-a06d-bd33c50c247e",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/171019fc-aaac-4904-83d2-676205c73f9a"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/a001174d-e82e-493b-bccc-a7a647090b57"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4c1b85ad-fbb4-4985-a763-cc1f010d15fc",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/171019fc-aaac-4904-83d2-676205c73f9a"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/a001174d-e82e-493b-bccc-a7a647090b57"
+          }
+        }
+      ]
+    },
+    {
+      "id": "403c953c-7845-4cbc-a276-2c5df891aa4b",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/5fae68ae-9394-47b1-bcb2-a8e82e21d0b2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "9e309a42-27e9-4c42-91e0-b0a466bd73b2",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/5fae68ae-9394-47b1-bcb2-a8e82e21d0b2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cfe7833c-9168-4a15-9031-c99377c09a5e",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/5fae68ae-9394-47b1-bcb2-a8e82e21d0b2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e6bed5d1-ef5f-4d75-ba3f-b717ef4fdb9f",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/5fae68ae-9394-47b1-bcb2-a8e82e21d0b2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f724e861-2e65-4877-8662-66f067a9be45",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/5fae68ae-9394-47b1-bcb2-a8e82e21d0b2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "9656d45c-e4fa-42d2-a990-17532aa0ed66",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6cf459aa-0807-469b-8198-61cb0335ae09"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/af38192d-fcf1-43a5-b250-0ba8b7e6daa5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "9f84ae9c-eb0a-4476-a218-1cc5afacb23f",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6cf459aa-0807-469b-8198-61cb0335ae09"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/af38192d-fcf1-43a5-b250-0ba8b7e6daa5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "1862da1b-b639-4e2e-b095-a0fdd3180dbc",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6cf459aa-0807-469b-8198-61cb0335ae09"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/af38192d-fcf1-43a5-b250-0ba8b7e6daa5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "def0af3a-a38a-4f69-a979-ae499ca3dd33",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6cf459aa-0807-469b-8198-61cb0335ae09"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/af38192d-fcf1-43a5-b250-0ba8b7e6daa5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "0ffb8936-d1e6-44fe-a4ff-7cff197dba99",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/6cf459aa-0807-469b-8198-61cb0335ae09"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/af38192d-fcf1-43a5-b250-0ba8b7e6daa5"
+          }
+        }
+      ]
+    },
+    {
+      "id": "cb3fa0a7-7c47-4102-99c3-1dd566a2d021",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/fb45d493-e857-44f4-9379-c45977a5a052"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7e146c8a-3be9-4783-b93a-bd140a195777"
+          }
+        }
+      ]
+    },
+    {
+      "id": "c71a3029-19a1-440c-999e-5e4e48b88836",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/fb45d493-e857-44f4-9379-c45977a5a052"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7e146c8a-3be9-4783-b93a-bd140a195777"
+          }
+        }
+      ]
+    },
+    {
+      "id": "d45babb8-5494-458a-a759-a392e1f6e1ac",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/fb45d493-e857-44f4-9379-c45977a5a052"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7e146c8a-3be9-4783-b93a-bd140a195777"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f43cc7b4-5874-4de7-9160-e6a709880e6b",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/fb45d493-e857-44f4-9379-c45977a5a052"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7e146c8a-3be9-4783-b93a-bd140a195777"
+          }
+        }
+      ]
+    },
+    {
+      "id": "16024df8-1435-4776-aee9-c8b70e2276b8",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/fb45d493-e857-44f4-9379-c45977a5a052"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/7e146c8a-3be9-4783-b93a-bd140a195777"
+          }
+        }
+      ]
+    },
+    {
+      "id": "a9958f9d-91d0-4463-a3b3-757582367f02",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/5a68dff4-e4ff-4c4e-806b-dfc3f384c52c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e50c4a18-30c2-4943-abb6-de1ac8c18d31"
+          }
+        }
+      ]
+    },
+    {
+      "id": "8a0b6c70-8e34-412c-9ce6-f577f069f901",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/5a68dff4-e4ff-4c4e-806b-dfc3f384c52c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e50c4a18-30c2-4943-abb6-de1ac8c18d31"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3a750ca1-f602-4c86-95c3-1306fd5e8c47",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/5a68dff4-e4ff-4c4e-806b-dfc3f384c52c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e50c4a18-30c2-4943-abb6-de1ac8c18d31"
+          }
+        }
+      ]
+    },
+    {
+      "id": "119a8907-accc-46d7-8ccc-e560a721d38b",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/5a68dff4-e4ff-4c4e-806b-dfc3f384c52c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e50c4a18-30c2-4943-abb6-de1ac8c18d31"
+          }
+        }
+      ]
+    },
+    {
+      "id": "3e6c1385-235b-4a1b-9afa-3b3919c5e222",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/5a68dff4-e4ff-4c4e-806b-dfc3f384c52c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e50c4a18-30c2-4943-abb6-de1ac8c18d31"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2026b5e-a3c5-4de7-ad2e-7cd9c5bc3632",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ee30bef6-039c-4ab1-81be-b8e83fb7338e"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/58311774-a67f-4941-a73c-b48b0b319532"
+          }
+        }
+      ]
+    },
+    {
+      "id": "26c07eee-6967-4940-b3b9-6c01335457bf",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ee30bef6-039c-4ab1-81be-b8e83fb7338e"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/58311774-a67f-4941-a73c-b48b0b319532"
+          }
+        }
+      ]
+    },
+    {
+      "id": "f181b3b7-2586-4994-a2b1-65397eec3510",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ee30bef6-039c-4ab1-81be-b8e83fb7338e"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/58311774-a67f-4941-a73c-b48b0b319532"
+          }
+        }
+      ]
+    },
+    {
+      "id": "c2d0cd00-d3e2-49d3-afa0-6ff92ff0a748",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ee30bef6-039c-4ab1-81be-b8e83fb7338e"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/58311774-a67f-4941-a73c-b48b0b319532"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e1fdfc5c-cf3c-4b76-bfa9-b1320d7107d1",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ee30bef6-039c-4ab1-81be-b8e83fb7338e"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/58311774-a67f-4941-a73c-b48b0b319532"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e62b16a1-5e25-43e4-9cc2-c35b85b8f070",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/11d2df93-3923-4aaa-bca3-a769c4ae1b3c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e8e4f780-2cea-45d7-97b3-e3a6bd7f241b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "50441cfd-e96f-4d38-b0a9-233444e17e24",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/11d2df93-3923-4aaa-bca3-a769c4ae1b3c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e8e4f780-2cea-45d7-97b3-e3a6bd7f241b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "21713125-4097-49ea-ae34-0fe616d1ab8e",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/11d2df93-3923-4aaa-bca3-a769c4ae1b3c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e8e4f780-2cea-45d7-97b3-e3a6bd7f241b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dbeab907-47dc-42b5-a01f-334c4d15f855",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/11d2df93-3923-4aaa-bca3-a769c4ae1b3c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e8e4f780-2cea-45d7-97b3-e3a6bd7f241b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "19aac8a7-0b68-4e8b-bc56-5e29bf53e483",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/11d2df93-3923-4aaa-bca3-a769c4ae1b3c"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/e8e4f780-2cea-45d7-97b3-e3a6bd7f241b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "c79b662b-2594-4e1a-9ff7-3e65407aaeb9",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/09bd83f0-d128-4334-b8bd-a2980eda70b4"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/bb0a8898-0ba2-49a2-bda4-bd0001dfcc23"
+          }
+        }
+      ]
+    },
+    {
+      "id": "8bb41c18-9aeb-4357-8595-46067cd02b20",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/09bd83f0-d128-4334-b8bd-a2980eda70b4"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/bb0a8898-0ba2-49a2-bda4-bd0001dfcc23"
+          }
+        }
+      ]
+    },
+    {
+      "id": "275918eb-0756-446a-8a1e-f58a1845c789",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/09bd83f0-d128-4334-b8bd-a2980eda70b4"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/bb0a8898-0ba2-49a2-bda4-bd0001dfcc23"
+          }
+        }
+      ]
+    },
+    {
+      "id": "191425ac-f62e-4311-a3de-9883d2a2c162",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/09bd83f0-d128-4334-b8bd-a2980eda70b4"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/bb0a8898-0ba2-49a2-bda4-bd0001dfcc23"
+          }
+        }
+      ]
+    },
+    {
+      "id": "208e4854-55e5-4e94-b8df-76bd0565b796",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/09bd83f0-d128-4334-b8bd-a2980eda70b4"
+      },
+      "diagnosis": [
+        {
+          "condition": {
+            "reference": "Condition/bb0a8898-0ba2-49a2-bda4-bd0001dfcc23"
+          }
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "bb0a8898-0ba2-49a2-bda4-bd0001dfcc23",
+      "note": [
+        {
+          "text": "Sonitus crustulum cur tamdiu."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/09bd83f0-d128-4334-b8bd-a2980eda70b4"
       }
     },
     {
-      "id": "dec8cdb2-ba77-4a08-b975-29ddd197047b",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      "id": "d3a92ec5-0e38-4c33-9af3-3e1d4e6cf873",
+      "note": [
+        {
+          "text": "Angustus beatus una bos."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/6f5e952e-35d2-4ceb-b37f-2df4fa99d681"
       }
     },
     {
-      "id": "02cc827a-2317-4f54-9aaf-3060eda54504",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      "id": "7f3d45f9-4975-4e77-a41a-c383bb33d2ad",
+      "note": [
+        {
+          "text": "Iusto claro approbo iusto abbas."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/33d79fcd-2a27-4e6d-bfd1-1841f47548ee"
       }
     },
     {
-      "id": "33ce87fb-2945-4bca-afdb-e250626ec2e1",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      "id": "a001174d-e82e-493b-bccc-a7a647090b57",
+      "note": [
+        {
+          "text": "Totus coadunatio calcar contigo adhaero."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/171019fc-aaac-4904-83d2-676205c73f9a"
       }
     },
     {
-      "id": "789fc445-9daa-41a5-b87d-399c3f0b071c",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      "id": "5fae68ae-9394-47b1-bcb2-a8e82e21d0b2",
+      "note": [
+        {
+          "text": "Approbo ago collum via assentator."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/e3e612a4-6ba2-4d63-be53-b0bf3d2f01c0"
       }
     },
     {
-      "id": "05c5fd8e-d4f4-4004-b34f-a2b73844f52b",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      "id": "af38192d-fcf1-43a5-b250-0ba8b7e6daa5",
+      "note": [
+        {
+          "text": "Temptatio thymbra ulciscor copia."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/6cf459aa-0807-469b-8198-61cb0335ae09"
       }
     },
     {
-      "id": "f854f651-691e-44e6-a22f-b3b7376803ca",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      "id": "7e146c8a-3be9-4783-b93a-bd140a195777",
+      "note": [
+        {
+          "text": "Tabesco mollitia vir."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/fb45d493-e857-44f4-9379-c45977a5a052"
       }
     },
     {
-      "id": "a721a78b-8c79-4a6b-b132-df7eb551862c",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      "id": "e50c4a18-30c2-4943-abb6-de1ac8c18d31",
+      "note": [
+        {
+          "text": "Vapulus stillicidium illo."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/5a68dff4-e4ff-4c4e-806b-dfc3f384c52c"
       }
     },
     {
-      "id": "e53d0e7e-65bb-4ade-a205-44cecebdcb45",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      "id": "58311774-a67f-4941-a73c-b48b0b319532",
+      "note": [
+        {
+          "text": "Curis cedo suus."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/ee30bef6-039c-4ab1-81be-b8e83fb7338e"
       }
     },
     {
-      "id": "d28e3b1e-6ed6-4e38-990d-ea7589a52191",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
-      }
-    },
-    {
-      "id": "16733016-2b29-4786-88a2-f84d1cb9a17b",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
-      }
-    },
-    {
-      "id": "e7e7fae2-d19f-4a11-a276-b8419ac76bab",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
-      }
-    },
-    {
-      "id": "277fc36f-aaf9-4806-a361-bc327f218029",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
-      }
-    },
-    {
-      "id": "556ead38-f8d4-475c-bbca-2d911c56750a",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
-      }
-    },
-    {
-      "id": "265d243b-b5b2-4e5a-8d84-0fed39837294",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
-      }
-    },
-    {
-      "id": "cf799083-7ce7-43f5-acaa-1c0751cdefc9",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
-      }
-    },
-    {
-      "id": "b51b9125-5e09-446a-990c-5671143c3170",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
-      }
-    },
-    {
-      "id": "536ed1be-2930-487a-acf5-b4050a74d75d",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
-      }
-    },
-    {
-      "id": "e03fc6c5-dd1c-48b7-ac8e-23cc449018f6",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
-      }
-    },
-    {
-      "id": "25e22f67-e5c0-47ad-bda9-dcf4cf7e3d80",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
-      }
-    },
-    {
-      "id": "d80c6313-2fad-4bf9-90b0-0001cbbbb6fc",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
-      }
-    },
-    {
-      "id": "8ec63b00-e397-41c8-8cb1-712e602633b5",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
-      }
-    },
-    {
-      "id": "e21cfdb0-c1fb-4709-a5ea-3682fa1b3c04",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
-      }
-    },
-    {
-      "id": "fecddb9f-274d-46b2-902d-7817f48aed11",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
-      }
-    },
-    {
-      "id": "3a63e5ca-f58d-4abe-8514-919ea062ff30",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
-      }
-    },
-    {
-      "id": "c1dd8190-ffac-46f0-b6e0-ec8098362e52",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
-      }
-    },
-    {
-      "id": "d0f9a854-54aa-4c75-b6b7-81415dcf57f0",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
-      }
-    },
-    {
-      "id": "c4924aeb-64c6-49f3-b3b1-e1491b65650a",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
-      }
-    },
-    {
-      "id": "dfa6e8e9-f596-441e-8340-a94c8f04aa94",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
-      }
-    },
-    {
-      "id": "2464727b-114b-42f3-b8f4-9f7f7ced5a15",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
-      }
-    },
-    {
-      "id": "c974d5ff-d60f-4313-8e08-752ad4980ac9",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
-      }
-    },
-    {
-      "id": "d84b10ab-e353-428b-bb2e-b7622dd2f168",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
-      }
-    },
-    {
-      "id": "732c305b-9f00-49a3-90ad-a04c16adf853",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
-      }
-    },
-    {
-      "id": "d265b1a3-f8dd-4cad-8367-1a1cecbc748c",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
-      }
-    },
-    {
-      "id": "89d458db-fcee-4ff8-91f9-b29ea2026b5d",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
-      }
-    },
-    {
-      "id": "dfbbf662-917e-44f5-9193-bb2ee9634822",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
-      }
-    },
-    {
-      "id": "67541ccd-d25a-42b9-8f09-e29e74a0791d",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
-      }
-    },
-    {
-      "id": "61e39698-eeb9-41c0-b816-9699131e1811",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
-      }
-    },
-    {
-      "id": "49f62050-331e-4787-95f4-1a13f6726b6e",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
-      }
-    },
-    {
-      "id": "e491a405-cb53-4349-b712-088fe57ae59d",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
-      }
-    },
-    {
-      "id": "de6b73af-cd06-4276-bfac-d941cf62bdca",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
-      }
-    },
-    {
-      "id": "ea742c40-2ae0-46f5-80fb-17981ad299d4",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
-      }
-    },
-    {
-      "id": "50de2278-211e-4066-9665-b2a4ccd992ee",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
-      }
-    },
-    {
-      "id": "921da04c-d03b-4538-ac7b-d5c54f3bd337",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
-      }
-    },
-    {
-      "id": "0eaa9547-e5bb-4495-9d55-3299a033d0de",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
-      }
-    },
-    {
-      "id": "18b3578c-2b5e-4609-9a1d-3bfc19355579",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
-      }
-    },
-    {
-      "id": "bf2506c0-77f8-4e38-b25a-977987698728",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
-      }
-    },
-    {
-      "id": "b90ce156-5bdd-445c-92ca-bbf982719f64",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
-      }
-    },
-    {
-      "id": "f9d24601-539a-455c-80d5-ec613aa887e5",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
-      }
-    },
-    {
-      "id": "11adbaa2-5b9f-4c1b-a126-4494791acb10",
-      "resourceType": "EpisodeOfCare",
-      "status": "active",
-      "patient": {
-        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
+      "id": "e8e4f780-2cea-45d7-97b3-e3a6bd7f241b",
+      "note": [
+        {
+          "text": "Vallum aliqua adfero vos vilicus."
+        }
+      ],
+      "resourceType": "Condition",
+      "subject": {
+        "reference": "Patient/11d2df93-3923-4aaa-bca3-a769c4ae1b3c"
       }
     }
   ]

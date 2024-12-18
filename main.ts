@@ -23,59 +23,93 @@ app.get("/", (_, res) => {
 });
 
 app.get("/patients", (_, res) => {
-  const patients = db.data.patients;
+  try {
+    const patients = db.data.patients;
 
-  res.send({ status: "success", lengtt: patients.length, data: patients });
+    res.send({ status: "success", lengtt: patients.length, data: patients });
+  } catch (error) {
+    console.error("Error fetching patients", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
+  }
 });
 
 app.get("/patients/:id", (req, res) => {
-  const patient = db.data.patients.find((p) => p.id === req.params.id);
+  try {
+    const patient = db.data.patients.find((p) => p.id === req.params.id);
 
-  if (!patient) {
-    res
-      .status(404)
-      .send({ status: "fail", data: null, message: "patient not found" });
-  } else {
-    res.send({ status: "success", data: patient });
+    if (!patient) {
+      res
+        .status(404)
+        .send({ status: "fail", data: null, message: "patient not found" });
+    } else {
+      res.send({ status: "success", data: patient });
+    }
+  } catch (error) {
+    console.error("Error fetching patient", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
   }
 });
 
 app.get("/episodes", (_, res) => {
-  const episodes = db.data.episodes;
+  try {
+    const episodes = db.data.episodes;
 
-  res.send({ status: "success", lengtt: episodes.length, data: episodes });
+    res.send({ status: "success", lengtt: episodes.length, data: episodes });
+  } catch (error) {
+    console.error("Error fetching episodes", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
+  }
 });
 
 app.get("/episodes/:id", (req, res) => {
-  const episode = db.data.episodes.find((e) => e.id === req.params.id);
-  if (!episode) {
-    res.status(404).send({
-      status: "fail",
-      data: null,
-      message: "episode of care not found",
-    });
-  } else {
-    res.send({ status: "success", data: episode });
+  try {
+    const episode = db.data.episodes.find((e) => e.id === req.params.id);
+    if (!episode) {
+      res.status(404).send({
+        status: "fail",
+        data: null,
+        message: "episode of care not found",
+      });
+    } else {
+      res.send({ status: "success", data: episode });
+    }
+  } catch (error) {
+    console.error("Error fetching episode", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
   }
 });
 
 app.get("/conditions", (_, res) => {
-  const conditions = db.data.conditions;
+  try {
+    const conditions = db.data.conditions;
 
-  res.send({ status: "success", lengtt: conditions.length, data: conditions });
+    res.send({
+      status: "success",
+      lengtt: conditions.length,
+      data: conditions,
+    });
+  } catch (error) {
+    console.error("Error fetching conditions", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
+  }
 });
 
 app.get("/conditions/:id", (req, res) => {
-  const condition = db.data.conditions.find((c) => c.id === req.params.id);
+  try {
+    const condition = db.data.conditions.find((c) => c.id === req.params.id);
 
-  if (!condition) {
-    res.status(404).send({
-      status: "fail",
-      data: null,
-      message: "condition not found",
-    });
-  } else {
-    res.send({ status: "success", data: condition });
+    if (!condition) {
+      res.status(404).send({
+        status: "fail",
+        data: null,
+        message: "condition not found",
+      });
+    } else {
+      res.send({ status: "success", data: condition });
+    }
+  } catch (error) {
+    console.error("Error fetching condition", error);
+    res.status(500).send({ status: "error", message: "internal server error" });
   }
 });
 

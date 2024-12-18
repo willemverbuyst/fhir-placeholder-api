@@ -38,6 +38,11 @@ app.get("/episodes", (_, res) => {
   res.send(episodes);
 });
 
+app.get("/conditions", (_, res) => {
+  const conditions = db.data.conditions;
+  res.send(conditions);
+});
+
 app.listen(8000, () => {
   console.log("listening on port 8000");
 });

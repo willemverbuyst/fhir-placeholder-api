@@ -2,11 +2,11 @@
 import express from "npm:express@4.18.2";
 import { Low, Memory } from "npm:lowdb";
 import morganMiddleware from "./config/morganMiddleWare.ts";
+import { Data } from "./models/data.ts";
 import conditionRoutes from "./routes/conditionRoutes.ts";
 import episodeRoutes from "./routes/episodeRoutes.ts";
 import patientRoutes from "./routes/patientRoutes.ts";
 import { seedDB } from "./seed.ts";
-import { Data } from "./types.ts";
 
 // Setup adapter and database
 const adapter = new Memory<Data>();

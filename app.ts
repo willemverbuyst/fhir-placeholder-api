@@ -28,6 +28,4 @@ app.get("/", (_, res) => {
   res.send("Fhir Placeholder Api");
 });
 
-app.listen(8000, () => {
-  console.log("listening on port 8000");
-});
+export default app;

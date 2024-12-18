@@ -1,5 +1,5 @@
 import { Request, Response } from "npm:express";
-import { db } from "../main.ts";
+import { db } from "../app.ts";
 
 export function getConditions(_: Request, res: Response) {
   try {

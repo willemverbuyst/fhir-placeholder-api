@@ -1,13 +1,12 @@
 // @ts-types="npm:@types/express@4.17.15"
 import express from "npm:express@4.18.2";
-import { Low } from "npm:lowdb";
-import { JSONFile } from "npm:lowdb/node";
+import { Low, Memory } from "npm:lowdb";
 import morganMiddleware from "./config/morganMiddleWare.ts";
 import { seedDB } from "./seed.ts";
 import { Data } from "./types.ts";
 
 // Setup adapter and database
-const adapter = new JSONFile<Data>("db.json");
+const adapter = new Memory<Data>();
 const defaultData: Data = { patients: [], episodes: [], conditions: [] };
 const db = new Low<Data>(adapter, defaultData);
 

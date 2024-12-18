@@ -1,7 +1,6 @@
-export type Patient = { id: string; name: string };
-export type Episode = { id: string; title: string; patientId: string };
+import { EpisodeOfCare, Patient } from "npm:@types/fhir/r4";
 
 export type Data = {
   patients: Patient[];
-  episodes: Episode[];
+  episodes: EpisodeOfCare[];
 };

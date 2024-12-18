@@ -1,296 +1,526 @@
 {
   "patients": [
     {
-      "id": "dcc614ea-6bfd-4e42-b18a-7260414fdf8b",
-      "name": "foo"
+      "id": "18bb2eef-4676-47f7-8fc2-863c4aad3513",
+      "name": [
+        {
+          "family": "Bauch",
+          "given": [
+            "Dorris"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "1d4c0f53-cc20-4a3d-a8ee-fe15bd1dd0bc",
-      "name": "foo"
+      "id": "0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511",
+      "name": [
+        {
+          "family": "Gusikowski",
+          "given": [
+            "Lavada"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "8a5497d2-814c-43da-98c3-3fc2f28878e3",
-      "name": "foo"
+      "id": "ccba6c4e-a501-4f4a-a154-6a82fc8e4c86",
+      "name": [
+        {
+          "family": "Sporer",
+          "given": [
+            "Kiara"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "cab1611b-c16a-4863-9483-535b3cff6b52",
-      "name": "foo"
+      "id": "70c9ad0c-c17f-4e3e-90df-219e66af1929",
+      "name": [
+        {
+          "family": "Krajcik",
+          "given": [
+            "Leonardo"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "8014d8ed-ebef-4115-a3cf-38341a02b8b7",
-      "name": "foo"
+      "id": "250b03e3-6434-4a8c-89fc-070ca73df5cd",
+      "name": [
+        {
+          "family": "Huel",
+          "given": [
+            "Cordell"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "16e31c2a-dcf0-4e07-ac9e-74c0d6d94661",
-      "name": "foo"
+      "id": "973fa710-e165-4872-b0fe-2307e2162393",
+      "name": [
+        {
+          "family": "Bogan",
+          "given": [
+            "Ruben"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "7536f105-3380-45f8-8de2-4637565b10fc",
-      "name": "foo"
+      "id": "512b3c38-38d3-4a58-ae26-937e69ed424f",
+      "name": [
+        {
+          "family": "Satterfield",
+          "given": [
+            "Rowan"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "69d236b9-c763-42a9-b6b0-acaa2b0cfd0f",
-      "name": "foo"
+      "id": "c756e05d-0377-49bb-93ed-31aef9df179f",
+      "name": [
+        {
+          "family": "Herman",
+          "given": [
+            "Erich"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "0d8caf7c-e1ce-4f14-af29-3bbfe634cb09",
-      "name": "foo"
+      "id": "b4d2feea-efe5-44f3-ab6f-e59f29738541",
+      "name": [
+        {
+          "family": "Heidenreich",
+          "given": [
+            "Kathryn"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     },
     {
-      "id": "89d2930c-3843-46f2-9c42-45e952ae3969",
-      "name": "foo"
+      "id": "ce882d3f-5977-45f0-a048-72f27b0b0b49",
+      "name": [
+        {
+          "family": "Murazik",
+          "given": [
+            "Evan"
+          ]
+        }
+      ],
+      "resourceType": "Patient"
     }
   ],
   "episodes": [
     {
-      "id": "35e25534-dbd1-4fee-a31f-c3b2022545a1",
-      "title": "quux",
-      "patientId": "dcc614ea-6bfd-4e42-b18a-7260414fdf8b"
+      "id": "32e629dc-ecf9-4916-9562-84f462c20c74",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      }
     },
     {
-      "id": "a16e4202-db02-4db2-8642-bfeeeb64e74e",
-      "title": "quux",
-      "patientId": "dcc614ea-6bfd-4e42-b18a-7260414fdf8b"
+      "id": "dec8cdb2-ba77-4a08-b975-29ddd197047b",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      }
     },
     {
-      "id": "866ae65f-a425-4548-b604-0a6bdd9510d9",
-      "title": "quux",
-      "patientId": "dcc614ea-6bfd-4e42-b18a-7260414fdf8b"
+      "id": "02cc827a-2317-4f54-9aaf-3060eda54504",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      }
     },
     {
-      "id": "151a5a18-c6e7-47de-a0ae-a32145df5420",
-      "title": "quux",
-      "patientId": "dcc614ea-6bfd-4e42-b18a-7260414fdf8b"
+      "id": "33ce87fb-2945-4bca-afdb-e250626ec2e1",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      }
     },
     {
-      "id": "c266dd5c-9896-4a9e-8ec4-d726f52be5a4",
-      "title": "quux",
-      "patientId": "dcc614ea-6bfd-4e42-b18a-7260414fdf8b"
+      "id": "789fc445-9daa-41a5-b87d-399c3f0b071c",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/18bb2eef-4676-47f7-8fc2-863c4aad3513"
+      }
     },
     {
-      "id": "d58929d7-b79e-4fdb-8c39-303e61835425",
-      "title": "quux",
-      "patientId": "1d4c0f53-cc20-4a3d-a8ee-fe15bd1dd0bc"
+      "id": "05c5fd8e-d4f4-4004-b34f-a2b73844f52b",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      }
     },
     {
-      "id": "d23e7976-1904-4b2d-92a8-83b35b33c80f",
-      "title": "quux",
-      "patientId": "1d4c0f53-cc20-4a3d-a8ee-fe15bd1dd0bc"
+      "id": "f854f651-691e-44e6-a22f-b3b7376803ca",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      }
     },
     {
-      "id": "bafa830f-9566-4651-bc04-79e60ed2a8f5",
-      "title": "quux",
-      "patientId": "1d4c0f53-cc20-4a3d-a8ee-fe15bd1dd0bc"
+      "id": "a721a78b-8c79-4a6b-b132-df7eb551862c",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      }
     },
     {
-      "id": "74bd866f-606f-4047-8d99-8f82b44fc244",
-      "title": "quux",
-      "patientId": "1d4c0f53-cc20-4a3d-a8ee-fe15bd1dd0bc"
+      "id": "e53d0e7e-65bb-4ade-a205-44cecebdcb45",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      }
     },
     {
-      "id": "bbbb6efa-2c55-4a57-8af7-94c4e5dec632",
-      "title": "quux",
-      "patientId": "1d4c0f53-cc20-4a3d-a8ee-fe15bd1dd0bc"
+      "id": "d28e3b1e-6ed6-4e38-990d-ea7589a52191",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/0a85d1e2-d2f7-4fdb-895e-1e7d91fb0511"
+      }
     },
     {
-      "id": "c8180778-b8b6-4d2a-9a55-610e625c50a4",
-      "title": "quux",
-      "patientId": "8a5497d2-814c-43da-98c3-3fc2f28878e3"
+      "id": "16733016-2b29-4786-88a2-f84d1cb9a17b",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
+      }
     },
     {
-      "id": "635ed3a6-f052-415f-887f-c8b6b53ca6fb",
-      "title": "quux",
-      "patientId": "8a5497d2-814c-43da-98c3-3fc2f28878e3"
+      "id": "e7e7fae2-d19f-4a11-a276-b8419ac76bab",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
+      }
     },
     {
-      "id": "5155dbd8-8730-4570-bbe2-2beeab4685ec",
-      "title": "quux",
-      "patientId": "8a5497d2-814c-43da-98c3-3fc2f28878e3"
+      "id": "277fc36f-aaf9-4806-a361-bc327f218029",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
+      }
     },
     {
-      "id": "d3ba47ce-2a54-4485-9091-50fc9fd4481b",
-      "title": "quux",
-      "patientId": "8a5497d2-814c-43da-98c3-3fc2f28878e3"
+      "id": "556ead38-f8d4-475c-bbca-2d911c56750a",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
+      }
     },
     {
-      "id": "8c64a636-db75-4897-8a94-e28375b5026e",
-      "title": "quux",
-      "patientId": "8a5497d2-814c-43da-98c3-3fc2f28878e3"
+      "id": "265d243b-b5b2-4e5a-8d84-0fed39837294",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ccba6c4e-a501-4f4a-a154-6a82fc8e4c86"
+      }
     },
     {
-      "id": "9f1b2750-1d0d-4f93-a52d-07da470caaaf",
-      "title": "quux",
-      "patientId": "cab1611b-c16a-4863-9483-535b3cff6b52"
+      "id": "cf799083-7ce7-43f5-acaa-1c0751cdefc9",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
+      }
     },
     {
-      "id": "25e94656-de3f-43c3-8939-fca6ee302a32",
-      "title": "quux",
-      "patientId": "cab1611b-c16a-4863-9483-535b3cff6b52"
+      "id": "b51b9125-5e09-446a-990c-5671143c3170",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
+      }
     },
     {
-      "id": "53074753-3585-4314-8e33-9c9c60f29d86",
-      "title": "quux",
-      "patientId": "cab1611b-c16a-4863-9483-535b3cff6b52"
+      "id": "536ed1be-2930-487a-acf5-b4050a74d75d",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
+      }
     },
     {
-      "id": "a6607d32-b95d-4c0f-ab4f-82d9e2746600",
-      "title": "quux",
-      "patientId": "cab1611b-c16a-4863-9483-535b3cff6b52"
+      "id": "e03fc6c5-dd1c-48b7-ac8e-23cc449018f6",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
+      }
     },
     {
-      "id": "b2cb2dac-9fc5-4d77-b5a8-a9036668e240",
-      "title": "quux",
-      "patientId": "cab1611b-c16a-4863-9483-535b3cff6b52"
+      "id": "25e22f67-e5c0-47ad-bda9-dcf4cf7e3d80",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/70c9ad0c-c17f-4e3e-90df-219e66af1929"
+      }
     },
     {
-      "id": "425bf2b2-7887-4e6d-af0c-de7575ea0e23",
-      "title": "quux",
-      "patientId": "8014d8ed-ebef-4115-a3cf-38341a02b8b7"
+      "id": "d80c6313-2fad-4bf9-90b0-0001cbbbb6fc",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
+      }
     },
     {
-      "id": "fb078036-f044-4f41-950d-7c9c9b612476",
-      "title": "quux",
-      "patientId": "8014d8ed-ebef-4115-a3cf-38341a02b8b7"
+      "id": "8ec63b00-e397-41c8-8cb1-712e602633b5",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
+      }
     },
     {
-      "id": "db155f3b-2fc6-4375-933b-d3c52fcab8d8",
-      "title": "quux",
-      "patientId": "8014d8ed-ebef-4115-a3cf-38341a02b8b7"
+      "id": "e21cfdb0-c1fb-4709-a5ea-3682fa1b3c04",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
+      }
     },
     {
-      "id": "a6b0f742-0e60-4ab9-a8d6-e68f5d4d54b6",
-      "title": "quux",
-      "patientId": "8014d8ed-ebef-4115-a3cf-38341a02b8b7"
+      "id": "fecddb9f-274d-46b2-902d-7817f48aed11",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
+      }
     },
     {
-      "id": "6f3a9628-d185-499a-98ba-19f2f7acf51a",
-      "title": "quux",
-      "patientId": "8014d8ed-ebef-4115-a3cf-38341a02b8b7"
+      "id": "3a63e5ca-f58d-4abe-8514-919ea062ff30",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/250b03e3-6434-4a8c-89fc-070ca73df5cd"
+      }
     },
     {
-      "id": "5a8219dc-7251-4a15-af16-9703af3cc65d",
-      "title": "quux",
-      "patientId": "16e31c2a-dcf0-4e07-ac9e-74c0d6d94661"
+      "id": "c1dd8190-ffac-46f0-b6e0-ec8098362e52",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
+      }
     },
     {
-      "id": "7a783f77-9a3f-4c22-81df-831b7540244c",
-      "title": "quux",
-      "patientId": "16e31c2a-dcf0-4e07-ac9e-74c0d6d94661"
+      "id": "d0f9a854-54aa-4c75-b6b7-81415dcf57f0",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
+      }
     },
     {
-      "id": "800c8fc3-49e9-471f-9561-278a6da3c661",
-      "title": "quux",
-      "patientId": "16e31c2a-dcf0-4e07-ac9e-74c0d6d94661"
+      "id": "c4924aeb-64c6-49f3-b3b1-e1491b65650a",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
+      }
     },
     {
-      "id": "e5e86871-ea60-4946-b59e-783457605425",
-      "title": "quux",
-      "patientId": "16e31c2a-dcf0-4e07-ac9e-74c0d6d94661"
+      "id": "dfa6e8e9-f596-441e-8340-a94c8f04aa94",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
+      }
     },
     {
-      "id": "43c5bb57-e80d-480f-9d12-77563ac404c3",
-      "title": "quux",
-      "patientId": "16e31c2a-dcf0-4e07-ac9e-74c0d6d94661"
+      "id": "2464727b-114b-42f3-b8f4-9f7f7ced5a15",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/973fa710-e165-4872-b0fe-2307e2162393"
+      }
     },
     {
-      "id": "70a53fc2-2bd7-409b-8c0c-d21255def955",
-      "title": "quux",
-      "patientId": "7536f105-3380-45f8-8de2-4637565b10fc"
+      "id": "c974d5ff-d60f-4313-8e08-752ad4980ac9",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
+      }
     },
     {
-      "id": "b4ffe361-19e7-4c53-af2c-708bd4128037",
-      "title": "quux",
-      "patientId": "7536f105-3380-45f8-8de2-4637565b10fc"
+      "id": "d84b10ab-e353-428b-bb2e-b7622dd2f168",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
+      }
     },
     {
-      "id": "0106f22b-017a-4766-b8a0-0ce149ec09b8",
-      "title": "quux",
-      "patientId": "7536f105-3380-45f8-8de2-4637565b10fc"
+      "id": "732c305b-9f00-49a3-90ad-a04c16adf853",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
+      }
     },
     {
-      "id": "284da120-7fd6-45ea-a9f3-fa1385927df2",
-      "title": "quux",
-      "patientId": "7536f105-3380-45f8-8de2-4637565b10fc"
+      "id": "d265b1a3-f8dd-4cad-8367-1a1cecbc748c",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
+      }
     },
     {
-      "id": "74d323c8-a711-4a46-b872-4e973d7d58f2",
-      "title": "quux",
-      "patientId": "7536f105-3380-45f8-8de2-4637565b10fc"
+      "id": "89d458db-fcee-4ff8-91f9-b29ea2026b5d",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/512b3c38-38d3-4a58-ae26-937e69ed424f"
+      }
     },
     {
-      "id": "a4c39125-f6cd-432e-ae05-330a9d84faa4",
-      "title": "quux",
-      "patientId": "69d236b9-c763-42a9-b6b0-acaa2b0cfd0f"
+      "id": "dfbbf662-917e-44f5-9193-bb2ee9634822",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
+      }
     },
     {
-      "id": "e227072c-f871-4a0f-a831-2c473d41d2d7",
-      "title": "quux",
-      "patientId": "69d236b9-c763-42a9-b6b0-acaa2b0cfd0f"
+      "id": "67541ccd-d25a-42b9-8f09-e29e74a0791d",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
+      }
     },
     {
-      "id": "a61d6b4c-508e-47f8-ba11-953bd8f83503",
-      "title": "quux",
-      "patientId": "69d236b9-c763-42a9-b6b0-acaa2b0cfd0f"
+      "id": "61e39698-eeb9-41c0-b816-9699131e1811",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
+      }
     },
     {
-      "id": "0a62320a-e4b9-4f0b-8582-b17a66b22f0e",
-      "title": "quux",
-      "patientId": "69d236b9-c763-42a9-b6b0-acaa2b0cfd0f"
+      "id": "49f62050-331e-4787-95f4-1a13f6726b6e",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
+      }
     },
     {
-      "id": "460b4cd0-6039-46b9-b738-df07feea2216",
-      "title": "quux",
-      "patientId": "69d236b9-c763-42a9-b6b0-acaa2b0cfd0f"
+      "id": "e491a405-cb53-4349-b712-088fe57ae59d",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/c756e05d-0377-49bb-93ed-31aef9df179f"
+      }
     },
     {
-      "id": "ef2d76e8-c6dc-4c3f-b393-e1ed6c006630",
-      "title": "quux",
-      "patientId": "0d8caf7c-e1ce-4f14-af29-3bbfe634cb09"
+      "id": "de6b73af-cd06-4276-bfac-d941cf62bdca",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
+      }
     },
     {
-      "id": "1c1a3aaa-9b04-4ffa-8970-606b87d824ca",
-      "title": "quux",
-      "patientId": "0d8caf7c-e1ce-4f14-af29-3bbfe634cb09"
+      "id": "ea742c40-2ae0-46f5-80fb-17981ad299d4",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
+      }
     },
     {
-      "id": "8ee9d2af-7ed3-4318-90b4-9ae60c44eb95",
-      "title": "quux",
-      "patientId": "0d8caf7c-e1ce-4f14-af29-3bbfe634cb09"
+      "id": "50de2278-211e-4066-9665-b2a4ccd992ee",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
+      }
     },
     {
-      "id": "f6a27503-2ab1-408d-abe3-9c444c68bbb9",
-      "title": "quux",
-      "patientId": "0d8caf7c-e1ce-4f14-af29-3bbfe634cb09"
+      "id": "921da04c-d03b-4538-ac7b-d5c54f3bd337",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
+      }
     },
     {
-      "id": "0efb2929-8d06-4071-8771-f1e08c5f2c01",
-      "title": "quux",
-      "patientId": "0d8caf7c-e1ce-4f14-af29-3bbfe634cb09"
+      "id": "0eaa9547-e5bb-4495-9d55-3299a033d0de",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/b4d2feea-efe5-44f3-ab6f-e59f29738541"
+      }
     },
     {
-      "id": "6383e84c-8029-46f6-838c-7e0a719db521",
-      "title": "quux",
-      "patientId": "89d2930c-3843-46f2-9c42-45e952ae3969"
+      "id": "18b3578c-2b5e-4609-9a1d-3bfc19355579",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
+      }
     },
     {
-      "id": "e5105fab-5d91-482a-947a-bda128a5f0b5",
-      "title": "quux",
-      "patientId": "89d2930c-3843-46f2-9c42-45e952ae3969"
+      "id": "bf2506c0-77f8-4e38-b25a-977987698728",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
+      }
     },
     {
-      "id": "367f427b-bd0d-449d-9ae0-8dd541eaa494",
-      "title": "quux",
-      "patientId": "89d2930c-3843-46f2-9c42-45e952ae3969"
+      "id": "b90ce156-5bdd-445c-92ca-bbf982719f64",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
+      }
     },
     {
-      "id": "cff96db4-eb81-4be3-8544-3e76c725877a",
-      "title": "quux",
-      "patientId": "89d2930c-3843-46f2-9c42-45e952ae3969"
+      "id": "f9d24601-539a-455c-80d5-ec613aa887e5",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
+      }
     },
     {
-      "id": "c6565019-5526-4da2-82d8-c6bf21f4ba9f",
-      "title": "quux",
-      "patientId": "89d2930c-3843-46f2-9c42-45e952ae3969"
+      "id": "11adbaa2-5b9f-4c1b-a126-4494791acb10",
+      "resourceType": "EpisodeOfCare",
+      "status": "active",
+      "patient": {
+        "reference": "Patient/ce882d3f-5977-45f0-a048-72f27b0b0b49"
+      }
     }
   ]
 }

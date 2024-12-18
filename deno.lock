@@ -1,7 +1,9 @@
 {
   "version": "4",
   "specifiers": {
+    "npm:@faker-js/faker@*": "9.3.0",
     "npm:@types/express@4.17.15": "4.17.15",
+    "npm:@types/fhir@*": "0.0.41",
     "npm:@types/morgan@1.9.9": "1.9.9",
     "npm:@types/node@*": "22.5.4",
     "npm:express@4.18.2": "4.18.2",
@@ -20,6 +22,9 @@
         "enabled",
         "kuler"
       ]
+    },
+    "@faker-js/faker@9.3.0": {
+      "integrity": "sha512-r0tJ3ZOkMd9xsu3VRfqlFR6cz0V/jFYRswAIpC+m/DIfAUXq7g8N7wTAlhSANySXYGKzGryfDXwtwsY8TxEIDw=="
     },
     "@types/body-parser@1.19.5": {
       "integrity": "sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==",
@@ -51,6 +56,9 @@
         "@types/qs",
         "@types/serve-static"
       ]
+    },
+    "@types/fhir@0.0.41": {
+      "integrity": "sha512-MAQAFufNZBZ6V0F94Nhknmmh/E3iMXFK4n/L8RkSNjKtOJnvaAJERivNOj35VVx9VCQBJbE0BHSzikfBahoRhA=="
     },
     "@types/http-errors@2.0.4": {
       "integrity": "sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA=="

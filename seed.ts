@@ -1,15 +1,22 @@
+import { faker } from "npm:@faker-js/faker";
+import { EpisodeOfCare, Patient } from "npm:@types/fhir/r4";
 import { Low } from "npm:lowdb";
-import { Data, Episode, Patient } from "./types.ts";
+import { Data } from "./types.ts";
 
 const NUMBER_OF_PATIENTS = 10;
 const NUMBER_OF_EPISODES = 5;
 
+type PatientWithId = Patient & Required<Pick<Patient, "id">>;
+
 async function createPatients(db: Low<Data>, numberOfPatients: number) {
-  const newPatients: Patient[] = Array.from(
+  const newPatients: PatientWithId[] = Array.from(
     { length: numberOfPatients },
     () => ({
       id: crypto.randomUUID(),
-      name: "foo",
+      name: [
+        { family: faker.person.lastName(), given: [faker.person.firstName()] },
+      ],
+      resourceType: "Patient",
     })
   );
 
@@ -21,12 +28,13 @@ async function createPatients(db: Low<Data>, numberOfPatients: number) {
 }
 
 function createEpisodes(numberOfEpisodes: number, patientId: string) {
-  const newEpisodes: Episode[] = Array.from(
+  const newEpisodes: EpisodeOfCare[] = Array.from(
     { length: numberOfEpisodes },
     () => ({
       id: crypto.randomUUID(),
-      title: "quux",
-      patientId,
+      resourceType: "EpisodeOfCare",
+      status: "active",
+      patient: { reference: `Patient/${patientId}` },
     })
   );
 
@@ -35,7 +43,7 @@ function createEpisodes(numberOfEpisodes: number, patientId: string) {
 
 async function createEpisodesForPatients(
   db: Low<Data>,
-  patients: Patient[],
+  patients: PatientWithId[],
   numberOfEpisodes: number
 ) {
   const newEpisodesForPatients = patients.flatMap((p) =>

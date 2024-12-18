@@ -25,7 +25,7 @@ async function createCondition(db: Low<Data>, patientId: string) {
 }
 
 async function createPatients(db: Low<Data>, numberOfPatients: number) {
-  const newPatients: PatientWithId[] = Array.from(
+  const patients: PatientWithId[] = Array.from(
     { length: numberOfPatients },
     () => ({
       id: crypto.randomUUID(),
@@ -33,14 +33,18 @@ async function createPatients(db: Low<Data>, numberOfPatients: number) {
         { family: faker.person.lastName(), given: [faker.person.firstName()] },
       ],
       resourceType: "Patient",
+      birthDate: faker.date
+        .between({ from: "1950-01-01", to: Date.now() })
+        .toISOString()
+        .split("T")[0],
     })
   );
 
-  db.data.patients.push(...newPatients);
+  db.data.patients.push(...patients);
 
   await db.write();
 
-  return newPatients;
+  return patients;
 }
 
 async function createEpisodes(

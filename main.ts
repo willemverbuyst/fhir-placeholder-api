@@ -1,6 +1,6 @@
 // @ts-types="npm:@types/express@4.17.15"
 import express from "npm:express@4.18.2";
-import { JSONFilePreset } from "npm:lowdb/node";
+import morganMiddleware from "./config/morganMiddleWare.ts";
 
 type Data = {
   names: string[];
@@ -14,6 +14,8 @@ db.data.names.push("bar");
 db.data.names.push("quux");
 
 const app = express();
+
+app.use(morganMiddleware);
 
 app.get("/", (_, res) => {
   res.send("Hello world!");

@@ -10,7 +10,7 @@ export function getEpisodes(ctx: RouterContext<string>) {
 
     ctx.response.body = {
       status: "success",
-      lengtt: episodes.length,
+      length: episodes.length,
       data: episodes,
     };
   } catch (error) {

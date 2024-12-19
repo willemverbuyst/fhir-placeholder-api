@@ -11,7 +11,7 @@ export function getAllPatients(ctx: RouterContext<string>) {
 
     ctx.response.body = {
       status: "success",
-      lengtt: patients.length,
+      length: patients.length,
       data: patients,
     };
   } catch (error) {
@@ -72,7 +72,7 @@ export function getEpisodesForPatient(ctx: RouterContext<string>) {
 
     ctx.response.body = {
       status: "success",
-      lengtt: episodes.length,
+      length: episodes.length,
       data: episodes,
     };
   } catch (error) {

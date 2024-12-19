@@ -10,7 +10,7 @@ export function getConditions(ctx: RouterContext<string>) {
 
     ctx.response.body = {
       status: "success",
-      lengtt: conditions.length,
+      length: conditions.length,
       data: conditions,
     };
   } catch (error) {

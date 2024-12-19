@@ -1,9 +1,9 @@
-import { db } from "../db/index.ts";
+import { dataStore } from "../data/index.ts";
 
 export function getConditionFromDB(id: string) {
-  return db.data.conditions.find((c) => c.id === id);
+  return dataStore.conditions.find((c) => c.id === id);
 }
 
 export function getConditionsFromDB() {
-  return db.data.conditions;
+  return dataStore.conditions;
 }

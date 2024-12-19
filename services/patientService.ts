@@ -1,15 +1,15 @@
-import { db } from "../db/index.ts";
+import { dataStore } from "../data/index.ts";
 
 export function getPatientFromDB(id: string) {
-  return db.data.patients.find((p) => p.id === id);
+  return dataStore.patients.find((p) => p.id === id);
 }
 
 export function getPatientsFromDB() {
-  return db.data.patients;
+  return dataStore.patients;
 }
 
 export function getEpisodesForPatientFromDB(id: string) {
-  return db.data.episodes.filter(
+  return dataStore.episodes.filter(
     (e) => e.patient.reference?.split("/")[1] === id
   );
 }

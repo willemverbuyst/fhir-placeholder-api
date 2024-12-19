@@ -1,6 +1,5 @@
 import { faker } from "npm:@faker-js/faker";
 import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r4";
-import { Low } from "npm:lowdb";
 import { Data } from "../models/data.ts";
 
 const NUMBER_OF_PATIENTS = 10;
@@ -104,23 +103,16 @@ function createEpisodesForPatients(
   return { newConditions, newEpisodes };
 }
 
-export async function seedDB(db: Low<Data>) {
-  db.data.patients = [];
-  db.data.episodes = [];
-  db.data.conditions = [];
-  await db.write();
-
+export function seed(dataStore: Data) {
   const newPatients = createPatients(NUMBER_OF_PATIENTS);
 
-  db.data.patients.push(...newPatients);
+  dataStore.patients.push(...newPatients);
 
   const { newConditions, newEpisodes } = createEpisodesForPatients(
     newPatients,
     NUMBER_OF_EPISODES_PER_PATIENT
   );
 
-  db.data.conditions.push(...newConditions);
-  db.data.episodes.push(...newEpisodes);
-
-  await db.write();
+  dataStore.conditions.push(...newConditions);
+  dataStore.episodes.push(...newEpisodes);
 }

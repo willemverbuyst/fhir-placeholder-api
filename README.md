@@ -4,7 +4,7 @@
 
 ## What is this?
 
-A simple oak server in a deno runtime, serving some [fhir](https://hl7.org/fhir/R4/) resources, based on [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
+A simple oak server in a deno runtime, serving some [fhir](https://hl7.org/fhir/R4/) resources, inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 It has the following endpoints (wip)
 

@@ -8,27 +8,13 @@ const NUMBER_OF_EPISODES_PER_PATIENT = 5;
 
 type PatientWithId = Patient & Required<Pick<Patient, "id">>;
 type ConditionWithId = Condition & Required<Pick<Condition, "id">>;
-
-async function createCondition(db: Low<Data>, patientId: string) {
-  const condition: ConditionWithId = {
-    id: crypto.randomUUID(),
-    note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],
-    resourceType: "Condition",
-    subject: { reference: `Patient/${patientId}` },
-  };
-
-  db.data.conditions.push(condition);
-
-  await db.write();
-
-  return condition;
-}
+type EpisodeOfCareWithId = EpisodeOfCare & Required<Pick<EpisodeOfCare, "id">>;
 
 async function createPatients(db: Low<Data>, numberOfPatients: number) {
   const patients: PatientWithId[] = Array.from(
     { length: numberOfPatients },
-    () => ({
-      id: crypto.randomUUID(),
+    (_, i) => ({
+      id: `patient-${i + 1}`,
       name: [
         { family: faker.person.lastName(), given: [faker.person.firstName()] },
       ],
@@ -47,30 +33,54 @@ async function createPatients(db: Low<Data>, numberOfPatients: number) {
   return patients;
 }
 
-async function createEpisodes(
-  db: Low<Data>,
+function createCondition(patientId: string, episodeId: number) {
+  const condition: ConditionWithId = {
+    id: `condition-${episodeId}`,
+    note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],
+    resourceType: "Condition",
+    subject: { reference: `Patient/${patientId}` },
+  };
+
+  return condition;
+}
+
+function createEpisode(
+  patientId: string,
+  episodeId: number,
+  conditionId: string
+) {
+  const episode: EpisodeOfCareWithId = {
+    id: `episode-of-care-${episodeId}`,
+    resourceType: "EpisodeOfCare",
+    status: "active",
+    patient: { reference: `Patient/${patientId}` },
+    diagnosis: [
+      {
+        condition: {
+          reference: `Condition/${conditionId}`,
+        },
+      },
+    ],
+  };
+
+  return episode;
+}
+function createEpisodesWithConditions(
   numberOfEpisodes: number,
   patientId: string
 ) {
-  const condition = await createCondition(db, patientId);
-  const newEpisodes: EpisodeOfCare[] = Array.from(
-    { length: numberOfEpisodes },
-    () => ({
-      id: crypto.randomUUID(),
-      resourceType: "EpisodeOfCare",
-      status: "active",
-      patient: { reference: `Patient/${patientId}` },
-      diagnosis: [
-        {
-          condition: {
-            reference: `Condition/${condition.id}`,
-          },
-        },
-      ],
-    })
-  );
+  const conditions: ConditionWithId[] = [];
+  const episodes: EpisodeOfCareWithId[] = [];
 
-  return newEpisodes;
+  Array.from({ length: numberOfEpisodes }, (_, i) => {
+    const condition = createCondition(patientId, i + 1);
+    const episode = createEpisode(patientId, i + 1, condition.id);
+
+    conditions.push(condition);
+    episodes.push(episode);
+  });
+
+  return { conditions, episodes };
 }
 
 async function createEpisodesForPatients(
@@ -79,15 +89,21 @@ async function createEpisodesForPatients(
   numberOfEpisodes: number
 ) {
   const allEpisodes: EpisodeOfCare[] = [];
+  const allConditions: Condition[] = [];
 
-  await Promise.all(
-    patients.map(async (p) => {
-      const episodes = await createEpisodes(db, numberOfEpisodes, p.id);
+  Promise.all(
+    patients.map((p) => {
+      const { conditions, episodes } = createEpisodesWithConditions(
+        numberOfEpisodes,
+        p.id
+      );
       allEpisodes.push(...episodes);
+      allConditions.push(...conditions);
     })
   );
 
   db.data.episodes.push(...allEpisodes);
+  db.data.conditions.push(...allConditions);
 
   await db.write();
 }

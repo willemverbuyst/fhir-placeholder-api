@@ -1,7 +1,7 @@
 // @ts-types="npm:@types/express@4.17.15"
 import express from "npm:express@4.18.2";
 import { Low, Memory } from "npm:lowdb";
-import morganMiddleware from "./config/morganMiddleWare.ts";
+import morganMiddleware from "./middlewares/morganMiddleWare.ts";
 import { Data } from "./models/data.ts";
 import conditionRoutes from "./routes/conditionRoutes.ts";
 import episodeRoutes from "./routes/episodeRoutes.ts";

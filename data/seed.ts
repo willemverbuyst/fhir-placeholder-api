@@ -10,16 +10,44 @@ type ConditionWithId = Condition & Required<Pick<Condition, "id">>;
 type EpisodeOfCareWithId = EpisodeOfCare & Required<Pick<EpisodeOfCare, "id">>;
 
 function createPatient(patientId: number) {
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
   const newPatient: PatientWithId = {
     id: patientId.toString(),
-    name: [
-      { family: faker.person.lastName(), given: [faker.person.firstName()] },
-    ],
+    name: [{ family: lastName, given: [firstName] }],
     resourceType: "Patient",
     birthDate: faker.date
       .between({ from: "1950-01-01", to: Date.now() })
       .toISOString()
       .split("T")[0],
+    gender: faker.helpers.arrayElement(["male", "female", "other", "unknown"]),
+    telecom: [
+      {
+        use: "home",
+        system: "phone",
+        value: faker.phone.number({ style: "national" }),
+      },
+      {
+        use: "home",
+        system: "email",
+        value: faker.internet.email({
+          firstName,
+          lastName,
+          provider: "fhir-placeholder.api",
+        }),
+      },
+    ],
+    address: [
+      {
+        use: "home",
+        type: faker.helpers.arrayElement(["both", "physical", "postal"]),
+        line: [faker.location.streetAddress()],
+        city: faker.location.city(),
+        state: faker.location.state(),
+        postalCode: faker.location.zipCode(),
+        country: faker.location.country(),
+      },
+    ],
   };
 
   return newPatient;

@@ -21,4 +21,12 @@ app.use(episodeRoutes.allowedMethods());
 app.use(patientRoutes.prefix("/patients").routes());
 app.use(patientRoutes.allowedMethods());
 
+app.use((context) => {
+  context.response.status = 404;
+  context.response.body = {
+    status: "error",
+    message: "Route not found",
+  };
+});
+
 export default app;

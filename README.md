@@ -1,12 +1,23 @@
 # README
 
-> deno run -A --watch server.ts
-
 ## What is this?
 
-A simple oak server in a deno runtime, serving some [fhir](https://hl7.org/fhir/R4/) resources, inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
+A simple server where you can get some dummy [fhir](https://hl7.org/fhir/R4/) resources (Patient, Episodes and Conditions).
 
-It has the following endpoints (wip)
+You can run this locally for dev purposes.
+
+## Technical
+
+A server with
+
+- Oak
+- Deno
+
+## Inspiration
+
+Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
+
+## endpoints (wip)
 
 - GET /Patients
 - GET /Patients/:id
@@ -15,3 +26,9 @@ It has the following endpoints (wip)
 - GET /Episodes/:id
 - GET /Conditions
 - GET /Conditions/:id
+
+Check [examples](./examples.http)
+
+## Run Server
+
+> deno run -A server.ts

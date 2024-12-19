@@ -1,45 +1,83 @@
-import { Request, Response } from "npm:express";
+import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getEpisodesForPatientFromDB,
   getPatientFromDB,
   getPatientsFromDB,
 } from "../services/patientService.ts";
 
-export function getAllPatients(_: Request, res: Response) {
+export function getAllPatients(ctx: RouterContext<string>) {
   try {
     const patients = getPatientsFromDB();
 
-    res.send({ status: "success", lengtt: patients.length, data: patients });
+    ctx.response.body = {
+      status: "success",
+      lengtt: patients.length,
+      data: patients,
+    };
   } catch (error) {
     console.error("Error fetching patients", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getPatient(req: Request, res: Response) {
+export function getPatient(ctx: RouterContext<string>) {
   try {
-    const patient = getPatientFromDB(req.params.id);
+    const { id } = ctx.params;
+
+    if (!id) {
+      ctx.response.status = 400;
+      ctx.response.body = {
+        status: "fail",
+        data: null,
+        message: "patient id is required",
+      };
+      return;
+    }
+
+    const patient = getPatientFromDB(id);
 
     if (!patient) {
-      res
-        .status(404)
-        .send({ status: "fail", data: null, message: "patient not found" });
+      ctx.response.status = 404;
+      ctx.response.body = {
+        status: "fail",
+        data: null,
+        message: "patient not found",
+      };
     } else {
-      res.send({ status: "success", data: patient });
+      ctx.response.body = { status: "success", data: patient };
     }
   } catch (error) {
     console.error("Error fetching patient", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getEpisodesForPatient(req: Request, res: Response) {
+export function getEpisodesForPatient(ctx: RouterContext<string>) {
   try {
-    const episodes = getEpisodesForPatientFromDB(req.params.id);
+    const { id } = ctx.params;
 
-    res.send({ status: "success", lengtt: episodes.length, data: episodes });
+    if (!id) {
+      ctx.response.status = 400;
+      ctx.response.body = {
+        status: "fail",
+        data: null,
+        message: "patient id is required",
+      };
+      return;
+    }
+
+    const episodes = getEpisodesForPatientFromDB(id);
+
+    ctx.response.body = {
+      status: "success",
+      lengtt: episodes.length,
+      data: episodes,
+    };
   } catch (error) {
     console.error("Error fetching patient", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }

@@ -1,25 +1,24 @@
-// @ts-types="npm:@types/express@4.17.15"
-import express from "npm:express@4.18.2";
+import { Application } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import { seedDataStore } from "./data/index.ts";
-import { errorHandler } from "./middlewares/errorHandler.ts";
-import { morganMiddleware } from "./middlewares/morganMiddleWare.ts";
+import { logger } from "./middlewares/logger.ts";
 import conditionRoutes from "./routes/conditionRoutes.ts";
 import episodeRoutes from "./routes/episodeRoutes.ts";
 import patientRoutes from "./routes/patientRoutes.ts";
 
-const app = express();
-
-app.use(morganMiddleware);
-app.use(errorHandler);
+const app = new Application();
 
 seedDataStore();
 
-app.use("/conditions", conditionRoutes);
-app.use("/episodes", episodeRoutes);
-app.use("/patients", patientRoutes);
+// Middleware
+app.use(logger);
 
-app.get("/", (_, res) => {
-  res.send("Fhir Placeholder Api");
-});
+app.use(conditionRoutes.prefix("/conditions").routes());
+app.use(conditionRoutes.allowedMethods());
+
+app.use(episodeRoutes.prefix("/episodes").routes());
+app.use(episodeRoutes.allowedMethods());
+
+app.use(patientRoutes.prefix("/patients").routes());
+app.use(patientRoutes.allowedMethods());
 
 export default app;

@@ -1,39 +1,54 @@
-import { Request, Response } from "npm:express";
+import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getConditionFromDB,
   getConditionsFromDB,
 } from "../services/conditionService.ts";
 
-export function getConditions(_: Request, res: Response) {
+export function getConditions(ctx: RouterContext<string>) {
   try {
     const conditions = getConditionsFromDB();
 
-    res.send({
+    ctx.response.body = {
       status: "success",
       lengtt: conditions.length,
       data: conditions,
-    });
+    };
   } catch (error) {
     console.error("Error fetching conditions", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getCondition(req: Request, res: Response) {
+export function getCondition(ctx: RouterContext<string>) {
   try {
-    const condition = getConditionFromDB(req.params.id);
+    const { id } = ctx.params;
+
+    if (!id) {
+      ctx.response.status = 400;
+      ctx.response.body = {
+        status: "fail",
+        data: null,
+        message: "condition id is required",
+      };
+      return;
+    }
+
+    const condition = getConditionFromDB(id);
 
     if (!condition) {
-      res.status(404).send({
+      ctx.response.status = 404;
+      ctx.response.body = {
         status: "fail",
         data: null,
         message: "condition not found",
-      });
+      };
     } else {
-      res.send({ status: "success", data: condition });
+      ctx.response.body = { status: "success", data: condition };
     }
   } catch (error) {
     console.error("Error fetching condition", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }

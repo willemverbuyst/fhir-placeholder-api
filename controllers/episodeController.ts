@@ -1,34 +1,53 @@
-import { Request, Response } from "npm:express";
+import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getEpisodeFromDB,
   getEpisodesFromDB,
 } from "../services/episodeService.ts";
 
-export function getEpisodes(_: Request, res: Response) {
+export function getEpisodes(ctx: RouterContext<string>) {
   try {
     const episodes = getEpisodesFromDB();
 
-    res.send({ status: "success", lengtt: episodes.length, data: episodes });
+    ctx.response.body = {
+      status: "success",
+      lengtt: episodes.length,
+      data: episodes,
+    };
   } catch (error) {
     console.error("Error fetching episodes", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getEpisode(req: Request, res: Response) {
+export function getEpisode(ctx: RouterContext<string>) {
   try {
-    const episode = getEpisodeFromDB(req.params.id);
-    if (!episode) {
-      res.status(404).send({
+    const { id } = ctx.params;
+
+    if (!id) {
+      ctx.response.status = 400;
+      ctx.response.body = {
         status: "fail",
         data: null,
-        message: "episode of care not found",
-      });
+        message: "episode id is required",
+      };
+      return;
+    }
+
+    const episode = getEpisodeFromDB(id);
+    if (!episode) {
+      ctx.response.status = 404;
+      ctx.response.body = {
+        status: "fail",
+        data: null,
+        message: "episode not found",
+      };
     } else {
-      res.send({ status: "success", data: episode });
+      ctx.response.body = { status: "success", data: episode };
     }
   } catch (error) {
     console.error("Error fetching episode", error);
-    res.status(500).send({ status: "error", message: "internal server error" });
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }

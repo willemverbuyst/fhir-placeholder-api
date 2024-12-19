@@ -1,15 +1,15 @@
-import { Router } from "npm:express";
+import { Router } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getAllPatients,
   getEpisodesForPatient,
   getPatient,
 } from "../controllers/patientController.ts";
 
-const router = Router();
+const router = new Router();
 
 router
   .get("/", getAllPatients)
-  .get("/:id", getPatient)
-  .get("/:id/episodes", getEpisodesForPatient);
+  .get("/:id/episodes", getEpisodesForPatient)
+  .get("/:id", getPatient);
 
 export default router;

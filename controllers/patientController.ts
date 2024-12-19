@@ -1,13 +1,13 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
-  getEpisodesForPatientFromDB,
-  getPatientFromDB,
-  getPatientsFromDB,
+  getEpisodesForPatientFromDataStore,
+  getPatientFromDataStore,
+  getPatientsFromDataStore,
 } from "../services/patientService.ts";
 
 export function getAllPatients(ctx: RouterContext<string>) {
   try {
-    const patients = getPatientsFromDB();
+    const patients = getPatientsFromDataStore();
 
     ctx.response.body = {
       status: "success",
@@ -35,7 +35,7 @@ export function getPatient(ctx: RouterContext<string>) {
       return;
     }
 
-    const patient = getPatientFromDB(id);
+    const patient = getPatientFromDataStore(id);
 
     if (!patient) {
       ctx.response.status = 404;
@@ -68,7 +68,7 @@ export function getEpisodesForPatient(ctx: RouterContext<string>) {
       return;
     }
 
-    const episodes = getEpisodesForPatientFromDB(id);
+    const episodes = getEpisodesForPatientFromDataStore(id);
 
     ctx.response.body = {
       status: "success",

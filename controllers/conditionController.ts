@@ -1,12 +1,12 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
-  getConditionFromDB,
-  getConditionsFromDB,
+  getConditionFromDataStore,
+  getConditionsFromDataStore,
 } from "../services/conditionService.ts";
 
 export function getConditions(ctx: RouterContext<string>) {
   try {
-    const conditions = getConditionsFromDB();
+    const conditions = getConditionsFromDataStore();
 
     ctx.response.body = {
       status: "success",
@@ -34,7 +34,7 @@ export function getCondition(ctx: RouterContext<string>) {
       return;
     }
 
-    const condition = getConditionFromDB(id);
+    const condition = getConditionFromDataStore(id);
 
     if (!condition) {
       ctx.response.status = 404;

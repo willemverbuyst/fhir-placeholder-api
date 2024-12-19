@@ -1,9 +1,9 @@
 import { dataStore } from "../data/index.ts";
 
-export function getEpisodeFromDB(id: string) {
+export function getEpisodeFromDataStore(id: string) {
   return dataStore.episodes.find((e) => e.id === id);
 }
 
-export function getEpisodesFromDB() {
+export function getEpisodesFromDataStore() {
   return dataStore.episodes;
 }

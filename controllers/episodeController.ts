@@ -1,12 +1,12 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
-  getEpisodeFromDB,
-  getEpisodesFromDB,
+  getEpisodeFromDataStore,
+  getEpisodesFromDataStore,
 } from "../services/episodeService.ts";
 
 export function getEpisodes(ctx: RouterContext<string>) {
   try {
-    const episodes = getEpisodesFromDB();
+    const episodes = getEpisodesFromDataStore();
 
     ctx.response.body = {
       status: "success",
@@ -34,7 +34,7 @@ export function getEpisode(ctx: RouterContext<string>) {
       return;
     }
 
-    const episode = getEpisodeFromDB(id);
+    const episode = getEpisodeFromDataStore(id);
     if (!episode) {
       ctx.response.status = 404;
       ctx.response.body = {

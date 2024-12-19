@@ -1,14 +1,14 @@
 import { dataStore } from "../data/index.ts";
 
-export function getPatientFromDB(id: string) {
+export function getPatientFromDataStore(id: string) {
   return dataStore.patients.find((p) => p.id === id);
 }
 
-export function getPatientsFromDB() {
+export function getPatientsFromDataStore() {
   return dataStore.patients;
 }
 
-export function getEpisodesForPatientFromDB(id: string) {
+export function getEpisodesForPatientFromDataStore(id: string) {
   return dataStore.episodes.filter(
     (e) => e.patient.reference?.split("/")[1] === id
   );

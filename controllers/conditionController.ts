@@ -1,9 +1,12 @@
 import { Request, Response } from "npm:express";
-import { db } from "../app.ts";
+import {
+  getConditionFromDB,
+  getConditionsFromDB,
+} from "../services/conditionService.ts";
 
 export function getConditions(_: Request, res: Response) {
   try {
-    const conditions = db.data.conditions;
+    const conditions = getConditionsFromDB();
 
     res.send({
       status: "success",
@@ -18,7 +21,7 @@ export function getConditions(_: Request, res: Response) {
 
 export function getCondition(req: Request, res: Response) {
   try {
-    const condition = db.data.conditions.find((c) => c.id === req.params.id);
+    const condition = getConditionFromDB(req.params.id);
 
     if (!condition) {
       res.status(404).send({

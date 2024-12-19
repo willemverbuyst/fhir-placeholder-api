@@ -1,9 +1,13 @@
 import { Request, Response } from "npm:express";
-import { db } from "../app.ts";
+import {
+  getEpisodesForPatientFromDB,
+  getPatientFromDB,
+  getPatientsFromDB,
+} from "../services/patientService.ts";
 
 export function getAllPatients(_: Request, res: Response) {
   try {
-    const patients = db.data.patients;
+    const patients = getPatientsFromDB();
 
     res.send({ status: "success", lengtt: patients.length, data: patients });
   } catch (error) {
@@ -14,7 +18,7 @@ export function getAllPatients(_: Request, res: Response) {
 
 export function getPatient(req: Request, res: Response) {
   try {
-    const patient = db.data.patients.find((p) => p.id === req.params.id);
+    const patient = getPatientFromDB(req.params.id);
 
     if (!patient) {
       res
@@ -31,9 +35,7 @@ export function getPatient(req: Request, res: Response) {
 
 export function getEpisodesForPatient(req: Request, res: Response) {
   try {
-    const episodes = db.data.episodes.filter(
-      (e) => e.patient.reference?.split("/")[1] === req.params.id
-    );
+    const episodes = getEpisodesForPatientFromDB(req.params.id);
 
     res.send({ status: "success", lengtt: episodes.length, data: episodes });
   } catch (error) {

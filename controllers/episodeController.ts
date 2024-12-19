@@ -1,9 +1,12 @@
 import { Request, Response } from "npm:express";
-import { db } from "../app.ts";
+import {
+  getEpisodeFromDB,
+  getEpisodesFromDB,
+} from "../services/episodeService.ts";
 
 export function getEpisodes(_: Request, res: Response) {
   try {
-    const episodes = db.data.episodes;
+    const episodes = getEpisodesFromDB();
 
     res.send({ status: "success", lengtt: episodes.length, data: episodes });
   } catch (error) {
@@ -14,7 +17,7 @@ export function getEpisodes(_: Request, res: Response) {
 
 export function getEpisode(req: Request, res: Response) {
   try {
-    const episode = db.data.episodes.find((e) => e.id === req.params.id);
+    const episode = getEpisodeFromDB(req.params.id);
     if (!episode) {
       res.status(404).send({
         status: "fail",

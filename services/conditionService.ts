@@ -1,4 +1,4 @@
-import { db } from "../app.ts";
+import { db } from "../db/index.ts";
 
 export function getConditionFromDB(id: string) {
   return db.data.conditions.find((c) => c.id === id);

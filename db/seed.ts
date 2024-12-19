@@ -1,7 +1,7 @@
 import { faker } from "npm:@faker-js/faker";
 import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r4";
 import { Low } from "npm:lowdb";
-import { Data } from "./models/data.ts";
+import { Data } from "../models/data.ts";
 
 const NUMBER_OF_PATIENTS = 10;
 const NUMBER_OF_EPISODES_PER_PATIENT = 5;

@@ -1,4 +1,4 @@
-import { db } from "../app.ts";
+import { db } from "../db/index.ts";
 
 export function getEpisodeFromDB(id: string) {
   return db.data.episodes.find((e) => e.id === id);

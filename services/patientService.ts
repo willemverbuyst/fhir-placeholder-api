@@ -1,4 +1,4 @@
-import { db } from "../app.ts";
+import { db } from "../db/index.ts";
 
 export function getPatientFromDB(id: string) {
   return db.data.patients.find((p) => p.id === id);

@@ -14,6 +14,7 @@ const skip = () => {
   return env !== "development";
 };
 
-const morganMiddleware = morgan(":method :url :status", { stream, skip });
-
-export default morganMiddleware;
+export const morganMiddleware = morgan(":method :url :status", {
+  stream,
+  skip,
+});

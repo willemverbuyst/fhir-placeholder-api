@@ -1,5 +1,5 @@
 import { faker } from "npm:@faker-js/faker";
-import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r4";
+import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r5";
 import { Data } from "../models/data.ts";
 
 const NUMBER_OF_PATIENTS = 10;
@@ -23,12 +23,24 @@ function createPatient(patientId: number) {
     gender: faker.helpers.arrayElement(["male", "female", "other", "unknown"]),
     telecom: [
       {
-        use: "home",
+        use: faker.helpers.arrayElement([
+          "home",
+          "work",
+          "temp",
+          "old",
+          "mobile",
+        ]),
         system: "phone",
         value: faker.phone.number({ style: "national" }),
       },
       {
-        use: "home",
+        use: faker.helpers.arrayElement([
+          "home",
+          "work",
+          "temp",
+          "old",
+          "mobile",
+        ]),
         system: "email",
         value: faker.internet.email({
           firstName,
@@ -39,7 +51,13 @@ function createPatient(patientId: number) {
     ],
     address: [
       {
-        use: "home",
+        use: faker.helpers.arrayElement([
+          "home",
+          "work",
+          "temp",
+          "old",
+          "billing",
+        ]),
         type: faker.helpers.arrayElement(["both", "physical", "postal"]),
         line: [faker.location.streetAddress()],
         city: faker.location.city(),
@@ -68,6 +86,22 @@ function createCondition(patientId: string, episodeId: number) {
     note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],
     resourceType: "Condition",
     subject: { reference: `Patient/${patientId}` },
+    clinicalStatus: {
+      coding: [
+        {
+          code: faker.helpers.arrayElement([
+            "active",
+            "recurrence",
+            "relapse",
+            "inactive",
+            "remission",
+            "resolved",
+            "unknown",
+          ]),
+          system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+        },
+      ],
+    },
   };
 
   return newCondition;
@@ -85,9 +119,11 @@ function createEpisode(
     patient: { reference: `Patient/${patientId}` },
     diagnosis: [
       {
-        condition: {
-          reference: `Condition/${conditionId}`,
-        },
+        condition: [
+          {
+            reference: { reference: `Condition/${conditionId}` },
+          },
+        ],
       },
     ],
   };

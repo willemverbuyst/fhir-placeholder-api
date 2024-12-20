@@ -2,7 +2,7 @@
 
 ## What is this?
 
-A simple server where you can get some dummy [fhir](https://hl7.org/fhir/R4/) resources (Patient, Episodes and Conditions).
+A simple server where you can get some dummy [fhir R5](https://hl7.org/fhir/R5/) resources (Patient, Episodes and Conditions).
 
 You can run this locally for dev purposes.
 

@@ -1,4 +1,4 @@
-import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r4";
+import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r5";
 
 export type Data = {
   patients: Patient[];

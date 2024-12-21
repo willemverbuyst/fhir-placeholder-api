@@ -1,9 +1,11 @@
 import { faker } from "npm:@faker-js/faker";
 import { Condition, EpisodeOfCare, Patient } from "npm:@types/fhir/r5";
 import { Data } from "../models/data.ts";
-
-const NUMBER_OF_PATIENTS = 10;
-const NUMBER_OF_EPISODES_PER_PATIENT = 5;
+import {
+  NUMBER_OF_EPISODES_PER_PATIENT,
+  NUMBER_OF_PATIENTS,
+} from "./config.ts";
+import { START_DATE } from "./constants.ts";
 
 type PatientWithId = Patient & Required<Pick<Patient, "id">>;
 type ConditionWithId = Condition & Required<Pick<Condition, "id">>;
@@ -17,7 +19,7 @@ function createPatient(patientId: number) {
     name: [{ family: lastName, given: [firstName] }],
     resourceType: "Patient",
     birthDate: faker.date
-      .between({ from: "1950-01-01", to: Date.now() })
+      .between({ from: START_DATE, to: Date.now() })
       .toISOString()
       .split("T")[0],
     gender: faker.helpers.arrayElement(["male", "female", "other", "unknown"]),

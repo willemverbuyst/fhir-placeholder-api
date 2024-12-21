@@ -1,30 +1,30 @@
-GET http://localhost:8000/patients
+GET http://localhost:8000/R5/patients
 
 ###
 
-GET http://localhost:8000/patients/1
+GET http://localhost:8000/R5/patients/1
 
 ###
 
-GET http://localhost:8000/patients/1/episodes
+GET http://localhost:8000/R5/patients/1/episodes
 
 ###
 
-GET http://localhost:8000/conditions
+GET http://localhost:8000/R5/conditions
 
 ###
 
-GET http://localhost:8000/conditions/1
+GET http://localhost:8000/R5/conditions/1
 
 ###
 
-GET http://localhost:8000/conditions/1
+GET http://localhost:8000/R5/conditions/1
 
 ###
 
-GET http://localhost:8000/episodes
+GET http://localhost:8000/R5/episodes
 
 ###
 
-GET http://localhost:8000/episodes/1
+GET http://localhost:8000/R5/episodes/1
 

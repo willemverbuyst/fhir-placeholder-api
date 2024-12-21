@@ -170,13 +170,13 @@ function createEpisodesForPatients(
 export function seed(dataStore: Data) {
   const newPatients = createPatients(NUMBER_OF_PATIENTS);
 
-  dataStore.patients.push(...newPatients);
+  dataStore.patients = newPatients;
 
   const { newConditions, newEpisodes } = createEpisodesForPatients(
     newPatients,
     NUMBER_OF_EPISODES_PER_PATIENT
   );
 
-  dataStore.conditions.push(...newConditions);
-  dataStore.episodes.push(...newEpisodes);
+  dataStore.conditions = newConditions;
+  dataStore.episodes = newEpisodes;
 }

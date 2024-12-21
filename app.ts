@@ -4,6 +4,7 @@ import { logger } from "./middlewares/logger.ts";
 import conditionRoutes from "./routes/conditionRoutes.ts";
 import episodeRoutes from "./routes/episodeRoutes.ts";
 import patientRoutes from "./routes/patientRoutes.ts";
+import practitionerRoutes from "./routes/practitionerRoutes.ts";
 
 const app = new Application();
 
@@ -20,6 +21,9 @@ app.use(episodeRoutes.allowedMethods());
 
 app.use(patientRoutes.prefix("/patients").routes());
 app.use(patientRoutes.allowedMethods());
+
+app.use(practitionerRoutes.prefix("/practitioners").routes());
+app.use(practitionerRoutes.allowedMethods());
 
 app.use((context) => {
   context.response.status = 404;

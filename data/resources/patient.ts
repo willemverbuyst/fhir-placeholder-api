@@ -4,7 +4,7 @@ import { START_DATE } from "../constants.ts";
 import { createAddress } from "../helpers/address.ts";
 import { createEmail, createPhone } from "../helpers/contactPoint.ts";
 
-export function createPatient(patientId: number) {
+export function createPatient(patientId: number, organizationId: number) {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const newPatient: PatientWithId = {
@@ -18,6 +18,7 @@ export function createPatient(patientId: number) {
     gender: faker.helpers.arrayElement(["male", "female", "other", "unknown"]),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],
+    managingOrganization: { reference: `Organization/${organizationId}` },
   };
 
   return newPatient;

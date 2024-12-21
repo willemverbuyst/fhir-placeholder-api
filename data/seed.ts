@@ -10,12 +10,13 @@ import {
 } from "./config.ts";
 import { createCondition } from "./resources/condition.ts";
 import { createEpisode } from "./resources/episode-of-care.ts";
+import { createOrganization } from "./resources/organization.ts";
 import { createPatient } from "./resources/patient.ts";
 
-function createPatients(numberOfPatients: number) {
+function createPatients(numberOfPatients: number, organizationId: number) {
   const newPatients: PatientWithId[] = Array.from(
     { length: numberOfPatients },
-    (_, i) => createPatient(i + 1)
+    (_, i) => createPatient(i + 1, organizationId)
   );
 
   return newPatients;
@@ -59,15 +60,16 @@ function createEpisodesForPatients(
 }
 
 export function seed(dataStore: Data) {
-  const newPatients = createPatients(NUMBER_OF_PATIENTS);
-
-  dataStore.patients = newPatients;
+  const newOrganization = createOrganization(1);
+  const newPatients = createPatients(NUMBER_OF_PATIENTS, 1);
 
   const { newConditions, newEpisodes } = createEpisodesForPatients(
     newPatients,
     NUMBER_OF_EPISODES_PER_PATIENT
   );
 
+  dataStore.organizations = [newOrganization];
+  dataStore.patients = newPatients;
   dataStore.conditions = newConditions;
   dataStore.episodes = newEpisodes;
 }

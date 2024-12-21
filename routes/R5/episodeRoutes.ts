@@ -1,5 +1,8 @@
 import { Router } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { getEpisode, getEpisodes } from "../controllers/episodeController.ts";
+import {
+  getEpisode,
+  getEpisodes,
+} from "../../controllers/episodeController.ts";
 
 const router = new Router();
 

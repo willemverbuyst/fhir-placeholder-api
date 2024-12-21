@@ -6,6 +6,7 @@ export const dataStore: Data = {
   episodes: [],
   conditions: [],
   organizations: [],
+  practitioners: [],
 };
 
 export function seedDataStore() {

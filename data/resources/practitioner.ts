@@ -1,20 +1,18 @@
 import { faker } from "npm:@faker-js/faker";
-import { PatientWithId } from "../../models/data.ts";
+import { PractitionerWithId } from "../../models/data.ts";
 import { START_DATE } from "../constants.ts";
 import { createAddress } from "../helpers/address.ts";
 import { createEmail, createPhone } from "../helpers/contactPoint.ts";
 
-export function createPatient(
-  patientId: number,
-  organizationId: number,
-  practitionerIds: string[]
-) {
+export function createPractitioner(practitionerId: number) {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
-  const newPatient: PatientWithId = {
-    id: patientId.toString(),
+
+  const practitioner: PractitionerWithId = {
+    id: practitionerId.toString(),
+    resourceType: "Practitioner",
     name: [{ family: lastName, given: [firstName] }],
-    resourceType: "Patient",
+    active: true,
     birthDate: faker.date
       .between({ from: START_DATE, to: Date.now() })
       .toISOString()
@@ -22,15 +20,7 @@ export function createPatient(
     gender: faker.helpers.arrayElement(["male", "female", "other", "unknown"]),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],
-    managingOrganization: { reference: `Organization/${organizationId}` },
-    generalPractitioner: [
-      {
-        reference: `Practitioner/${faker.helpers.arrayElement(
-          practitionerIds
-        )}`,
-      },
-    ],
   };
 
-  return newPatient;
+  return practitioner;
 }

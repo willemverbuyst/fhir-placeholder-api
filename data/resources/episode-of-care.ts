@@ -1,5 +1,6 @@
 import { faker } from "npm:@faker-js/faker";
 import { EpisodeOfCareWithId } from "../../models/data.ts";
+import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set.ts";
 
 export function createEpisode(
   patientId: string,
@@ -28,6 +29,7 @@ export function createEpisode(
         ],
       },
     ],
+    type: [{ coding: [faker.helpers.arrayElement(episodeOfCareTypes)] }],
   };
 
   return newEpisode;

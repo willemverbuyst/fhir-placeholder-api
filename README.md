@@ -53,8 +53,8 @@ curl http://localhost:8000/R5/patients/1
     "id": "1",
     "name": [
       {
-        "family": "Kemmer",
-        "given": ["Hugh"]
+        "family": "Doe",
+        "given": ["John"]
       }
     ],
     "resourceType": "Patient",
@@ -64,7 +64,7 @@ curl http://localhost:8000/R5/patients/1
       {
         "use": "old",
         "system": "email",
-        "value": "Hugh_Kemmer27@fhir-placeholder.api"
+        "value": "John_Doe27@fhir-placeholder.api"
       },
       {
         "use": "temp",
@@ -77,7 +77,7 @@ curl http://localhost:8000/R5/patients/1
         "use": "old",
         "type": "physical",
         "line": ["96298 Long Lane"],
-        "city": "Gibsonboro",
+        "city": "Gibson",
         "state": "Washington",
         "postalCode": "09207",
         "country": "Brunei Darussalam"

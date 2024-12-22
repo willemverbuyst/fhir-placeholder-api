@@ -1,26 +1,26 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
-  getPractitionerFromDataStore,
-  getPractitionersFromDataStore,
-} from "../services/practitionerService.ts";
+  getOrganizationFromDataStore,
+  getOrganizationsFromDataStore,
+} from "../services/organization-services.ts";
 
-export function getPractitioners(ctx: RouterContext<string>) {
+export function getOrganizations(ctx: RouterContext<string>) {
   try {
-    const practitioners = getPractitionersFromDataStore();
+    const organizations = getOrganizationsFromDataStore();
 
     ctx.response.body = {
       status: "success",
-      length: practitioners.length,
-      data: practitioners,
+      length: organizations.length,
+      data: organizations,
     };
   } catch (error) {
-    console.error("Error fetching practitioners", error);
+    console.error("Error fetching organizations", error);
     ctx.response.status = 500;
     ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getPractitioner(ctx: RouterContext<string>) {
+export function getOrganization(ctx: RouterContext<string>) {
   try {
     const { id } = ctx.params;
 
@@ -29,25 +29,25 @@ export function getPractitioner(ctx: RouterContext<string>) {
       ctx.response.body = {
         status: "fail",
         data: null,
-        message: "practitioner id is required",
+        message: "organization id is required",
       };
       return;
     }
 
-    const practitioner = getPractitionerFromDataStore(id);
+    const organization = getOrganizationFromDataStore(id);
 
-    if (!practitioner) {
+    if (!organization) {
       ctx.response.status = 404;
       ctx.response.body = {
         status: "fail",
         data: null,
-        message: "practitioner not found",
+        message: "organization not found",
       };
     } else {
-      ctx.response.body = { status: "success", data: practitioner };
+      ctx.response.body = { status: "success", data: organization };
     }
   } catch (error) {
-    console.error("Error fetching practitioner", error);
+    console.error("Error fetching organization", error);
     ctx.response.status = 500;
     ctx.response.body = { status: "error", message: "internal server error" };
   }

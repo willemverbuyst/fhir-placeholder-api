@@ -2,7 +2,7 @@ import { Router } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getOrganization,
   getOrganizations,
-} from "../controllers/organization-controller.ts";
+} from "../controllers/organization-controllers.ts";
 
 const router = new Router();
 

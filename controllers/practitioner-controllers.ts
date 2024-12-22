@@ -1,26 +1,26 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
-  getEpisodeFromDataStore,
-  getEpisodesFromDataStore,
-} from "../services/episodeService.ts";
+  getPractitionerFromDataStore,
+  getPractitionersFromDataStore,
+} from "../services/practitioner-services.ts";
 
-export function getEpisodes(ctx: RouterContext<string>) {
+export function getPractitioners(ctx: RouterContext<string>) {
   try {
-    const episodes = getEpisodesFromDataStore();
+    const practitioners = getPractitionersFromDataStore();
 
     ctx.response.body = {
       status: "success",
-      length: episodes.length,
-      data: episodes,
+      length: practitioners.length,
+      data: practitioners,
     };
   } catch (error) {
-    console.error("Error fetching episodes", error);
+    console.error("Error fetching practitioners", error);
     ctx.response.status = 500;
     ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getEpisode(ctx: RouterContext<string>) {
+export function getPractitioner(ctx: RouterContext<string>) {
   try {
     const { id } = ctx.params;
 
@@ -29,24 +29,25 @@ export function getEpisode(ctx: RouterContext<string>) {
       ctx.response.body = {
         status: "fail",
         data: null,
-        message: "episode id is required",
+        message: "practitioner id is required",
       };
       return;
     }
 
-    const episode = getEpisodeFromDataStore(id);
-    if (!episode) {
+    const practitioner = getPractitionerFromDataStore(id);
+
+    if (!practitioner) {
       ctx.response.status = 404;
       ctx.response.body = {
         status: "fail",
         data: null,
-        message: "episode not found",
+        message: "practitioner not found",
       };
     } else {
-      ctx.response.body = { status: "success", data: episode };
+      ctx.response.body = { status: "success", data: practitioner };
     }
   } catch (error) {
-    console.error("Error fetching episode", error);
+    console.error("Error fetching practitioner", error);
     ctx.response.status = 500;
     ctx.response.body = { status: "error", message: "internal server error" };
   }

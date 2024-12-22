@@ -3,7 +3,7 @@ import {
   getEpisodesForPatientFromDataStore,
   getPatientFromDataStore,
   getPatientsFromDataStore,
-} from "../services/patientService.ts";
+} from "../services/patient-services.ts";
 
 export function getAllPatients(ctx: RouterContext<string>) {
   try {

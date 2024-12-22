@@ -18,10 +18,6 @@ GET http://localhost:8000/R5/conditions/1
 
 ###
 
-GET http://localhost:8000/R5/conditions/1
-
-###
-
 GET http://localhost:8000/R5/episodes
 
 ###

@@ -1,26 +1,26 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
-  getOrganizationFromDataStore,
-  getOrganizationsFromDataStore,
-} from "../services/organization-service.ts";
+  getEpisodeFromDataStore,
+  getEpisodesFromDataStore,
+} from "../services/episode-services.ts";
 
-export function getOrganizations(ctx: RouterContext<string>) {
+export function getEpisodes(ctx: RouterContext<string>) {
   try {
-    const organizations = getOrganizationsFromDataStore();
+    const episodes = getEpisodesFromDataStore();
 
     ctx.response.body = {
       status: "success",
-      length: organizations.length,
-      data: organizations,
+      length: episodes.length,
+      data: episodes,
     };
   } catch (error) {
-    console.error("Error fetching organizations", error);
+    console.error("Error fetching episodes", error);
     ctx.response.status = 500;
     ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
-export function getOrganization(ctx: RouterContext<string>) {
+export function getEpisode(ctx: RouterContext<string>) {
   try {
     const { id } = ctx.params;
 
@@ -29,25 +29,24 @@ export function getOrganization(ctx: RouterContext<string>) {
       ctx.response.body = {
         status: "fail",
         data: null,
-        message: "organization id is required",
+        message: "episode id is required",
       };
       return;
     }
 
-    const organization = getOrganizationFromDataStore(id);
-
-    if (!organization) {
+    const episode = getEpisodeFromDataStore(id);
+    if (!episode) {
       ctx.response.status = 404;
       ctx.response.body = {
         status: "fail",
         data: null,
-        message: "organization not found",
+        message: "episode not found",
       };
     } else {
-      ctx.response.body = { status: "success", data: organization };
+      ctx.response.body = { status: "success", data: episode };
     }
   } catch (error) {
-    console.error("Error fetching organization", error);
+    console.error("Error fetching episode", error);
     ctx.response.status = 500;
     ctx.response.body = { status: "error", message: "internal server error" };
   }

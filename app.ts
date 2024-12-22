@@ -1,11 +1,11 @@
 import { Application } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import { seedDataStore } from "./data/index.ts";
 import { logger } from "./middlewares/logger.ts";
-import conditionRoutes from "./routes/conditionRoutes.ts";
-import episodeRoutes from "./routes/episodeRoutes.ts";
+import conditionRoutes from "./routes/condition-routes.ts";
+import episodeRoutes from "./routes/episode-routes.ts";
 import organizationRoutes from "./routes/organization-routes.ts";
-import patientRoutes from "./routes/patientRoutes.ts";
-import practitionerRoutes from "./routes/practitionerRoutes.ts";
+import patientRoutes from "./routes/patient-routes.ts";
+import practitionerRoutes from "./routes/practitioner-routes.ts";
 
 const fHIR_VERSION_R5 = "R5";
 

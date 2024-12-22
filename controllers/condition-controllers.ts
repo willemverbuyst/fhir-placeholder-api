@@ -2,7 +2,7 @@ import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getConditionFromDataStore,
   getConditionsFromDataStore,
-} from "../services/conditionService.ts";
+} from "../services/condition-services.ts";
 
 export function getConditions(ctx: RouterContext<string>) {
   try {

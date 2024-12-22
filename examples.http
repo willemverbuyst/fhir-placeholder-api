@@ -28,3 +28,19 @@ GET http://localhost:8000/R5/episodes
 
 GET http://localhost:8000/R5/episodes/1
 
+
+###
+
+GET http://localhost:8000/R5/organizations
+
+###
+
+GET http://localhost:8000/R5/organizations/1
+
+###
+
+GET http://localhost:8000/R5/practitioners
+
+###
+
+GET http://localhost:8000/R5/practitioners/1

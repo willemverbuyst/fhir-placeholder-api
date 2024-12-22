@@ -19,17 +19,18 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 ## :telephone_receiver: Endpoints (wip)
 
-- GET /Patients
-- GET /Patients/:id
-- GET /Patients/:id/episodes
-- GET /Episodes
-- GET /Episodes/:id
-- GET /Conditions
-- GET /Conditions/:id
-- GET /Practitioners
-- GET /Practitioners/:id
-- GET /Organizations
-- GET /Organizations/:id
+- GET /patients
+- GET /patients/:id
+- GET /patients/:id/episodes
+- GET /episodes
+- GET /episodes/:id
+- GET /episodes?patient=1
+- GET /conditions
+- GET /conditions/:id
+- GET /practitioners
+- GET /practitioners/:id
+- GET /organizations
+- GET /organizations/:id
 
 ```typescript
 fetch("http://localhost:8000/R5/patients/1")

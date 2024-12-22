@@ -7,3 +7,9 @@ export function getEpisodeFromDataStore(id: string) {
 export function getEpisodesFromDataStore() {
   return dataStore.episodes;
 }
+
+export function getEpisodesForPatientFromDataStore(id: string) {
+  return dataStore.episodes.filter(
+    (e) => e.patient.reference?.split("/")[1] === id
+  );
+}

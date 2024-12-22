@@ -3,7 +3,7 @@ import {
   getAllPatients,
   getEpisodesForPatient,
   getPatient,
-} from "../../controllers/patientController.ts";
+} from "../controllers/patientController.ts";
 
 const router = new Router();
 

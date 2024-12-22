@@ -3,7 +3,7 @@ import { PatientWithId } from "../../models/data.ts";
 import { START_DATE } from "../constants.ts";
 import { createAddress } from "../helpers/address.ts";
 import { createEmail, createPhone } from "../helpers/contactPoint.ts";
-import { languages } from "../valueSet/languages.ts";
+import { languages } from "../valueSets/languages.ts";
 
 export function createPatient(
   patientId: number,

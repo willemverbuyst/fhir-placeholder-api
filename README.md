@@ -2,9 +2,9 @@
 
 ## 🤔 What is this?
 
-A simple server where you can get some dummy [fhir R5](https://hl7.org/fhir/R5/) resources (Patient, Episodes and Conditions).
+A simple server where you can get some dummy [fhir R5](https://hl7.org/fhir/R5/) resources.
 
-You can run this locally for dev purposes.
+You can run this server locally for dev purposes.
 
 ## :nerd_face: Technical
 
@@ -27,14 +27,20 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /Conditions
 - GET /Conditions/:id
 - GET /Practitioners
-- GET /Practitioners/:1
+- GET /Practitioners/:id
 - GET /Organizations
-- GET /Organizations/1
+- GET /Organizations/:id
 
 ```typescript
-fetch("http://localhost:8000/patients/1")
+fetch("http://localhost:8000/R5/patients/1")
   .then((response) => response.json())
   .then((json) => console.log(json));
+```
+
+or
+
+```sh
+curl http://localhost:8000/R5/patients/1
 ```
 
 👇 _Output_
@@ -92,4 +98,4 @@ Check [examples](./examples.http)
 
 ## :rocket: Run Server
 
-> deno run -A server.ts
+> deno run --allow-net server.ts

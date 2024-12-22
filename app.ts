@@ -7,7 +7,7 @@ import organizationRoutes from "./routes/organization-routes.ts";
 import patientRoutes from "./routes/patient-routes.ts";
 import practitionerRoutes from "./routes/practitioner-routes.ts";
 
-const fHIR_VERSION_R5 = "R5";
+const FHIR_VERSION_R5 = "R5";
 
 const app = new Application();
 
@@ -16,22 +16,22 @@ seedDataStore();
 // Middleware
 app.use(logger);
 
-app.use(conditionRoutes.prefix(`/${fHIR_VERSION_R5}/conditions`).routes());
+app.use(conditionRoutes.prefix(`/${FHIR_VERSION_R5}/conditions`).routes());
 app.use(conditionRoutes.allowedMethods());
 
-app.use(episodeRoutes.prefix(`/${fHIR_VERSION_R5}/episodes`).routes());
+app.use(episodeRoutes.prefix(`/${FHIR_VERSION_R5}/episodes`).routes());
 app.use(episodeRoutes.allowedMethods());
 
-app.use(patientRoutes.prefix(`/${fHIR_VERSION_R5}/patients`).routes());
+app.use(patientRoutes.prefix(`/${FHIR_VERSION_R5}/patients`).routes());
 app.use(patientRoutes.allowedMethods());
 
 app.use(
-  practitionerRoutes.prefix(`/${fHIR_VERSION_R5}/practitioners`).routes()
+  practitionerRoutes.prefix(`/${FHIR_VERSION_R5}/practitioners`).routes()
 );
 app.use(practitionerRoutes.allowedMethods());
 
 app.use(
-  organizationRoutes.prefix(`/${fHIR_VERSION_R5}/organizations`).routes()
+  organizationRoutes.prefix(`/${FHIR_VERSION_R5}/organizations`).routes()
 );
 app.use(organizationRoutes.allowedMethods());
 

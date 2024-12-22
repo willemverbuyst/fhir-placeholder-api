@@ -3,6 +3,7 @@ import { seedDataStore } from "./data/index.ts";
 import { logger } from "./middlewares/logger.ts";
 import conditionRoutes from "./routes/conditionRoutes.ts";
 import episodeRoutes from "./routes/episodeRoutes.ts";
+import organizationRoutes from "./routes/organization-routes.ts";
 import patientRoutes from "./routes/patientRoutes.ts";
 import practitionerRoutes from "./routes/practitionerRoutes.ts";
 
@@ -28,6 +29,11 @@ app.use(
   practitionerRoutes.prefix(`/${fHIR_VERSION_R5}/practitioners`).routes()
 );
 app.use(practitionerRoutes.allowedMethods());
+
+app.use(
+  organizationRoutes.prefix(`/${fHIR_VERSION_R5}/organizations`).routes()
+);
+app.use(organizationRoutes.allowedMethods());
 
 app.use((context) => {
   context.response.status = 404;

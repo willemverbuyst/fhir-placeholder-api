@@ -1,4 +1,11 @@
 import { dataStore } from "../data/index.ts";
+import {
+  ConditionWithId,
+  EpisodeOfCareWithId,
+  OrganizationWithId,
+  PatientWithId,
+  PractitionerWithId,
+} from "../models/data.ts";
 import { getConditionsForPatientFromDataStore } from "./condition-services.ts";
 import { getEpisodesForPatientFromDataStore } from "./episode-services.ts";
 import { getOrganizationFromDataStore } from "./organization-services.ts";
@@ -13,11 +20,17 @@ export function getPatientsFromDataStore() {
 }
 
 export function getEverythingForPatient(id: string) {
-  const resources = [];
+  const resources: (
+    | PatientWithId
+    | OrganizationWithId
+    | EpisodeOfCareWithId
+    | ConditionWithId
+    | PractitionerWithId
+  )[] = [];
   const patient = getPatientFromDataStore(id);
 
   if (!patient) {
-    return null;
+    return resources;
   }
 
   resources.push(patient);
@@ -26,22 +39,21 @@ export function getEverythingForPatient(id: string) {
 
   if (organizationId) {
     const organization = getOrganizationFromDataStore(organizationId);
-    resources.push(organization);
+    organization && resources.push(organization);
   }
 
-  const practitioners = patient.generalPractitioner?.map((gp) => {
+  patient.generalPractitioner?.forEach((gp) => {
     const practitionerId = gp.reference?.split("/")[1];
     if (practitionerId) {
       const practitioner = getPractitionerFromDataStore(practitionerId);
-      return practitioner;
+      practitioner && resources.push(practitioner);
     }
   });
-  resources.push(practitioners);
 
   const episodes = getEpisodesForPatientFromDataStore(id);
   resources.push(...episodes);
   const conditions = getConditionsForPatientFromDataStore(id);
   resources.push(...conditions);
 
-  return {};
+  return resources.filter(Boolean);
 }

@@ -7,3 +7,9 @@ export function getConditionFromDataStore(id: string) {
 export function getConditionsFromDataStore() {
   return dataStore.conditions;
 }
+
+export function getConditionsForPatientFromDataStore(id: string) {
+  return dataStore.conditions.filter(
+    (c) => c.subject.reference?.split("/")[1] === id
+  );
+}

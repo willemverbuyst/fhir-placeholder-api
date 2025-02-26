@@ -101,4 +101,4 @@ Check [examples](./examples.http)
 
 > deno run --allow-net server.ts
 
-You can change the number of resources in the [config](./data/config.ts)
+You can change the number of resources in the [config](./app/data/config.ts)

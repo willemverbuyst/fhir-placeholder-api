@@ -37,7 +37,30 @@ export const testDataStore: DataStore = {
     },
   ],
   organizations: [],
-  practitioners: [],
+  practitioners: [
+    {
+      id: "1",
+      resourceType: "Practitioner",
+      active: true,
+      name: [
+        {
+          family: "Smith",
+          given: ["John"],
+        },
+      ],
+    },
+    {
+      id: "2",
+      resourceType: "Practitioner",
+      active: true,
+      name: [
+        {
+          family: "Doe",
+          given: ["Jane"],
+        },
+      ],
+    },
+  ],
   conditions: [
     {
       id: "1",

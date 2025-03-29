@@ -36,7 +36,18 @@ export const testDataStore: DataStore = {
       type: [{ coding: [{ code: "test" }] }],
     },
   ],
-  organizations: [],
+  organizations: [
+    {
+      id: "1",
+      resourceType: "Organization",
+      name: "test organization",
+    },
+    {
+      id: "2",
+      resourceType: "Organization",
+      name: "another test organization",
+    },
+  ],
   practitioners: [
     {
       id: "1",

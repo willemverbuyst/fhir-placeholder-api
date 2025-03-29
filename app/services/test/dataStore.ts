@@ -2,7 +2,40 @@ import { DataStore } from "../../models/data.ts";
 
 export const testDataStore: DataStore = {
   patients: [],
-  episodes: [],
+  episodes: [
+    {
+      id: "1",
+      resourceType: "EpisodeOfCare",
+      status: "active",
+      patient: { reference: "Patient/1" },
+      diagnosis: [
+        {
+          condition: [
+            {
+              reference: { reference: "Condition/1" },
+            },
+          ],
+        },
+      ],
+      type: [{ coding: [{ code: "test" }] }],
+    },
+    {
+      id: "2",
+      resourceType: "EpisodeOfCare",
+      status: "active",
+      patient: { reference: "Patient/2" },
+      diagnosis: [
+        {
+          condition: [
+            {
+              reference: { reference: "Condition/2" },
+            },
+          ],
+        },
+      ],
+      type: [{ coding: [{ code: "test" }] }],
+    },
+  ],
   organizations: [],
   practitioners: [],
   conditions: [

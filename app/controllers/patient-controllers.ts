@@ -1,14 +1,25 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import { dataStore } from "../data/index.ts";
+import { ConditionService } from "../services/condition-service.ts";
 import { EpisodeService } from "../services/episode-service.ts";
-import {
-  getPatientFromDataStore,
-  getPatientsFromDataStore,
-} from "../services/patient-services.ts";
+import { OrganizationService } from "../services/organization-service.ts";
+import { PatientService } from "../services/patient-service.ts";
+import { PractitionerService } from "../services/practitioner-service.ts";
 
 export function getAllPatients(ctx: RouterContext<string>) {
   try {
-    const patients = getPatientsFromDataStore();
+    const conditionService = new ConditionService(dataStore);
+    const episodeService = new EpisodeService(dataStore);
+    const organizationService = new OrganizationService(dataStore);
+    const practitionerService = new PractitionerService(dataStore);
+    const patientService = new PatientService(
+      dataStore,
+      conditionService,
+      episodeService,
+      organizationService,
+      practitionerService
+    );
+    const patients = patientService.getAll();
 
     ctx.response.body = {
       status: "success",
@@ -36,7 +47,18 @@ export function getPatient(ctx: RouterContext<string>) {
       return;
     }
 
-    const patient = getPatientFromDataStore(id);
+    const conditionService = new ConditionService(dataStore);
+    const episodeService = new EpisodeService(dataStore);
+    const organizationService = new OrganizationService(dataStore);
+    const practitionerService = new PractitionerService(dataStore);
+    const patientService = new PatientService(
+      dataStore,
+      conditionService,
+      episodeService,
+      organizationService,
+      practitionerService
+    );
+    const patient = patientService.getById(id);
 
     if (!patient) {
       ctx.response.status = 404;

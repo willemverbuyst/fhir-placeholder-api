@@ -1,23 +1,17 @@
 import {
   ConditionWithId,
-  DataStore,
   EpisodeOfCareWithId,
   OrganizationWithId,
   PatientWithId,
 } from "../models/data.ts";
-import {
-  NUMBER_OF_EPISODES_PER_PATIENT,
-  NUMBER_OF_ORGANIZATIONS,
-  NUMBER_OF_PATIENTS,
-  NUMBER_OF_PRACTITIONERS,
-} from "./config.ts";
+import { NUMBER_OF_EPISODES_PER_PATIENT } from "./config.ts";
 import { createCondition } from "./resources/condition.ts";
 import { createEpisode } from "./resources/episode-of-care.ts";
 import { createOrganization } from "./resources/organization.ts";
 import { createPatient } from "./resources/patient.ts";
 import { createPractitioner } from "./resources/practitioner.ts";
 
-function createPatients(
+export function createPatients(
   numberOfPatients: number,
   organizationId: number,
   practitionerIds: string[]
@@ -30,7 +24,7 @@ function createPatients(
   return newPatients;
 }
 
-function createOrganizations(numberOfOrganizations: number) {
+export function createOrganizations(numberOfOrganizations: number) {
   const newOrganizations: OrganizationWithId[] = Array.from(
     { length: numberOfOrganizations },
     (_, i) => createOrganization(i + 1)
@@ -39,7 +33,7 @@ function createOrganizations(numberOfOrganizations: number) {
   return newOrganizations;
 }
 
-function createEpisodesWithConditions(
+export function createEpisodesWithConditions(
   numberOfEpisodes: number,
   patientId: string
 ) {
@@ -59,7 +53,7 @@ function createEpisodesWithConditions(
   return { newConditions, newEpisodes };
 }
 
-function createEpisodesForPatients(
+export function createEpisodesForPatients(
   patients: PatientWithId[],
   numberOfEpisodes: number
 ) {
@@ -76,30 +70,8 @@ function createEpisodesForPatients(
   return { newConditions, newEpisodes };
 }
 
-const createPractitioners = (numberOfPractitioners: number) => {
+export function createPractitioners(numberOfPractitioners: number) {
   return Array.from({ length: numberOfPractitioners }, (_, i) =>
     createPractitioner(i + 1)
   );
-};
-
-export function seed(dataStore: DataStore) {
-  const newOrganizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
-  const newPractitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
-
-  const newPatients = createPatients(
-    NUMBER_OF_PATIENTS,
-    1,
-    newPractitioners.map((p) => p.id)
-  );
-
-  const { newConditions, newEpisodes } = createEpisodesForPatients(
-    newPatients,
-    NUMBER_OF_EPISODES_PER_PATIENT
-  );
-
-  dataStore.organizations = newOrganizations;
-  dataStore.practitioners = newPractitioners;
-  dataStore.patients = newPatients;
-  dataStore.conditions = newConditions;
-  dataStore.episodes = newEpisodes;
 }

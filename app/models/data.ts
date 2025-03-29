@@ -14,11 +14,3 @@ export type OrganizationWithId = Organization &
   Required<Pick<Organization, "id">>;
 export type PractitionerWithId = Practitioner &
   Required<Pick<Practitioner, "id">>;
-
-export type DataStore = {
-  patients: PatientWithId[];
-  episodes: EpisodeOfCareWithId[];
-  conditions: ConditionWithId[];
-  organizations: OrganizationWithId[];
-  practitioners: PractitionerWithId[];
-};

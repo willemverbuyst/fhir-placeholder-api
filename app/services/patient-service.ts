@@ -1,6 +1,6 @@
+import { DataStore } from "../data/index.ts";
 import {
   ConditionWithId,
-  DataStore,
   EpisodeOfCareWithId,
   OrganizationWithId,
   PatientWithId,

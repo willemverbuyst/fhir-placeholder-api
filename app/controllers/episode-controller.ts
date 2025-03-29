@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { dataStore } from "../data/index.ts";
+import { dataStore } from "../index.ts";
 import { EpisodeService } from "../services/episode-service.ts";
 
 export function getEpisodes(ctx: RouterContext<string>) {

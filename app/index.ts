@@ -1,5 +1,5 @@
 import { Application } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { seedDataStore } from "./data/index.ts";
+import { DataStore } from "./data/index.ts";
 import { logger } from "./middlewares/logger.ts";
 import conditionRoutes from "./routes/condition-routes.ts";
 import episodeRoutes from "./routes/episode-routes.ts";
@@ -11,7 +11,7 @@ const FHIR_VERSION_R5 = "R5";
 
 const app = new Application();
 
-seedDataStore();
+export const dataStore = new DataStore();
 
 // Middleware
 app.use(logger);

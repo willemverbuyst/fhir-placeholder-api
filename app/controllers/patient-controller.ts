@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { dataStore } from "../data/index.ts";
+import { dataStore } from "../index.ts";
 import { ConditionService } from "../services/condition-service.ts";
 import { EpisodeService } from "../services/episode-service.ts";
 import { OrganizationService } from "../services/organization-service.ts";

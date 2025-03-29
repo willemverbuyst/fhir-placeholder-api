@@ -1,4 +1,4 @@
-import { DataStore } from "../models/data.ts";
+import { DataStore } from "../data/index.ts";
 
 export class EpisodeService {
   constructor(private dataStore: DataStore) {}

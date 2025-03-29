@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { dataStore } from "../data/index.ts";
+import { dataStore } from "../index.ts";
 import { PractitionerService } from "../services/practitioner-service.ts";
 
 export function getPractitioners(ctx: RouterContext<string>) {

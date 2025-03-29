@@ -1,15 +1,19 @@
-import { dataStore } from "../data/index.ts";
+import { Data } from "../models/data.ts";
 
-export function getConditionFromDataStore(id: string) {
-  return dataStore.conditions.find((c) => c.id === id);
-}
+export class ConditionService {
+  constructor(private dataStore: Data) {}
 
-export function getConditionsFromDataStore() {
-  return dataStore.conditions;
-}
+  getAll() {
+    return this.dataStore.conditions;
+  }
 
-export function getConditionsForPatientFromDataStore(id: string) {
-  return dataStore.conditions.filter(
-    (c) => c.subject.reference?.split("/")[1] === id
-  );
+  getById(id: string) {
+    return this.dataStore.conditions.find((c) => c.id === id);
+  }
+
+  getByPatientId(id: string) {
+    return this.dataStore.conditions.filter(
+      (c) => c.subject.reference?.split("/")[1] === id
+    );
+  }
 }

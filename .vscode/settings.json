@@ -1,6 +1,0 @@
-{
-  "deno.enable": true,
-  "cSpell.ignoreWords": ["fhir", "waitlist", "onhold"],
-  "cSpell.ignorePaths": ["./data/valueSets", ".vscode/**"],
-  "cSpell.words": ["waitlist"]
-}

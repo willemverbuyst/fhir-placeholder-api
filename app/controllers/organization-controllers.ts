@@ -1,12 +1,11 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import {
-  getOrganizationFromDataStore,
-  getOrganizationsFromDataStore,
-} from "../services/organization-services.ts";
+import { dataStore } from "../data/index.ts";
+import { OrganizationService } from "../services/organization-service.ts";
 
 export function getOrganizations(ctx: RouterContext<string>) {
   try {
-    const organizations = getOrganizationsFromDataStore();
+    const organizationService = new OrganizationService(dataStore);
+    const organizations = organizationService.getAll();
 
     ctx.response.body = {
       status: "success",
@@ -34,7 +33,8 @@ export function getOrganization(ctx: RouterContext<string>) {
       return;
     }
 
-    const organization = getOrganizationFromDataStore(id);
+    const organizationService = new OrganizationService(dataStore);
+    const organization = organizationService.getById(id);
 
     if (!organization) {
       ctx.response.status = 404;

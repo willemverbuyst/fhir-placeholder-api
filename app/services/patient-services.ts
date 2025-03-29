@@ -8,7 +8,7 @@ import {
 } from "../models/data.ts";
 import { ConditionService } from "./condition-service.ts";
 import { EpisodeService } from "./episode-service.ts";
-import { getOrganizationFromDataStore } from "./organization-services.ts";
+import { OrganizationService } from "./organization-service.ts";
 import { PractitionerService } from "./practitioner-service.ts";
 
 export function getPatientFromDataStore(id: string) {
@@ -38,7 +38,8 @@ export function getEverythingForPatient(id: string) {
   const organizationId = patient.managingOrganization?.reference?.split("/")[1];
 
   if (organizationId) {
-    const organization = getOrganizationFromDataStore(organizationId);
+    const organizationService = new OrganizationService(dataStore);
+    const organization = organizationService.getById(organizationId);
     organization && resources.push(organization);
   }
 

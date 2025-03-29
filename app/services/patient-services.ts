@@ -7,7 +7,7 @@ import {
   PractitionerWithId,
 } from "../models/data.ts";
 import { ConditionService } from "./condition-service.ts";
-import { getEpisodesForPatientFromDataStore } from "./episode-service.ts";
+import { EpisodeService } from "./episode-service.ts";
 import { getOrganizationFromDataStore } from "./organization-services.ts";
 import { getPractitionerFromDataStore } from "./practitioner-services.ts";
 
@@ -50,7 +50,8 @@ export function getEverythingForPatient(id: string) {
     }
   });
 
-  const episodes = getEpisodesForPatientFromDataStore(id);
+  const episodeService = new EpisodeService(dataStore);
+  const episodes = episodeService.getByPatientId(id);
   resources.push(...episodes);
   const conditionService = new ConditionService(dataStore);
   const conditions = conditionService.getByPatientId(id);

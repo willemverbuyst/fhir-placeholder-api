@@ -1,15 +1,19 @@
-import { dataStore } from "../data/index.ts";
+import { Data } from "../models/data.ts";
 
-export function getEpisodeFromDataStore(id: string) {
-  return dataStore.episodes.find((e) => e.id === id);
-}
+export class EpisodeService {
+  constructor(private dataStore: Data) {}
 
-export function getEpisodesFromDataStore() {
-  return dataStore.episodes;
-}
+  getById(id: string) {
+    return this.dataStore.episodes.find((e) => e.id === id);
+  }
 
-export function getEpisodesForPatientFromDataStore(id: string) {
-  return dataStore.episodes.filter(
-    (e) => e.patient.reference?.split("/")[1] === id
-  );
+  getAll() {
+    return this.dataStore.episodes;
+  }
+
+  getByPatientId(id: string) {
+    return this.dataStore.episodes.filter(
+      (e) => e.patient.reference?.split("/")[1] === id
+    );
+  }
 }

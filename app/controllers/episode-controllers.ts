@@ -1,42 +1,21 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import {
-  getEpisodeFromDataStore,
-  getEpisodesForPatientFromDataStore,
-  getEpisodesFromDataStore,
-} from "../services/episode-service.ts";
+import { dataStore } from "../data/index.ts";
+import { EpisodeService } from "../services/episode-service.ts";
 
 export function getEpisodes(ctx: RouterContext<string>) {
-  const { searchParams } = ctx.request.url;
-  const patientId = searchParams.get("patient");
+  try {
+    const episodeService = new EpisodeService(dataStore);
+    const episodes = episodeService.getAll();
 
-  if (patientId) {
-    try {
-      const episodes = getEpisodesForPatientFromDataStore(patientId);
-
-      ctx.response.body = {
-        status: "success",
-        length: episodes.length,
-        data: episodes,
-      };
-    } catch (error) {
-      console.error("Error fetching episodes", error);
-      ctx.response.status = 500;
-      ctx.response.body = { status: "error", message: "internal server error" };
-    }
-  } else {
-    try {
-      const episodes = getEpisodesFromDataStore();
-
-      ctx.response.body = {
-        status: "success",
-        length: episodes.length,
-        data: episodes,
-      };
-    } catch (error) {
-      console.error("Error fetching episodes", error);
-      ctx.response.status = 500;
-      ctx.response.body = { status: "error", message: "internal server error" };
-    }
+    ctx.response.body = {
+      status: "success",
+      length: episodes.length,
+      data: episodes,
+    };
+  } catch (error) {
+    console.error("Error fetching episodes", error);
+    ctx.response.status = 500;
+    ctx.response.body = { status: "error", message: "internal server error" };
   }
 }
 
@@ -54,7 +33,8 @@ export function getEpisode(ctx: RouterContext<string>) {
       return;
     }
 
-    const episode = getEpisodeFromDataStore(id);
+    const episodeService = new EpisodeService(dataStore);
+    const episode = episodeService.getById(id);
     if (!episode) {
       ctx.response.status = 404;
       ctx.response.body = {
@@ -74,9 +54,9 @@ export function getEpisode(ctx: RouterContext<string>) {
 
 export function getEpisodesForPatient(ctx: RouterContext<string>) {
   try {
-    const { id } = ctx.params;
+    const { patientId } = ctx.params;
 
-    if (!id) {
+    if (!patientId) {
       ctx.response.status = 400;
       ctx.response.body = {
         status: "fail",
@@ -86,7 +66,8 @@ export function getEpisodesForPatient(ctx: RouterContext<string>) {
       return;
     }
 
-    const episodes = getEpisodesForPatientFromDataStore(id);
+    const episodeService = new EpisodeService(dataStore);
+    const episodes = episodeService.getByPatientId(patientId);
 
     ctx.response.body = {
       status: "success",

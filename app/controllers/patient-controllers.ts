@@ -1,5 +1,6 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { getEpisodesForPatientFromDataStore } from "../services/episode-service.ts";
+import { dataStore } from "../data/index.ts";
+import { EpisodeService } from "../services/episode-service.ts";
 import {
   getPatientFromDataStore,
   getPatientsFromDataStore,
@@ -68,7 +69,8 @@ export function getEpisodesForPatient(ctx: RouterContext<string>) {
       return;
     }
 
-    const episodes = getEpisodesForPatientFromDataStore(id);
+    const episodeService = new EpisodeService(dataStore);
+    const episodes = episodeService.getByPatientId(id);
 
     ctx.response.body = {
       status: "success",

@@ -56,8 +56,6 @@ export function getEpisodesForPatient(ctx: RouterContext<string>) {
   try {
     const { id } = ctx.params;
 
-    console.log({ id });
-
     if (!id) {
       ctx.response.status = 400;
       ctx.response.body = {

@@ -1,5 +1,5 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import { getEpisodesForPatientFromDataStore } from "../services/episode-services.ts";
+import { getEpisodesForPatientFromDataStore } from "../services/episode-service.ts";
 import {
   getPatientFromDataStore,
   getPatientsFromDataStore,

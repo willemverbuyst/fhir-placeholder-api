@@ -7,7 +7,7 @@ import {
   PractitionerWithId,
 } from "../models/data.ts";
 import { ConditionService } from "./condition-service.ts";
-import { getEpisodesForPatientFromDataStore } from "./episode-services.ts";
+import { getEpisodesForPatientFromDataStore } from "./episode-service.ts";
 import { getOrganizationFromDataStore } from "./organization-services.ts";
 import { getPractitionerFromDataStore } from "./practitioner-services.ts";
 

@@ -3,7 +3,7 @@ import {
   getEpisodeFromDataStore,
   getEpisodesForPatientFromDataStore,
   getEpisodesFromDataStore,
-} from "../services/episode-services.ts";
+} from "../services/episode-service.ts";
 
 export function getEpisodes(ctx: RouterContext<string>) {
   const { searchParams } = ctx.request.url;

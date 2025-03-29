@@ -1,7 +1,7 @@
-import { Data } from "../models/data.ts";
+import { DataStore } from "../models/data.ts";
 
 export class ConditionService {
-  constructor(private dataStore: Data) {}
+  constructor(private dataStore: DataStore) {}
 
   getAll() {
     return this.dataStore.conditions;

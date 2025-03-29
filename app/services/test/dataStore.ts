@@ -1,6 +1,6 @@
-import { Data } from "../../models/data.ts";
+import { DataStore } from "../../models/data.ts";
 
-export const testDataStore: Data = {
+export const testDataStore: DataStore = {
   patients: [],
   episodes: [],
   organizations: [],

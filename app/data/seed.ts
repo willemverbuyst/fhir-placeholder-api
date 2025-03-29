@@ -1,6 +1,6 @@
 import {
   ConditionWithId,
-  Data,
+  DataStore,
   EpisodeOfCareWithId,
   PatientWithId,
 } from "../models/data.ts";
@@ -71,7 +71,7 @@ const createPractitioners = (numberOfPractitioners: number) => {
   );
 };
 
-export function seed(dataStore: Data) {
+export function seed(dataStore: DataStore) {
   const newOrganization = createOrganization(1);
   const newPractitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
 

@@ -15,7 +15,7 @@ export type OrganizationWithId = Organization &
 export type PractitionerWithId = Practitioner &
   Required<Pick<Practitioner, "id">>;
 
-export type Data = {
+export type DataStore = {
   patients: PatientWithId[];
   episodes: EpisodeOfCareWithId[];
   conditions: ConditionWithId[];

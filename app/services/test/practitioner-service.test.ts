@@ -20,7 +20,7 @@ describe("PractitionerService", () => {
   });
 
   it("should return a practitioner by ID", () => {
-    const practitionerId = testDataStore.conditions[0].id;
+    const practitionerId = testDataStore.practitioners[0].id;
     const practitioner = practitionerService.getById(practitionerId);
     assertEquals(practitioner, testDataStore.practitioners[0]);
   });

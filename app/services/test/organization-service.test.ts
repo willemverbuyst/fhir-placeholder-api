@@ -20,7 +20,7 @@ describe("OrganizationService", () => {
   });
 
   it("should return a organization by ID", () => {
-    const practitionerId = testDataStore.conditions[0].id;
+    const practitionerId = testDataStore.organizations[0].id;
     const organization = organizationService.getById(practitionerId);
     assertEquals(organization, testDataStore.organizations[0]);
   });

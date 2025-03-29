@@ -2,7 +2,7 @@ import { Router } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import {
   getPractitioner,
   getPractitioners,
-} from "../controllers/practitioner-controllers.ts";
+} from "../controllers/practitioner-controller.ts";
 
 const router = new Router();
 

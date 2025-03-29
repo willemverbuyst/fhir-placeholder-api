@@ -26,7 +26,7 @@ GET http://localhost:8000/R5/episodes/1
 
 ###
 
-GET http://localhost:8000/R5/episodes?patient=1
+GET http://localhost:8000/R5/episodes/patient/1
 
 ###
 

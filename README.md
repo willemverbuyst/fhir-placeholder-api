@@ -24,7 +24,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /patients/:id/episodes
 - GET /episodes
 - GET /episodes/:id
-- GET /episodes?patient=1
+- GET /episodes/patient/:id
 - GET /conditions
 - GET /conditions/:id
 - GET /practitioners

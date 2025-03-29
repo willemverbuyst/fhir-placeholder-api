@@ -54,9 +54,11 @@ export function getEpisode(ctx: RouterContext<string>) {
 
 export function getEpisodesForPatient(ctx: RouterContext<string>) {
   try {
-    const { patient } = ctx.params;
+    const { id } = ctx.params;
 
-    if (!patient) {
+    console.log({ id });
+
+    if (!id) {
       ctx.response.status = 400;
       ctx.response.body = {
         status: "fail",
@@ -67,7 +69,7 @@ export function getEpisodesForPatient(ctx: RouterContext<string>) {
     }
 
     const episodeService = new EpisodeService(dataStore);
-    const episodes = episodeService.getByPatientId(patient);
+    const episodes = episodeService.getByPatientId(id);
 
     ctx.response.body = {
       status: "success",

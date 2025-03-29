@@ -1,6 +1,6 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
 import { dataStore } from "../data/index.ts";
-import { ConditionService } from "../services/condition-services.ts";
+import { ConditionService } from "../services/condition-service.ts";
 
 export function getConditions(ctx: RouterContext<string>) {
   try {

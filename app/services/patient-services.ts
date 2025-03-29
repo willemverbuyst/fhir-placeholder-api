@@ -6,7 +6,7 @@ import {
   PatientWithId,
   PractitionerWithId,
 } from "../models/data.ts";
-import { ConditionService } from "./condition-services.ts";
+import { ConditionService } from "./condition-service.ts";
 import { getEpisodesForPatientFromDataStore } from "./episode-services.ts";
 import { getOrganizationFromDataStore } from "./organization-services.ts";
 import { getPractitionerFromDataStore } from "./practitioner-services.ts";

@@ -1,7 +1,24 @@
 import { DataStore } from "../../models/data.ts";
 
 export const testDataStore: DataStore = {
-  patients: [],
+  patients: [
+    {
+      id: "1",
+      resourceType: "Patient",
+      managingOrganization: {
+        reference: "Organization/1",
+      },
+      generalPractitioner: [
+        {
+          reference: "Practitioner/1",
+        },
+      ],
+    },
+    {
+      id: "2",
+      resourceType: "Patient",
+    },
+  ],
   episodes: [
     {
       id: "1",

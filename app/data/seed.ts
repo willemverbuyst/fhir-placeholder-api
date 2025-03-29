@@ -2,10 +2,12 @@ import {
   ConditionWithId,
   DataStore,
   EpisodeOfCareWithId,
+  OrganizationWithId,
   PatientWithId,
 } from "../models/data.ts";
 import {
   NUMBER_OF_EPISODES_PER_PATIENT,
+  NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
 } from "./config.ts";
@@ -26,6 +28,15 @@ function createPatients(
   );
 
   return newPatients;
+}
+
+function createOrganizations(numberOfOrganizations: number) {
+  const newOrganizations: OrganizationWithId[] = Array.from(
+    { length: numberOfOrganizations },
+    (_, i) => createOrganization(i + 1)
+  );
+
+  return newOrganizations;
 }
 
 function createEpisodesWithConditions(
@@ -72,7 +83,7 @@ const createPractitioners = (numberOfPractitioners: number) => {
 };
 
 export function seed(dataStore: DataStore) {
-  const newOrganization = createOrganization(1);
+  const newOrganizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
   const newPractitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
 
   const newPatients = createPatients(
@@ -86,7 +97,7 @@ export function seed(dataStore: DataStore) {
     NUMBER_OF_EPISODES_PER_PATIENT
   );
 
-  dataStore.organizations = [newOrganization];
+  dataStore.organizations = newOrganizations;
   dataStore.practitioners = newPractitioners;
   dataStore.patients = newPatients;
   dataStore.conditions = newConditions;

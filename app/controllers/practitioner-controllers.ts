@@ -1,12 +1,11 @@
 import { RouterContext } from "https://deno.land/x/oak@v17.1.3/mod.ts";
-import {
-  getPractitionerFromDataStore,
-  getPractitionersFromDataStore,
-} from "../services/practitioner-services.ts";
+import { dataStore } from "../data/index.ts";
+import { PractitionerService } from "../services/practitioner-service.ts";
 
 export function getPractitioners(ctx: RouterContext<string>) {
   try {
-    const practitioners = getPractitionersFromDataStore();
+    const practitionerService = new PractitionerService(dataStore);
+    const practitioners = practitionerService.getAll();
 
     ctx.response.body = {
       status: "success",
@@ -34,7 +33,8 @@ export function getPractitioner(ctx: RouterContext<string>) {
       return;
     }
 
-    const practitioner = getPractitionerFromDataStore(id);
+    const practitionerService = new PractitionerService(dataStore);
+    const practitioner = practitionerService.getById(id);
 
     if (!practitioner) {
       ctx.response.status = 404;

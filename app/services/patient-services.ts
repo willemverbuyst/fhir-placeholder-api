@@ -9,7 +9,7 @@ import {
 import { ConditionService } from "./condition-service.ts";
 import { EpisodeService } from "./episode-service.ts";
 import { getOrganizationFromDataStore } from "./organization-services.ts";
-import { getPractitionerFromDataStore } from "./practitioner-services.ts";
+import { PractitionerService } from "./practitioner-service.ts";
 
 export function getPatientFromDataStore(id: string) {
   return dataStore.patients.find((p) => p.id === id);
@@ -45,7 +45,8 @@ export function getEverythingForPatient(id: string) {
   patient.generalPractitioner?.forEach((gp) => {
     const practitionerId = gp.reference?.split("/")[1];
     if (practitionerId) {
-      const practitioner = getPractitionerFromDataStore(practitionerId);
+      const practitionerService = new PractitionerService(dataStore);
+      const practitioner = practitionerService.getById(practitionerId);
       practitioner && resources.push(practitioner);
     }
   });

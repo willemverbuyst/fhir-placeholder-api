@@ -4,8 +4,8 @@ import {
   it,
 } from "https://deno.land/std@0.151.0/testing/bdd.ts";
 import { assertEquals } from "jsr:@std/assert";
-import { ConditionService } from "./condition-service.ts";
-import { testDataStore } from "./test/dataStore.ts";
+import { ConditionService } from "../condition-service.ts";
+import { testDataStore } from "./testDataStore.ts";
 
 describe("ConditionService", () => {
   let conditionService: ConditionService;

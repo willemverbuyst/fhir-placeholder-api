@@ -4,8 +4,8 @@ import {
   it,
 } from "https://deno.land/std@0.151.0/testing/bdd.ts";
 import { assertEquals } from "jsr:@std/assert";
-import { PractitionerService } from "./practitioner-service.ts";
-import { testDataStore } from "./test/dataStore.ts";
+import { PractitionerService } from "../practitioner-service.ts";
+import { testDataStore } from "./testDataStore.ts";
 
 describe("PractitionerService", () => {
   let practitionerService: PractitionerService;

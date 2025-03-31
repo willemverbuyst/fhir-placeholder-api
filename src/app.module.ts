@@ -4,8 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import configuration from './config/configuration';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
-import { PatientsModule } from './patients/patients.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { PatientsModule } from './patients/patients.module';
 
 @Module({
   imports: [

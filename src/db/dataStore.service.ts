@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import {
   NUMBER_OF_EPISODES_PER_PATIENT,
   NUMBER_OF_ORGANIZATIONS,
@@ -18,6 +19,7 @@ import {
   createPractitioners,
 } from './utils/createResources';
 
+@Injectable()
 export class DataStore {
   public patients: PatientWithId[];
   public episodes: EpisodeOfCareWithId[];

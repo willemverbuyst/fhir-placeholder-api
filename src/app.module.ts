@@ -8,6 +8,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { PatientsModule } from './patients/patients.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
 import { ConditionsModule } from './conditions/conditions.module';
+import { EpisodesModule } from './episodes/episodes.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ConditionsModule } from './conditions/conditions.module';
     PatientsModule,
     PractitionersModule,
     ConditionsModule,
+    EpisodesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,6 +19,12 @@ export class PatientsService {
     return this.repo.patients.find((patient) => patient.id === String(id));
   }
 
+  findAllEpisodesForPatient(id: number) {
+    return this.repo.episodes.filter(
+      (episode) => episode.patient.reference?.split('/')[1] === String(id),
+    );
+  }
+
   update(id: number, updatePatientDto: UpdatePatientDto) {
     return `This action updates a #${id} patient`;
   }

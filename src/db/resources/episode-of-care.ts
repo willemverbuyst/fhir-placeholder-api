@@ -1,5 +1,5 @@
 import { EpisodeOfCare } from 'fhir/r5';
-import { getRandomElement } from '../utils/getRandomElement';
+import { getRandomElement } from '../helpers/getRandomElement';
 import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
 
 export function createEpisode(

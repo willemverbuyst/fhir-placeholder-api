@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Condition } from 'fhir/r5';
-import { getRandomElement } from '../utils/getRandomElement';
+import { getRandomElement } from '../helpers/getRandomElement';
 
 export function createCondition(patientId: string, episodeId: number) {
   const newCondition: Condition = {

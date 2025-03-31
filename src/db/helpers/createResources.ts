@@ -1,5 +1,5 @@
 import { Condition, EpisodeOfCare, Patient } from 'fhir/r5';
-import { NUMBER_OF_EPISODES_PER_PATIENT } from '../config';
+import { NUMBER_OF_EPISODES_PER_PATIENT } from '../dataStore.config';
 import { createCondition } from '../resources/condition';
 import { createEpisode } from '../resources/episode-of-care';
 import { createOrganization } from '../resources/organization';

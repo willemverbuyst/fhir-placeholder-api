@@ -11,13 +11,13 @@ import {
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
-} from './config';
+} from './dataStore.config';
 import {
   createEpisodesForPatients,
   createOrganizations,
   createPatients,
   createPractitioners,
-} from './utils/createResources';
+} from './helpers/createResources';
 
 @Injectable()
 export class DataStore {

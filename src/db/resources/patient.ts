@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker';
 import { Patient } from 'fhir/r5';
-import { START_DATE } from '../config';
+import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
-import { getRandomElement } from '../utils/getRandomElement';
+import { getRandomElement } from '../helpers/getRandomElement';
 import { languages } from '../valueSets/languages-value-set';
 
 export function createPatient(

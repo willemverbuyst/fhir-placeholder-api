@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { ContactPoint } from 'fhir/r5';
-import { getRandomElement } from '../utils/getRandomElement';
+import { getRandomElement } from './getRandomElement';
 
 export function createEmail(firstName: string, lastName: string) {
   const email: ContactPoint = {

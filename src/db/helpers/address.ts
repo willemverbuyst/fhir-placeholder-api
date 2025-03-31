@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Address } from 'fhir/r5';
-import { getRandomElement } from '../utils/getRandomElement';
+import { getRandomElement } from './getRandomElement';
 
 export function createAddress() {
   const address: Address = {

@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import configuration from './config/configuration';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { PatientsModule } from './patients/patients.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { PatientsModule } from './patients/patients.module';
       envFilePath: `.env.${process.env.NODE_ENV ?? 'development'}`,
       load: [configuration],
     }),
+    OrganizationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

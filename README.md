@@ -8,10 +8,7 @@ You can run this server locally for dev purposes. The data is in memory. On star
 
 ## :nerd_face: Technical
 
-A server with
-
-- Oak
-- Deno
+A server with NestJS
 
 ## :pray: Inspiration
 
@@ -21,10 +18,9 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 - GET /patients
 - GET /patients/:id
-- GET /patients/:id/episodes
 - GET /episodes
 - GET /episodes/:id
-- GET /episodes/patient/:id
+- GET /episodes?patient=\<id\>
 - GET /conditions
 - GET /conditions/:id
 - GET /practitioners
@@ -33,7 +29,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /organizations/:id
 
 ```typescript
-fetch("http://localhost:8000/R5/patients/1")
+fetch('http://localhost:8080/api/v2/r5/patients/1')
   .then((response) => response.json())
   .then((json) => console.log(json));
 ```
@@ -41,7 +37,7 @@ fetch("http://localhost:8000/R5/patients/1")
 or
 
 ```sh
-curl http://localhost:8000/R5/patients/1
+curl http://localhost:8080/api/v2/r5/patients/1
 ```
 
 👇 _Output_
@@ -95,10 +91,8 @@ curl http://localhost:8000/R5/patients/1
 }
 ```
 
-Check [examples](./examples.http)
-
 ## :rocket: Run Server
 
-> deno run --allow-net server.ts
+> npm run start
 
-You can change the number of resources in the [config](./app/data/config.ts)
+You can change the number of resources in the [config](./src/db/dataStore.config.ts)

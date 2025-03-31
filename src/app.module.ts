@@ -7,10 +7,10 @@ import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PatientsModule } from './patients/patients.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
+import { ConditionsModule } from './conditions/conditions.module';
 
 @Module({
   imports: [
-    PatientsModule,
     ConfigModule.forRoot({
       // to use ConfigModule in other modules set isGlobal to true
       isGlobal: true,
@@ -18,7 +18,9 @@ import { PractitionersModule } from './practitioners/practitioners.module';
       load: [configuration],
     }),
     OrganizationsModule,
+    PatientsModule,
     PractitionersModule,
+    ConditionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

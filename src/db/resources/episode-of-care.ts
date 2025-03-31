@@ -1,14 +1,15 @@
 import { EpisodeOfCare } from 'fhir/r5';
+import { v4 as uuidV4 } from 'uuid';
 import { getRandomElement } from '../helpers/getRandomElement';
 import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
 
 export function createEpisode(
   patientId: string,
-  episodeId: number,
+
   conditionId: string,
 ) {
   const newEpisode: EpisodeOfCare = {
-    id: episodeId.toString(),
+    id: uuidV4(),
     resourceType: 'EpisodeOfCare',
     status: getRandomElement([
       'planned',

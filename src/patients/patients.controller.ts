@@ -27,12 +27,12 @@ export class PatientsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.patientsService.findOne(+id);
+    return this.patientsService.findOne(id);
   }
 
   @Get(':id/episodes')
   findAllEpisodesForPatient(@Param('id') id: string) {
-    return this.patientsService.findAllEpisodesForPatient(+id);
+    return this.patientsService.findAllEpisodesForPatient(id);
   }
 
   @Patch(':id')

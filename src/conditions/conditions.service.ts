@@ -15,10 +15,8 @@ export class ConditionsService {
     return this.repo.conditions;
   }
 
-  findOne(id: number) {
-    return this.repo.conditions.find(
-      (condition) => condition.id === String(id),
-    );
+  findOne(id: string) {
+    return this.repo.conditions.find((condition) => condition.id === id);
   }
 
   update(id: number, updateConditionDto: UpdateConditionDto) {

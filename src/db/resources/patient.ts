@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Patient } from 'fhir/r5';
+import { v4 as uuidV4 } from 'uuid';
 import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
@@ -7,14 +8,13 @@ import { getRandomElement } from '../helpers/getRandomElement';
 import { languages } from '../valueSets/languages-value-set';
 
 export function createPatient(
-  patientId: number,
-  organizationId: number,
+  organizationId: string,
   practitionerIds: string[],
 ) {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   const newPatient: Patient = {
-    id: patientId.toString(),
+    id: uuidV4(),
     name: [{ family: lastName, given: [firstName] }],
     resourceType: 'Patient',
     birthDate: faker.date

@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PractitionersService } from './practitioners.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreatePractitionerDto } from './dto/create-practitioner.dto';
 import { UpdatePractitionerDto } from './dto/update-practitioner.dto';
+import { PractitionersService } from './practitioners.service';
 
 @Controller('practitioners')
 export class PractitionersController {
@@ -19,11 +27,14 @@ export class PractitionersController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.practitionersService.findOne(+id);
+    return this.practitionersService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePractitionerDto: UpdatePractitionerDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePractitionerDto: UpdatePractitionerDto,
+  ) {
     return this.practitionersService.update(+id, updatePractitionerDto);
   }
 

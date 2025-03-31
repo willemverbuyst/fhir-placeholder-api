@@ -15,13 +15,13 @@ export class PatientsService {
     return this.repo.patients;
   }
 
-  findOne(id: number) {
-    return this.repo.patients.find((patient) => patient.id === String(id));
+  findOne(id: string) {
+    return this.repo.patients.find((patient) => patient.id === id);
   }
 
-  findAllEpisodesForPatient(id: number) {
+  findAllEpisodesForPatient(id: string) {
     return this.repo.episodes.filter(
-      (episode) => episode.patient.reference?.split('/')[1] === String(id),
+      (episode) => episode.patient.reference?.split('/')[1] === id,
     );
   }
 

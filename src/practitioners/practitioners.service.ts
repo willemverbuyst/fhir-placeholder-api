@@ -15,9 +15,9 @@ export class PractitionersService {
     return this.repo.practitioners;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.repo.practitioners.find(
-      (practitioner) => practitioner.id === String(id),
+      (practitioner) => practitioner.id === id,
     );
   }
 

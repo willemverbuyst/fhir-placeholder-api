@@ -1,4 +1,4 @@
-import { EpisodeOfCareWithId } from '../models';
+import { EpisodeOfCare } from 'fhir/r5';
 import { getRandomElement } from '../utils/getRandomElement';
 import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
 
@@ -7,7 +7,7 @@ export function createEpisode(
   episodeId: number,
   conditionId: string,
 ) {
-  const newEpisode: EpisodeOfCareWithId = {
+  const newEpisode: EpisodeOfCare = {
     id: episodeId.toString(),
     resourceType: 'EpisodeOfCare',
     status: getRandomElement([

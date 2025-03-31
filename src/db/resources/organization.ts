@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { OrganizationWithId } from '../models';
+import { Organization } from 'fhir/r5';
 
 export function createOrganization(organizationId: number) {
-  const organization: OrganizationWithId = {
+  const organization: Organization = {
     id: organizationId.toString(),
     resourceType: 'Organization',
     name: faker.company.name(),

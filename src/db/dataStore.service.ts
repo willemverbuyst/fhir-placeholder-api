@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import {
+  Condition,
+  EpisodeOfCare,
+  Organization,
+  Patient,
+  Practitioner,
+} from 'fhir/r5';
+import {
   NUMBER_OF_EPISODES_PER_PATIENT,
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
 } from './config';
-import {
-  ConditionWithId,
-  EpisodeOfCareWithId,
-  OrganizationWithId,
-  PatientWithId,
-  PractitionerWithId,
-} from './models';
 import {
   createEpisodesForPatients,
   createOrganizations,
@@ -21,11 +21,11 @@ import {
 
 @Injectable()
 export class DataStore {
-  public patients: PatientWithId[];
-  public episodes: EpisodeOfCareWithId[];
-  public conditions: ConditionWithId[];
-  public organizations: OrganizationWithId[];
-  public practitioners: PractitionerWithId[];
+  public patients: Patient[];
+  public episodes: EpisodeOfCare[];
+  public conditions: Condition[];
+  public organizations: Organization[];
+  public practitioners: Practitioner[];
 
   constructor() {
     const newOrganizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
@@ -33,7 +33,7 @@ export class DataStore {
     const newPatients = createPatients(
       NUMBER_OF_PATIENTS,
       1,
-      newPractitioners.map((p) => p.id),
+      newPractitioners.map((p) => p.id!),
     );
     const { newConditions, newEpisodes } = createEpisodesForPatients(
       newPatients,

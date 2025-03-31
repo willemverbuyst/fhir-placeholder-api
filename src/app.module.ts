@@ -11,7 +11,7 @@ import { PatientsModule } from './patients/patients.module';
     ConfigModule.forRoot({
       // to use ConfigModule in other modules set isGlobal to true
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env.${process.env.NODE_ENV ?? 'development'}`,
     }),
   ],
   controllers: [AppController],

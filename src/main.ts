@@ -5,18 +5,18 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const FHIR_VERSION = app.get(ConfigService).get('FHIR_VERSION');
-  if (!FHIR_VERSION) {
-    throw new Error('FHIR_VERSION is not defined');
+  const fhirVersion = app.get(ConfigService).get('fhirVersion');
+  if (!fhirVersion) {
+    throw new Error('fhirVersion is not defined');
   }
 
   app.enableCors();
-  app.setGlobalPrefix('api/v2/' + FHIR_VERSION);
+  app.setGlobalPrefix('api/v2/' + fhirVersion);
 
-  const PORT = app.get(ConfigService).get('PORT') || 3000;
-  await app.listen(PORT, () => {
+  const port = app.get(ConfigService).get('PORT') || 3000;
+  await app.listen(port, () => {
     console.log(
-      `Server is running on http://localhost:${PORT}/api/v2/${FHIR_VERSION}`,
+      `Server is running on http://localhost:${port}/api/v2/${fhirVersion}`,
     );
   });
 }

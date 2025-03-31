@@ -6,6 +6,7 @@ import configuration from './config/configuration';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PatientsModule } from './patients/patients.module';
+import { PractitionersModule } from './practitioners/practitioners.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PatientsModule } from './patients/patients.module';
       load: [configuration],
     }),
     OrganizationsModule,
+    PractitionersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -22,7 +22,7 @@ export class EpisodesController {
   }
 
   @Get()
-  findAll(@Query('patient') patient: string) {
+  findAll(@Query('patient') patient?: string) {
     if (!patient) {
       return this.episodesService.findAll();
     }

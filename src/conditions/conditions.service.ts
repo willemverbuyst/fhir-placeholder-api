@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataStore } from 'src/db/dataStore.service';
+import { DataStore } from '../db/dataStore.service';
 import { CreateConditionDto } from './dto/create-condition.dto';
 import { UpdateConditionDto } from './dto/update-condition.dto';
 
@@ -15,10 +15,8 @@ export class ConditionsService {
     return this.repo.conditions;
   }
 
-  findOne(id: number) {
-    return this.repo.conditions.find(
-      (condition) => condition.id === String(id),
-    );
+  findOne(id: string) {
+    return this.repo.conditions.find((condition) => condition.id === id);
   }
 
   update(id: number, updateConditionDto: UpdateConditionDto) {

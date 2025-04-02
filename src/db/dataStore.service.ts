@@ -32,7 +32,7 @@ export class DataStore {
     const newPractitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
     const newPatients = createPatients(
       NUMBER_OF_PATIENTS,
-      1,
+      newOrganizations.map((o) => o.id!)[0],
       newPractitioners.map((p) => p.id!),
     );
     const { newConditions, newEpisodes } = createEpisodesForPatients(

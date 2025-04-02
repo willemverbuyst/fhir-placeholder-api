@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataStore } from 'src/db/dataStore.service';
+import { DataStore } from '../db/dataStore.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 
@@ -15,8 +15,8 @@ export class OrganizationsService {
     return this.repo.organizations;
   }
 
-  findOne(id: number) {
-    return this.repo.organizations.find((org) => org.id === String(id));
+  findOne(id: string) {
+    return this.repo.organizations.find((org) => org.id === id);
   }
 
   update(id: number, updateOrganizationDto: UpdateOrganizationDto) {

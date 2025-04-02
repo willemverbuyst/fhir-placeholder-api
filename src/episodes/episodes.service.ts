@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataStore } from 'src/db/dataStore.service';
+import { DataStore } from '../db/dataStore.service';
 import { CreateEpisodeDto } from './dto/create-episode.dto';
 import { UpdateEpisodeDto } from './dto/update-episode.dto';
 
@@ -15,13 +15,13 @@ export class EpisodesService {
     return this.repo.episodes;
   }
 
-  findOne(id: number) {
-    return this.repo.episodes.find((episode) => episode.id === String(id));
+  findOne(id: string) {
+    return this.repo.episodes.find((episode) => episode.id === id);
   }
 
-  findByPatientId(id: number) {
+  findByPatientId(id: string) {
     return this.repo.episodes.filter(
-      (e) => e.patient.reference?.split('/')[1] === String(id),
+      (e) => e.patient.reference?.split('/')[1] === id,
     );
   }
 

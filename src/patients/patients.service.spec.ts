@@ -33,4 +33,9 @@ describe('PatientsService', () => {
     expect(patient!.id).toBe('1');
     expect(patient!.resourceType).toBe('Patient');
   });
+
+  it("should return undefined for an patient that doesn't exist", () => {
+    const patient = service.findOne('999');
+    expect(patient).toBeUndefined();
+  });
 });

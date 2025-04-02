@@ -33,4 +33,9 @@ describe('OrganizationsService', () => {
     expect(organization!.id).toBe('1');
     expect(organization!.resourceType).toBe('Organization');
   });
+
+  it("should return undefined for an organization that doesn't exist", () => {
+    const organization = service.findOne('999');
+    expect(organization).toBeUndefined();
+  });
 });

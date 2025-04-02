@@ -26,4 +26,11 @@ describe('OrganizationsService', () => {
     expect(organizations).toBeDefined();
     expect(organizations.length).toBe(2);
   });
+
+  it('should return an organization by id', () => {
+    const organization = service.findOne('1');
+    expect(organization).toBeDefined();
+    expect(organization!.id).toBe('1');
+    expect(organization!.resourceType).toBe('Organization');
+  });
 });

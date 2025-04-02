@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataStore } from 'src/db/dataStore.service';
+import { DataStore } from '../db/dataStore.service';
 import { CreatePractitionerDto } from './dto/create-practitioner.dto';
 import { UpdatePractitionerDto } from './dto/update-practitioner.dto';
 

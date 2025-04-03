@@ -46,4 +46,11 @@ describe('OrganizationsController', () => {
 
     expect(service.findOne).toHaveBeenCalledWith(id);
   });
+
+  it('should call create with organization dto', () => {
+    const body = { name: 'test organization' };
+    controller.create(body);
+
+    expect(service.create).toHaveBeenCalledWith(body);
+  });
 });

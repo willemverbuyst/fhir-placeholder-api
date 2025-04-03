@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Organization } from 'fhir/r5';
+import { v4 as uuidV4 } from 'uuid';
 import { DataStore } from '../db/dataStore.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
@@ -8,7 +10,16 @@ export class OrganizationsService {
   constructor(private readonly repo: DataStore) {}
 
   create(createOrganizationDto: CreateOrganizationDto) {
-    return 'This action adds a new organization';
+    const newOrganization: Organization = {
+      id: uuidV4(),
+      resourceType: 'Organization',
+      active: true,
+      ...createOrganizationDto,
+    };
+
+    this.repo.organizations.push(newOrganization);
+
+    return newOrganization;
   }
 
   findAll() {

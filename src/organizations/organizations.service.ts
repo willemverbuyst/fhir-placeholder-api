@@ -26,7 +26,7 @@ export class OrganizationsService {
     return this.repo.organizations;
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     return this.repo.organizations.find((org) => org.id === id);
   }
 

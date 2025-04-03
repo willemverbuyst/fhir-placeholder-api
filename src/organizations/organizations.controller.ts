@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -26,8 +27,14 @@ export class OrganizationsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.organizationsService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const organization = await this.organizationsService.findOne(id);
+
+    if (!organization) {
+      throw new NotFoundException('organization not found');
+    }
+
+    return organization;
   }
 
   @Patch(':id')

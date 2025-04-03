@@ -1,4 +1,6 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Organization } from 'fhir/r5';
 import { DataStore } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { OrganizationsController } from './organizations.controller';
@@ -36,21 +38,32 @@ describe('OrganizationsController', () => {
 
   it('should call findAll method of OrganizationsService', () => {
     controller.findAll();
-
     expect(service.findAll).toHaveBeenCalledTimes(1);
   });
 
-  it('should call findOne method of OrganizationsService', () => {
-    const id = '1';
-    controller.findOne(id);
+  it('should call findOne method of OrganizationsService', async () => {
+    const mockOrganization: Organization = {
+      id: '1',
+      resourceType: 'Organization',
+    };
+    jest.spyOn(service, 'findOne').mockResolvedValue(mockOrganization);
+    const result = await controller.findOne('1');
+    expect(result).toEqual(mockOrganization);
+    expect(service.findOne).toHaveBeenCalledWith('1');
+  });
 
-    expect(service.findOne).toHaveBeenCalledWith(id);
+  it('should throw an error if organization with id is not found', async () => {
+    jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
+
+    await expect(controller.findOne('unknown')).rejects.toThrow(
+      NotFoundException,
+    );
+    expect(service.findOne).toHaveBeenCalledWith('unknown');
   });
 
   it('should call create with organization dto', () => {
-    const body = { name: 'test organization' };
-    controller.create(body);
-
-    expect(service.create).toHaveBeenCalledWith(body);
+    const dto = { name: 'test organization' };
+    controller.create(dto);
+    expect(service.create).toHaveBeenCalledWith(dto);
   });
 });

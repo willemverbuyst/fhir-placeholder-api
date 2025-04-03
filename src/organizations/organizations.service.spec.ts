@@ -27,15 +27,15 @@ describe('OrganizationsService', () => {
     expect(organizations.length).toBe(2);
   });
 
-  it('should return an organization by id', () => {
-    const organization = service.findOne('1');
+  it('should return an organization by id', async () => {
+    const organization = await service.findOne('1');
     expect(organization).toBeDefined();
     expect(organization!.id).toBe('1');
     expect(organization!.resourceType).toBe('Organization');
   });
 
-  it("should return undefined for an organization that doesn't exist", () => {
-    const organization = service.findOne('999');
+  it("should return undefined for an organization that doesn't exist", async () => {
+    const organization = await service.findOne('unknown');
     expect(organization).toBeUndefined();
   });
 });

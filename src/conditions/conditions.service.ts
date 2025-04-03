@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DataStore } from '../db/dataStore.service';
-import { CreateConditionDto } from './dto/create-condition.dto';
-import { UpdateConditionDto } from './dto/update-condition.dto';
 
 @Injectable()
 export class ConditionsService {
   constructor(private readonly repo: DataStore) {}
 
-  create(createConditionDto: CreateConditionDto) {
+  create() {
     return 'This action adds a new condition';
   }
 
@@ -19,7 +17,7 @@ export class ConditionsService {
     return this.repo.conditions.find((condition) => condition.id === id);
   }
 
-  update(id: number, updateConditionDto: UpdateConditionDto) {
+  update(id: number) {
     return `This action updates a #${id} condition`;
   }
 

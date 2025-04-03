@@ -32,9 +32,15 @@ export function createEpisodesWithConditions(
   const newConditions: Condition[] = [];
   const newEpisodes: EpisodeOfCare[] = [];
 
-  Array.from({ length: numberOfEpisodes }, (_, i) => {
+  Array.from({ length: numberOfEpisodes }, () => {
     const condition = createCondition(patientId);
-    const episode = createEpisode(patientId, condition.id!);
+    const conditionId = condition.id;
+    if (!conditionId) {
+      throw new Error(
+        'Condition ID is missing in createEpisodesWithConditions',
+      );
+    }
+    const episode = createEpisode(patientId, conditionId);
 
     newConditions.push(condition);
     newEpisodes.push(episode);
@@ -51,8 +57,13 @@ export function createEpisodesForPatients(
   const newConditions: Condition[] = [];
 
   patients.forEach((p) => {
+    const patientId = p.id;
+    if (!patientId) {
+      throw new Error('Patient ID is missing in createEpisodesForPatients');
+    }
+    // Create a condition for each episode
     const { newConditions: conditions, newEpisodes: episodes } =
-      createEpisodesWithConditions(numberOfEpisodes, p.id!);
+      createEpisodesWithConditions(numberOfEpisodes, patientId);
     newEpisodes.push(...episodes);
     newConditions.push(...conditions);
   });

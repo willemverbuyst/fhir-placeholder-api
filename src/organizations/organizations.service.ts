@@ -3,7 +3,6 @@ import { Organization } from 'fhir/r5';
 import { v4 as uuidV4 } from 'uuid';
 import { DataStore } from '../db/dataStore.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { UpdateOrganizationDto } from './dto/update-organization.dto';
 
 @Injectable()
 export class OrganizationsService {
@@ -30,7 +29,7 @@ export class OrganizationsService {
     return this.repo.organizations.find((org) => org.id === id);
   }
 
-  update(id: number, updateOrganizationDto: UpdateOrganizationDto) {
+  update(id: number) {
     return `This action updates a #${id} organization`;
   }
 

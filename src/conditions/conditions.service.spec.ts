@@ -30,7 +30,9 @@ describe('ConditionsService', () => {
   it('should return an condition by id', () => {
     const condition = service.findOne('1');
     expect(condition).toBeDefined();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(condition!.id).toBe('1');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(condition!.resourceType).toBe('Condition');
   });
 

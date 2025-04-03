@@ -30,7 +30,9 @@ describe('PractitionersService', () => {
   it('should return an practitioner by id', () => {
     const practitioner = service.findOne('1');
     expect(practitioner).toBeDefined();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(practitioner!.id).toBe('1');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(practitioner!.resourceType).toBe('Practitioner');
   });
 

@@ -26,6 +26,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /practitioners
 - GET /practitioners/:id
 - GET /organizations
+- POST /organizations
 - GET /organizations/:id
 
 ```typescript

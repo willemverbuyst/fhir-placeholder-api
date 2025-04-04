@@ -10,7 +10,7 @@ describe('OrganizationsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrganizationsService,
-        { provide: DataStore, useValue: testDataStore },
+        { provide: DataStore, useValue: { ...testDataStore } },
       ],
     }).compile();
 
@@ -50,17 +50,33 @@ describe('OrganizationsService', () => {
       const organization = await service.remove('unknown');
       expect(organization).toBeUndefined();
     });
+
+    it('should remove an organization by id', async () => {
+      const organization = await service.remove('1');
+      expect(organization).toBeDefined();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(organization!.id).toBe('1');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(organization!.resourceType).toBe('Organization');
+
+      const allOrganizations = service.findAll();
+      expect(allOrganizations.length).toBe(1);
+    });
   });
 
-  it('should remove an organization by id', async () => {
-    const organization = await service.remove('1');
-    expect(organization).toBeDefined();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(organization!.id).toBe('1');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(organization!.resourceType).toBe('Organization');
+  describe('create', () => {
+    it('should create a new organization', () => {
+      const newOrganization = service.create({
+        name: 'New Organization',
+      });
+      expect(newOrganization).toBeDefined();
+      expect(newOrganization.id).toBeDefined();
+      expect(newOrganization.resourceType).toBe('Organization');
+      expect(newOrganization.name).toBe('New Organization');
+      expect(newOrganization.active).toBe(true);
 
-    const allOrganizations = service.findAll();
-    expect(allOrganizations.length).toBe(1);
+      const allOrganizations = service.findAll();
+      expect(allOrganizations.length).toBe(3);
+    });
   });
 });

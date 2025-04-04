@@ -13,7 +13,7 @@ export class PractitionersService {
     return this.repo.practitioners;
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     return this.repo.practitioners.find(
       (practitioner) => practitioner.id === id,
     );
@@ -23,7 +23,15 @@ export class PractitionersService {
     return `This action updates a #${id} practitioner`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} practitioner`;
+  async remove(id: string) {
+    const practitioner = await this.findOne(id);
+
+    if (practitioner) {
+      this.repo.practitioners = this.repo.practitioners.filter(
+        (practitioner) => practitioner.id !== id,
+      );
+      return practitioner;
+    }
+    return undefined;
   }
 }

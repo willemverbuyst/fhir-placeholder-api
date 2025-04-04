@@ -1,4 +1,6 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Practitioner } from 'fhir/r5';
 import { DataStore } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { PractitionersController } from './practitioners.controller';
@@ -34,16 +36,57 @@ describe('PractitionersController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call findAll method of PractitionersService', () => {
-    controller.findAll();
+  describe('findAll', () => {
+    it('should call findAll method of PractitionersService', () => {
+      controller.findAll();
 
-    expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(service.findAll).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('should call findOne method of PractitionersService', () => {
-    const id = '1';
-    controller.findOne(id);
+  describe('findOne', () => {
+    it('should call findOne method of PractitionersService', async () => {
+      const mockPractitioner: Practitioner = {
+        id: '1',
+        resourceType: 'Practitioner',
+      };
+      jest.spyOn(service, 'findOne').mockResolvedValue(mockPractitioner);
 
-    expect(service.findOne).toHaveBeenCalledWith(id);
+      const result = await controller.findOne('1');
+      expect(result).toEqual(mockPractitioner);
+      expect(service.findOne).toHaveBeenCalledWith('1');
+    });
+
+    it('should throw an error if practitioner with id is not found', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
+
+      await expect(controller.findOne('unknown')).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.findOne).toHaveBeenCalledWith('unknown');
+    });
+  });
+
+  describe('remove', () => {
+    it('should call remove method of PractitionersService', async () => {
+      const mockPractitioner: Practitioner = {
+        id: '1',
+        resourceType: 'Practitioner',
+      };
+      jest.spyOn(service, 'remove').mockResolvedValue(mockPractitioner);
+
+      const result = await controller.remove('1');
+      expect(result).toEqual(mockPractitioner);
+      expect(service.remove).toHaveBeenCalledWith('1');
+    });
+
+    it('should throw an error if practitioner with id is not found', async () => {
+      jest.spyOn(service, 'remove').mockResolvedValue(undefined);
+
+      await expect(controller.remove('unknown')).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.remove).toHaveBeenCalledWith('unknown');
+    });
   });
 });

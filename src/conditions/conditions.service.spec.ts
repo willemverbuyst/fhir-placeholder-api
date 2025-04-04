@@ -10,7 +10,7 @@ describe('ConditionsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ConditionsService,
-        { provide: DataStore, useValue: testDataStore },
+        { provide: DataStore, useValue: { ...testDataStore } },
       ],
     }).compile();
 
@@ -30,10 +30,13 @@ describe('ConditionsService', () => {
   it('should return an condition by id', () => {
     const condition = service.findOne('1');
     expect(condition).toBeDefined();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(condition!.id).toBe('1');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(condition!.resourceType).toBe('Condition');
+
+    if (!condition) {
+      throw new Error('Expected condition to be defined in test');
+    }
+
+    expect(condition.id).toBe('1');
+    expect(condition.resourceType).toBe('Condition');
   });
 
   it("should return undefined for an condition that doesn't exist", () => {

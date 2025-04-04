@@ -33,10 +33,13 @@ describe('OrganizationsService', () => {
     it('should return an organization by id', async () => {
       const organization = await service.findOne('1');
       expect(organization).toBeDefined();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(organization!.id).toBe('1');
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(organization!.resourceType).toBe('Organization');
+
+      if (!organization) {
+        throw new Error('Expected organization to be defined in test');
+      }
+
+      expect(organization.id).toBe('1');
+      expect(organization.resourceType).toBe('Organization');
     });
 
     it("should return undefined for an organization that doesn't exist", async () => {
@@ -54,10 +57,13 @@ describe('OrganizationsService', () => {
     it('should remove an organization by id', async () => {
       const organization = await service.remove('1');
       expect(organization).toBeDefined();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(organization!.id).toBe('1');
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(organization!.resourceType).toBe('Organization');
+
+      if (!organization) {
+        throw new Error('Expected organization to be defined in test');
+      }
+
+      expect(organization.id).toBe('1');
+      expect(organization.resourceType).toBe('Organization');
 
       const allOrganizations = service.findAll();
       expect(allOrganizations.length).toBe(1);

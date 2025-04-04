@@ -10,7 +10,7 @@ describe('PractitionersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PractitionersService,
-        { provide: DataStore, useValue: testDataStore },
+        { provide: DataStore, useValue: { ...testDataStore } },
       ],
     }).compile();
 
@@ -33,10 +33,13 @@ describe('PractitionersService', () => {
     it('should return an practitioner by id', async () => {
       const practitioner = await service.findOne('1');
       expect(practitioner).toBeDefined();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(practitioner!.id).toBe('1');
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(practitioner!.resourceType).toBe('Practitioner');
+
+      if (!practitioner) {
+        throw new Error('Expected practitioner to be defined in test');
+      }
+
+      expect(practitioner.id).toBe('1');
+      expect(practitioner.resourceType).toBe('Practitioner');
     });
 
     it("should return undefined for an practitioner that doesn't exist", async () => {
@@ -54,10 +57,12 @@ describe('PractitionersService', () => {
     it('should remove an practitioner by id', async () => {
       const practitioner = await service.remove('1');
       expect(practitioner).toBeDefined();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(practitioner!.id).toBe('1');
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(practitioner!.resourceType).toBe('Practitioner');
+
+      if (!practitioner) {
+        throw new Error('Expected practitioner to be defined in test');
+      }
+      expect(practitioner.id).toBe('1');
+      expect(practitioner.resourceType).toBe('Practitioner');
 
       const allPractitioners = service.findAll();
       expect(allPractitioners.length).toBe(1);

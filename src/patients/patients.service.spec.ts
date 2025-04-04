@@ -10,7 +10,7 @@ describe('PatientsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PatientsService,
-        { provide: DataStore, useValue: testDataStore },
+        { provide: DataStore, useValue: { ...testDataStore } },
       ],
     }).compile();
 
@@ -30,10 +30,13 @@ describe('PatientsService', () => {
   it('should return an patient by id', () => {
     const patient = service.findOne('1');
     expect(patient).toBeDefined();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(patient!.id).toBe('1');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(patient!.resourceType).toBe('Patient');
+
+    if (!patient) {
+      throw new Error('Expected patient to be defined in test');
+    }
+
+    expect(patient.id).toBe('1');
+    expect(patient.resourceType).toBe('Patient');
   });
 
   it("should return undefined for an patient that doesn't exist", () => {

@@ -2,13 +2,13 @@ import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config/dist';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ConditionsModule } from './conditions/conditions.module';
 import configuration from './config/configuration';
+import { EpisodesModule } from './episodes/episodes.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PatientsModule } from './patients/patients.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
-import { ConditionsModule } from './conditions/conditions.module';
-import { EpisodesModule } from './episodes/episodes.module';
 
 @Module({
   imports: [
@@ -28,7 +28,6 @@ import { EpisodesModule } from './episodes/episodes.module';
   providers: [AppService],
 })
 export class AppModule {
-  constructor() {}
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggerMiddleware)

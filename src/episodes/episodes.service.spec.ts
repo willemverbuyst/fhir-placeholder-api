@@ -30,7 +30,9 @@ describe('EpisodesService', () => {
   it('should return an episode by id', () => {
     const episode = service.findOne('1');
     expect(episode).toBeDefined();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(episode!.id).toBe('1');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(episode!.resourceType).toBe('EpisodeOfCare');
   });
 

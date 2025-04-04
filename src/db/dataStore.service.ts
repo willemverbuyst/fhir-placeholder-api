@@ -30,10 +30,24 @@ export class DataStore {
   constructor() {
     const newOrganizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
     const newPractitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
+    const newPractitionerIds = newPractitioners
+      .map((p) => p.id)
+      .filter((p): p is string => !!p);
+
+    const newOrganizationIds = newOrganizations.map((o) => o.id);
+
+    const firstNewOrganizationId = newOrganizationIds[0];
+
+    if (!firstNewOrganizationId) {
+      throw new Error(
+        'First organization ID is missing in DataStore constructor',
+      );
+    }
+
     const newPatients = createPatients(
       NUMBER_OF_PATIENTS,
-      newOrganizations.map((o) => o.id!)[0],
-      newPractitioners.map((p) => p.id!),
+      firstNewOrganizationId,
+      newPractitionerIds,
     );
     const { newConditions, newEpisodes } = createEpisodesForPatients(
       newPatients,

@@ -25,6 +25,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /conditions/:id
 - GET /practitioners
 - GET /practitioners/:id
+- DELETE /practitioner/:id
 - GET /organizations
 - POST /organizations
 - GET /organizations/:id

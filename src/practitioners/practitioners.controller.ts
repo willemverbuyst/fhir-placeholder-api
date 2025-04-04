@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { PractitionersService } from './practitioners.service';
 
 @Controller('practitioners')
@@ -13,5 +13,10 @@ export class PractitionersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.practitionersService.findOne(id);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.practitionersService.remove(id);
   }
 }

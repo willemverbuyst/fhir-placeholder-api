@@ -34,16 +34,29 @@ describe('PractitionersController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call findAll method of PractitionersService', () => {
-    controller.findAll();
+  describe('findAll', () => {
+    it('should call findAll method of PractitionersService', () => {
+      controller.findAll();
 
-    expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(service.findAll).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('should call findOne method of PractitionersService', () => {
-    const id = '1';
-    controller.findOne(id);
+  describe('findOne', () => {
+    it('should call findOne method of PractitionersService', () => {
+      const id = '1';
+      controller.findOne(id);
 
-    expect(service.findOne).toHaveBeenCalledWith(id);
+      expect(service.findOne).toHaveBeenCalledWith(id);
+    });
+  });
+
+  describe('remove', () => {
+    it('should call remove method of PractitionersService', () => {
+      const id = '1';
+      controller.remove(id);
+
+      expect(service.remove).toHaveBeenCalledWith(id);
+    });
   });
 });

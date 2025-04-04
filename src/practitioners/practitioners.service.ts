@@ -1,13 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { DataStore } from '../db/dataStore.service';
-import { CreatePractitionerDto } from './dto/create-practitioner.dto';
-import { UpdatePractitionerDto } from './dto/update-practitioner.dto';
 
 @Injectable()
 export class PractitionersService {
   constructor(private readonly repo: DataStore) {}
 
-  create(createPractitionerDto: CreatePractitionerDto) {
+  create() {
     return 'This action adds a new practitioner';
   }
 
@@ -21,7 +19,7 @@ export class PractitionersService {
     );
   }
 
-  update(id: number, updatePractitionerDto: UpdatePractitionerDto) {
+  update(id: number) {
     return `This action updates a #${id} practitioner`;
   }
 

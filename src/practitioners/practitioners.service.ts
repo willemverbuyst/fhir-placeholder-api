@@ -23,7 +23,15 @@ export class PractitionersService {
     return `This action updates a #${id} practitioner`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} practitioner`;
+  remove(id: string) {
+    const practitioner = this.findOne(id);
+
+    if (practitioner) {
+      this.repo.practitioners = this.repo.practitioners.filter(
+        (practitioner) => practitioner.id !== id,
+      );
+      return practitioner;
+    }
+    return undefined;
   }
 }

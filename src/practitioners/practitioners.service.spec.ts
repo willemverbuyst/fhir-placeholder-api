@@ -21,23 +21,46 @@ describe('PractitionersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all practitioners', () => {
-    const practitioners = service.findAll();
-    expect(practitioners).toBeDefined();
-    expect(practitioners.length).toBe(2);
+  describe('findAll', () => {
+    it('should return all practitioners', () => {
+      const practitioners = service.findAll();
+      expect(practitioners).toBeDefined();
+      expect(practitioners.length).toBe(2);
+    });
   });
 
-  it('should return an practitioner by id', () => {
-    const practitioner = service.findOne('1');
-    expect(practitioner).toBeDefined();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(practitioner!.id).toBe('1');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(practitioner!.resourceType).toBe('Practitioner');
+  describe('findOne', () => {
+    it('should return an practitioner by id', () => {
+      const practitioner = service.findOne('1');
+      expect(practitioner).toBeDefined();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(practitioner!.id).toBe('1');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(practitioner!.resourceType).toBe('Practitioner');
+    });
+
+    it("should return undefined for an practitioner that doesn't exist", () => {
+      const practitioner = service.findOne('999');
+      expect(practitioner).toBeUndefined();
+    });
   });
 
-  it("should return undefined for an practitioner that doesn't exist", () => {
-    const practitioner = service.findOne('999');
-    expect(practitioner).toBeUndefined();
+  describe('remove', () => {
+    it("should return undefined for an practitioner that doesn't exist", () => {
+      const practitioner = service.remove('unknown');
+      expect(practitioner).toBeUndefined();
+    });
+
+    it('should remove an practitioner by id', () => {
+      const practitioner = service.remove('1');
+      expect(practitioner).toBeDefined();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(practitioner!.id).toBe('1');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(practitioner!.resourceType).toBe('Practitioner');
+
+      const allPractitioners = service.findAll();
+      expect(allPractitioners.length).toBe(1);
+    });
   });
 });

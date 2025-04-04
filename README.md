@@ -28,6 +28,8 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - DELETE /practitioner/:id
 - GET /organizations
 - POST /organizations
+- DELETE /organizations/:id
+- PATCH /organizations/:id
 - GET /organizations/:id
 
 ```typescript
@@ -46,50 +48,47 @@ curl http://localhost:8080/api/v2/r5/patients/1
 
 ```json
 {
-  "status": "success",
-  "data": {
-    "id": "1",
-    "name": [
-      {
-        "family": "Doe",
-        "given": ["John"]
-      }
-    ],
-    "resourceType": "Patient",
-    "birthDate": "1969-12-05",
-    "gender": "other",
-    "telecom": [
-      {
-        "use": "old",
-        "system": "email",
-        "value": "John_Doe27@fhir-placeholder.api"
-      },
-      {
-        "use": "temp",
-        "system": "phone",
-        "value": "(239) 778-3678"
-      }
-    ],
-    "address": [
-      {
-        "use": "old",
-        "type": "physical",
-        "line": ["96298 Long Lane"],
-        "city": "Gibson",
-        "state": "Washington",
-        "postalCode": "09207",
-        "country": "Brunei Darussalam"
-      }
-    ],
-    "managingOrganization": {
-      "reference": "Organization/1"
+  "id": "1",
+  "name": [
+    {
+      "family": "Doe",
+      "given": ["John"]
+    }
+  ],
+  "resourceType": "Patient",
+  "birthDate": "1969-12-05",
+  "gender": "other",
+  "telecom": [
+    {
+      "use": "old",
+      "system": "email",
+      "value": "John_Doe27@fhir-placeholder.api"
     },
-    "generalPractitioner": [
-      {
-        "reference": "Practitioner/2"
-      }
-    ]
-  }
+    {
+      "use": "temp",
+      "system": "phone",
+      "value": "(239) 778-3678"
+    }
+  ],
+  "address": [
+    {
+      "use": "old",
+      "type": "physical",
+      "line": ["96298 Long Lane"],
+      "city": "Gibson",
+      "state": "Washington",
+      "postalCode": "09207",
+      "country": "Brunei Darussalam"
+    }
+  ],
+  "managingOrganization": {
+    "reference": "Organization/1"
+  },
+  "generalPractitioner": [
+    {
+      "reference": "Practitioner/2"
+    }
+  ]
 }
 ```
 

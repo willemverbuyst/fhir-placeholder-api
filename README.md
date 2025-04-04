@@ -92,6 +92,10 @@ curl http://localhost:8080/api/v2/r5/patients/1
 }
 ```
 
+## :open_book: Swagger Docs
+
+Go to [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
+
 ## :rocket: Run Server
 
 > npm run start

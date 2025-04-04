@@ -68,7 +68,7 @@ describe('PractitionersController', () => {
   });
 
   describe('remove', () => {
-    it('should call remove method of PractitionersService', () => {
+    it('should call remove method of PractitionersService', async () => {
       const id = '1';
       controller.remove(id);
 

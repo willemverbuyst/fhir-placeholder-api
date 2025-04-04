@@ -23,8 +23,8 @@ export class PractitionersService {
     return `This action updates a #${id} practitioner`;
   }
 
-  remove(id: string) {
-    const practitioner = this.findOne(id);
+  async remove(id: string) {
+    const practitioner = await this.findOne(id);
 
     if (practitioner) {
       this.repo.practitioners = this.repo.practitioners.filter(

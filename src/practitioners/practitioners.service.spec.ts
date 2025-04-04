@@ -30,8 +30,8 @@ describe('PractitionersService', () => {
   });
 
   describe('findOne', () => {
-    it('should return an practitioner by id', () => {
-      const practitioner = service.findOne('1');
+    it('should return an practitioner by id', async () => {
+      const practitioner = await service.findOne('1');
       expect(practitioner).toBeDefined();
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(practitioner!.id).toBe('1');
@@ -39,20 +39,20 @@ describe('PractitionersService', () => {
       expect(practitioner!.resourceType).toBe('Practitioner');
     });
 
-    it("should return undefined for an practitioner that doesn't exist", () => {
-      const practitioner = service.findOne('999');
+    it("should return undefined for an practitioner that doesn't exist", async () => {
+      const practitioner = await service.findOne('999');
       expect(practitioner).toBeUndefined();
     });
   });
 
   describe('remove', () => {
-    it("should return undefined for an practitioner that doesn't exist", () => {
-      const practitioner = service.remove('unknown');
+    it("should return undefined for an practitioner that doesn't exist", async () => {
+      const practitioner = await service.remove('unknown');
       expect(practitioner).toBeUndefined();
     });
 
-    it('should remove an practitioner by id', () => {
-      const practitioner = service.remove('1');
+    it('should remove an practitioner by id', async () => {
+      const practitioner = await service.remove('1');
       expect(practitioner).toBeDefined();
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(practitioner!.id).toBe('1');

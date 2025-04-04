@@ -26,7 +26,7 @@ export class PractitionersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.practitionersService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.practitionersService.remove(id);
   }
 }

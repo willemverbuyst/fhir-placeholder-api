@@ -27,6 +27,10 @@ export class PractitionersController {
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.practitionersService.remove(id);
+    const practitioner = await this.practitionersService.remove(id);
+    if (!practitioner) {
+      throw new NotFoundException('practitioner not found');
+    }
+    return practitioner;
   }
 }

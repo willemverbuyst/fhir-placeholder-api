@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
@@ -26,6 +28,34 @@ export class OrganizationsController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const organization = await this.organizationsService.findOne(id);
+
+    if (!organization) {
+      throw new NotFoundException('organization not found');
+    }
+
+    return organization;
+  }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    const organization = await this.organizationsService.remove(id);
+
+    if (!organization) {
+      throw new NotFoundException('organization not found');
+    }
+
+    return organization;
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateOrganizationDto: CreateOrganizationDto,
+  ) {
+    const organization = await this.organizationsService.update(
+      id,
+      updateOrganizationDto,
+    );
 
     if (!organization) {
       throw new NotFoundException('organization not found');

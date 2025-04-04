@@ -72,4 +72,50 @@ describe('OrganizationsController', () => {
       expect(service.create).toHaveBeenCalledWith(dto);
     });
   });
+
+  describe('remove', () => {
+    it('should call remove method of OrganizationsService', async () => {
+      const mockOrganization: Organization = {
+        id: '1',
+        resourceType: 'Organization',
+      };
+      jest.spyOn(service, 'remove').mockResolvedValue(mockOrganization);
+      const result = await controller.remove('1');
+      expect(result).toEqual(mockOrganization);
+      expect(service.remove).toHaveBeenCalledWith('1');
+    });
+
+    it('should throw an error if organization with id is not found', async () => {
+      jest.spyOn(service, 'remove').mockResolvedValue(undefined);
+
+      await expect(controller.remove('unknown')).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.remove).toHaveBeenCalledWith('unknown');
+    });
+  });
+
+  describe('update', () => {
+    it('should call update method of OrganizationsService', async () => {
+      const mockOrganization: Organization = {
+        id: '1',
+        resourceType: 'Organization',
+      };
+      const dto = { name: 'Updated organization' };
+      jest.spyOn(service, 'update').mockResolvedValue(mockOrganization);
+      const result = await controller.update('1', dto);
+      expect(result).toEqual(mockOrganization);
+      expect(service.update).toHaveBeenCalledWith('1', dto);
+    });
+
+    it('should throw an error if organization with id is not found', async () => {
+      const dto = { name: 'updated organization' };
+      jest.spyOn(service, 'update').mockResolvedValue(undefined);
+
+      await expect(controller.update('unknown', dto)).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.update).toHaveBeenCalledWith('unknown', dto);
+    });
+  });
 });

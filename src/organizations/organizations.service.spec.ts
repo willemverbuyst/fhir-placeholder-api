@@ -10,7 +10,7 @@ describe('OrganizationsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrganizationsService,
-        { provide: DataStore, useValue: testDataStore },
+        { provide: DataStore, useValue: { ...testDataStore } },
       ],
     }).compile();
 
@@ -21,23 +21,92 @@ describe('OrganizationsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all organizations', () => {
-    const organizations = service.findAll();
-    expect(organizations).toBeDefined();
-    expect(organizations.length).toBe(2);
+  describe('findAll', () => {
+    it('should return all organizations', () => {
+      const organizations = service.findAll();
+      expect(organizations).toBeDefined();
+      expect(organizations.length).toBe(2);
+    });
   });
 
-  it('should return an organization by id', async () => {
-    const organization = await service.findOne('1');
-    expect(organization).toBeDefined();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(organization!.id).toBe('1');
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    expect(organization!.resourceType).toBe('Organization');
+  describe('findOne', () => {
+    it('should return an organization by id', async () => {
+      const organization = await service.findOne('1');
+      expect(organization).toBeDefined();
+
+      if (!organization) {
+        throw new Error('Expected organization to be defined in test');
+      }
+
+      expect(organization.id).toBe('1');
+      expect(organization.resourceType).toBe('Organization');
+    });
+
+    it("should return undefined for an organization that doesn't exist", async () => {
+      const organization = await service.findOne('unknown');
+      expect(organization).toBeUndefined();
+    });
   });
 
-  it("should return undefined for an organization that doesn't exist", async () => {
-    const organization = await service.findOne('unknown');
-    expect(organization).toBeUndefined();
+  describe('remove', () => {
+    it("should return undefined for an organization that doesn't exist", async () => {
+      const organization = await service.remove('unknown');
+      expect(organization).toBeUndefined();
+    });
+
+    it('should remove an organization by id', async () => {
+      const organization = await service.remove('1');
+      expect(organization).toBeDefined();
+
+      if (!organization) {
+        throw new Error('Expected organization to be defined in test');
+      }
+
+      expect(organization.id).toBe('1');
+      expect(organization.resourceType).toBe('Organization');
+
+      const allOrganizations = service.findAll();
+      expect(allOrganizations.length).toBe(1);
+    });
+  });
+
+  describe('create', () => {
+    it('should create a new organization', () => {
+      const newOrganization = service.create({
+        name: 'New Organization',
+      });
+      expect(newOrganization).toBeDefined();
+      expect(newOrganization.id).toBeDefined();
+      expect(newOrganization.resourceType).toBe('Organization');
+      expect(newOrganization.name).toBe('New Organization');
+      expect(newOrganization.active).toBe(true);
+
+      const allOrganizations = service.findAll();
+      expect(allOrganizations.length).toBe(3);
+    });
+  });
+
+  describe('update', () => {
+    it('should update an existing organization', async () => {
+      const updatedOrganization = await service.update('1', {
+        name: 'Updated Organization',
+      });
+      expect(updatedOrganization).toBeDefined();
+
+      if (!updatedOrganization) {
+        throw new Error('Expected updated organization to be defined in test');
+      }
+
+      expect(updatedOrganization.id).toBe('1');
+      expect(updatedOrganization.resourceType).toBe('Organization');
+      expect(updatedOrganization.name).toBe('Updated Organization');
+    });
+
+    it("should return undefined for an organization that doesn't exist", async () => {
+      const updatedOrganization = await service.update('unknown', {
+        name: 'Updated Organization',
+      });
+      expect(updatedOrganization).toBeUndefined();
+    });
   });
 });

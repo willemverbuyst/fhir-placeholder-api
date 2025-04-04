@@ -21,23 +21,46 @@ describe('OrganizationsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all organizations', () => {
-    const organizations = service.findAll();
-    expect(organizations).toBeDefined();
-    expect(organizations.length).toBe(2);
+  describe('findAll', () => {
+    it('should return all organizations', () => {
+      const organizations = service.findAll();
+      expect(organizations).toBeDefined();
+      expect(organizations.length).toBe(2);
+    });
   });
 
-  it('should return an organization by id', async () => {
-    const organization = await service.findOne('1');
+  describe('findOne', () => {
+    it('should return an organization by id', async () => {
+      const organization = await service.findOne('1');
+      expect(organization).toBeDefined();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(organization!.id).toBe('1');
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      expect(organization!.resourceType).toBe('Organization');
+    });
+
+    it("should return undefined for an organization that doesn't exist", async () => {
+      const organization = await service.findOne('unknown');
+      expect(organization).toBeUndefined();
+    });
+  });
+
+  describe('remove', () => {
+    it("should return undefined for an organization that doesn't exist", async () => {
+      const organization = await service.remove('unknown');
+      expect(organization).toBeUndefined();
+    });
+  });
+
+  it('should remove an organization by id', async () => {
+    const organization = await service.remove('1');
     expect(organization).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(organization!.id).toBe('1');
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(organization!.resourceType).toBe('Organization');
-  });
 
-  it("should return undefined for an organization that doesn't exist", async () => {
-    const organization = await service.findOne('unknown');
-    expect(organization).toBeUndefined();
+    const allOrganizations = service.findAll();
+    expect(allOrganizations.length).toBe(1);
   });
 });

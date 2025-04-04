@@ -13,7 +13,7 @@ export class PractitionersService {
     return this.repo.practitioners;
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     return this.repo.practitioners.find(
       (practitioner) => practitioner.id === id,
     );

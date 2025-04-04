@@ -1,4 +1,6 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Practitioner } from 'fhir/r5';
 import { DataStore } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { PractitionersController } from './practitioners.controller';
@@ -43,11 +45,25 @@ describe('PractitionersController', () => {
   });
 
   describe('findOne', () => {
-    it('should call findOne method of PractitionersService', () => {
-      const id = '1';
-      controller.findOne(id);
+    it('should call findOne method of PractitionersService', async () => {
+      const mockPractitioner: Practitioner = {
+        id: '1',
+        resourceType: 'Practitioner',
+      };
+      jest.spyOn(service, 'findOne').mockResolvedValue(mockPractitioner);
 
-      expect(service.findOne).toHaveBeenCalledWith(id);
+      const result = await controller.findOne('1');
+      expect(result).toEqual(mockPractitioner);
+      expect(service.findOne).toHaveBeenCalledWith('1');
+    });
+
+    it('should throw an error if practitioner with id is not found', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
+
+      await expect(controller.findOne('unknown')).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.findOne).toHaveBeenCalledWith('unknown');
     });
   });
 

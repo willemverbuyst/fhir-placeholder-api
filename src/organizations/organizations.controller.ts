@@ -8,23 +8,41 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { OrganizationDto } from './dto/organization.dto';
 import { OrganizationsService } from './organizations.service';
 
 @Controller('organizations')
 export class OrganizationsController {
   constructor(private readonly organizationsService: OrganizationsService) {}
 
+  @ApiOkResponse({
+    description: 'The organization is created successfully',
+    type: OrganizationDto,
+  })
   @Post()
   create(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.organizationsService.create(createOrganizationDto);
   }
 
+  @ApiOkResponse({
+    description: 'All organizations',
+    type: OrganizationDto,
+    isArray: true,
+  })
   @Get()
   findAll() {
     return this.organizationsService.findAll();
   }
 
+  @ApiOkResponse({
+    description: 'The organization is returned successfully',
+    type: OrganizationDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Organization not found',
+  })
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const organization = await this.organizationsService.findOne(id);
@@ -36,6 +54,13 @@ export class OrganizationsController {
     return organization;
   }
 
+  @ApiOkResponse({
+    description: 'The organization is deleted successfully',
+    type: OrganizationDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Organization not found',
+  })
   @Delete(':id')
   async remove(@Param('id') id: string) {
     const organization = await this.organizationsService.remove(id);
@@ -47,6 +72,13 @@ export class OrganizationsController {
     return organization;
   }
 
+  @ApiOkResponse({
+    description: 'The organization is updated successfully',
+    type: OrganizationDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Organization not found',
+  })
   @Patch(':id')
   async update(
     @Param('id') id: string,

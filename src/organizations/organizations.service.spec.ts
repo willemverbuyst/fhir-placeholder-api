@@ -85,4 +85,28 @@ describe('OrganizationsService', () => {
       expect(allOrganizations.length).toBe(3);
     });
   });
+
+  describe('update', () => {
+    it('should update an existing organization', async () => {
+      const updatedOrganization = await service.update('1', {
+        name: 'Updated Organization',
+      });
+      expect(updatedOrganization).toBeDefined();
+
+      if (!updatedOrganization) {
+        throw new Error('Expected updated organization to be defined in test');
+      }
+
+      expect(updatedOrganization.id).toBe('1');
+      expect(updatedOrganization.resourceType).toBe('Organization');
+      expect(updatedOrganization.name).toBe('Updated Organization');
+    });
+
+    it("should return undefined for an organization that doesn't exist", async () => {
+      const updatedOrganization = await service.update('unknown', {
+        name: 'Updated Organization',
+      });
+      expect(updatedOrganization).toBeUndefined();
+    });
+  });
 });

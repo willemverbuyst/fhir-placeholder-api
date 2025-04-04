@@ -29,8 +29,23 @@ export class OrganizationsService {
     return this.repo.organizations.find((org) => org.id === id);
   }
 
-  update(id: number) {
-    return `This action updates a #${id} organization`;
+  async update(id: string, updateOrganizationDto: CreateOrganizationDto) {
+    const organization = await this.findOne(id);
+
+    if (organization) {
+      const updatedOrganization: Organization = {
+        ...organization,
+        ...updateOrganizationDto,
+      };
+
+      this.repo.organizations = this.repo.organizations.map((org) =>
+        org.id === id ? updatedOrganization : org,
+      );
+
+      return updatedOrganization;
+    }
+
+    return undefined;
   }
 
   async remove(id: string) {

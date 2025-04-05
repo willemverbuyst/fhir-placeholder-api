@@ -1,4 +1,6 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { EpisodeOfCare } from 'fhir/r5';
 import { DataStore } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { EpisodesController } from './episodes.controller';
@@ -35,22 +37,53 @@ describe('EpisodesController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call findAll method of EpisodesService', () => {
-    controller.findAll();
+  describe('findAll', () => {
+    it('should call findAll method of EpisodesService', () => {
+      controller.findAll();
 
-    expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(service.findAll).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return an array of episodes for patient', async () => {
+      const mockEpisodes: EpisodeOfCare[] = [
+        {
+          id: '1',
+          resourceType: 'EpisodeOfCare',
+          status: 'active',
+          patient: {
+            reference: 'Patient/1',
+          },
+        },
+      ];
+      jest.spyOn(service, 'findByPatientId').mockResolvedValue(mockEpisodes);
+      const result = await controller.findAll('1');
+      expect(result).toEqual(mockEpisodes);
+    });
   });
 
-  it('should call findAll method of EpisodesService', () => {
-    controller.findAll('patientId');
+  describe('findOne', () => {
+    it('should call findAll method of EpisodesService', async () => {
+      const mockEpisode: EpisodeOfCare = {
+        id: '1',
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: {
+          reference: 'Patient/1',
+        },
+      };
+      jest.spyOn(service, 'findOne').mockResolvedValue(mockEpisode);
+      const result = await controller.findOne('1');
+      expect(result).toEqual(mockEpisode);
+      expect(service.findOne).toHaveBeenCalledWith('1');
+    });
 
-    expect(service.findByPatientId).toHaveBeenCalledTimes(1);
-  });
+    it('should throw an error if episode with id is not found', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
 
-  it('should call findOne method of EpisodesService', () => {
-    const id = '1';
-    controller.findOne(id);
-
-    expect(service.findOne).toHaveBeenCalledWith(id);
+      await expect(controller.findOne('unknown')).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.findOne).toHaveBeenCalledWith('unknown');
+    });
   });
 });

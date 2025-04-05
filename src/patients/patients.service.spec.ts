@@ -21,26 +21,44 @@ describe('PatientsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all patients', () => {
-    const patients = service.findAll();
-    expect(patients).toBeDefined();
-    expect(patients.length).toBe(2);
+  describe('findAll', () => {
+    it('should return all patients', async () => {
+      const patients = await service.findAll();
+      expect(patients).toBeDefined();
+      expect(patients.length).toBe(2);
+    });
   });
 
-  it('should return an patient by id', () => {
-    const patient = service.findOne('1');
-    expect(patient).toBeDefined();
+  describe('findOne', () => {
+    it('should return an patient by id', async () => {
+      const patient = await service.findOne('1');
+      expect(patient).toBeDefined();
 
-    if (!patient) {
-      throw new Error('Expected patient to be defined in test');
-    }
+      if (!patient) {
+        throw new Error('Expected patient to be defined in test');
+      }
 
-    expect(patient.id).toBe('1');
-    expect(patient.resourceType).toBe('Patient');
+      expect(patient.id).toBe('1');
+      expect(patient.resourceType).toBe('Patient');
+    });
+
+    it("should return undefined for an patient that doesn't exist", async () => {
+      const patient = await service.findOne('unknown');
+      expect(patient).toBeUndefined();
+    });
   });
 
-  it("should return undefined for an patient that doesn't exist", () => {
-    const patient = service.findOne('999');
-    expect(patient).toBeUndefined();
+  describe('findAllEpisodesForPatient', () => {
+    it('should return all episodes for a patient', async () => {
+      const episodes = await service.findAllEpisodesForPatient('1');
+      expect(episodes).toBeDefined();
+      expect(episodes.length).toBe(1);
+    });
+
+    it("should return an empty array for a patient that doesn't exist", async () => {
+      const episodes = await service.findAllEpisodesForPatient('unknown');
+      expect(episodes).toBeDefined();
+      expect(episodes.length).toBe(0);
+    });
   });
 });

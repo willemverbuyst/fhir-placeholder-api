@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { EpisodeOfCare } from 'fhir/r5';
-import { EpisodeOfCareStatus } from 'src/db/resources/episode-of-care';
+import { EpisodeOfCareStatus } from '../../db/resources/episode-of-care';
 import { CodeableConceptDto } from './codeable-concept.dto';
 import { DiagnosisEntryDto } from './diagnosis.dto';
 

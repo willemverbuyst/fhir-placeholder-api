@@ -1,5 +1,11 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+} from '@nestjs/common';
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { EpisodeDto } from './dto/episode.dto';
 import { EpisodesService } from './episodes.service';
 
@@ -19,19 +25,27 @@ export class EpisodesController {
     type: String,
   })
   @Get()
-  findAll(@Query('patient') patient?: string) {
+  async findAll(@Query('patient') patient?: string) {
     if (!patient) {
-      return this.episodesService.findAll();
+      return await this.episodesService.findAll();
     }
-    return this.episodesService.findByPatientId(patient);
+    return await this.episodesService.findByPatientId(patient);
   }
 
   @ApiOkResponse({
     description: 'The episode is returned successfully',
     type: EpisodeDto,
   })
+  @ApiNotFoundResponse({
+    description: 'Episode not found',
+  })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.episodesService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const episode = await this.episodesService.findOne(id);
+
+    if (!episode) {
+      throw new NotFoundException('Episode not found');
+    }
+    return episode;
   }
 }

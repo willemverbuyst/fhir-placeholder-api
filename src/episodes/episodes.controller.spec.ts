@@ -43,6 +43,22 @@ describe('EpisodesController', () => {
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });
+
+    it('should return an array of episodes for patient', async () => {
+      const mockEpisodes: EpisodeOfCare[] = [
+        {
+          id: '1',
+          resourceType: 'EpisodeOfCare',
+          status: 'active',
+          patient: {
+            reference: 'Patient/1',
+          },
+        },
+      ];
+      jest.spyOn(service, 'findByPatientId').mockResolvedValue(mockEpisodes);
+      const result = await controller.findAll('1');
+      expect(result).toEqual(mockEpisodes);
+    });
   });
 
   describe('findOne', () => {

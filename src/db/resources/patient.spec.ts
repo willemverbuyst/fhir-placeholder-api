@@ -22,10 +22,15 @@ describe('createPatient', () => {
     expect(patient).toHaveProperty('birthDate');
     expect(patient).toHaveProperty('gender');
     expect(['male', 'female', 'other', 'unknown']).toContain(patient.gender);
-    expect(patient).toHaveProperty('telecom');
-    expect(patient.telecom).toBeInstanceOf(Array);
-    expect(patient).toHaveProperty('address');
-    expect(patient.address).toBeInstanceOf(Array);
+    expect(patient).toHaveProperty('contact');
+
+    if (!patient.contact) {
+      throw new Error('Patient contact array is empty');
+    }
+    expect(patient.contact[0]).toHaveProperty('telecom');
+    expect(patient.contact[0].telecom).toBeInstanceOf(Array);
+    expect(patient.contact[0]).toHaveProperty('address');
+
     expect(patient).toHaveProperty('managingOrganization');
     expect(patient.managingOrganization).toHaveProperty('reference');
 
@@ -92,12 +97,16 @@ describe('createPatient', () => {
     const practitionerIds = ['67890'];
     const patient = createPatient(organizationId, practitionerIds);
 
-    if (!patient.telecom) {
-      throw new Error('Patient telecom array is undefined');
+    if (!patient.contact) {
+      throw new Error('Patient contact array is undefined');
     }
 
-    const email = patient.telecom.find((t) => t.system === 'email');
-    const phone = patient.telecom.find((t) => t.system === 'phone');
+    if (!patient.contact[0].telecom) {
+      throw new Error('Patient telecom array in contact is undefine');
+    }
+
+    const email = patient.contact[0].telecom.find((t) => t.system === 'email');
+    const phone = patient.contact[0].telecom.find((t) => t.system === 'phone');
 
     expect(email).toBeDefined();
     expect(email).toHaveProperty('value');
@@ -110,16 +119,18 @@ describe('createPatient', () => {
     const practitionerIds = ['67890'];
     const patient = createPatient(organizationId, practitionerIds);
 
-    if (!patient.address) {
-      throw new Error('Patient address array is undefined');
+    if (!patient.contact) {
+      throw new Error('Patient contact array is undefined');
     }
 
-    const address = patient.address[0];
+    if (!patient.contact[0].address) {
+      throw new Error('Patient address in contact array is undefined');
+    }
 
-    expect(address).toHaveProperty('line');
-    expect(address).toHaveProperty('city');
-    expect(address).toHaveProperty('state');
-    expect(address).toHaveProperty('postalCode');
-    expect(address).toHaveProperty('country');
+    expect(patient.contact[0].address).toHaveProperty('line');
+    expect(patient.contact[0].address).toHaveProperty('city');
+    expect(patient.contact[0].address).toHaveProperty('state');
+    expect(patient.contact[0].address).toHaveProperty('postalCode');
+    expect(patient.contact[0].address).toHaveProperty('country');
   });
 });

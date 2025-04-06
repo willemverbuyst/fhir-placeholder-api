@@ -28,6 +28,12 @@ export function createPatient(
       Gender.UNKNOWN,
       Gender.OTHER,
     ]),
+    contact: [
+      {
+        telecom: [createEmail(firstName, lastName), createPhone()],
+        address: createAddress(),
+      },
+    ],
     managingOrganization: { reference: `Organization/${organizationId}` },
     generalPractitioner: [
       {

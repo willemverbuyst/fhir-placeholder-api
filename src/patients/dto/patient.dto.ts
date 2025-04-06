@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Patient } from 'fhir/r5';
+import { ContactPointDto } from 'src/dto/contact-point.dto';
 import { HumanNameDto } from 'src/dto/human-name-dto';
+import { ReferenceDto } from 'src/dto/reference.dto';
 import { Gender } from '../../db/resources/gender';
+import { CommunicationDto } from './communication.dto';
 
 export class PatientDto implements Patient {
   @ApiProperty({
@@ -40,4 +43,55 @@ export class PatientDto implements Patient {
     example: [{ family: 'Doe', given: ['John'] }],
   })
   name: HumanNameDto[];
+
+  @ApiProperty({
+    type: ContactPointDto,
+    description: 'A contact detail for the individual',
+    example: [
+      {
+        use: 'home',
+        system: 'phone',
+        value: '(653) 410-0715',
+      },
+    ],
+    isArray: true,
+  })
+  telecom: ContactPointDto[];
+
+  @ApiProperty({
+    type: ReferenceDto,
+    description: 'Organization that is the custodian of the patient record',
+    example: { reference: 'Organization/123-675' },
+  })
+  managingOrganization: ReferenceDto;
+
+  @ApiProperty({
+    type: ReferenceDto,
+    description: "Patient's nominated primary care provider",
+    example: [{ reference: 'Practitioner/123-675' }],
+    isArray: true,
+  })
+  generalPractitioner: ReferenceDto[];
+
+  @ApiProperty({
+    type: CommunicationDto,
+    description:
+      'A language which may be used to communicate with the patient about his or her health',
+    example: [
+      {
+        language: {
+          coding: [
+            {
+              code: 'en-GB',
+              system: 'urn:ietf:bcp:47',
+              display: 'English (Great Britain)',
+            },
+          ],
+        },
+        preferred: true,
+      },
+    ],
+    isArray: true,
+  })
+  communication: CommunicationDto[];
 }

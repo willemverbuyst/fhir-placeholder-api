@@ -5,10 +5,6 @@ import { DataStore } from '../db/dataStore.service';
 export class PractitionersService {
   constructor(private readonly repo: DataStore) {}
 
-  create() {
-    return 'This action adds a new practitioner';
-  }
-
   findAll() {
     return this.repo.practitioners;
   }
@@ -17,10 +13,6 @@ export class PractitionersService {
     return this.repo.practitioners.find(
       (practitioner) => practitioner.id === id,
     );
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} practitioner`;
   }
 
   async remove(id: string) {

@@ -1,0 +1,5 @@
+###
+GET http://localhost:8080/api/v2/r5/patients
+
+###
+GET http://localhost:8080/api/v2/r5/patients/e676cee1-c2cd-401a-be44-29dd9f87ae92

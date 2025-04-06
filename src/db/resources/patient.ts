@@ -6,6 +6,7 @@ import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
 import { getRandomElement } from '../helpers/getRandomElement';
 import { languages } from '../valueSets/languages-value-set';
+import { Gender } from './gender';
 
 export function createPatient(
   organizationId: string,
@@ -21,9 +22,12 @@ export function createPatient(
       .between({ from: START_DATE, to: Date.now() })
       .toISOString()
       .split('T')[0],
-    gender: getRandomElement(['male', 'female', 'other', 'unknown']),
-    telecom: [createEmail(firstName, lastName), createPhone()],
-    address: [createAddress()],
+    gender: getRandomElement([
+      Gender.MALE,
+      Gender.FEMALE,
+      Gender.UNKNOWN,
+      Gender.OTHER,
+    ]),
     managingOrganization: { reference: `Organization/${organizationId}` },
     generalPractitioner: [
       {

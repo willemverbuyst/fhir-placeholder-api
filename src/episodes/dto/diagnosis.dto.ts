@@ -1,14 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-
-class ReferenceDto {
-  @ApiProperty({ type: String })
-  reference: string;
-}
-
-class CodeableReferenceDto {
-  @ApiProperty({ type: ReferenceDto })
-  reference: ReferenceDto;
-}
+import { CodeableReferenceDto } from '../../dto/codeable-reference.dto';
 
 export class DiagnosisEntryDto {
   @ApiProperty({ type: CodeableReferenceDto, isArray: true })

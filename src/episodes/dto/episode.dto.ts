@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { EpisodeOfCare } from 'fhir/r5';
 import { EpisodeOfCareStatus } from '../../db/resources/episode-of-care';
-import { CodeableConceptDto } from './codeable-concept.dto';
+import { CodeableConceptDto } from '../../dto/codeable-concept.dto';
 import { DiagnosisEntryDto } from './diagnosis.dto';
 
 export class EpisodeDto implements EpisodeOfCare {
@@ -29,27 +29,27 @@ export class EpisodeDto implements EpisodeOfCare {
   };
 
   @ApiProperty({
-    type: [DiagnosisEntryDto],
-    description: 'The condition reference',
+    type: DiagnosisEntryDto,
+    description:
+      '	The list of medical conditions that were addressed during the episode of care',
     example: {
       condition: [{ reference: { reference: 'Condition/12345-67890' } }],
     },
+    isArray: true,
   })
-  diagnosis: [
-    {
-      condition: [
-        {
-          reference: {
-            reference: string;
-          };
-        },
-      ];
-    },
-  ];
+  diagnosis: {
+    condition: [
+      {
+        reference: {
+          reference: string;
+        };
+      },
+    ];
+  }[];
 
   @ApiProperty({
-    type: [CodeableConceptDto],
-    description: 'The type of the episode',
+    type: CodeableConceptDto,
+    description: 'Type/class - e.g. specialist referral, disease management',
     example: {
       coding: [
         {
@@ -59,8 +59,9 @@ export class EpisodeDto implements EpisodeOfCare {
         },
       ],
     },
+    isArray: true,
   })
-  type: [CodeableConceptDto];
+  type: CodeableConceptDto[];
 
   @ApiProperty({
     type: String,

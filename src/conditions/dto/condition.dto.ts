@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Condition } from 'fhir/r5';
-import { CodeableConceptDto } from '../../episodes/dto/codeable-concept.dto';
-import { AnnotationDto } from './annotation.dto';
-import { PatientReferenceDto } from './patient-reference.dto';
+import { AnnotationDto } from '../../dto/annotation.dto';
+import { CodeableConceptDto } from '../../dto/codeable-concept.dto';
+import { ReferenceDto } from '../../dto/reference.dto';
 
 export class ConditionDto implements Condition {
   @ApiProperty({
@@ -20,11 +20,11 @@ export class ConditionDto implements Condition {
   resourceType: 'Condition';
 
   @ApiProperty({
-    type: PatientReferenceDto,
+    type: ReferenceDto,
     description: 'The patient reference',
     example: { reference: 'Patient/12345-67890' },
   })
-  subject: PatientReferenceDto;
+  subject: ReferenceDto;
 
   @ApiProperty({
     type: CodeableConceptDto,
@@ -42,9 +42,10 @@ export class ConditionDto implements Condition {
   clinicalStatus: CodeableConceptDto;
 
   @ApiProperty({
-    type: [AnnotationDto],
+    type: AnnotationDto,
     description: 'Additional information about the Condition',
     example: [{ text: 'Something about the condition' }],
+    isArray: true,
   })
-  note: [AnnotationDto];
+  note: AnnotationDto[];
 }

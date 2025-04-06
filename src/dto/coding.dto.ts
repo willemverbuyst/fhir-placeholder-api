@@ -1,16 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-class CodingDto {
+export class CodingDto {
   @ApiProperty({
     type: String,
-    description: 'The code of the type',
+    description: 'Symbol in syntax defined by the system',
     example: 'hacc',
   })
   code: string;
 
   @ApiProperty({
     type: String,
-    description: 'The system of the type',
+    description: 'Identity of the terminology system',
     example: 'http://terminology.hl7.org/CodeSystem/episodeofcare-type',
   })
   system: string;
@@ -18,12 +18,7 @@ class CodingDto {
   @ApiProperty({
     type: String,
     description: 'The display of the type',
-    example: 'Home and Community Care',
+    example: 'Representation defined by the system',
   })
   display: string;
-}
-
-export class CodeableConceptDto {
-  @ApiProperty({ type: CodingDto, isArray: true })
-  coding: CodingDto[];
 }

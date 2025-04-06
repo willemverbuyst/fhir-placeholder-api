@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AddressType, AddressUse } from 'src/db/helpers/address';
+import { AddressType, AddressUse } from '../db/helpers/address';
 
 export class AddressDto {
   @ApiProperty({

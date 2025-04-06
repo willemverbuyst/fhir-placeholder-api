@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CodeableConceptDto } from 'src/dto/codeable-concept.dto';
+import { CodeableConceptDto } from '../../dto/codeable-concept.dto';
 
 export class CommunicationDto {
   @ApiProperty({

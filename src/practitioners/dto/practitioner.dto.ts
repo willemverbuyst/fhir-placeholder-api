@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Practitioner } from 'fhir/r5';
-import { Gender } from 'src/db/resources/gender';
-import { AddressDto } from 'src/dto/address.dto';
-import { ContactPointDto } from 'src/dto/contact-point.dto';
-import { HumanNameDto } from 'src/dto/human-name-dto';
+import { Gender } from '../../db/resources/gender';
+import { AddressDto } from '../../dto/address.dto';
+import { ContactPointDto } from '../../dto/contact-point.dto';
+import { HumanNameDto } from '../../dto/human-name-dto';
 
 export class PractitionerDto implements Practitioner {
   @ApiProperty({

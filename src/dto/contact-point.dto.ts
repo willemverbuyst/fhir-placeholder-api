@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ContactSystem, ContactUse } from 'src/db/helpers/contactPoint';
+import { ContactSystem, ContactUse } from '../db/helpers/contactPoint';
 
 export class ContactPointDto {
   @ApiProperty({

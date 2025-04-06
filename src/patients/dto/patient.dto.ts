@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Patient } from 'fhir/r5';
-import { AddressDto } from 'src/dto/address.dto';
-import { ContactPointDto } from 'src/dto/contact-point.dto';
-import { HumanNameDto } from 'src/dto/human-name-dto';
-import { ReferenceDto } from 'src/dto/reference.dto';
 import { Gender } from '../../db/resources/gender';
+import { AddressDto } from '../../dto/address.dto';
+import { ContactPointDto } from '../../dto/contact-point.dto';
+import { HumanNameDto } from '../../dto/human-name-dto';
+import { ReferenceDto } from '../../dto/reference.dto';
 import { CommunicationDto } from './communication.dto';
 
 export class PatientDto implements Patient {

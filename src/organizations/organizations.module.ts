@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { DataStore } from '../db/dataStore.service';
+import { DataStoreModule } from '../db/dataStore.module';
 import { OrganizationsController } from './organizations.controller';
 import { OrganizationsService } from './organizations.service';
 
 @Module({
+  imports: [DataStoreModule],
   controllers: [OrganizationsController],
-  providers: [OrganizationsService, DataStore],
+  providers: [OrganizationsService],
 })
 export class OrganizationsModule {}

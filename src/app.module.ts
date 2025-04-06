@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConditionsModule } from './conditions/conditions.module';
 import configuration from './config/configuration';
+import { DataStoreModule } from './db/dataStore.module';
 import { EpisodesModule } from './episodes/episodes.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
@@ -23,6 +24,7 @@ import { PractitionersModule } from './practitioners/practitioners.module';
     PractitionersModule,
     ConditionsModule,
     EpisodesModule,
+    DataStoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

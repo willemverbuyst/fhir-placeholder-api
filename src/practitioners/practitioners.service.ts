@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { DataStore } from '../db/dataStore.service';
+import { DataStoreService } from '../db/dataStore.service';
 
 @Injectable()
 export class PractitionersService {
-  constructor(private readonly repo: DataStore) {}
+  constructor(private readonly repo: DataStoreService) {}
 
   findAll() {
     return this.repo.practitioners;

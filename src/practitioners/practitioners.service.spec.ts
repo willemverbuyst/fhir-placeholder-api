@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DataStore } from '../db/dataStore.service';
+import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { PractitionersService } from './practitioners.service';
 
@@ -10,7 +10,7 @@ describe('PractitionersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PractitionersService,
-        { provide: DataStore, useValue: { ...testDataStore } },
+        { provide: DataStoreService, useValue: { ...testDataStore } },
       ],
     }).compile();
 

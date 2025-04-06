@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Condition } from 'fhir/r5';
-import { DataStore } from '../db/dataStore.service';
+import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { ConditionsController } from './conditions.controller';
 import { ConditionsService } from './conditions.service';
@@ -24,7 +24,7 @@ describe('ConditionsController', () => {
             remove: jest.fn(),
           },
         },
-        { provide: DataStore, useValue: testDataStore },
+        { provide: DataStoreService, useValue: testDataStore },
       ],
     }).compile();
 

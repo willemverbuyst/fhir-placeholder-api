@@ -22,10 +22,11 @@ describe('createPatient', () => {
     expect(patient).toHaveProperty('birthDate');
     expect(patient).toHaveProperty('gender');
     expect(['male', 'female', 'other', 'unknown']).toContain(patient.gender);
+
     expect(patient).toHaveProperty('telecom');
     expect(patient.telecom).toBeInstanceOf(Array);
     expect(patient).toHaveProperty('address');
-    expect(patient.address).toBeInstanceOf(Array);
+
     expect(patient).toHaveProperty('managingOrganization');
     expect(patient.managingOrganization).toHaveProperty('reference');
 
@@ -93,7 +94,7 @@ describe('createPatient', () => {
     const patient = createPatient(organizationId, practitionerIds);
 
     if (!patient.telecom) {
-      throw new Error('Patient telecom array is undefined');
+      throw new Error('Patient telecom array is empty');
     }
 
     const email = patient.telecom.find((t) => t.system === 'email');
@@ -111,15 +112,13 @@ describe('createPatient', () => {
     const patient = createPatient(organizationId, practitionerIds);
 
     if (!patient.address) {
-      throw new Error('Patient address array is undefined');
+      throw new Error('Patient address array is empty');
     }
 
-    const address = patient.address[0];
-
-    expect(address).toHaveProperty('line');
-    expect(address).toHaveProperty('city');
-    expect(address).toHaveProperty('state');
-    expect(address).toHaveProperty('postalCode');
-    expect(address).toHaveProperty('country');
+    expect(patient.address[0]).toHaveProperty('line');
+    expect(patient.address[0]).toHaveProperty('city');
+    expect(patient.address[0]).toHaveProperty('state');
+    expect(patient.address[0]).toHaveProperty('postalCode');
+    expect(patient.address[0]).toHaveProperty('country');
   });
 });

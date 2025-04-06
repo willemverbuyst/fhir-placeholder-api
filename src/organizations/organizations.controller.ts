@@ -11,6 +11,7 @@ import {
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { OrganizationDto } from './dto/organization.dto';
+import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationsService } from './organizations.service';
 
 @Controller('organizations')
@@ -82,7 +83,7 @@ export class OrganizationsController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateOrganizationDto: CreateOrganizationDto,
+    @Body() updateOrganizationDto: UpdateOrganizationDto,
   ) {
     const organization = await this.organizationsService.update(
       id,

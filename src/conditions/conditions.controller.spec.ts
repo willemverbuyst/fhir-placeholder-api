@@ -1,4 +1,6 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Condition } from 'fhir/r5';
 import { DataStore } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { ConditionsController } from './conditions.controller';
@@ -34,16 +36,35 @@ describe('ConditionsController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call findAll method of ConditionsService', () => {
-    controller.findAll();
+  describe('findAll', () => {
+    it('should call findAll method of ConditionsService', () => {
+      controller.findAll();
 
-    expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(service.findAll).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('should call findOne method of ConditionsService', () => {
-    const id = '1';
-    controller.findOne(id);
+  describe('findOne', () => {
+    it('should call findOne method of ConditionsService', async () => {
+      const mockCondition: Condition = {
+        id: '1',
+        resourceType: 'Condition',
+        clinicalStatus: {},
+        subject: {},
+      };
+      jest.spyOn(service, 'findOne').mockResolvedValue(mockCondition);
+      const result = await controller.findOne('1');
+      expect(result).toEqual(mockCondition);
+      expect(service.findOne).toHaveBeenCalledWith('1');
+    });
 
-    expect(service.findOne).toHaveBeenCalledWith(id);
+    it('should throw an error if condition with id is not found', async () => {
+      jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
+
+      await expect(controller.findOne('unknown')).rejects.toThrow(
+        NotFoundException,
+      );
+      expect(service.findOne).toHaveBeenCalledWith('unknown');
+    });
   });
 });

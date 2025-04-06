@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Patient } from 'fhir/r5';
+import { AddressDto } from 'src/dto/address.dto';
 import { ContactPointDto } from 'src/dto/contact-point.dto';
 import { HumanNameDto } from 'src/dto/human-name-dto';
 import { ReferenceDto } from 'src/dto/reference.dto';
@@ -57,6 +58,23 @@ export class PatientDto implements Patient {
     isArray: true,
   })
   telecom: ContactPointDto[];
+
+  @ApiProperty({
+    type: AddressDto,
+    description: 'An address for the individual',
+    example: [
+      {
+        use: 'home',
+        type: 'postal',
+        line: ['944 Hessel Walks'],
+        city: 'Port Dexterbury',
+        state: 'Alabama',
+        postalCode: '77390-8168',
+        country: 'Dominica',
+      },
+    ],
+  })
+  address: AddressDto[];
 
   @ApiProperty({
     type: ReferenceDto,

@@ -5,23 +5,11 @@ import { DataStore } from '../db/dataStore.service';
 export class ConditionsService {
   constructor(private readonly repo: DataStore) {}
 
-  create() {
-    return 'This action adds a new condition';
-  }
-
-  findAll() {
+  async findAll() {
     return this.repo.conditions;
   }
 
-  findOne(id: string) {
+  async findOne(id: string) {
     return this.repo.conditions.find((condition) => condition.id === id);
-  }
-
-  update(id: number) {
-    return `This action updates a #${id} condition`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} condition`;
   }
 }

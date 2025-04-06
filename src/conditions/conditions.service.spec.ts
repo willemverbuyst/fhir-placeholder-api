@@ -21,26 +21,30 @@ describe('ConditionsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return all conditions', () => {
-    const conditions = service.findAll();
-    expect(conditions).toBeDefined();
-    expect(conditions.length).toBe(2);
+  describe('findAll', () => {
+    it('should return all conditions', async () => {
+      const conditions = await service.findAll();
+      expect(conditions).toBeDefined();
+      expect(conditions.length).toBe(2);
+    });
   });
 
-  it('should return an condition by id', () => {
-    const condition = service.findOne('1');
-    expect(condition).toBeDefined();
+  describe('findOne', () => {
+    it('should return an condition by id', async () => {
+      const condition = await service.findOne('1');
+      expect(condition).toBeDefined();
 
-    if (!condition) {
-      throw new Error('Expected condition to be defined in test');
-    }
+      if (!condition) {
+        throw new Error('Expected condition to be defined in test');
+      }
 
-    expect(condition.id).toBe('1');
-    expect(condition.resourceType).toBe('Condition');
-  });
+      expect(condition.id).toBe('1');
+      expect(condition.resourceType).toBe('Condition');
+    });
 
-  it("should return undefined for an condition that doesn't exist", () => {
-    const condition = service.findOne('999');
-    expect(condition).toBeUndefined();
+    it("should return undefined for an condition that doesn't exist", async () => {
+      const condition = await service.findOne('unknown');
+      expect(condition).toBeUndefined();
+    });
   });
 });

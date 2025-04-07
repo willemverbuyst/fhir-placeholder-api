@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Coding } from 'fhir/r5';
 
-export class CodingDto {
+export class CodingDto implements Coding {
   @ApiProperty({
     type: String,
     description: 'Symbol in syntax defined by the system',

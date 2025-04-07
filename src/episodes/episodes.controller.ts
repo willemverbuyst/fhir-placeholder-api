@@ -44,7 +44,7 @@ export class EpisodesController {
     const episode = await this.episodesService.findOne(id);
 
     if (!episode) {
-      throw new NotFoundException('Episode not found');
+      throw new NotFoundException('episode not found');
     }
     return episode;
   }

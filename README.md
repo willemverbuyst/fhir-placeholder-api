@@ -4,7 +4,7 @@
 
 A simple server where you can get some dummy [fhir R5](https://hl7.org/fhir/R5/) resources.
 
-You can run this server locally for dev purposes. The data is in memory. On starting the server some dummy data is created. When shutting down the server all data is lost.
+You can run this server locally for development purposes. The data is in memory. On starting the server some dummy data is created. When shutting down the server all data is lost.
 
 ## :nerd_face: Technical
 

@@ -21,6 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        if: github.event_name == 'push'
+        run: npm ci
+
       - name: E2E Placeholder (on PR)
         if: github.event_name == 'pull_request'
         run: echo "Skipping E2E on PR — runs on merge to development or main"

@@ -20,7 +20,7 @@ import {
 } from './helpers/createResources';
 
 @Injectable()
-export class DataStore {
+export class DataStoreService {
   public patients: Patient[];
   public episodes: EpisodeOfCare[];
   public conditions: Condition[];
@@ -40,7 +40,7 @@ export class DataStore {
 
     if (!firstNewOrganizationId) {
       throw new Error(
-        'First organization ID is missing in DataStore constructor',
+        'First organization ID is missing in DataStoreService constructor',
       );
     }
 

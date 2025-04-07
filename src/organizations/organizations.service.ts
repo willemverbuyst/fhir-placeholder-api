@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Organization } from 'fhir/r5';
 import { v4 as uuidV4 } from 'uuid';
-import { DataStore } from '../db/dataStore.service';
+import { DataStoreService } from '../db/dataStore.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Injectable()
 export class OrganizationsService {
-  constructor(private readonly repo: DataStore) {}
+  constructor(private readonly repo: DataStoreService) {}
 
   create(createOrganizationDto: CreateOrganizationDto) {
     const newOrganization: Organization = {

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ContactPoint } from 'fhir/r5';
 import { ContactSystem, ContactUse } from '../db/helpers/contactPoint';
 
-export class ContactPointDto {
+export class ContactPointDto implements ContactPoint {
   @ApiProperty({
     enum: ContactUse,
     description:

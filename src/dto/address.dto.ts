@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Address } from 'fhir/r5';
 import { AddressType, AddressUse } from '../db/helpers/address';
 
-export class AddressDto {
+export class AddressDto implements Address {
   @ApiProperty({
     enum: AddressUse,
     description: 'home | work | temp | old | billing - purpose of this address',

@@ -27,7 +27,7 @@ describe('EpisodesController (e2e)', () => {
       .then((res) => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
-        expect(episodes).toHaveLength(2);
+        expect(episodes).toHaveLength(3);
       });
   });
 
@@ -38,8 +38,9 @@ describe('EpisodesController (e2e)', () => {
       .then((res) => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
-        expect(episodes).toHaveLength(1);
+        expect(episodes).toHaveLength(2);
         expect(episodes[0].patient.reference).toBe('Patient/1');
+        expect(episodes[1].patient.reference).toBe('Patient/1');
       });
   });
 

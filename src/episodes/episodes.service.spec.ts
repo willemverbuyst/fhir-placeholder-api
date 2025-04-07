@@ -25,7 +25,7 @@ describe('EpisodesService', () => {
     it('should return all episodes', async () => {
       const episodes = await service.findAll();
       expect(episodes).toBeDefined();
-      expect(episodes.length).toBe(2);
+      expect(episodes.length).toBe(3);
     });
   });
 
@@ -51,8 +51,9 @@ describe('EpisodesService', () => {
     it('should return episodes by patient id', async () => {
       const episodes = await service.findByPatientId('1');
       expect(episodes).toBeDefined();
-      expect(episodes.length).toBe(1);
+      expect(episodes.length).toBe(2);
       expect(episodes[0].patient.reference).toBe('Patient/1');
+      expect(episodes[1].patient.reference).toBe('Patient/1');
     });
 
     it("should return an empty array for a patient id that doesn't exist", async () => {

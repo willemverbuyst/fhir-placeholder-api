@@ -52,7 +52,7 @@ describe('PatientsService', () => {
     it('should return all episodes for a patient', async () => {
       const episodes = await service.findAllEpisodesForPatient('1');
       expect(episodes).toBeDefined();
-      expect(episodes.length).toBe(1);
+      expect(episodes.length).toBe(2);
     });
 
     it("should return an empty array for a patient that doesn't exist", async () => {

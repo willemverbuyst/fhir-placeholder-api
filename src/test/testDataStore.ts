@@ -30,6 +30,12 @@ export const testDataStore = {
       status: 'active',
       patient: { reference: 'Patient/2' },
     },
+    {
+      id: '3',
+      resourceType: 'EpisodeOfCare',
+      status: 'active',
+      patient: { reference: 'Patient/1' },
+    },
   ],
   organizations: [
     {

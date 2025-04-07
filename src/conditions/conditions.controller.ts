@@ -29,7 +29,7 @@ export class ConditionsController {
     const condition = await this.conditionsService.findOne(id);
 
     if (!condition) {
-      throw new NotFoundException('Condition not found');
+      throw new NotFoundException('condition not found');
     }
     return condition;
   }

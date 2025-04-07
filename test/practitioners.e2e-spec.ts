@@ -1,0 +1,56 @@
+import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as request from 'supertest';
+import { AppModule } from './../src/app.module';
+import { DataStoreService } from './../src/db/dataStore.service';
+import { testDataStore } from './../src/test/testDataStore';
+
+describe('PractitionersController (e2e)', () => {
+  let app: INestApplication;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    })
+      .overrideProvider(DataStoreService)
+      .useValue({ ...testDataStore })
+      .compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/practitioners (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/practitioners')
+      .expect(200)
+      .then((res) => {
+        const practitioners = res.body;
+        expect(practitioners).toBeDefined();
+        expect(practitioners).toHaveLength(2);
+      });
+  });
+
+  it('/practitioners/:id (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/practitioners/1')
+      .expect(200)
+      .then((res) => {
+        const practitioner = res.body;
+        expect(practitioner).toBeDefined();
+        expect(practitioner).toHaveProperty('id', '1');
+        expect(practitioner).toHaveProperty('resourceType', 'Practitioner');
+      });
+  });
+
+  it('/practitioners/:id (GET) - Not Found', async () => {
+    return request(app.getHttpServer())
+      .get('/practitioners/unknown')
+      .expect(404)
+      .then((res) => {
+        const response = res.body;
+        expect(response).toBeDefined();
+        expect(response).toHaveProperty('message', 'practitioner not found');
+      });
+  });
+});

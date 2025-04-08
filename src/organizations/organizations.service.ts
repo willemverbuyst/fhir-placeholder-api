@@ -59,4 +59,10 @@ export class OrganizationsService {
     }
     return undefined;
   }
+
+  async findByName(name: string) {
+    return this.repo.organizations.filter(
+      (o) => o.name?.toLocaleLowerCase() === name.toLocaleLowerCase(),
+    );
+  }
 }

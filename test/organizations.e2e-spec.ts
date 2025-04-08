@@ -27,7 +27,7 @@ describe('OrganizationsController (e2e)', () => {
       .then((res) => {
         const organizations = res.body;
         expect(organizations).toBeDefined();
-        expect(organizations).toHaveLength(2);
+        expect(organizations).toHaveLength(3);
       });
   });
 

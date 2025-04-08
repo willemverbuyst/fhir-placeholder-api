@@ -22,6 +22,7 @@ describe('OrganizationsController', () => {
             create: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            findByName: jest.fn(),
           },
         },
         { provide: DataStoreService, useValue: testDataStore },
@@ -40,6 +41,19 @@ describe('OrganizationsController', () => {
     it('should call findAll method of OrganizationsService', async () => {
       await controller.findAll();
       expect(service.findAll).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return an array of episodes for patient', async () => {
+      const mockOrganizations: Organization[] = [
+        {
+          id: '1',
+          resourceType: 'Organization',
+          name: 'foo',
+        },
+      ];
+      jest.spyOn(service, 'findByName').mockResolvedValue(mockOrganizations);
+      const result = await controller.findAll('foo');
+      expect(result).toEqual(mockOrganizations);
     });
   });
 

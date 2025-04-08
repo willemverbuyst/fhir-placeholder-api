@@ -7,8 +7,9 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { OrganizationDto } from './dto/organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
@@ -32,8 +33,17 @@ export class OrganizationsController {
     type: OrganizationDto,
     isArray: true,
   })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    description: 'Name to filter organizations',
+    type: String,
+  })
   @Get()
-  async findAll() {
+  async findAll(@Query('name') name?: string) {
+    if (name) {
+      return this.organizationsService.findByName(name);
+    }
     return this.organizationsService.findAll();
   }
 

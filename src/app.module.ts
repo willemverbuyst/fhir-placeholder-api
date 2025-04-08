@@ -10,6 +10,7 @@ import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PatientsModule } from './patients/patients.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
+import { MetadataModule } from './metadata/metadata.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PractitionersModule } from './practitioners/practitioners.module';
     ConditionsModule,
     EpisodesModule,
     DataStoreModule,
+    MetadataModule,
   ],
   controllers: [AppController],
   providers: [AppService],

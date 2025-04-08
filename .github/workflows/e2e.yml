@@ -4,31 +4,18 @@ permissions:
   contents: read
 
 on:
-  push:
-    branches:
-      - development
-      - main
   pull_request:
-    branches:
-      - development
-      - main
+  workflow_dispatch:
 
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Install dependencies
-        if: github.event_name == 'push'
-        run: npm ci
+        run: npm i
 
-      - name: E2E Placeholder (on PR)
-        if: github.event_name == 'pull_request'
-        run: echo "Skipping E2E on PR — runs on merge to development or main"
-
-      - name: Run E2E (on merge)
-        if: github.event_name == 'push'
+      - name: Run E2E
         run: npm run test:e2e

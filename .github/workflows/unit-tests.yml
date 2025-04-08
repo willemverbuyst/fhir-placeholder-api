@@ -1,6 +1,6 @@
 name: Unit Tests
 
-on: 
+on:
   pull_request:
   workflow_dispatch:
 
@@ -10,7 +10,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Install dependencies
         run: npm i
+
       - name: Test
         run: npm run test

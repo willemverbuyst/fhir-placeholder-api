@@ -37,8 +37,8 @@ describe('OrganizationsController', () => {
   });
 
   describe('findAll', () => {
-    it('should call findAll method of OrganizationsService', () => {
-      controller.findAll();
+    it('should call findAll method of OrganizationsService', async () => {
+      await controller.findAll();
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });
   });
@@ -66,9 +66,9 @@ describe('OrganizationsController', () => {
   });
 
   describe('create', () => {
-    it('should call create with organization dto', () => {
+    it('should call create with organization dto', async () => {
       const dto = { name: 'test organization' };
-      controller.create(dto);
+      await controller.create(dto);
       expect(service.create).toHaveBeenCalledWith(dto);
     });
   });

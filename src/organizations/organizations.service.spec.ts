@@ -22,8 +22,8 @@ describe('OrganizationsService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all organizations', () => {
-      const organizations = service.findAll();
+    it('should return all organizations', async () => {
+      const organizations = await service.findAll();
       expect(organizations).toBeDefined();
       expect(organizations.length).toBe(2);
     });
@@ -65,14 +65,14 @@ describe('OrganizationsService', () => {
       expect(organization.id).toBe('1');
       expect(organization.resourceType).toBe('Organization');
 
-      const allOrganizations = service.findAll();
+      const allOrganizations = await service.findAll();
       expect(allOrganizations.length).toBe(1);
     });
   });
 
   describe('create', () => {
-    it('should create a new organization', () => {
-      const newOrganization = service.create({
+    it('should create a new organization', async () => {
+      const newOrganization = await service.create({
         name: 'New Organization',
       });
       expect(newOrganization).toBeDefined();
@@ -81,7 +81,7 @@ describe('OrganizationsService', () => {
       expect(newOrganization.name).toBe('New Organization');
       expect(newOrganization.active).toBe(true);
 
-      const allOrganizations = service.findAll();
+      const allOrganizations = await service.findAll();
       expect(allOrganizations.length).toBe(3);
     });
   });

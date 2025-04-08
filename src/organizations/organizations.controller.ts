@@ -23,7 +23,7 @@ export class OrganizationsController {
     type: OrganizationDto,
   })
   @Post()
-  create(@Body() createOrganizationDto: CreateOrganizationDto) {
+  async create(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.organizationsService.create(createOrganizationDto);
   }
 
@@ -33,7 +33,7 @@ export class OrganizationsController {
     isArray: true,
   })
   @Get()
-  findAll() {
+  async findAll() {
     return this.organizationsService.findAll();
   }
 

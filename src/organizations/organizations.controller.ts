@@ -7,10 +7,12 @@ import {
   Param,
   Patch,
   Post,
-  UnprocessableEntityException,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { GetOrganizationDto } from './dto/get-organization.dto';
 import { OrganizationDto } from './dto/organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationsService } from './organizations.service';
@@ -40,23 +42,21 @@ export class OrganizationsController {
     type: String,
   })
   @Get()
-  async findAll(query?: Record<string, any>) {
-    if (!query) {
-      return this.organizationsService.findAll();
+  async findAll(
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    data?: GetOrganizationDto,
+  ) {
+    if (data?.name) {
+      return this.organizationsService.findByName(data.name);
     }
 
-    const allowedParams = ['name'];
-    const invalidParams = Object.keys(query).filter(
-      (key) => !allowedParams.includes(key),
-    );
-
-    if (query.name) {
-      return this.organizationsService.findByName(query.name);
-    }
-
-    throw new UnprocessableEntityException(
-      `Invalid query parameter(s): ${invalidParams.join(', ')}`,
-    );
+    return this.organizationsService.findAll();
   }
 
   @ApiOkResponse({

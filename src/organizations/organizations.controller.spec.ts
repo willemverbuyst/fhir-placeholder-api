@@ -1,7 +1,4 @@
-import {
-  NotFoundException,
-  UnprocessableEntityException,
-} from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Organization } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
@@ -46,7 +43,7 @@ describe('OrganizationsController', () => {
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });
 
-    it('should return an array of episodes for patient', async () => {
+    it('should return an array of organizations with name', async () => {
       const mockOrganizations: Organization[] = [
         {
           id: '1',
@@ -57,12 +54,6 @@ describe('OrganizationsController', () => {
       jest.spyOn(service, 'findByName').mockResolvedValue(mockOrganizations);
       const result = await controller.findAll({ name: 'foo' });
       expect(result).toEqual(mockOrganizations);
-    });
-
-    it('should return error for invalid param', async () => {
-      await expect(controller.findAll({ foo: 'bar' })).rejects.toThrow(
-        UnprocessableEntityException,
-      );
     });
   });
 

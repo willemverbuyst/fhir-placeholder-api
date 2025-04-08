@@ -44,6 +44,19 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
+  it('/organizations?name=Acme&city=Somewhere (GET) - Bad Request', async () => {
+    return request(app.getHttpServer())
+      .get('/organizations?name=Acme&city=lala')
+      .expect(400)
+      .then((res) => {
+        const response = res.body;
+        expect(response).toBeDefined();
+        expect(response).toHaveProperty('message', [
+          'property city should not exist',
+        ]);
+      });
+  });
+
   it('/organizations/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
       .get('/organizations/1')

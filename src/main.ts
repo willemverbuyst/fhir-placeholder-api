@@ -18,7 +18,13 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v2/' + fhirVersion);
 
   // whitelist: true will strip properties that are not in the DTO
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Fhir R5 API')

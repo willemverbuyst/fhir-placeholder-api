@@ -56,7 +56,7 @@ describe('EpisodesController', () => {
         },
       ];
       jest.spyOn(service, 'findByPatientId').mockResolvedValue(mockEpisodes);
-      const result = await controller.findAll('1');
+      const result = await controller.findAll({ patient: '1' });
       expect(result).toEqual(mockEpisodes);
     });
   });

@@ -4,9 +4,11 @@ import {
   NotFoundException,
   Param,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { EpisodeDto } from './dto/episode.dto';
+import { GetEpisodeDto } from './dto/get-episode.dto';
 import { EpisodesService } from './episodes.service';
 
 @Controller('episodes')
@@ -25,11 +27,21 @@ export class EpisodesController {
     type: String,
   })
   @Get()
-  async findAll(@Query('patient') patient?: string) {
-    if (!patient) {
-      return await this.episodesService.findAll();
+  async findAll(
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    data?: GetEpisodeDto,
+  ) {
+    if (data?.patient) {
+      return await this.episodesService.findByPatientId(data.patient);
     }
-    return await this.episodesService.findByPatientId(patient);
+
+    return await this.episodesService.findAll();
   }
 
   @ApiOkResponse({

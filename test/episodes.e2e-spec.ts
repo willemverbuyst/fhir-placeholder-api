@@ -44,6 +44,19 @@ describe('EpisodesController (e2e)', () => {
       });
   });
 
+  it('/episodes?patient=1&title=foo (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/episodes?patient=1&title=foo')
+      .expect(400)
+      .then((res) => {
+        const response = res.body;
+        expect(response).toBeDefined();
+        expect(response).toHaveProperty('message', [
+          'property title should not exist',
+        ]);
+      });
+  });
+
   it('/episodes/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
       .get('/episodes/1')

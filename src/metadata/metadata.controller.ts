@@ -4,8 +4,6 @@ import { CapabilityStatement } from 'fhir/r5';
 
 @Controller('metadata')
 export class MetadataController {
-  constructor() {}
-
   @ApiOkResponse({
     description: 'CapabilityStatement',
   })

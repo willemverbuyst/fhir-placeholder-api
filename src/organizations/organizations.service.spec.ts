@@ -22,10 +22,10 @@ describe('OrganizationsService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all organizations', () => {
-      const organizations = service.findAll();
+    it('should return all organizations', async () => {
+      const organizations = await service.findAll();
       expect(organizations).toBeDefined();
-      expect(organizations.length).toBe(2);
+      expect(organizations.length).toBe(3);
     });
   });
 
@@ -65,14 +65,14 @@ describe('OrganizationsService', () => {
       expect(organization.id).toBe('1');
       expect(organization.resourceType).toBe('Organization');
 
-      const allOrganizations = service.findAll();
-      expect(allOrganizations.length).toBe(1);
+      const allOrganizations = await service.findAll();
+      expect(allOrganizations.length).toBe(2);
     });
   });
 
   describe('create', () => {
-    it('should create a new organization', () => {
-      const newOrganization = service.create({
+    it('should create a new organization', async () => {
+      const newOrganization = await service.create({
         name: 'New Organization',
       });
       expect(newOrganization).toBeDefined();
@@ -81,8 +81,8 @@ describe('OrganizationsService', () => {
       expect(newOrganization.name).toBe('New Organization');
       expect(newOrganization.active).toBe(true);
 
-      const allOrganizations = service.findAll();
-      expect(allOrganizations.length).toBe(3);
+      const allOrganizations = await service.findAll();
+      expect(allOrganizations.length).toBe(4);
     });
   });
 
@@ -107,6 +107,45 @@ describe('OrganizationsService', () => {
         name: 'Updated Organization',
       });
       expect(updatedOrganization).toBeUndefined();
+    });
+  });
+
+  describe('findByName', () => {
+    it('should return organization with given name', async () => {
+      const organizations = await service.findByName('test organization');
+      expect(organizations).toBeDefined();
+
+      if (!organizations) {
+        throw new Error('Expected organizations to be defined');
+      }
+
+      expect(organizations[0]).toHaveProperty('name', 'test organization');
+    });
+
+    it('should return multiple organizations for given name', async () => {
+      const organizations = await service.findByName('test organization');
+      expect(organizations).toBeDefined();
+
+      if (!organizations) {
+        throw new Error('Expected organizations to be defined');
+      }
+
+      expect(organizations.length).toBe(2);
+      expect(organizations[0]).toHaveProperty('resourceType', 'Organization');
+      expect(organizations[0]).toHaveProperty('id', '1');
+      expect(organizations[1]).toHaveProperty('resourceType', 'Organization');
+      expect(organizations[1]).toHaveProperty('id', '3');
+    });
+
+    it('should return an empty array when no organizations with given name are found', async () => {
+      const organizations = await service.findByName('unknown organization');
+      expect(organizations).toBeDefined();
+
+      if (!organizations) {
+        throw new Error('Expected organizations to be defined');
+      }
+
+      expect(organizations.length).toBe(0);
     });
   });
 });

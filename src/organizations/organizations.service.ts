@@ -8,7 +8,7 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 export class OrganizationsService {
   constructor(private readonly repo: DataStoreService) {}
 
-  create(createOrganizationDto: CreateOrganizationDto) {
+  async create(createOrganizationDto: CreateOrganizationDto) {
     const newOrganization: Organization = {
       id: uuidV4(),
       resourceType: 'Organization',
@@ -21,7 +21,7 @@ export class OrganizationsService {
     return newOrganization;
   }
 
-  findAll() {
+  async findAll() {
     return this.repo.organizations;
   }
 
@@ -58,5 +58,11 @@ export class OrganizationsService {
       return organization;
     }
     return undefined;
+  }
+
+  async findByName(name: string) {
+    return this.repo.organizations.filter(
+      (o) => o.name?.toLocaleLowerCase() === name.toLocaleLowerCase(),
+    );
   }
 }

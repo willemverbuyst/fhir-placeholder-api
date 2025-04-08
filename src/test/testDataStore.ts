@@ -48,6 +48,11 @@ export const testDataStore = {
       resourceType: 'Organization',
       name: 'another test organization',
     },
+    {
+      id: '3',
+      resourceType: 'Organization',
+      name: 'test organization',
+    },
   ],
   practitioners: [
     {

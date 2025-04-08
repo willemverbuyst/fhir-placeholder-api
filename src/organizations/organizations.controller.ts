@@ -7,9 +7,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { GetOrganizationDto } from './dto/get-organization.dto';
 import { OrganizationDto } from './dto/organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { OrganizationsService } from './organizations.service';
@@ -23,7 +26,7 @@ export class OrganizationsController {
     type: OrganizationDto,
   })
   @Post()
-  create(@Body() createOrganizationDto: CreateOrganizationDto) {
+  async create(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.organizationsService.create(createOrganizationDto);
   }
 
@@ -32,8 +35,27 @@ export class OrganizationsController {
     type: OrganizationDto,
     isArray: true,
   })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    description: 'Name to filter organizations',
+    type: String,
+  })
   @Get()
-  findAll() {
+  async findAll(
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    data?: GetOrganizationDto,
+  ) {
+    if (data?.name) {
+      return this.organizationsService.findByName(data.name);
+    }
+
     return this.organizationsService.findAll();
   }
 

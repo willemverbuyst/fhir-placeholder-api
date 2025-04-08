@@ -27,7 +27,33 @@ describe('OrganizationsController (e2e)', () => {
       .then((res) => {
         const organizations = res.body;
         expect(organizations).toBeDefined();
+        expect(organizations).toHaveLength(3);
+      });
+  });
+
+  it('/organizations?name=test%20organization (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/organizations?name=test%20organization')
+      .expect(200)
+      .then((res) => {
+        const organizations = res.body;
+        expect(organizations).toBeDefined();
         expect(organizations).toHaveLength(2);
+        expect(organizations[0].name).toBe('test organization');
+        expect(organizations[0].name).toBe('test organization');
+      });
+  });
+
+  it('/organizations?name=Acme&city=Somewhere (GET) - Bad Request', async () => {
+    return request(app.getHttpServer())
+      .get('/organizations?name=Acme&city=lala')
+      .expect(400)
+      .then((res) => {
+        const response = res.body;
+        expect(response).toBeDefined();
+        expect(response).toHaveProperty('message', [
+          'property city should not exist',
+        ]);
       });
   });
 

@@ -16,6 +16,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 ## :telephone_receiver: Endpoints (wip)
 
+- GET /metadata
 - GET /patients
 - GET /patients/:id
 - GET /episodes
@@ -27,10 +28,11 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /practitioners/:id
 - DELETE /practitioner/:id
 - GET /organizations
+- GET /organizations?name=\<name\>
+- GET /organizations/:id
 - POST /organizations
 - DELETE /organizations/:id
 - PATCH /organizations/:id
-- GET /organizations/:id
 
 ```typescript
 fetch('http://localhost:8080/api/v2/r5/patients/1')

@@ -18,8 +18,8 @@ describe('PatientsController', () => {
           provide: PatientsService,
           useValue: {
             findAll: jest.fn(),
-            findOne: jest.fn(),
             findAllEpisodesForPatient: jest.fn(),
+            findOne: jest.fn(),
           },
         },
         { provide: DataStoreService, useValue: testDataStore },

@@ -5,7 +5,7 @@ import { DataStoreService } from '../db/dataStore.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Injectable()
-export class OrganizationsService {
+export class OrganizationService {
   constructor(private readonly repo: DataStoreService) {}
 
   async create(createOrganizationDto: CreateOrganizationDto) {

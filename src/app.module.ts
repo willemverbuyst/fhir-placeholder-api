@@ -8,7 +8,7 @@ import { DataStoreModule } from './db/dataStore.module';
 import { EpisodeOfCareModule } from './EpisodeOfCare/episode-of-care.module';
 import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
-import { OrganizationsModule } from './organizations/organizations.module';
+import { OrganizationModule } from './Organization/organization.module';
 import { PatientsModule } from './patients/patients.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
 
@@ -20,7 +20,7 @@ import { PractitionersModule } from './practitioners/practitioners.module';
       envFilePath: `.env.${process.env.NODE_ENV ?? 'development'}`,
       load: [configuration],
     }),
-    OrganizationsModule,
+    OrganizationModule,
     PatientsModule,
     PractitionersModule,
     ConditionModule,

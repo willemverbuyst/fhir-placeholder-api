@@ -14,11 +14,11 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { GetOrganizationDto } from './dto/get-organization.dto';
 import { OrganizationDto } from './dto/organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
-import { OrganizationsService } from './organizations.service';
+import { OrganizationService } from './organization.service';
 
-@Controller('organizations')
-export class OrganizationsController {
-  constructor(private readonly organizationsService: OrganizationsService) {}
+@Controller('Organization')
+export class OrganizationController {
+  constructor(private readonly organizationsService: OrganizationService) {}
 
   @ApiOkResponse({
     description: 'The organization is created successfully',

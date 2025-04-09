@@ -5,7 +5,7 @@ import { AppModule } from '../src/app.module';
 import { DataStoreService } from '../src/db/dataStore.service';
 import { testDataStore } from '../src/test/testDataStore';
 
-describe('OrganizationsController (e2e)', () => {
+describe('OrganizationController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -20,9 +20,9 @@ describe('OrganizationsController (e2e)', () => {
     await app.init();
   });
 
-  it('/organizations (GET) - OK', async () => {
+  it('/Organization (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/organizations')
+      .get('/Organization')
       .expect(200)
       .then((res) => {
         const organizations = res.body;
@@ -31,9 +31,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations?name=test%20organization (GET) - OK', async () => {
+  it('/Organization?name=test%20organization (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/organizations?name=test%20organization')
+      .get('/Organization?name=test%20organization')
       .expect(200)
       .then((res) => {
         const organizations = res.body;
@@ -44,9 +44,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations?name=Acme&city=Somewhere (GET) - Bad Request', async () => {
+  it('/Organization?name=Acme&city=Somewhere (GET) - Bad Request', async () => {
     return request(app.getHttpServer())
-      .get('/organizations?name=Acme&city=lala')
+      .get('/Organization?name=Acme&city=lala')
       .expect(400)
       .then((res) => {
         const response = res.body;
@@ -57,9 +57,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations/:id (GET) - OK', async () => {
+  it('/Organization/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/organizations/1')
+      .get('/Organization/1')
       .expect(200)
       .then((res) => {
         const organization = res.body;
@@ -69,9 +69,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations/:id (GET) - Not Found', async () => {
+  it('/Organization/:id (GET) - Not Found', async () => {
     return request(app.getHttpServer())
-      .get('/organizations/unknown')
+      .get('/Organization/unknown')
       .expect(404)
       .then((res) => {
         const response = res.body;
@@ -80,9 +80,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations/:id (PATCH) - OK', async () => {
+  it('/Organization/:id (PATCH) - OK', async () => {
     return request(app.getHttpServer())
-      .patch('/organizations/1')
+      .patch('/Organization/1')
       .set('Accept', 'application/json')
       .send({
         name: 'Updated Organization Name',
@@ -100,9 +100,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations/:id (PATCH) - Not found', async () => {
+  it('/Organization/:id (PATCH) - Not found', async () => {
     return request(app.getHttpServer())
-      .patch('/organizations/unknown')
+      .patch('/Organization/unknown')
       .set('Accept', 'application/json')
       .send({
         name: 'Updated Organization Name',
@@ -115,9 +115,9 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations/:id (POST) - Created', async () => {
+  it('/Organization/:id (POST) - Created', async () => {
     return request(app.getHttpServer())
-      .post('/organizations')
+      .post('/Organization')
       .set('Accept', 'application/json')
       .send({
         name: 'New Organization Name',

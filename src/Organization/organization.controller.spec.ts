@@ -3,19 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Organization } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
-import { OrganizationsController } from './organizations.controller';
-import { OrganizationsService } from './organizations.service';
+import { OrganizationController } from './organization.controller';
+import { OrganizationService } from './organization.service';
 
-describe('OrganizationsController', () => {
-  let controller: OrganizationsController;
-  let service: OrganizationsService;
+describe('OrganizationController', () => {
+  let controller: OrganizationController;
+  let service: OrganizationService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [OrganizationsController],
+      controllers: [OrganizationController],
       providers: [
         {
-          provide: OrganizationsService,
+          provide: OrganizationService,
           useValue: {
             findAll: jest.fn(),
             findOne: jest.fn(),
@@ -28,8 +28,8 @@ describe('OrganizationsController', () => {
       ],
     }).compile();
 
-    controller = module.get<OrganizationsController>(OrganizationsController);
-    service = module.get<OrganizationsService>(OrganizationsService);
+    controller = module.get<OrganizationController>(OrganizationController);
+    service = module.get<OrganizationService>(OrganizationService);
   });
 
   it('should be defined', () => {
@@ -37,7 +37,7 @@ describe('OrganizationsController', () => {
   });
 
   describe('findAll', () => {
-    it('should call findAll method of OrganizationsService', async () => {
+    it('should call findAll method of OrganizationService', async () => {
       await controller.findAll();
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });
@@ -57,7 +57,7 @@ describe('OrganizationsController', () => {
   });
 
   describe('findOne', () => {
-    it('should call findOne method of OrganizationsService', async () => {
+    it('should call findOne method of OrganizationService', async () => {
       const mockOrganization: Organization = {
         id: '1',
         resourceType: 'Organization',
@@ -87,7 +87,7 @@ describe('OrganizationsController', () => {
   });
 
   describe('update', () => {
-    it('should call update method of OrganizationsService', async () => {
+    it('should call update method of OrganizationService', async () => {
       const mockOrganization: Organization = {
         id: '1',
         resourceType: 'Organization',

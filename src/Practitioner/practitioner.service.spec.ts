@@ -22,10 +22,10 @@ describe('PractitionerService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all practitioners', () => {
-      const practitioners = service.findAll();
-      expect(practitioners).toBeDefined();
-      expect(practitioners.length).toBe(2);
+    it('should return all practitioners', async () => {
+      const bundle = await service.findAll();
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(2);
     });
   });
 

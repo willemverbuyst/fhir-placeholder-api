@@ -27,7 +27,8 @@ describe('PractitionerController (e2e)', () => {
       .then((res) => {
         const practitioners = res.body;
         expect(practitioners).toBeDefined();
-        expect(practitioners).toHaveLength(2);
+        expect(practitioners).toHaveProperty('resourceType', 'Bundle');
+        expect(practitioners.entry).toHaveLength(2);
       });
   });
 

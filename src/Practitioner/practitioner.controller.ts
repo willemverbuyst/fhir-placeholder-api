@@ -1,6 +1,8 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { PractitionerDto } from './dto/practitioner.dto';
+import { Bundle, Practitioner } from 'fhir/r5';
+import { practitionerBundleExample } from './examples/practitioner-bundle.example';
+import { practitionerExample } from './examples/practitioner.example';
 import { PractitionerService } from './practitioner.service';
 
 @Controller('Practitioner')
@@ -9,23 +11,22 @@ export class PractitionerController {
 
   @ApiOkResponse({
     description: 'All practitioners',
-    type: PractitionerDto,
-    isArray: true,
+    example: practitionerBundleExample,
   })
   @Get()
-  findAll() {
-    return this.practitionersService.findAll();
+  async findAll(): Promise<Bundle<Practitioner>> {
+    return await this.practitionersService.findAll();
   }
 
   @ApiOkResponse({
     description: 'The practitioner is returned successfully',
-    type: PractitionerDto,
+    example: practitionerExample,
   })
   @ApiNotFoundResponse({
     description: 'Practitioner not found',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Practitioner> {
     const practitioner = await this.practitionersService.findOne(id);
     if (!practitioner) {
       throw new NotFoundException('practitioner not found');

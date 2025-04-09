@@ -7,7 +7,7 @@ import { EpisodeOfCareDto } from './episode-of-care.dto';
 export class EpisodeOfCareBundleDto extends BundleDto<EpisodeOfCare> {
   @ApiProperty({
     type: EntryDto<EpisodeOfCareDto>,
-    description: 'The conditions',
+    description: 'The episodes',
     example: [
       {
         fullUrl:

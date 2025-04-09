@@ -10,7 +10,7 @@ import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationModule } from './Organization/organization.module';
 import { PatientModule } from './Patient/patient.module';
-import { PractitionersModule } from './practitioners/practitioners.module';
+import { PractitionerModule } from './Practitioner/practitioner.module';
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { PractitionersModule } from './practitioners/practitioners.module';
     }),
     OrganizationModule,
     PatientModule,
-    PractitionersModule,
+    PractitionerModule,
     ConditionModule,
     EpisodeOfCareModule,
     DataStoreModule,

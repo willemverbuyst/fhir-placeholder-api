@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataStoreService } from '../db/dataStore.service';
 
 @Injectable()
-export class PractitionersService {
+export class PractitionerService {
   constructor(private readonly repo: DataStoreService) {}
 
   findAll() {

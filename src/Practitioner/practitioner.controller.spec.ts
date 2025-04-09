@@ -3,19 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Practitioner } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
-import { PractitionersController } from './practitioners.controller';
-import { PractitionersService } from './practitioners.service';
+import { PractitionerController } from './practitioner.controller';
+import { PractitionerService } from './practitioner.service';
 
-describe('PractitionersController', () => {
-  let controller: PractitionersController;
-  let service: PractitionersService;
+describe('PractitionerController', () => {
+  let controller: PractitionerController;
+  let service: PractitionerService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PractitionersController],
+      controllers: [PractitionerController],
       providers: [
         {
-          provide: PractitionersService,
+          provide: PractitionerService,
           useValue: {
             findAll: jest.fn(),
             findOne: jest.fn(),
@@ -26,8 +26,8 @@ describe('PractitionersController', () => {
       ],
     }).compile();
 
-    controller = module.get<PractitionersController>(PractitionersController);
-    service = module.get<PractitionersService>(PractitionersService);
+    controller = module.get<PractitionerController>(PractitionerController);
+    service = module.get<PractitionerService>(PractitionerService);
   });
 
   it('should be defined', () => {
@@ -35,7 +35,7 @@ describe('PractitionersController', () => {
   });
 
   describe('findAll', () => {
-    it('should call findAll method of PractitionersService', () => {
+    it('should call findAll method of PractitionerService', () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
@@ -43,7 +43,7 @@ describe('PractitionersController', () => {
   });
 
   describe('findOne', () => {
-    it('should call findOne method of PractitionersService', async () => {
+    it('should call findOne method of PractitionerService', async () => {
       const mockPractitioner: Practitioner = {
         id: '1',
         resourceType: 'Practitioner',

@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
-import { DataStoreService } from './../src/db/dataStore.service';
-import { testDataStore } from './../src/test/testDataStore';
+import { AppModule } from '../src/app.module';
+import { DataStoreService } from '../src/db/dataStore.service';
+import { testDataStore } from '../src/test/testDataStore';
 
-describe('PractitionersController (e2e)', () => {
+describe('PractitionerController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -20,9 +20,9 @@ describe('PractitionersController (e2e)', () => {
     await app.init();
   });
 
-  it('/practitioners (GET) - OK', async () => {
+  it('/Practitioner (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/practitioners')
+      .get('/Practitioner')
       .expect(200)
       .then((res) => {
         const practitioners = res.body;
@@ -31,9 +31,9 @@ describe('PractitionersController (e2e)', () => {
       });
   });
 
-  it('/practitioners/:id (GET) - OK', async () => {
+  it('/Practitioner/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/practitioners/1')
+      .get('/Practitioner/1')
       .expect(200)
       .then((res) => {
         const practitioner = res.body;
@@ -43,9 +43,9 @@ describe('PractitionersController (e2e)', () => {
       });
   });
 
-  it('/practitioners/:id (GET) - Not Found', async () => {
+  it('/Practitioner/:id (GET) - Not Found', async () => {
     return request(app.getHttpServer())
-      .get('/practitioners/unknown')
+      .get('/Practitioner/unknown')
       .expect(404)
       .then((res) => {
         const response = res.body;

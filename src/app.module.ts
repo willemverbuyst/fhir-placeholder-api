@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { ConditionModule } from './Condition/condition.module';
 import configuration from './config/configuration';
 import { DataStoreModule } from './db/dataStore.module';
-import { EpisodesModule } from './episodes/episodes.module';
+import { EpisodeOfCareModule } from './EpisodeOfCare/episode-of-care.module';
 import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
@@ -24,7 +24,7 @@ import { PractitionersModule } from './practitioners/practitioners.module';
     PatientsModule,
     PractitionersModule,
     ConditionModule,
-    EpisodesModule,
+    EpisodeOfCareModule,
     DataStoreModule,
     MetadataModule,
   ],

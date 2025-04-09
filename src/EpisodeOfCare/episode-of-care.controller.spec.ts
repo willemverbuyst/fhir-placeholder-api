@@ -3,19 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { EpisodeOfCare } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
-import { EpisodesController } from './episodes.controller';
-import { EpisodesService } from './episodes.service';
+import { EpisodeOfCareController } from './episode-of-care.controller';
+import { EpisodeOfCareService } from './episode-of-care.service';
 
-describe('EpisodesController', () => {
-  let controller: EpisodesController;
-  let service: EpisodesService;
+describe('EpisodeOfCareController', () => {
+  let controller: EpisodeOfCareController;
+  let service: EpisodeOfCareService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [EpisodesController],
+      controllers: [EpisodeOfCareController],
       providers: [
         {
-          provide: EpisodesService,
+          provide: EpisodeOfCareService,
           useValue: {
             findAll: jest.fn(),
             findOne: jest.fn(),
@@ -26,8 +26,8 @@ describe('EpisodesController', () => {
       ],
     }).compile();
 
-    controller = module.get<EpisodesController>(EpisodesController);
-    service = module.get<EpisodesService>(EpisodesService);
+    controller = module.get<EpisodeOfCareController>(EpisodeOfCareController);
+    service = module.get<EpisodeOfCareService>(EpisodeOfCareService);
   });
 
   it('should be defined', () => {
@@ -35,7 +35,7 @@ describe('EpisodesController', () => {
   });
 
   describe('findAll', () => {
-    it('should call findAll method of EpisodesService', () => {
+    it('should call findAll method of EpisodeOfCareService', () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
@@ -59,7 +59,7 @@ describe('EpisodesController', () => {
   });
 
   describe('findOne', () => {
-    it('should call findAll method of EpisodesService', async () => {
+    it('should call findAll method of EpisodeOfCareService', async () => {
       const mockEpisode: EpisodeOfCare = {
         id: '1',
         resourceType: 'EpisodeOfCare',

@@ -9,11 +9,11 @@ import {
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { EpisodeDto } from './dto/episode.dto';
 import { GetEpisodeDto } from './dto/get-episode.dto';
-import { EpisodesService } from './episodes.service';
+import { EpisodeOfCareService } from './episode-of-care.service';
 
-@Controller('episodes')
-export class EpisodesController {
-  constructor(private readonly episodesService: EpisodesService) {}
+@Controller('EpisodeOfCare')
+export class EpisodeOfCareController {
+  constructor(private readonly episodesService: EpisodeOfCareService) {}
 
   @ApiOkResponse({
     description: 'All episodes',

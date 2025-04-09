@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { EpisodeDto } from '../episodes/dto/episode.dto';
+import { EpisodeDto } from '../EpisodeOfCare/dto/episode.dto';
 import { PatientDto } from './dto/patient.dto';
 import { PatientsService } from './patients.service';
 

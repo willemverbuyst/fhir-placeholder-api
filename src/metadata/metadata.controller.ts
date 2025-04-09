@@ -33,17 +33,18 @@ export class MetadataController {
               type: 'Organization',
               interaction: [
                 { code: 'read' },
+                { code: 'search-type' },
                 { code: 'create' },
                 { code: 'patch' },
               ],
             },
             {
               type: 'Patient',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
             {
               type: 'Practitioner',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
           ],
         },

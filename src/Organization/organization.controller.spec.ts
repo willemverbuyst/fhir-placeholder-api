@@ -1,6 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Organization } from 'fhir/r5';
+import { Bundle, Organization } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { OrganizationController } from './organization.controller';
@@ -43,16 +43,27 @@ describe('OrganizationController', () => {
     });
 
     it('should return an array of organizations with name', async () => {
-      const mockOrganizations: Organization[] = [
-        {
-          id: '1',
-          resourceType: 'Organization',
-          name: 'foo',
-        },
-      ];
-      jest.spyOn(service, 'findByName').mockResolvedValue(mockOrganizations);
+      const mockOrganizationBundle: Bundle<Organization> = {
+        resourceType: 'Bundle',
+        type: 'searchset',
+        total: 1,
+        entry: [
+          {
+            fullUrl: 'url/org/1',
+            resource: {
+              id: '1',
+              resourceType: 'Organization',
+              name: 'foo',
+            },
+          },
+        ],
+      };
+
+      jest
+        .spyOn(service, 'findByName')
+        .mockResolvedValue(mockOrganizationBundle);
       const result = await controller.findAll({ name: 'foo' });
-      expect(result).toEqual(mockOrganizations);
+      expect(result).toEqual(mockOrganizationBundle);
     });
   });
 

@@ -10,10 +10,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { Bundle, Organization } from 'fhir/r5';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { GetOrganizationDto } from './dto/get-organization.dto';
-import { OrganizationDto } from './dto/organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { organizationBundleExample } from './examples/organization-bundle.example';
+import { organizationExample } from './examples/organization.example';
 import { OrganizationService } from './organization.service';
 
 @Controller('Organization')
@@ -22,17 +24,18 @@ export class OrganizationController {
 
   @ApiOkResponse({
     description: 'The organization is created successfully',
-    type: OrganizationDto,
+    example: organizationExample,
   })
   @Post()
-  async create(@Body() createOrganizationDto: CreateOrganizationDto) {
+  async create(
+    @Body() createOrganizationDto: CreateOrganizationDto,
+  ): Promise<Organization> {
     return this.organizationsService.create(createOrganizationDto);
   }
 
   @ApiOkResponse({
     description: 'All organizations',
-    type: OrganizationDto,
-    isArray: true,
+    example: organizationBundleExample,
   })
   @ApiQuery({
     name: 'name',
@@ -50,7 +53,7 @@ export class OrganizationController {
       }),
     )
     data?: GetOrganizationDto,
-  ) {
+  ): Promise<Bundle<Organization>> {
     if (data?.name) {
       return this.organizationsService.findByName(data.name);
     }
@@ -60,13 +63,13 @@ export class OrganizationController {
 
   @ApiOkResponse({
     description: 'The organization is returned successfully',
-    type: OrganizationDto,
+    example: organizationExample,
   })
   @ApiNotFoundResponse({
     description: 'Organization not found',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Organization> {
     const organization = await this.organizationsService.findOne(id);
 
     if (!organization) {
@@ -78,7 +81,7 @@ export class OrganizationController {
 
   @ApiOkResponse({
     description: 'The organization is updated successfully',
-    type: OrganizationDto,
+    example: organizationExample,
   })
   @ApiNotFoundResponse({
     description: 'Organization not found',
@@ -87,7 +90,7 @@ export class OrganizationController {
   async update(
     @Param('id') id: string,
     @Body() updateOrganizationDto: UpdateOrganizationDto,
-  ) {
+  ): Promise<Organization> {
     const organization = await this.organizationsService.update(
       id,
       updateOrganizationDto,

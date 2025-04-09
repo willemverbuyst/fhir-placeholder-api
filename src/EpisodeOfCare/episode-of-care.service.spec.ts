@@ -55,7 +55,7 @@ describe('EpisodeOfCareService', () => {
       if (!bundle.entry) {
         throw new Error('Expected entry to be defined in bundle');
       }
-      expect(bundle.entry?.length).toBe(2);
+      expect(bundle.entry.length).toBe(2);
 
       expect(bundle.entry[0].resource?.patient.reference).toBe('Patient/1');
       expect(bundle.entry[1].resource?.patient.reference).toBe('Patient/1');

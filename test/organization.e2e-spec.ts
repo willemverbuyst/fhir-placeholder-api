@@ -27,7 +27,8 @@ describe('OrganizationController (e2e)', () => {
       .then((res) => {
         const organizations = res.body;
         expect(organizations).toBeDefined();
-        expect(organizations).toHaveLength(3);
+        expect(organizations).toHaveProperty('resourceType', 'Bundle');
+        expect(organizations.entry).toHaveLength(3);
       });
   });
 
@@ -38,9 +39,9 @@ describe('OrganizationController (e2e)', () => {
       .then((res) => {
         const organizations = res.body;
         expect(organizations).toBeDefined();
-        expect(organizations).toHaveLength(2);
-        expect(organizations[0].name).toBe('test organization');
-        expect(organizations[0].name).toBe('test organization');
+        expect(organizations.entry).toHaveLength(2);
+        expect(organizations.entry[0].resource.name).toBe('test organization');
+        expect(organizations.entry[0].resource.name).toBe('test organization');
       });
   });
 

@@ -48,18 +48,6 @@ export class OrganizationsService {
     return undefined;
   }
 
-  async remove(id: string) {
-    const organization = await this.findOne(id);
-
-    if (organization) {
-      this.repo.organizations = this.repo.organizations.filter(
-        (org) => org.id !== id,
-      );
-      return organization;
-    }
-    return undefined;
-  }
-
   async findByName(name: string) {
     return this.repo.organizations.filter(
       (o) => o.name?.toLocaleLowerCase() === name.toLocaleLowerCase(),

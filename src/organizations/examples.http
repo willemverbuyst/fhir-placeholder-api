@@ -22,9 +22,6 @@ Content-Type:  application/json
 }
 
 ###
-DELETE http://localhost:8080/api/v2/r5/organizations/90b2e19a-415d-4309-b19a-b6a7fa711cdf
-
-###
 PATCH http://localhost:8080/api/v2/r5/organizations/542c4ada-b60a-4b2c-a3d3-51e4ed5079be
 Content-Type:  application/json
 

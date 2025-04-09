@@ -48,28 +48,6 @@ describe('OrganizationsService', () => {
     });
   });
 
-  describe('remove', () => {
-    it("should return undefined for an organization that doesn't exist", async () => {
-      const organization = await service.remove('unknown');
-      expect(organization).toBeUndefined();
-    });
-
-    it('should remove an organization by id', async () => {
-      const organization = await service.remove('1');
-      expect(organization).toBeDefined();
-
-      if (!organization) {
-        throw new Error('Expected organization to be defined in test');
-      }
-
-      expect(organization.id).toBe('1');
-      expect(organization.resourceType).toBe('Organization');
-
-      const allOrganizations = await service.findAll();
-      expect(allOrganizations.length).toBe(2);
-    });
-  });
-
   describe('create', () => {
     it('should create a new organization', async () => {
       const newOrganization = await service.create({

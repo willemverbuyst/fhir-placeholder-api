@@ -47,25 +47,4 @@ describe('PractitionersService', () => {
       expect(practitioner).toBeUndefined();
     });
   });
-
-  describe('remove', () => {
-    it("should return undefined for an practitioner that doesn't exist", async () => {
-      const practitioner = await service.remove('unknown');
-      expect(practitioner).toBeUndefined();
-    });
-
-    it('should remove an practitioner by id', async () => {
-      const practitioner = await service.remove('1');
-      expect(practitioner).toBeDefined();
-
-      if (!practitioner) {
-        throw new Error('Expected practitioner to be defined in test');
-      }
-      expect(practitioner.id).toBe('1');
-      expect(practitioner.resourceType).toBe('Practitioner');
-
-      const allPractitioners = service.findAll();
-      expect(allPractitioners.length).toBe(1);
-    });
-  });
 });

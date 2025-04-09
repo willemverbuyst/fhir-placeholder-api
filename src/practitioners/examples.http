@@ -3,6 +3,3 @@ GET http://localhost:8080/api/v2/r5/practitioners
 
 ###
 GET http://localhost:8080/api/v2/r5/practitioners/0535dfde-05f5-4313-911b-cea328127691
-
-###
-DELETE http://localhost:8080/api/v2/r5/practitioners/0535dfde-05f5-4313-911b-cea328127691

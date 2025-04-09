@@ -14,16 +14,4 @@ export class PractitionersService {
       (practitioner) => practitioner.id === id,
     );
   }
-
-  async remove(id: string) {
-    const practitioner = await this.findOne(id);
-
-    if (practitioner) {
-      this.repo.practitioners = this.repo.practitioners.filter(
-        (practitioner) => practitioner.id !== id,
-      );
-      return practitioner;
-    }
-    return undefined;
-  }
 }

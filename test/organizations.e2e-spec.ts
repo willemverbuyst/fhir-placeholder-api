@@ -115,29 +115,6 @@ describe('OrganizationsController (e2e)', () => {
       });
   });
 
-  it('/organizations/:id (DELETE) - OK', async () => {
-    return request(app.getHttpServer())
-      .delete('/organizations/1')
-      .expect(200)
-      .then((res) => {
-        const organization = res.body;
-        expect(organization).toBeDefined();
-        expect(organization).toHaveProperty('id', '1');
-        expect(organization).toHaveProperty('resourceType', 'Organization');
-      });
-  });
-
-  it('/organizations/:id (DELETE) - Not Found', async () => {
-    return request(app.getHttpServer())
-      .delete('/organizations/unknown')
-      .expect(404)
-      .then((res) => {
-        const response = res.body;
-        expect(response).toBeDefined();
-        expect(response).toHaveProperty('message', 'organization not found');
-      });
-  });
-
   it('/organizations/:id (POST) - Created', async () => {
     return request(app.getHttpServer())
       .post('/organizations')

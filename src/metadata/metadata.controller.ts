@@ -23,7 +23,7 @@ export class MetadataController {
           resource: [
             {
               type: 'Condition',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
             {
               type: 'EpisodeOfCare',
@@ -34,7 +34,6 @@ export class MetadataController {
               interaction: [
                 { code: 'read' },
                 { code: 'create' },
-                { code: 'delete' },
                 { code: 'patch' },
               ],
             },
@@ -44,7 +43,7 @@ export class MetadataController {
             },
             {
               type: 'Practitioner',
-              interaction: [{ code: 'read' }, { code: 'delete' }],
+              interaction: [{ code: 'read' }],
             },
           ],
         },

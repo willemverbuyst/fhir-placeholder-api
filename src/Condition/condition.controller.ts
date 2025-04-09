@@ -1,6 +1,7 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ConditionService } from './condition.service';
+import { ConditionBundleDto } from './dto/condition-bundle.tdo';
 import { ConditionDto } from './dto/condition.dto';
 
 @Controller('Condition')
@@ -9,7 +10,7 @@ export class ConditionController {
 
   @ApiOkResponse({
     description: 'All conditions',
-    type: ConditionDto,
+    type: ConditionBundleDto,
     isArray: true,
   })
   @Get()

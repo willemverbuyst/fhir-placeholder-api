@@ -7,11 +7,12 @@ export class ConditionService {
   constructor(private readonly repo: DataStoreService) {}
 
   async findAll(): Promise<Bundle<Condition>> {
+    const resources = this.repo.conditions;
     return {
       resourceType: 'Bundle',
       type: 'searchset',
-      total: this.repo.conditions.length,
-      entry: this.repo.conditions.map((resource) => ({
+      total: resources.length,
+      entry: resources.map((resource) => ({
         fullUrl: `http://localhost:8080/api/v2/r5/${resource.resourceType}/${resource.id}`,
         resource,
       })),

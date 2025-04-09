@@ -1,8 +1,9 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import { Bundle, Condition } from 'fhir/r5';
 import { ConditionService } from './condition.service';
-import { ConditionBundleDto } from './dto/condition-bundle.tdo';
-import { ConditionDto } from './dto/condition.dto';
+import { conditionBundleExample } from './examples/condition-bundle.example';
+import { conditionExample } from './examples/condition.example';
 
 @Controller('Condition')
 export class ConditionController {
@@ -10,23 +11,22 @@ export class ConditionController {
 
   @ApiOkResponse({
     description: 'All conditions',
-    type: ConditionBundleDto,
-    isArray: true,
+    example: conditionBundleExample,
   })
   @Get()
-  async findAll() {
+  async findAll(): Promise<Bundle<Condition>> {
     return await this.conditionService.findAll();
   }
 
   @ApiOkResponse({
     description: 'The condition is returned successfully',
-    type: ConditionDto,
+    example: conditionExample,
   })
   @ApiNotFoundResponse({
     description: 'Condition not found',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Condition> {
     const condition = await this.conditionService.findOne(id);
 
     if (!condition) {

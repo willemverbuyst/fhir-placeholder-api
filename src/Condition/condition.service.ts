@@ -19,7 +19,7 @@ export class ConditionService {
     };
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<Condition | undefined> {
     return this.repo.conditions.find((condition) => condition.id === id);
   }
 }

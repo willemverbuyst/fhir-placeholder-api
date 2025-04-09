@@ -1,6 +1,6 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { EpisodeDto } from '../EpisodeOfCare/dto/episode.dto';
+import { EpisodeOfCareDto } from '../EpisodeOfCare/dto/episode-of-care.dto';
 import { PatientDto } from './dto/patient.dto';
 import { PatientService } from './patient.service';
 
@@ -40,7 +40,7 @@ export class PatientController {
 
   @ApiOkResponse({
     description: 'All episodes for patient',
-    type: EpisodeDto,
+    type: EpisodeOfCareDto,
     isArray: true,
   })
   @Get(':id/episodes')

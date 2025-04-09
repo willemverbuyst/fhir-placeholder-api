@@ -4,7 +4,7 @@ import { EpisodeOfCareStatus } from '../../db/resources/episode-of-care';
 import { CodeableConceptDto } from '../../dto/codeable-concept.dto';
 import { DiagnosisEntryDto } from './diagnosis.dto';
 
-export class EpisodeDto implements EpisodeOfCare {
+export class EpisodeOfCareDto implements EpisodeOfCare {
   @ApiProperty({
     type: String,
     description: 'The id of the episode',

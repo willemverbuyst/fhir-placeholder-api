@@ -7,7 +7,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
-import { EpisodeDto } from './dto/episode.dto';
+import { EpisodeOfCareBundleDto } from './dto/episode-of-care-bundle.dto';
+import { EpisodeOfCareDto } from './dto/episode-of-care.dto';
 import { GetEpisodeDto } from './dto/get-episode.dto';
 import { EpisodeOfCareService } from './episode-of-care.service';
 
@@ -17,7 +18,7 @@ export class EpisodeOfCareController {
 
   @ApiOkResponse({
     description: 'All episodes',
-    type: EpisodeDto,
+    type: EpisodeOfCareBundleDto,
     isArray: true,
   })
   @ApiQuery({
@@ -46,7 +47,7 @@ export class EpisodeOfCareController {
 
   @ApiOkResponse({
     description: 'The episode is returned successfully',
-    type: EpisodeDto,
+    type: EpisodeOfCareDto,
   })
   @ApiNotFoundResponse({
     description: 'Episode not found',

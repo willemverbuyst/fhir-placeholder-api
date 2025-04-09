@@ -27,7 +27,7 @@ export class MetadataController {
             },
             {
               type: 'EpisodeOfCare',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
             {
               type: 'Organization',

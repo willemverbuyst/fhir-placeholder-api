@@ -14,8 +14,13 @@ async function bootstrap() {
     throw new Error('fhirVersion is not defined');
   }
 
+  const serverVersion = app.get(ConfigService).get('serverVersion');
+  if (!serverVersion) {
+    throw new Error('serverVersion is not defined');
+  }
+
   app.enableCors();
-  app.setGlobalPrefix('api/v2/' + fhirVersion);
+  app.setGlobalPrefix(`api/${serverVersion}/${fhirVersion}`);
 
   // whitelist: true will strip properties that are not in the DTO
   app.useGlobalPipes(

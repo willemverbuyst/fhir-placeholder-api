@@ -1,0 +1,102 @@
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { GetOrganizationDto } from './dto/get-organization.dto';
+import { OrganizationDto } from './dto/organization.dto';
+import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { OrganizationService } from './organization.service';
+
+@Controller('Organization')
+export class OrganizationController {
+  constructor(private readonly organizationsService: OrganizationService) {}
+
+  @ApiOkResponse({
+    description: 'The organization is created successfully',
+    type: OrganizationDto,
+  })
+  @Post()
+  async create(@Body() createOrganizationDto: CreateOrganizationDto) {
+    return this.organizationsService.create(createOrganizationDto);
+  }
+
+  @ApiOkResponse({
+    description: 'All organizations',
+    type: OrganizationDto,
+    isArray: true,
+  })
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    description: 'Name to filter organizations',
+    type: String,
+  })
+  @Get()
+  async findAll(
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    data?: GetOrganizationDto,
+  ) {
+    if (data?.name) {
+      return this.organizationsService.findByName(data.name);
+    }
+
+    return this.organizationsService.findAll();
+  }
+
+  @ApiOkResponse({
+    description: 'The organization is returned successfully',
+    type: OrganizationDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Organization not found',
+  })
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const organization = await this.organizationsService.findOne(id);
+
+    if (!organization) {
+      throw new NotFoundException('organization not found');
+    }
+
+    return organization;
+  }
+
+  @ApiOkResponse({
+    description: 'The organization is updated successfully',
+    type: OrganizationDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'Organization not found',
+  })
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateOrganizationDto: UpdateOrganizationDto,
+  ) {
+    const organization = await this.organizationsService.update(
+      id,
+      updateOrganizationDto,
+    );
+
+    if (!organization) {
+      throw new NotFoundException('organization not found');
+    }
+
+    return organization;
+  }
+}

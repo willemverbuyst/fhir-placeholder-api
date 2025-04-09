@@ -17,25 +17,23 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 ## :telephone_receiver: Endpoints (wip)
 
 - GET /metadata
-- GET /patients
-- GET /patients/:id
-- GET /episodes
-- GET /episodes/:id
-- GET /episodes?patient=\<id\>
-- GET /conditions
-- GET /conditions/:id
-- GET /practitioners
-- GET /practitioners/:id
-- DELETE /practitioner/:id
-- GET /organizations
-- GET /organizations?name=\<name\>
-- GET /organizations/:id
-- POST /organizations
-- DELETE /organizations/:id
-- PATCH /organizations/:id
+- GET /Patient
+- GET /Patient/:id
+- GET /EpisodeOfCare
+- GET /EpisodeOfCare/:id
+- GET /EpisodeOfCare?patient=\<id\>
+- GET /Condition
+- GET /Condition/:id
+- GET /Practitioner
+- GET /Practitioner/:id
+- GET /Organization
+- GET /Organization?name=\<name\>
+- GET /Organization/:id
+- POST /Organization
+- PATCH /Organization/:id
 
 ```typescript
-fetch('http://localhost:8080/api/v2/r5/patients/1')
+fetch('http://localhost:8080/api/v2/r5/Patient/1')
   .then((response) => response.json())
   .then((json) => console.log(json));
 ```
@@ -43,7 +41,7 @@ fetch('http://localhost:8080/api/v2/r5/patients/1')
 or
 
 ```sh
-curl http://localhost:8080/api/v2/r5/patients/1
+curl http://localhost:8080/api/v2/r5/Patient/1
 ```
 
 👇 _Output_

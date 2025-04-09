@@ -2,15 +2,15 @@ import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config/dist';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConditionsModule } from './conditions/conditions.module';
+import { ConditionModule } from './Condition/condition.module';
 import configuration from './config/configuration';
 import { DataStoreModule } from './db/dataStore.module';
-import { EpisodesModule } from './episodes/episodes.module';
-import { LoggerMiddleware } from './middlewares/logger.middlewares';
-import { OrganizationsModule } from './organizations/organizations.module';
-import { PatientsModule } from './patients/patients.module';
-import { PractitionersModule } from './practitioners/practitioners.module';
+import { EpisodeOfCareModule } from './EpisodeOfCare/episode-of-care.module';
 import { MetadataModule } from './metadata/metadata.module';
+import { LoggerMiddleware } from './middlewares/logger.middlewares';
+import { OrganizationModule } from './Organization/organization.module';
+import { PatientModule } from './Patient/patient.module';
+import { PractitionerModule } from './Practitioner/practitioner.module';
 
 @Module({
   imports: [
@@ -20,11 +20,11 @@ import { MetadataModule } from './metadata/metadata.module';
       envFilePath: `.env.${process.env.NODE_ENV ?? 'development'}`,
       load: [configuration],
     }),
-    OrganizationsModule,
-    PatientsModule,
-    PractitionersModule,
-    ConditionsModule,
-    EpisodesModule,
+    OrganizationModule,
+    PatientModule,
+    PractitionerModule,
+    ConditionModule,
+    EpisodeOfCareModule,
     DataStoreModule,
     MetadataModule,
   ],

@@ -3,19 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Condition } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
-import { ConditionsController } from './conditions.controller';
-import { ConditionsService } from './conditions.service';
+import { ConditionController } from './condition.controller';
+import { ConditionService } from './condition.service';
 
 describe('ConditionsController', () => {
-  let controller: ConditionsController;
-  let service: ConditionsService;
+  let controller: ConditionController;
+  let service: ConditionService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ConditionsController],
+      controllers: [ConditionController],
       providers: [
         {
-          provide: ConditionsService,
+          provide: ConditionService,
           useValue: {
             findAll: jest.fn(),
             findOne: jest.fn(),
@@ -25,8 +25,8 @@ describe('ConditionsController', () => {
       ],
     }).compile();
 
-    controller = module.get<ConditionsController>(ConditionsController);
-    service = module.get<ConditionsService>(ConditionsService);
+    controller = module.get<ConditionController>(ConditionController);
+    service = module.get<ConditionService>(ConditionService);
   });
 
   it('should be defined', () => {
@@ -34,7 +34,7 @@ describe('ConditionsController', () => {
   });
 
   describe('findAll', () => {
-    it('should call findAll method of ConditionsService', () => {
+    it('should call findAll method of ConditionService', () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
@@ -42,7 +42,7 @@ describe('ConditionsController', () => {
   });
 
   describe('findOne', () => {
-    it('should call findOne method of ConditionsService', async () => {
+    it('should call findOne method of ConditionService', async () => {
       const mockCondition: Condition = {
         id: '1',
         resourceType: 'Condition',

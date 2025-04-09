@@ -2,15 +2,15 @@ import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config/dist';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConditionsModule } from './conditions/conditions.module';
+import { ConditionModule } from './Condition/condition.module';
 import configuration from './config/configuration';
 import { DataStoreModule } from './db/dataStore.module';
 import { EpisodesModule } from './episodes/episodes.module';
+import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PatientsModule } from './patients/patients.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
-import { MetadataModule } from './metadata/metadata.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { MetadataModule } from './metadata/metadata.module';
     OrganizationsModule,
     PatientsModule,
     PractitionersModule,
-    ConditionsModule,
+    ConditionModule,
     EpisodesModule,
     DataStoreModule,
     MetadataModule,

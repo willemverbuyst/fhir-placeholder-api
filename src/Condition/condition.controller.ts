@@ -1,11 +1,11 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { ConditionsService } from './conditions.service';
+import { ConditionService } from './condition.service';
 import { ConditionDto } from './dto/condition.dto';
 
-@Controller('conditions')
-export class ConditionsController {
-  constructor(private readonly conditionsService: ConditionsService) {}
+@Controller('Condition')
+export class ConditionController {
+  constructor(private readonly conditionService: ConditionService) {}
 
   @ApiOkResponse({
     description: 'All conditions',
@@ -14,7 +14,7 @@ export class ConditionsController {
   })
   @Get()
   async findAll() {
-    return await this.conditionsService.findAll();
+    return await this.conditionService.findAll();
   }
 
   @ApiOkResponse({
@@ -26,7 +26,7 @@ export class ConditionsController {
   })
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const condition = await this.conditionsService.findOne(id);
+    const condition = await this.conditionService.findOne(id);
 
     if (!condition) {
       throw new NotFoundException('condition not found');

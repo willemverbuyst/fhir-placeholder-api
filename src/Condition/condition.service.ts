@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataStoreService } from '../db/dataStore.service';
 
 @Injectable()
-export class ConditionsService {
+export class ConditionService {
   constructor(private readonly repo: DataStoreService) {}
 
   async findAll() {

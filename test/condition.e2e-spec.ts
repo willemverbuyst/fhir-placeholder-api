@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
-import { DataStoreService } from './../src/db/dataStore.service';
-import { testDataStore } from './../src/test/testDataStore';
+import { AppModule } from '../src/app.module';
+import { DataStoreService } from '../src/db/dataStore.service';
+import { testDataStore } from '../src/test/testDataStore';
 
-describe('ConditionsController (e2e)', () => {
+describe('ConditionController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -20,9 +20,9 @@ describe('ConditionsController (e2e)', () => {
     await app.init();
   });
 
-  it('/conditions (GET) - OK', async () => {
+  it('/Condition (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/conditions')
+      .get('/Condition')
       .expect(200)
       .then((res) => {
         const conditions = res.body;
@@ -31,9 +31,9 @@ describe('ConditionsController (e2e)', () => {
       });
   });
 
-  it('/conditions/:id (GET) - OK', async () => {
+  it('/Condition/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/conditions/1')
+      .get('/Condition/1')
       .expect(200)
       .then((res) => {
         const condition = res.body;
@@ -43,9 +43,9 @@ describe('ConditionsController (e2e)', () => {
       });
   });
 
-  it('/conditions/:id (GET) - Not Found', async () => {
+  it('/Condition/:id (GET) - Not Found', async () => {
     return request(app.getHttpServer())
-      .get('/conditions/unknown')
+      .get('/Condition/unknown')
       .expect(404)
       .then((res) => {
         const response = res.body;

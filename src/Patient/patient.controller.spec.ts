@@ -3,19 +3,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Patient } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
-import { PatientsController } from './patients.controller';
-import { PatientsService } from './patients.service';
+import { PatientController } from './patient.controller';
+import { PatientService } from './patient.service';
 
-describe('PatientsController', () => {
-  let controller: PatientsController;
-  let service: PatientsService;
+describe('PatientController', () => {
+  let controller: PatientController;
+  let service: PatientService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PatientsController],
+      controllers: [PatientController],
       providers: [
         {
-          provide: PatientsService,
+          provide: PatientService,
           useValue: {
             findAll: jest.fn(),
             findAllEpisodesForPatient: jest.fn(),
@@ -26,8 +26,8 @@ describe('PatientsController', () => {
       ],
     }).compile();
 
-    controller = module.get<PatientsController>(PatientsController);
-    service = module.get<PatientsService>(PatientsService);
+    controller = module.get<PatientController>(PatientController);
+    service = module.get<PatientService>(PatientService);
   });
 
   it('should be defined', () => {
@@ -35,7 +35,7 @@ describe('PatientsController', () => {
   });
 
   describe('findAll', () => {
-    it('should call findAll method of PatientsService', () => {
+    it('should call findAll method of PatientService', () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
@@ -43,7 +43,7 @@ describe('PatientsController', () => {
   });
 
   describe('findAllEpisodesForPatient', () => {
-    it('should call findAllEpisodesForPatient method of PatientsService', () => {
+    it('should call findAllEpisodesForPatient method of PatientService', () => {
       const id = '1';
       controller.findAllEpisodesForPatient(id);
       expect(service.findAllEpisodesForPatient).toHaveBeenCalledWith(id);
@@ -51,7 +51,7 @@ describe('PatientsController', () => {
   });
 
   describe('findOne', () => {
-    it('should call findOne method of PatientsService', async () => {
+    it('should call findOne method of PatientService', async () => {
       const mockPatient: Patient = {
         id: '1',
         resourceType: 'Patient',

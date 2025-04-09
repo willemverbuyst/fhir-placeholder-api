@@ -1,11 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
-import { DataStoreService } from './../src/db/dataStore.service';
-import { testDataStore } from './../src/test/testDataStore';
+import { AppModule } from '../src/app.module';
+import { DataStoreService } from '../src/db/dataStore.service';
+import { testDataStore } from '../src/test/testDataStore';
 
-describe('PatientsController (e2e)', () => {
+describe('PatientController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -20,9 +20,9 @@ describe('PatientsController (e2e)', () => {
     await app.init();
   });
 
-  it('/patients (GET) - OK', async () => {
+  it('/Patient (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/patients')
+      .get('/Patient')
       .expect(200)
       .then((res) => {
         const patients = res.body;
@@ -31,9 +31,9 @@ describe('PatientsController (e2e)', () => {
       });
   });
 
-  it('/patients/:id (GET) - OK', async () => {
+  it('/Patient/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/patients/1')
+      .get('/Patient/1')
       .expect(200)
       .then((res) => {
         const patient = res.body;
@@ -43,9 +43,9 @@ describe('PatientsController (e2e)', () => {
       });
   });
 
-  it('/patients/:id (GET) - Not Found', async () => {
+  it('/Patient/:id (GET) - Not Found', async () => {
     return request(app.getHttpServer())
-      .get('/patients/unknown')
+      .get('/Patient/unknown')
       .expect(404)
       .then((res) => {
         const response = res.body;
@@ -54,9 +54,9 @@ describe('PatientsController (e2e)', () => {
       });
   });
 
-  it('/patients/:id/episodes (GET) - OK', async () => {
+  it('/Patient/:id/episodes (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/patients/1/episodes')
+      .get('/Patient/1/episodes')
       .expect(200)
       .then((res) => {
         const episodes = res.body;

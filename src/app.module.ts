@@ -9,7 +9,7 @@ import { EpisodeOfCareModule } from './EpisodeOfCare/episode-of-care.module';
 import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
 import { OrganizationModule } from './Organization/organization.module';
-import { PatientsModule } from './patients/patients.module';
+import { PatientModule } from './Patient/patient.module';
 import { PractitionersModule } from './practitioners/practitioners.module';
 
 @Module({
@@ -21,7 +21,7 @@ import { PractitionersModule } from './practitioners/practitioners.module';
       load: [configuration],
     }),
     OrganizationModule,
-    PatientsModule,
+    PatientModule,
     PractitionersModule,
     ConditionModule,
     EpisodeOfCareModule,

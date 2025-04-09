@@ -2,11 +2,11 @@ import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { EpisodeDto } from '../EpisodeOfCare/dto/episode.dto';
 import { PatientDto } from './dto/patient.dto';
-import { PatientsService } from './patients.service';
+import { PatientService } from './patient.service';
 
-@Controller('patients')
-export class PatientsController {
-  constructor(private readonly patientsService: PatientsService) {}
+@Controller('Patient')
+export class PatientController {
+  constructor(private readonly patientsService: PatientService) {}
 
   @ApiOkResponse({
     description: 'All patients',

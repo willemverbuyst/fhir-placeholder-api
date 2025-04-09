@@ -26,12 +26,10 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - GET /conditions/:id
 - GET /practitioners
 - GET /practitioners/:id
-- DELETE /practitioner/:id
 - GET /organizations
 - GET /organizations?name=\<name\>
 - GET /organizations/:id
 - POST /organizations
-- DELETE /organizations/:id
 - PATCH /organizations/:id
 
 ```typescript

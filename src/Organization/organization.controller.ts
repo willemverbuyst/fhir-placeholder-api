@@ -28,7 +28,14 @@ export class OrganizationController {
   })
   @Post()
   async create(
-    @Body() createOrganizationDto: CreateOrganizationDto,
+    @Body(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization> {
     return this.organizationsService.create(createOrganizationDto);
   }
@@ -89,7 +96,14 @@ export class OrganizationController {
   @Patch(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateOrganizationDto: UpdateOrganizationDto,
+    @Body(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    updateOrganizationDto: UpdateOrganizationDto,
   ): Promise<Organization> {
     const organization = await this.organizationsService.update(
       id,

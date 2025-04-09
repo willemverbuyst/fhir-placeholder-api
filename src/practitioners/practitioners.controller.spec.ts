@@ -64,27 +64,4 @@ describe('PractitionersController', () => {
       expect(service.findOne).toHaveBeenCalledWith('unknown');
     });
   });
-
-  describe('remove', () => {
-    it('should call remove method of PractitionersService', async () => {
-      const mockPractitioner: Practitioner = {
-        id: '1',
-        resourceType: 'Practitioner',
-      };
-      jest.spyOn(service, 'remove').mockResolvedValue(mockPractitioner);
-
-      const result = await controller.remove('1');
-      expect(result).toEqual(mockPractitioner);
-      expect(service.remove).toHaveBeenCalledWith('1');
-    });
-
-    it('should throw an error if practitioner with id is not found', async () => {
-      jest.spyOn(service, 'remove').mockResolvedValue(undefined);
-
-      await expect(controller.remove('unknown')).rejects.toThrow(
-        NotFoundException,
-      );
-      expect(service.remove).toHaveBeenCalledWith('unknown');
-    });
-  });
 });

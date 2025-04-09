@@ -19,7 +19,7 @@ export class EpisodeOfCareService {
     };
   }
 
-  async findOne(id: string) {
+  async findOne(id: string): Promise<EpisodeOfCare | undefined> {
     return this.repo.episodes.find((episode) => episode.id === id);
   }
 

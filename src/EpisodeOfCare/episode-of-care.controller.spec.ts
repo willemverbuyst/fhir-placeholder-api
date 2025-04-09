@@ -1,10 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { EpisodeOfCare } from 'fhir/r5';
+import { Bundle, EpisodeOfCare } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { EpisodeOfCareStatus } from '../db/resources/episode-of-care';
 import { testDataStore } from '../test/testDataStore';
-import { EpisodeOfCareBundleDto } from './dto/episode-of-care-bundle.dto';
 import { EpisodeOfCareController } from './episode-of-care.controller';
 import { EpisodeOfCareService } from './episode-of-care.service';
 
@@ -44,7 +43,7 @@ describe('EpisodeOfCareController', () => {
     });
 
     it('should return an array of episodes for patient', async () => {
-      const mockEpisodeBundle: EpisodeOfCareBundleDto = {
+      const mockEpisodeBundle: Bundle<EpisodeOfCare> = {
         resourceType: 'Bundle',
         type: 'searchset',
         total: 1,

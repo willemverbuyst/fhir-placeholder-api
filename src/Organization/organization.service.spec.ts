@@ -23,9 +23,9 @@ describe('OrganizationService', () => {
 
   describe('findAll', () => {
     it('should return all organizations', async () => {
-      const organizations = await service.findAll();
-      expect(organizations).toBeDefined();
-      expect(organizations.length).toBe(3);
+      const bundle = await service.findAll();
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(3);
     });
   });
 
@@ -60,7 +60,7 @@ describe('OrganizationService', () => {
       expect(newOrganization.active).toBe(true);
 
       const allOrganizations = await service.findAll();
-      expect(allOrganizations.length).toBe(4);
+      expect(allOrganizations?.entry?.length).toBe(4);
     });
   });
 
@@ -90,40 +90,49 @@ describe('OrganizationService', () => {
 
   describe('findByName', () => {
     it('should return organization with given name', async () => {
-      const organizations = await service.findByName('test organization');
-      expect(organizations).toBeDefined();
+      const bundle = await service.findByName('test organization');
+      expect(bundle).toBeDefined();
 
-      if (!organizations) {
-        throw new Error('Expected organizations to be defined');
+      if (!bundle.entry) {
+        throw new Error('Expected entry to be defined in bundle');
       }
 
-      expect(organizations[0]).toHaveProperty('name', 'test organization');
+      expect(bundle.entry[0].resource).toHaveProperty(
+        'name',
+        'test organization',
+      );
     });
 
     it('should return multiple organizations for given name', async () => {
-      const organizations = await service.findByName('test organization');
-      expect(organizations).toBeDefined();
+      const bundle = await service.findByName('test organization');
+      expect(bundle).toBeDefined();
 
-      if (!organizations) {
-        throw new Error('Expected organizations to be defined');
+      if (!bundle.entry) {
+        throw new Error('Expected entry to be defined in bundle');
       }
 
-      expect(organizations.length).toBe(2);
-      expect(organizations[0]).toHaveProperty('resourceType', 'Organization');
-      expect(organizations[0]).toHaveProperty('id', '1');
-      expect(organizations[1]).toHaveProperty('resourceType', 'Organization');
-      expect(organizations[1]).toHaveProperty('id', '3');
+      expect(bundle.entry.length).toBe(2);
+      expect(bundle.entry[0].resource).toHaveProperty(
+        'resourceType',
+        'Organization',
+      );
+      expect(bundle.entry[0].resource).toHaveProperty('id', '1');
+      expect(bundle.entry[1].resource).toHaveProperty(
+        'resourceType',
+        'Organization',
+      );
+      expect(bundle.entry[1].resource).toHaveProperty('id', '3');
     });
 
     it('should return an empty array when no organizations with given name are found', async () => {
-      const organizations = await service.findByName('unknown organization');
-      expect(organizations).toBeDefined();
+      const bundle = await service.findByName('unknown');
+      expect(bundle).toBeDefined();
 
-      if (!organizations) {
-        throw new Error('Expected organizations to be defined');
+      if (!bundle.entry) {
+        throw new Error('Expected entry to be defined in bundle');
       }
 
-      expect(organizations.length).toBe(0);
+      expect(bundle.entry.length).toBe(0);
     });
   });
 });

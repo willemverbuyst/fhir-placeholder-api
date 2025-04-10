@@ -27,7 +27,8 @@ describe('PatientController (e2e)', () => {
       .then((res) => {
         const patients = res.body;
         expect(patients).toBeDefined();
-        expect(patients).toHaveLength(2);
+        expect(patients).toHaveProperty('resourceType', 'Bundle');
+        expect(patients.entry).toHaveLength(2);
       });
   });
 
@@ -61,9 +62,10 @@ describe('PatientController (e2e)', () => {
       .then((res) => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
-        expect(episodes).toHaveLength(2);
-        expect(episodes[0].patient.reference).toBe('Patient/1');
-        expect(episodes[1].patient.reference).toBe('Patient/1');
+        expect(episodes).toHaveProperty('resourceType', 'Bundle');
+        expect(episodes.entry).toHaveLength(2);
+        expect(episodes.entry[0].resource.patient.reference).toBe('Patient/1');
+        expect(episodes.entry[1].resource.patient.reference).toBe('Patient/1');
       });
   });
 });

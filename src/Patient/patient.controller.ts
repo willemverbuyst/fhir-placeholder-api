@@ -1,7 +1,9 @@
 import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { EpisodeDto } from '../EpisodeOfCare/dto/episode.dto';
-import { PatientDto } from './dto/patient.dto';
+import { Bundle, EpisodeOfCare, Patient } from 'fhir/r5';
+import { episodeOFCareBundleExample } from '../EpisodeOfCare/examples/episode-of-care-bundle.example';
+import { examplePatientBundle } from './examples/patient-bundle.example';
+import { examplePatient } from './examples/patient.example';
 import { PatientService } from './patient.service';
 
 @Controller('Patient')
@@ -10,11 +12,10 @@ export class PatientController {
 
   @ApiOkResponse({
     description: 'All patients',
-    type: PatientDto,
-    isArray: true,
+    example: examplePatientBundle,
   })
   @Get()
-  async findAll() {
+  async findAll(): Promise<Bundle<Patient>> {
     const patients = await this.patientsService.findAll();
 
     return patients;
@@ -22,13 +23,13 @@ export class PatientController {
 
   @ApiOkResponse({
     description: 'The patient is returned successfully',
-    type: PatientDto,
+    example: examplePatient,
   })
   @ApiNotFoundResponse({
     description: 'Patient not found',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Patient | undefined> {
     const patient = await this.patientsService.findOne(id);
 
     if (!patient) {
@@ -40,11 +41,12 @@ export class PatientController {
 
   @ApiOkResponse({
     description: 'All episodes for patient',
-    type: EpisodeDto,
-    isArray: true,
+    example: episodeOFCareBundleExample,
   })
   @Get(':id/episodes')
-  async findAllEpisodesForPatient(@Param('id') id: string) {
+  async findAllEpisodesForPatient(
+    @Param('id') id: string,
+  ): Promise<Bundle<EpisodeOfCare>> {
     const episodes = await this.patientsService.findAllEpisodesForPatient(id);
 
     return episodes;

@@ -22,10 +22,10 @@ describe('ConditionService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all conditions', async () => {
-      const conditions = await service.findAll();
-      expect(conditions).toBeDefined();
-      expect(conditions.length).toBe(2);
+    it('should return all conditions in a Bundle', async () => {
+      const bundle = await service.findAll();
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(2);
     });
   });
 

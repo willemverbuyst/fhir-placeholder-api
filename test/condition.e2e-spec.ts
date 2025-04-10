@@ -27,7 +27,8 @@ describe('ConditionController (e2e)', () => {
       .then((res) => {
         const conditions = res.body;
         expect(conditions).toBeDefined();
-        expect(conditions).toHaveLength(2);
+        expect(conditions).toHaveProperty('resourceType', 'Bundle');
+        expect(conditions.entry).toHaveLength(2);
       });
   });
 

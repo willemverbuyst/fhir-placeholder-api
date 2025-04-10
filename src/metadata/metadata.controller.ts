@@ -23,28 +23,46 @@ export class MetadataController {
           resource: [
             {
               type: 'Condition',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
             {
               type: 'EpisodeOfCare',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-patient',
+                  type: 'reference',
+                  documentation: 'Search episodes by patient reference',
+                },
+              ],
             },
             {
               type: 'Organization',
               interaction: [
                 { code: 'read' },
+                { code: 'search-type' },
                 { code: 'create' },
-                { code: 'delete' },
                 { code: 'patch' },
+              ],
+              searchParam: [
+                {
+                  name: 'name',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Organization-name',
+                  type: 'string',
+                  documentation: 'Search by organization name',
+                },
               ],
             },
             {
               type: 'Patient',
-              interaction: [{ code: 'read' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
             {
               type: 'Practitioner',
-              interaction: [{ code: 'read' }, { code: 'delete' }],
+              interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
           ],
         },

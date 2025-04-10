@@ -7,9 +7,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
-import { EpisodeDto } from './dto/episode.dto';
-import { GetEpisodeDto } from './dto/get-episode.dto';
+import { Bundle, EpisodeOfCare } from 'fhir/r5';
+import { GetEpisodeDto } from './dto/get-episode-of-care.dto';
 import { EpisodeOfCareService } from './episode-of-care.service';
+import { episodeOFCareBundleExample } from './examples/episode-of-care-bundle.example';
+import { episodeOfCareExample } from './examples/episode-of-care.example';
 
 @Controller('EpisodeOfCare')
 export class EpisodeOfCareController {
@@ -17,8 +19,7 @@ export class EpisodeOfCareController {
 
   @ApiOkResponse({
     description: 'All episodes',
-    type: EpisodeDto,
-    isArray: true,
+    example: episodeOFCareBundleExample,
   })
   @ApiQuery({
     name: 'patient',
@@ -36,7 +37,7 @@ export class EpisodeOfCareController {
       }),
     )
     data?: GetEpisodeDto,
-  ) {
+  ): Promise<Bundle<EpisodeOfCare>> {
     if (data?.patient) {
       return await this.episodesService.findByPatientId(data.patient);
     }
@@ -46,13 +47,13 @@ export class EpisodeOfCareController {
 
   @ApiOkResponse({
     description: 'The episode is returned successfully',
-    type: EpisodeDto,
+    example: episodeOfCareExample,
   })
   @ApiNotFoundResponse({
     description: 'Episode not found',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<EpisodeOfCare> {
     const episode = await this.episodesService.findOne(id);
 
     if (!episode) {

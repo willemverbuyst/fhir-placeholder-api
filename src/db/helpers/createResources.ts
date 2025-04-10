@@ -1,9 +1,20 @@
-import { Condition, EpisodeOfCare } from 'fhir/r5';
+import { Condition, Encounter, EpisodeOfCare } from 'fhir/r5';
 import { createCondition } from '../resources/condition';
+import { createEncounter } from '../resources/encounter';
 import { createEpisode } from '../resources/episode-of-care';
 import { createOrganization } from '../resources/organization';
 import { createPatient } from '../resources/patient';
 import { createPractitioner } from '../resources/practitioner';
+
+export function createEncounters(
+  numberOfEncounters: number,
+  patientId: string,
+  episodes: string[],
+): Encounter[] {
+  return Array.from({ length: numberOfEncounters }, () =>
+    createEncounter(patientId, episodes),
+  );
+}
 
 export function createPatients(
   numberOfPatients: number,

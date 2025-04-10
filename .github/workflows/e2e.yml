@@ -1,11 +1,11 @@
 name: E2E
 
-permissions:
-  contents: read
-
 on:
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   e2e:

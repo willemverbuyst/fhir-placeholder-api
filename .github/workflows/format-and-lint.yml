@@ -1,8 +1,11 @@
-name: Lint
+name: Format & Lint
 
-on: 
+on:
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   lint:
@@ -10,7 +13,12 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Install dependencies
         run: npm i
-      - name: Lint
-        run: npm run lint
+
+      - name: check formatting
+        run: npm run format:check
+
+      - name: check linting
+        run: npm run lint:check

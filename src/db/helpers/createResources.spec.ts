@@ -1,6 +1,4 @@
-import { Patient } from 'fhir/r5';
 import {
-  createEpisodesForPatients,
   createEpisodesWithConditions,
   createOrganizations,
   createPatients,
@@ -135,72 +133,6 @@ describe('createEpisodesWithConditions', () => {
     expect(() =>
       createEpisodesWithConditions(numberOfEpisodes, patientId),
     ).toThrow('Condition ID is missing in createEpisodesWithConditions');
-  });
-});
-
-describe('createEpisodesForPatients', () => {
-  it('should create the specified number of episodes and conditions for each patient', () => {
-    const patients: Patient[] = [
-      { id: 'patient-1', resourceType: 'Patient' },
-      { id: 'patient-2', resourceType: 'Patient' },
-    ];
-    const numberOfEpisodes = 2;
-
-    const { newConditions, newEpisodes } = createEpisodesForPatients(
-      patients,
-      numberOfEpisodes,
-    );
-
-    expect(newConditions).toHaveLength(patients.length * numberOfEpisodes);
-    expect(newEpisodes).toHaveLength(patients.length * numberOfEpisodes);
-
-    patients.forEach((patient) => {
-      const patientConditions = newConditions.filter(
-        (condition) => condition.subject?.reference === `Patient/${patient.id}`,
-      );
-      const patientEpisodes = newEpisodes.filter(
-        (episode) => episode.patient?.reference === `Patient/${patient.id}`,
-      );
-
-      expect(patientConditions).toHaveLength(numberOfEpisodes);
-      expect(patientEpisodes).toHaveLength(numberOfEpisodes);
-
-      patientEpisodes.forEach((episode, index) => {
-        if (!episode.diagnosis) {
-          throw new Error('Diagnosis is missing in createEpisodesForPatients');
-        }
-
-        if (!episode.diagnosis[0]?.condition) {
-          throw new Error('Condition is missing in createEpisodesForPatients');
-        }
-
-        expect(episode.diagnosis[0].condition[0].reference?.reference).toBe(
-          `Condition/${patientConditions[index].id}`,
-        );
-      });
-    });
-  });
-
-  it('should return empty arrays if no patients are provided', () => {
-    const patients: Patient[] = [];
-    const numberOfEpisodes = 3;
-
-    const { newConditions, newEpisodes } = createEpisodesForPatients(
-      patients,
-      numberOfEpisodes,
-    );
-
-    expect(newConditions).toHaveLength(0);
-    expect(newEpisodes).toHaveLength(0);
-  });
-
-  it('should throw an error if a patient ID is missing', () => {
-    const patients = [{ id: undefined, resourceType: 'Patient' } as Patient];
-    const numberOfEpisodes = 2;
-
-    expect(() => createEpisodesForPatients(patients, numberOfEpisodes)).toThrow(
-      'Patient ID is missing in createEpisodesForPatients',
-    );
   });
 });
 

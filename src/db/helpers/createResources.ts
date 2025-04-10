@@ -1,4 +1,4 @@
-import { Condition, EpisodeOfCare, Patient } from 'fhir/r5';
+import { Condition, EpisodeOfCare } from 'fhir/r5';
 import { createCondition } from '../resources/condition';
 import { createEpisode } from '../resources/episode-of-care';
 import { createOrganization } from '../resources/organization';
@@ -44,28 +44,6 @@ export function createEpisodesWithConditions(
 
     newConditions.push(condition);
     newEpisodes.push(episode);
-  });
-
-  return { newConditions, newEpisodes };
-}
-
-export function createEpisodesForPatients(
-  patients: Patient[],
-  numberOfEpisodes: number,
-) {
-  const newEpisodes: EpisodeOfCare[] = [];
-  const newConditions: Condition[] = [];
-
-  patients.forEach((p) => {
-    const patientId = p.id;
-    if (!patientId) {
-      throw new Error('Patient ID is missing in createEpisodesForPatients');
-    }
-    // Create a condition for each episode
-    const { newConditions: conditions, newEpisodes: episodes } =
-      createEpisodesWithConditions(numberOfEpisodes, patientId);
-    newEpisodes.push(...episodes);
-    newConditions.push(...conditions);
   });
 
   return { newConditions, newEpisodes };

@@ -13,7 +13,7 @@ import {
   NUMBER_OF_PRACTITIONERS,
 } from './dataStore.config';
 import {
-  createEpisodesForPatients,
+  createEpisodesWithConditions,
   createOrganizations,
   createPatients,
   createPractitioners,
@@ -28,14 +28,13 @@ export class DataStoreService {
   public practitioners: Practitioner[];
 
   constructor() {
-    const newOrganizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
-    const newPractitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
-    const newPractitionerIds = newPractitioners
+    this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
+    this.practitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
+
+    const newPractitionerIds = this.practitioners
       .map((p) => p.id)
       .filter((p): p is string => !!p);
-
-    const newOrganizationIds = newOrganizations.map((o) => o.id);
-
+    const newOrganizationIds = this.organizations.map((o) => o.id);
     const firstNewOrganizationId = newOrganizationIds[0];
 
     if (!firstNewOrganizationId) {
@@ -44,20 +43,27 @@ export class DataStoreService {
       );
     }
 
-    const newPatients = createPatients(
+    this.patients = createPatients(
       NUMBER_OF_PATIENTS,
       firstNewOrganizationId,
       newPractitionerIds,
     );
-    const { newConditions, newEpisodes } = createEpisodesForPatients(
-      newPatients,
-      NUMBER_OF_EPISODES_PER_PATIENT,
-    );
 
-    this.organizations = newOrganizations;
-    this.practitioners = newPractitioners;
-    this.patients = newPatients;
-    this.conditions = newConditions;
-    this.episodes = newEpisodes;
+    this.episodes = [];
+    this.conditions = [];
+    this.patients.forEach((p) => {
+      const patientId = p.id;
+      if (!patientId) {
+        throw new Error('Patient ID is missing in createEpisodesForPatients');
+      }
+
+      const { newConditions, newEpisodes } = createEpisodesWithConditions(
+        NUMBER_OF_EPISODES_PER_PATIENT,
+        patientId,
+      );
+
+      this.episodes.push(...newEpisodes);
+      this.conditions.push(...newConditions);
+    });
   }
 }

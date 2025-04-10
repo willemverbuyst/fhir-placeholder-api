@@ -38,8 +38,11 @@ export class OrganizationController {
     )
     createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization> {
-    createOrganizationDto.name = sanitizeHtml(createOrganizationDto.name);
-    return this.organizationsService.create(createOrganizationDto);
+    const name = sanitizeHtml(createOrganizationDto.name, {
+      allowedTags: [],
+      allowedAttributes: {},
+    });
+    return this.organizationsService.create({ name });
   }
 
   @ApiOkResponse({

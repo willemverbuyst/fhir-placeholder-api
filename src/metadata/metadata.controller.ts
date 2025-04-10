@@ -28,6 +28,15 @@ export class MetadataController {
             {
               type: 'EpisodeOfCare',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-patient',
+                  type: 'reference',
+                  documentation: 'Search episodes by patient reference',
+                },
+              ],
             },
             {
               type: 'Organization',
@@ -36,6 +45,15 @@ export class MetadataController {
                 { code: 'search-type' },
                 { code: 'create' },
                 { code: 'patch' },
+              ],
+              searchParam: [
+                {
+                  name: 'name',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Organization-name',
+                  type: 'string',
+                  documentation: 'Search by organization name',
+                },
               ],
             },
             {

@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { Bundle, Organization } from 'fhir/r5';
+import * as sanitizeHtml from 'sanitize-html';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { GetOrganizationDto } from './dto/get-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
@@ -37,6 +38,7 @@ export class OrganizationController {
     )
     createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization> {
+    createOrganizationDto.name = sanitizeHtml(createOrganizationDto.name);
     return this.organizationsService.create(createOrganizationDto);
   }
 

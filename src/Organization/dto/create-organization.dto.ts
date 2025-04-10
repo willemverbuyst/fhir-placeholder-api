@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, TransformFnParams } from 'class-transformer';
+import { Escape, Trim } from 'class-sanitizer';
 import { IsNotEmpty, IsString } from 'class-validator';
-import * as sanitizeHtml from 'sanitize-html';
 
 export class CreateOrganizationDto {
   @ApiProperty({
@@ -11,6 +10,7 @@ export class CreateOrganizationDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Transform((params: TransformFnParams) => sanitizeHtml(params.value))
+  @Trim()
+  @Escape()
   name: string;
 }

@@ -81,4 +81,11 @@ export const testDataStore = {
       },
     },
   ],
+  encounters: [
+    { id: '1', resourceType: 'Encounter' },
+    { id: '2', resourceType: 'Encounter' },
+    { id: '3', resourceType: 'Encounter' },
+    { id: '4', resourceType: 'Encounter' },
+    { id: '5', resourceType: 'Encounter' },
+  ],
 };

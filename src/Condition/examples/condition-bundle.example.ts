@@ -4,23 +4,28 @@ export const conditionBundleExample = {
   total: 1,
   entry: [
     {
-      id: '45527ecf-1677-4151-9760-e9905a79dc6d',
-      note: [
-        {
-          text: 'Nostrum aperiam tertius.',
-        },
-      ],
-      resourceType: 'Condition',
-      subject: {
-        reference: 'Patient/ecd27a93-4343-4b1c-94b9-e8d4190bacaa',
-      },
-      clinicalStatus: {
-        coding: [
+      fullUrl:
+        'http://localhost:8080/api/v2/r5/Condition/b1e76afc-e8df-4857-a120-875412f7d9e9',
+      resource: {
+        id: 'b1e76afc-e8df-4857-a120-875412f7d9e9',
+        note: [
           {
-            code: 'resolved',
-            system: 'http://terminology.hl7.org/CodeSystem/condition-clinical',
+            text: 'Vinculum temeritas turba.',
           },
         ],
+        resourceType: 'Condition',
+        subject: {
+          reference: 'Patient/4595de85-8aa0-4143-b4cc-a8bb15d146c1',
+        },
+        clinicalStatus: {
+          coding: [
+            {
+              code: 'recurrence',
+              system:
+                'http://terminology.hl7.org/CodeSystem/condition-clinical',
+            },
+          ],
+        },
       },
     },
   ],

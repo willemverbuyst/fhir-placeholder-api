@@ -4,10 +4,14 @@ export const organizationBundleExample = {
   total: 1,
   entry: [
     {
-      id: '1bf7f0b5-b047-4a78-a63a-92a8c6b7ae0c',
-      resourceType: 'Organization',
-      name: 'Legros, Lind and Denesik',
-      active: true,
+      fullUrl:
+        'http://localhost:8080/api/v2/r5/Organization/fe45eb53-ea7e-4e6f-b07f-efeabb9ed226',
+      resource: {
+        id: 'fe45eb53-ea7e-4e6f-b07f-efeabb9ed226',
+        resourceType: 'Organization',
+        name: 'Nikolaus, Friesen and Hansen',
+        active: true,
+      },
     },
   ],
 };

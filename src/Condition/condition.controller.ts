@@ -28,7 +28,6 @@ export class ConditionController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Condition> {
     const condition = await this.conditionService.findOne(id);
-
     if (!condition) {
       throw new NotFoundException('condition not found');
     }

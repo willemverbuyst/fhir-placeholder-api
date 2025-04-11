@@ -83,11 +83,9 @@ export class OrganizationController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Organization> {
     const organization = await this.organizationsService.findOne(id);
-
     if (!organization) {
       throw new NotFoundException('organization not found');
     }
-
     return organization;
   }
 
@@ -114,11 +112,9 @@ export class OrganizationController {
       id,
       updateOrganizationDto,
     );
-
     if (!organization) {
       throw new NotFoundException('organization not found');
     }
-
     return organization;
   }
 }

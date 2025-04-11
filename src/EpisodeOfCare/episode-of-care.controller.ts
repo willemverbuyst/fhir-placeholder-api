@@ -41,7 +41,6 @@ export class EpisodeOfCareController {
     if (data?.patient) {
       return await this.episodesService.findByPatientId(data.patient);
     }
-
     return await this.episodesService.findAll();
   }
 
@@ -55,7 +54,6 @@ export class EpisodeOfCareController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<EpisodeOfCare> {
     const episode = await this.episodesService.findOne(id);
-
     if (!episode) {
       throw new NotFoundException('episode not found');
     }

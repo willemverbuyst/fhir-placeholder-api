@@ -16,9 +16,7 @@ export class PatientController {
   })
   @Get()
   async findAll(): Promise<Bundle<Patient>> {
-    const patients = await this.patientsService.findAll();
-
-    return patients;
+    return await this.patientsService.findAll();
   }
 
   @ApiOkResponse({
@@ -31,11 +29,9 @@ export class PatientController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Patient | undefined> {
     const patient = await this.patientsService.findOne(id);
-
     if (!patient) {
       throw new NotFoundException('patient not found');
     }
-
     return patient;
   }
 
@@ -47,8 +43,6 @@ export class PatientController {
   async findAllEpisodesForPatient(
     @Param('id') id: string,
   ): Promise<Bundle<EpisodeOfCare>> {
-    const episodes = await this.patientsService.findAllEpisodesForPatient(id);
-
-    return episodes;
+    return await this.patientsService.findAllEpisodesForPatient(id);
   }
 }

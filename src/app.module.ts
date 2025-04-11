@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { ConditionModule } from './Condition/condition.module';
 import configuration from './config/configuration';
 import { DataStoreModule } from './db/dataStore.module';
+import { EncounterModule } from './Encounter/encounter.module';
 import { EpisodeOfCareModule } from './EpisodeOfCare/episode-of-care.module';
 import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
@@ -27,6 +28,7 @@ import { PractitionerModule } from './Practitioner/practitioner.module';
     EpisodeOfCareModule,
     DataStoreModule,
     MetadataModule,
+    EncounterModule,
   ],
   controllers: [AppController],
   providers: [AppService],

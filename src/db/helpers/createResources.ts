@@ -1,77 +1,86 @@
-import { Condition, EpisodeOfCare, Patient } from 'fhir/r5';
+import {
+  Condition,
+  Encounter,
+  EpisodeOfCare,
+  Organization,
+  Patient,
+  Practitioner,
+} from 'fhir/r5';
 import { createCondition } from '../resources/condition';
+import { createEncounter } from '../resources/encounter';
 import { createEpisode } from '../resources/episode-of-care';
 import { createOrganization } from '../resources/organization';
 import { createPatient } from '../resources/patient';
 import { createPractitioner } from '../resources/practitioner';
 
+export function createEncounters(
+  numberOfEncounters: number,
+  patientId: string,
+  episodes: EpisodeOfCare[],
+): Encounter[] {
+  const episodeIds = episodes.map((e) => e.id).filter((e): e is string => !!e);
+  return Array.from({ length: numberOfEncounters }, () =>
+    createEncounter(patientId, episodeIds),
+  );
+}
+
 export function createPatients(
   numberOfPatients: number,
-  organizationId: string,
-  practitionerIds: string[],
-) {
-  const newPatients = Array.from({ length: numberOfPatients }, () =>
-    createPatient(organizationId, practitionerIds),
-  );
+  organizations: Organization[],
+  practitioners: Practitioner[],
+): Patient[] {
+  const practitionerIds = practitioners
+    .map((p) => p.id)
+    .filter((p): p is string => !!p);
 
-  return newPatients;
+  const organizationIds = organizations.map((o) => o.id);
+  const firstNewOrganizationId = organizationIds[0];
+
+  if (!firstNewOrganizationId) {
+    throw new Error(
+      'First organization ID is missing in DataStoreService constructor',
+    );
+  }
+
+  return Array.from({ length: numberOfPatients }, () => {
+    return createPatient(firstNewOrganizationId, practitionerIds);
+  });
 }
 
-export function createOrganizations(numberOfOrganizations: number) {
-  const newOrganizations = Array.from({ length: numberOfOrganizations }, () =>
+export function createOrganizations(
+  numberOfOrganizations: number,
+): Organization[] {
+  return Array.from({ length: numberOfOrganizations }, () =>
     createOrganization(),
   );
-
-  return newOrganizations;
 }
 
-export function createEpisodesWithConditions(
-  numberOfEpisodes: number,
+export function createConditions(
+  numberOfConditions: number,
   patientId: string,
-) {
-  const newConditions: Condition[] = [];
-  const newEpisodes: EpisodeOfCare[] = [];
+): Condition[] {
+  return Array.from({ length: numberOfConditions }, () => {
+    return createCondition(patientId);
+  });
+}
 
-  Array.from({ length: numberOfEpisodes }, () => {
-    const condition = createCondition(patientId);
-    const conditionId = condition.id;
-    if (!conditionId) {
+export function createEpisodes(
+  patientId: string,
+  conditions: Condition[],
+): EpisodeOfCare[] {
+  return conditions.map((c) => {
+    if (!c.id) {
       throw new Error(
         'Condition ID is missing in createEpisodesWithConditions',
       );
     }
-    const episode = createEpisode(patientId, conditionId);
-
-    newConditions.push(condition);
-    newEpisodes.push(episode);
+    return createEpisode(patientId, c.id);
   });
-
-  return { newConditions, newEpisodes };
 }
 
-export function createEpisodesForPatients(
-  patients: Patient[],
-  numberOfEpisodes: number,
-) {
-  const newEpisodes: EpisodeOfCare[] = [];
-  const newConditions: Condition[] = [];
-
-  patients.forEach((p) => {
-    const patientId = p.id;
-    if (!patientId) {
-      throw new Error('Patient ID is missing in createEpisodesForPatients');
-    }
-    // Create a condition for each episode
-    const { newConditions: conditions, newEpisodes: episodes } =
-      createEpisodesWithConditions(numberOfEpisodes, patientId);
-    newEpisodes.push(...episodes);
-    newConditions.push(...conditions);
-  });
-
-  return { newConditions, newEpisodes };
-}
-
-export function createPractitioners(numberOfPractitioners: number) {
+export function createPractitioners(
+  numberOfPractitioners: number,
+): Practitioner[] {
   return Array.from({ length: numberOfPractitioners }, () =>
     createPractitioner(),
   );

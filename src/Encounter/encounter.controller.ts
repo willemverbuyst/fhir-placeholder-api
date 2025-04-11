@@ -4,7 +4,7 @@ import { Bundle, Encounter } from 'fhir/r5';
 import { EncounterService } from './encounter.service';
 import { encounterBundleExample } from './examples/encounter-bundle.example';
 
-@Controller('encounter')
+@Controller('Encounter')
 export class EncounterController {
   constructor(private readonly encounterService: EncounterService) {}
 

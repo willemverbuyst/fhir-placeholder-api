@@ -1,61 +1,206 @@
+import { Condition, EpisodeOfCare, Organization, Practitioner } from 'fhir/r5';
 import {
-  createEpisodesWithConditions,
+  createConditions,
+  createEncounters,
+  createEpisodes,
   createOrganizations,
   createPatients,
   createPractitioners,
 } from './createResources';
 
+describe('createEncounters', () => {
+  it('should create the specified number of encounters', () => {
+    const numberOfEncounters = 3;
+    const patientId = 'patient-123';
+    const episodes: EpisodeOfCare[] = [
+      {
+        id: 'episode-1',
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: { reference: `Patient/${patientId}` },
+      },
+      {
+        id: 'episode-2',
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: { reference: `Patient/${patientId}` },
+      },
+    ];
+
+    const encounters = createEncounters(
+      numberOfEncounters,
+      patientId,
+      episodes,
+    );
+
+    expect(encounters).toHaveLength(numberOfEncounters);
+    encounters.forEach((encounter) => {
+      expect(encounter).toHaveProperty('id');
+      expect(encounter.resourceType).toBe('Encounter');
+      expect(encounter.subject?.reference).toBe(`Patient/${patientId}`);
+      if (!encounter.episodeOfCare) {
+        throw new Error('EpisodeOfCare is missing');
+      }
+      encounter.episodeOfCare.forEach((episodeRef) => {
+        expect(episodes.map((e) => e.id)).toContain(
+          episodeRef.reference?.split('/')[1],
+        );
+      });
+    });
+  });
+
+  it('should return an empty array if numberOfEncounters is 0', () => {
+    const numberOfEncounters = 0;
+    const patientId = 'patient-123';
+    const episodes: EpisodeOfCare[] = [
+      {
+        id: 'episode-1',
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: { reference: `Patient/${patientId}` },
+      },
+      {
+        id: 'episode-2',
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: { reference: `Patient/${patientId}` },
+      },
+    ];
+
+    const encounters = createEncounters(
+      numberOfEncounters,
+      patientId,
+      episodes,
+    );
+
+    expect(encounters).toHaveLength(0);
+  });
+
+  it('should handle episodes with missing IDs gracefully', () => {
+    const numberOfEncounters = 2;
+    const patientId = 'patient-123';
+    const episodes: EpisodeOfCare[] = [
+      {
+        id: 'episode-1',
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: { reference: `Patient/${patientId}` },
+      },
+      {
+        id: undefined,
+        resourceType: 'EpisodeOfCare',
+        status: 'active',
+        patient: { reference: `Patient/${patientId}` },
+      },
+    ];
+
+    const encounters = createEncounters(
+      numberOfEncounters,
+      patientId,
+      episodes,
+    );
+
+    expect(encounters).toHaveLength(numberOfEncounters);
+    encounters.forEach((encounter) => {
+      expect(encounter).toHaveProperty('id');
+      expect(encounter.resourceType).toBe('Encounter');
+      expect(encounter.subject?.reference).toBe(`Patient/${patientId}`);
+    });
+  });
+});
+
 describe('createPatients', () => {
   it('should create the specified number of patients', () => {
     const numberOfPatients = 3;
-    const organizationId = 'org-123';
-    const practitionerIds = ['pract-1', 'pract-2'];
+    const organizations: Organization[] = [
+      { id: 'organization-1', resourceType: 'Organization' },
+      { id: 'organization-2', resourceType: 'Organization' },
+    ];
+    const practitioners: Practitioner[] = [
+      { id: 'practitioner-1', resourceType: 'Practitioner' },
+      { id: 'practitioner-2', resourceType: 'Practitioner' },
+    ];
 
     const patients = createPatients(
       numberOfPatients,
-      organizationId,
-      practitionerIds,
+      organizations,
+      practitioners,
     );
 
     expect(patients).toHaveLength(numberOfPatients);
     patients.forEach((patient) => {
       expect(patient).toHaveProperty('id');
+      expect(patient.resourceType).toBe('Patient');
       expect(patient.managingOrganization?.reference).toBe(
-        `Organization/${organizationId}`,
+        `Organization/${organizations[0].id}`,
       );
-
-      if (!patient.generalPractitioner) {
-        throw new Error('General Practitioner is missing');
+      if (patient.generalPractitioner) {
+        patient.generalPractitioner.forEach((practitionerRef) => {
+          expect(practitioners.map((p) => p.id)).toContain(
+            practitionerRef.reference?.split('/')[1],
+          );
+        });
       }
+    });
+  });
 
-      expect(practitionerIds).toContain(
-        patient.generalPractitioner[0]?.reference?.split('/')[1],
+  it('should throw an error if organizations array is empty', () => {
+    const numberOfPatients = 3;
+    const organizations: Organization[] = [];
+    const practitioners: Practitioner[] = [
+      { id: 'practitioner-1', resourceType: 'Practitioner' },
+      { id: 'practitioner-2', resourceType: 'Practitioner' },
+    ];
+
+    expect(() =>
+      createPatients(numberOfPatients, organizations, practitioners),
+    ).toThrow(
+      'First organization ID is missing in DataStoreService constructor',
+    );
+  });
+
+  it('should handle practitioners with missing IDs gracefully', () => {
+    const numberOfPatients = 2;
+    const organizations: Organization[] = [
+      { id: 'organization-1', resourceType: 'Organization' },
+    ];
+    const practitioners: Practitioner[] = [
+      { id: 'practitioner-1', resourceType: 'Practitioner' },
+      { id: undefined, resourceType: 'Practitioner' },
+    ];
+
+    const patients = createPatients(
+      numberOfPatients,
+      organizations,
+      practitioners,
+    );
+
+    expect(patients).toHaveLength(numberOfPatients);
+    patients.forEach((patient) => {
+      expect(patient).toHaveProperty('id');
+      expect(patient.resourceType).toBe('Patient');
+      expect(patient.managingOrganization?.reference).toBe(
+        `Organization/${organizations[0].id}`,
       );
     });
   });
 
   it('should return an empty array if numberOfPatients is 0', () => {
     const numberOfPatients = 0;
-    const organizationId = 'org-123';
-    const practitionerIds = ['pract-1', 'pract-2'];
+    const organizations: Organization[] = [
+      { id: 'organization-1', resourceType: 'Organization' },
+    ];
+    const practitioners: Practitioner[] = [
+      { id: 'practitioner-1', resourceType: 'Practitioner' },
+    ];
 
     const patients = createPatients(
       numberOfPatients,
-      organizationId,
-      practitionerIds,
+      organizations,
+      practitioners,
     );
 
     expect(patients).toHaveLength(0);
-  });
-
-  it('should throw an error if practitionerIds is empty', () => {
-    const numberOfPatients = 3;
-    const organizationId = 'org-123';
-    const practitionerIds: string[] = [];
-
-    expect(() =>
-      createPatients(numberOfPatients, organizationId, practitionerIds),
-    ).toThrow();
   });
 });
 
@@ -81,58 +226,66 @@ describe('createOrganizations', () => {
   });
 });
 
-describe('createEpisodesWithConditions', () => {
-  it('should create the specified number of episodes and conditions', () => {
-    const numberOfEpisodes = 3;
+describe('createConditions', () => {
+  it('should create the specified number of conditions', () => {
+    const numberOfConditions = 3;
     const patientId = 'patient-123';
 
-    const { newConditions, newEpisodes } = createEpisodesWithConditions(
-      numberOfEpisodes,
-      patientId,
-    );
+    const conditions = createConditions(numberOfConditions, patientId);
 
-    expect(newConditions).toHaveLength(numberOfEpisodes);
-    expect(newEpisodes).toHaveLength(numberOfEpisodes);
-
-    newConditions.forEach((condition) => {
+    expect(conditions).toHaveLength(numberOfConditions);
+    conditions.forEach((condition) => {
       expect(condition).toHaveProperty('id');
+      expect(condition.resourceType).toBe('Condition');
       expect(condition.subject?.reference).toBe(`Patient/${patientId}`);
-    });
-
-    newEpisodes.forEach((episode, index) => {
-      expect(episode).toHaveProperty('id');
-      expect(episode.patient?.reference).toBe(`Patient/${patientId}`);
-
-      if (!episode.diagnosis) {
-        throw new Error('Diagnosis is missing in createEpisodesWithConditions');
-      }
-
-      if (!episode.diagnosis[0]?.condition) {
-        throw new Error('Condition is missing in createEpisodesWithConditions');
-      }
-
-      expect(episode.diagnosis[0]?.condition[0].reference?.reference).toBe(
-        `Condition/${newConditions[index].id}`,
-      );
     });
   });
 
-  it('should throw an error if a condition ID is missing', () => {
-    const numberOfEpisodes = 1;
+  it('should return an empty array if numberOfConditions is 0', () => {
+    const numberOfConditions = 0;
     const patientId = 'patient-123';
 
-    jest
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      .spyOn(require('../resources/condition'), 'createCondition')
-      .mockReturnValueOnce({
-        id: undefined,
-        resourceType: 'Condition',
-        subject: { reference: `Patient/${patientId}` },
-      });
+    const conditions = createConditions(numberOfConditions, patientId);
 
-    expect(() =>
-      createEpisodesWithConditions(numberOfEpisodes, patientId),
-    ).toThrow('Condition ID is missing in createEpisodesWithConditions');
+    expect(conditions).toHaveLength(0);
+  });
+});
+
+describe('createEpisodes', () => {
+  it('should create episodes for the given patient and conditions', () => {
+    const patientId = 'patient-123';
+    const conditions: Condition[] = [
+      {
+        id: 'condition-1',
+        resourceType: 'Condition',
+        clinicalStatus: {},
+        subject: { reference: `Patient/${patientId}` },
+      },
+      {
+        id: 'condition-2',
+        resourceType: 'Condition',
+        clinicalStatus: {},
+        subject: { reference: `Patient/${patientId}` },
+      },
+    ];
+
+    const episodes = createEpisodes(patientId, conditions);
+
+    expect(episodes).toHaveLength(conditions.length);
+    episodes.forEach((episode) => {
+      expect(episode).toHaveProperty('id');
+      expect(episode.resourceType).toBe('EpisodeOfCare');
+      expect(episode.patient?.reference).toBe(`Patient/${patientId}`);
+    });
+  });
+
+  it('should return an empty array if conditions are empty', () => {
+    const patientId = 'patient-123';
+    const conditions: Condition[] = [];
+
+    const episodes = createEpisodes(patientId, conditions);
+
+    expect(episodes).toHaveLength(0);
   });
 });
 

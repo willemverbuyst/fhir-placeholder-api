@@ -1,19 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import {
   Condition,
+  Encounter,
   EpisodeOfCare,
   Organization,
   Patient,
   Practitioner,
 } from 'fhir/r5';
 import {
+  NUMBER_OF_ENCOUNTERS_PER_PATIENT,
   NUMBER_OF_EPISODES_PER_PATIENT,
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
 } from './dataStore.config';
 import {
-  createEpisodesWithConditions,
+  createConditions,
+  createEncounters,
+  createEpisodes,
   createOrganizations,
   createPatients,
   createPractitioners,
@@ -21,49 +25,43 @@ import {
 
 @Injectable()
 export class DataStoreService {
-  public patients: Patient[];
-  public episodes: EpisodeOfCare[];
-  public conditions: Condition[];
-  public organizations: Organization[];
-  public practitioners: Practitioner[];
+  public patients: Patient[] = [];
+  public episodes: EpisodeOfCare[] = [];
+  public conditions: Condition[] = [];
+  public organizations: Organization[] = [];
+  public practitioners: Practitioner[] = [];
+  public encounters: Encounter[] = [];
 
   constructor() {
     this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
     this.practitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
-
-    const newPractitionerIds = this.practitioners
-      .map((p) => p.id)
-      .filter((p): p is string => !!p);
-    const newOrganizationIds = this.organizations.map((o) => o.id);
-    const firstNewOrganizationId = newOrganizationIds[0];
-
-    if (!firstNewOrganizationId) {
-      throw new Error(
-        'First organization ID is missing in DataStoreService constructor',
-      );
-    }
-
     this.patients = createPatients(
       NUMBER_OF_PATIENTS,
-      firstNewOrganizationId,
-      newPractitionerIds,
+      this.organizations,
+      this.practitioners,
     );
 
-    this.episodes = [];
-    this.conditions = [];
     this.patients.forEach((p) => {
       const patientId = p.id;
       if (!patientId) {
         throw new Error('Patient ID is missing in createEpisodesForPatients');
       }
 
-      const { newConditions, newEpisodes } = createEpisodesWithConditions(
+      const conditions = createConditions(
         NUMBER_OF_EPISODES_PER_PATIENT,
         patientId,
       );
+      this.conditions.push(...conditions);
 
-      this.episodes.push(...newEpisodes);
-      this.conditions.push(...newConditions);
+      const episodes = createEpisodes(patientId, conditions);
+      this.episodes.push(...episodes);
+
+      const encounters = createEncounters(
+        NUMBER_OF_ENCOUNTERS_PER_PATIENT,
+        patientId,
+        this.episodes,
+      );
+      this.encounters.push(...encounters);
     });
   }
 }

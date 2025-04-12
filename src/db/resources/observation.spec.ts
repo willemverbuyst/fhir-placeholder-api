@@ -24,19 +24,19 @@ describe('createObservation', () => {
       reference: `Encounter/${encounterId}`,
     });
     expect(observation.code.coding).toHaveLength(1);
+  });
 
-    it('should select a random code from the observationCodes value set', () => {
-      const patientId = '12345';
-      const encounterId = '67890';
-      const observation = createObservation(patientId, encounterId);
+  it('should select a random code from the observationCodes value set', () => {
+    const patientId = '12345';
+    const encounterId = '67890';
+    const observation = createObservation(patientId, encounterId);
 
-      expect(observation.code.coding).toHaveLength(1);
+    expect(observation.code.coding).toHaveLength(1);
 
-      if (!observation.code.coding) {
-        throw new Error('Observation.code.coding is empty');
-      }
+    if (!observation.code.coding) {
+      throw new Error('Observation.code.coding is empty');
+    }
 
-      expect(observationCodes).toContainEqual(observation.code.coding[0]);
-    });
+    expect(observationCodes).toContainEqual(observation.code.coding[0]);
   });
 });

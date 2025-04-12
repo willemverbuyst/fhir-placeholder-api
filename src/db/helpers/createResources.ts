@@ -2,6 +2,7 @@ import {
   Condition,
   Encounter,
   EpisodeOfCare,
+  Observation,
   Organization,
   Patient,
   Practitioner,
@@ -9,9 +10,20 @@ import {
 import { createCondition } from '../resources/condition';
 import { createEncounter } from '../resources/encounter';
 import { createEpisode } from '../resources/episode-of-care';
+import { createObservation } from '../resources/observation';
 import { createOrganization } from '../resources/organization';
 import { createPatient } from '../resources/patient';
 import { createPractitioner } from '../resources/practitioner';
+
+export function createObservations(
+  numberOfObservations: number,
+  patientId: string,
+  encounterId: string,
+): Observation[] {
+  return Array.from({ length: numberOfObservations }, () =>
+    createObservation(patientId, encounterId),
+  );
+}
 
 export function createEncounters(
   numberOfEncounters: number,

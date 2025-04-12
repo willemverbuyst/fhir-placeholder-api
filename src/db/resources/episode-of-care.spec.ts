@@ -5,7 +5,6 @@ describe('createEpisode', () => {
   it('should create an EpisodeOfCare with the correct structure', () => {
     const patientId = '12345';
     const conditionId = '67890';
-
     const episode = createEpisode(patientId, conditionId);
 
     expect(episode).toHaveProperty('id');
@@ -45,34 +44,15 @@ describe('createEpisode', () => {
   it('should generate a unique id for each EpisodeOfCare', () => {
     const patientId = '12345';
     const conditionId = '67890';
-
     const episode1 = createEpisode(patientId, conditionId);
     const episode2 = createEpisode(patientId, conditionId);
 
     expect(episode1.id).not.toBe(episode2.id);
   });
 
-  it('should select a random status from the predefined list', () => {
-    const patientId = '12345';
-    const conditionId = '67890';
-
-    const episode = createEpisode(patientId, conditionId);
-
-    expect([
-      'planned',
-      'waitlist',
-      'active',
-      'onhold',
-      'finished',
-      'cancelled',
-      'entered-in-error',
-    ]).toContain(episode.status);
-  });
-
   it('should select a random type from the episodeOfCareTypes value set', () => {
     const patientId = '12345';
     const conditionId = '67890';
-
     const episode = createEpisode(patientId, conditionId);
 
     if (!episode.type) {

@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Address } from 'fhir/r5';
 import { getRandomElement } from './getRandomElement';
 
-export enum AddressUse {
+enum AddressUse {
   HOME = 'home',
   WORK = 'work',
   TEMP = 'temp',
@@ -10,7 +10,7 @@ export enum AddressUse {
   BILLING = 'billing',
 }
 
-export enum AddressType {
+enum AddressType {
   BOTH = 'both',
   PHYSICAL = 'physical',
   POSTAL = 'postal',

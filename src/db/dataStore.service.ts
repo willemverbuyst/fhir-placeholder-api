@@ -35,7 +35,7 @@ export class DataStoreService {
   public organizations: (Organization & Id)[] = [];
   public practitioners: (Practitioner & Id)[] = [];
   public encounters: (Encounter & Id)[] = [];
-  public observations: Observation[] = [];
+  public observations: (Observation & Id)[] = [];
 
   constructor() {
     this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
@@ -64,16 +64,11 @@ export class DataStoreService {
       );
       this.encounters.push(...encounters);
 
-      encounters.forEach((e) => {
-        const encounterId = e.id;
-        if (!encounterId) {
-          throw new Error('Encounter ID is missing in creating data store');
-        }
-
+      encounters.forEach((encounter) => {
         const observations = createObservations(
           NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
           patientId,
-          encounterId,
+          encounter.id,
         );
 
         this.observations.push(...observations);

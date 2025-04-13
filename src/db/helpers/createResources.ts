@@ -20,7 +20,7 @@ export function createObservations(
   numberOfObservations: number,
   patientId: string,
   encounterId: string,
-): Observation[] {
+): (Observation & Id)[] {
   return Array.from({ length: numberOfObservations }, () =>
     createObservation(patientId, encounterId),
   );

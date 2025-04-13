@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Observation } from 'fhir/r5';
+import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 
 @Injectable()
 export class ObservationService {
   constructor(private readonly repo: DataStoreService) {}
 
-  async findAll(): Promise<Bundle<Observation>> {
+  async findAll(): Promise<Bundle<Observation & Id>> {
     const resources = this.repo.observations;
     return {
       resourceType: 'Bundle',

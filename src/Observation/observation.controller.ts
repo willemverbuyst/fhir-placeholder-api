@@ -1,5 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Bundle, Observation } from 'fhir/r5';
+import { Id } from 'src/types';
 import { observationBundleExample } from './examples/observation-bundle-example';
 import { ObservationService } from './observation.service';
 
@@ -12,7 +14,7 @@ export class ObservationController {
     example: observationBundleExample,
   })
   @Get()
-  findAll() {
+  findAll(): Promise<Bundle<Observation & Id>> {
     return this.observationService.findAll();
   }
 }

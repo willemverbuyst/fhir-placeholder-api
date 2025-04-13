@@ -9,6 +9,7 @@ import { EncounterModule } from './Encounter/encounter.module';
 import { EpisodeOfCareModule } from './EpisodeOfCare/episode-of-care.module';
 import { MetadataModule } from './metadata/metadata.module';
 import { LoggerMiddleware } from './middlewares/logger.middlewares';
+import { ObservationModule } from './Observation/observation.module';
 import { OrganizationModule } from './Organization/organization.module';
 import { PatientModule } from './Patient/patient.module';
 import { PractitionerModule } from './Practitioner/practitioner.module';
@@ -29,6 +30,7 @@ import { PractitionerModule } from './Practitioner/practitioner.module';
     DataStoreModule,
     MetadataModule,
     EncounterModule,
+    ObservationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

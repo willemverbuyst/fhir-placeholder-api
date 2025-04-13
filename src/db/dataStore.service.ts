@@ -39,39 +39,45 @@ export class DataStoreService {
 
   constructor() {
     this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
-    this.practitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
-    this.patients = createPatients(
-      NUMBER_OF_PATIENTS,
-      this.organizations,
-      this.practitioners,
-    );
 
-    this.patients.forEach((p) => {
-      const patientId = p.id;
-      const conditions = createConditions(
-        NUMBER_OF_EPISODES_PER_PATIENT,
-        patientId,
+    this.organizations.forEach((organization) => {
+      const practitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
+      this.practitioners.push(...practitioners);
+
+      const patients = createPatients(
+        NUMBER_OF_PATIENTS,
+        organization.id,
+        this.practitioners,
       );
-      this.conditions.push(...conditions);
+      this.patients.push(...patients);
 
-      const episodes = createEpisodes(patientId, conditions);
-      this.episodes.push(...episodes);
-
-      const encounters = createEncounters(
-        NUMBER_OF_ENCOUNTERS_PER_PATIENT,
-        patientId,
-        this.episodes,
-      );
-      this.encounters.push(...encounters);
-
-      encounters.forEach((encounter) => {
-        const observations = createObservations(
-          NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
+      patients.forEach((p) => {
+        const patientId = p.id;
+        const conditions = createConditions(
+          NUMBER_OF_EPISODES_PER_PATIENT,
           patientId,
-          encounter.id,
         );
+        this.conditions.push(...conditions);
 
-        this.observations.push(...observations);
+        const episodes = createEpisodes(patientId, conditions);
+        this.episodes.push(...episodes);
+
+        const encounters = createEncounters(
+          NUMBER_OF_ENCOUNTERS_PER_PATIENT,
+          patientId,
+          this.episodes,
+        );
+        this.encounters.push(...encounters);
+
+        encounters.forEach((encounter) => {
+          const observations = createObservations(
+            NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
+            patientId,
+            encounter.id,
+          );
+
+          this.observations.push(...observations);
+        });
       });
     });
   }

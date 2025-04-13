@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ObservationService } from './observation.service';
+import { DataStoreModule } from 'src/db/dataStore.module';
 import { ObservationController } from './observation.controller';
+import { ObservationService } from './observation.service';
 
 @Module({
+  imports: [DataStoreModule],
   controllers: [ObservationController],
   providers: [ObservationService],
 })

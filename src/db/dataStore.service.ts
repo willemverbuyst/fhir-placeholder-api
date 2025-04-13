@@ -81,17 +81,19 @@ export class DataStoreService {
       });
     });
 
-    console.dir(
-      {
-        patients: this.patients.length,
-        episodes: this.episodes.length,
-        conditions: this.conditions.length,
-        organizations: this.organizations.length,
-        practitioners: this.practitioners.length,
-        encounters: this.encounters.length,
-        observations: this.observations.length,
-      },
-      { depth: null, colors: true },
-    );
+    if (process.env.NODE_ENV === 'development') {
+      console.dir(
+        {
+          patients: this.patients.length,
+          episodes: this.episodes.length,
+          conditions: this.conditions.length,
+          organizations: this.organizations.length,
+          practitioners: this.practitioners.length,
+          encounters: this.encounters.length,
+          observations: this.observations.length,
+        },
+        { depth: null, colors: true },
+      );
+    }
   }
 }

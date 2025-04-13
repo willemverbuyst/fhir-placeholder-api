@@ -32,6 +32,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - POST /Organization
 - PATCH /Organization/:id
 - GET /Encounter
+- GET /Observation
 
 ```typescript
 fetch('http://localhost:8080/api/v2/r5/Patient/1')

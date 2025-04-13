@@ -67,6 +67,24 @@ export class MetadataController {
             {
               type: 'Patient',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'general-practitioner',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Patient-general-practitioner',
+                  type: 'reference',
+                  documentation:
+                    "Patient's nominated general practitioner, not the organization that manages the record",
+                },
+                {
+                  name: 'organization',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Patient-organization',
+                  type: 'reference',
+                  documentation:
+                    'The organization that is the custodian of the patient record',
+                },
+              ],
             },
             {
               type: 'Practitioner',

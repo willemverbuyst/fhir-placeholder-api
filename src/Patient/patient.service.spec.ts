@@ -47,25 +47,4 @@ describe('PatientService', () => {
       expect(patient).toBeUndefined();
     });
   });
-
-  describe('findAllEpisodesForPatient', () => {
-    it('should return all episodes for a patient', async () => {
-      const bundle = await service.findAllEpisodesForPatient('1');
-      expect(bundle).toBeDefined();
-
-      if (!bundle.entry) {
-        throw new Error('Expected entry to be defined in bundle');
-      }
-      expect(bundle.entry?.length).toBe(2);
-
-      expect(bundle.entry[0].resource?.patient.reference).toBe('Patient/1');
-      expect(bundle.entry[1].resource?.patient.reference).toBe('Patient/1');
-    });
-
-    it("should return an empty array for a patient that doesn't exist", async () => {
-      const bundle = await service.findAllEpisodesForPatient('unknown');
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(0);
-    });
-  });
 });

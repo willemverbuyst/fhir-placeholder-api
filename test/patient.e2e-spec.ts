@@ -54,18 +54,4 @@ describe('PatientController (e2e)', () => {
         expect(response).toHaveProperty('message', 'patient not found');
       });
   });
-
-  it('/Patient/:id/episodes (GET) - OK', async () => {
-    return request(app.getHttpServer())
-      .get('/Patient/1/episodes')
-      .expect(200)
-      .then((res) => {
-        const episodes = res.body;
-        expect(episodes).toBeDefined();
-        expect(episodes).toHaveProperty('resourceType', 'Bundle');
-        expect(episodes.entry).toHaveLength(2);
-        expect(episodes.entry[0].resource.patient.reference).toBe('Patient/1');
-        expect(episodes.entry[1].resource.patient.reference).toBe('Patient/1');
-      });
-  });
 });

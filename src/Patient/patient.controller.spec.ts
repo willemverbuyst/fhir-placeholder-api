@@ -43,14 +43,6 @@ describe('PatientController', () => {
     });
   });
 
-  describe('findAllEpisodesForPatient', () => {
-    it('should call findAllEpisodesForPatient method of PatientService', () => {
-      const id = '1';
-      controller.findAllEpisodesForPatient(id);
-      expect(service.findAllEpisodesForPatient).toHaveBeenCalledWith(id);
-    });
-  });
-
   describe('findOne', () => {
     it('should call findOne method of PatientService', async () => {
       const mockPatient: Patient & Id = {

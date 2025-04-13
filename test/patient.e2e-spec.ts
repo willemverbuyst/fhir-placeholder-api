@@ -28,7 +28,7 @@ describe('PatientController (e2e)', () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(2);
+        expect(patients.entry).toHaveLength(3);
       });
   });
 

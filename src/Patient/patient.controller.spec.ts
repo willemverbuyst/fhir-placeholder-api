@@ -1,9 +1,9 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Patient } from 'fhir/r5';
-import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
+import { Id } from '../types';
 import { PatientController } from './patient.controller';
 import { PatientService } from './patient.service';
 
@@ -19,7 +19,6 @@ describe('PatientController', () => {
           provide: PatientService,
           useValue: {
             findAll: jest.fn(),
-            findAllEpisodesForPatient: jest.fn(),
             findOne: jest.fn(),
           },
         },
@@ -51,11 +50,13 @@ describe('PatientController', () => {
       };
       jest.spyOn(service, 'findOne').mockResolvedValue(mockPatient);
       const result = await controller.findOne('1');
+
       expect(result).toEqual(mockPatient);
     });
 
     it('should throw an error if patient with id is not found', async () => {
       jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
+
       await expect(controller.findOne('1')).rejects.toThrow(
         new NotFoundException('patient not found'),
       );

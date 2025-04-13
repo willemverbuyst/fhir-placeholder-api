@@ -2,10 +2,13 @@
 GET http://localhost:8080/api/v2/r5/Patient
 
 ###
-GET http://localhost:8080/api/v2/r5/Patient?organization=Organization/2f943eb6-b533-4d7d-a785-594b84832557
+GET http://localhost:8080/api/v2/r5/Patient?organization=Organization/f9b441a2-c978-47db-b877-4203f18e5656
 
 ###
-GET http://localhost:8080/api/v2/r5/Patient?general-practitioner=Practitioner/520e496d-094a-4b9e-993e-b0ca7b350ae0
+GET http://localhost:8080/api/v2/r5/Patient?general-practitioner=Practitioner/1cec8bf7-e5a0-49ea-b9c8-b1454d5bef5a
+
+###
+GET http://localhost:8080/api/v2/r5/Patient?general-practitioner=Practitioner/1e620875-04c7-4f60-b688-34d6a19790b9&organization=Organization/f9b441a2-c978-47db-b877-4203f18e5656
 
 ###
 GET http://localhost:8080/api/v2/r5/Patient/e676cee1-c2cd-401a-be44-29dd9f87ae92

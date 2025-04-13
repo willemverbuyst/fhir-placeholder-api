@@ -25,7 +25,28 @@ describe('PatientService', () => {
     it('should return all patients', async () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(3);
+    });
+
+    it('should return all patients filtered by organization', async () => {
+      const bundle = await service.findAll({ organization: 'Organization/1' });
+      expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
+    });
+
+    it('should return all patients filtered by general practitioner', async () => {
+      const bundle = await service.findAll({ 'general-practitioner': '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
+    });
+
+    it('should return all patients filtered by general practitioner & organization', async () => {
+      const bundle = await service.findAll({
+        'general-practitioner': '2',
+        organization: '2',
+      });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
     });
   });
 

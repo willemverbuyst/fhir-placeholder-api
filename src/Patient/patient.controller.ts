@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { Bundle, Patient } from 'fhir/r5';
-import { Id } from 'src/types';
+import { Id } from '../types';
 import { GetPatientDto } from './dto/get-patient.dto';
 import { patientBundleExample } from './examples/patient-bundle.example';
 import { patientExample } from './examples/patient.example';
@@ -37,19 +37,9 @@ export class PatientController {
         forbidNonWhitelisted: true,
       }),
     )
-    data?: GetPatientDto,
+    query?: GetPatientDto,
   ): Promise<Bundle<Patient & Id>> {
-    if (data?.organization) {
-      return this.patientsService.findByOrganization(data.organization);
-    }
-
-    if (data?.['general-practitioner']) {
-      return this.patientsService.findByGeneralPractitioner(
-        data?.['general-practitioner'],
-      );
-    }
-
-    return await this.patientsService.findAll();
+    return await this.patientsService.findAll(query);
   }
 
   @ApiOkResponse({

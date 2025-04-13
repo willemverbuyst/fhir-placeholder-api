@@ -15,6 +15,26 @@ export const testDataStore = {
     {
       id: '2',
       resourceType: 'Patient',
+      managingOrganization: {
+        reference: 'Organization/1',
+      },
+      generalPractitioner: [
+        {
+          reference: 'Practitioner/2',
+        },
+      ],
+    },
+    {
+      id: '2',
+      resourceType: 'Patient',
+      managingOrganization: {
+        reference: 'Organization/2',
+      },
+      generalPractitioner: [
+        {
+          reference: 'Practitioner/2',
+        },
+      ],
     },
   ],
   episodes: [

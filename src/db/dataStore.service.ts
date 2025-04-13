@@ -3,6 +3,7 @@ import {
   Condition,
   Encounter,
   EpisodeOfCare,
+  Observation,
   Organization,
   Patient,
   Practitioner,
@@ -11,6 +12,7 @@ import { Id } from 'src/types';
 import {
   NUMBER_OF_ENCOUNTERS_PER_PATIENT,
   NUMBER_OF_EPISODES_PER_PATIENT,
+  NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
@@ -19,6 +21,7 @@ import {
   createConditions,
   createEncounters,
   createEpisodes,
+  createObservations,
   createOrganizations,
   createPatients,
   createPractitioners,
@@ -32,6 +35,7 @@ export class DataStoreService {
   public organizations: (Organization & Id)[] = [];
   public practitioners: (Practitioner & Id)[] = [];
   public encounters: (Encounter & Id)[] = [];
+  public observations: Observation[] = [];
 
   constructor() {
     this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
@@ -59,6 +63,21 @@ export class DataStoreService {
         this.episodes,
       );
       this.encounters.push(...encounters);
+
+      encounters.forEach((e) => {
+        const encounterId = e.id;
+        if (!encounterId) {
+          throw new Error('Encounter ID is missing in creating data store');
+        }
+
+        const observations = createObservations(
+          NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
+          patientId,
+          encounterId,
+        );
+
+        this.observations.push(...observations);
+      });
     });
   }
 }

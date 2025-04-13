@@ -1,6 +1,7 @@
 import {
   NUMBER_OF_ENCOUNTERS_PER_PATIENT,
   NUMBER_OF_EPISODES_PER_PATIENT,
+  NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
@@ -42,5 +43,15 @@ describe('DataStoreService', () => {
     const expectedEncountersCount =
       NUMBER_OF_PATIENTS * NUMBER_OF_ENCOUNTERS_PER_PATIENT;
     expect(dataStoreService.encounters.length).toBe(expectedEncountersCount);
+  });
+
+  it('should initialize observations for each patient', () => {
+    const expectedObservationsCount =
+      NUMBER_OF_PATIENTS *
+      NUMBER_OF_ENCOUNTERS_PER_PATIENT *
+      NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER;
+    expect(dataStoreService.observations.length).toBe(
+      expectedObservationsCount,
+    );
   });
 });

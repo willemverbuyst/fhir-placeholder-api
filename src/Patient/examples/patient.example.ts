@@ -1,4 +1,4 @@
-export const examplePatient = {
+export const patientExample = {
   id: 'e60648d3-22e8-4c0f-93aa-ce6023bb678a',
   name: [
     {

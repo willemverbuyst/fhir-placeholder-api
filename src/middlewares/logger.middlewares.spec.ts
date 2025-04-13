@@ -59,4 +59,21 @@ describe('LoggerMiddleware', () => {
 
     consoleLogSpy.mockRestore();
   });
+
+  it('should handle empty request body gracefully', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+    process.env.NODE_ENV = 'development';
+
+    mockRequest.body = {};
+
+    loggerMiddleware.use(
+      mockRequest as Request,
+      mockResponse as Response,
+      mockNextFunction,
+    );
+
+    expect(consoleLogSpy).toHaveBeenCalledWith('%s %s', 'GET', '/test', '');
+
+    consoleLogSpy.mockRestore();
+  });
 });

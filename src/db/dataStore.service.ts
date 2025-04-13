@@ -14,7 +14,7 @@ import {
   NUMBER_OF_EPISODES_PER_PATIENT,
   NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
   NUMBER_OF_ORGANIZATIONS,
-  NUMBER_OF_PATIENTS,
+  NUMBER_OF_PATIENTS_PER_ORGANIZATION,
   NUMBER_OF_PRACTITIONERS,
 } from './dataStore.config';
 import {
@@ -45,7 +45,7 @@ export class DataStoreService {
       this.practitioners.push(...practitioners);
 
       const patients = createPatients(
-        NUMBER_OF_PATIENTS,
+        NUMBER_OF_PATIENTS_PER_ORGANIZATION,
         organization.id,
         this.practitioners,
       );
@@ -80,5 +80,18 @@ export class DataStoreService {
         });
       });
     });
+
+    console.dir(
+      {
+        patients: this.patients.length,
+        episodes: this.episodes.length,
+        conditions: this.conditions.length,
+        organizations: this.organizations.length,
+        practitioners: this.practitioners.length,
+        encounters: this.encounters.length,
+        observations: this.observations.length,
+      },
+      { depth: null, colors: true },
+    );
   }
 }

@@ -1,0 +1,41 @@
+name: Code Style
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  format-and-lint:
+    name: Format & Lint
+    uses: ./.github/workflows/node-ci.yml
+    with:
+      run-command: |
+        npm run format:check
+        npm run lint:check
+
+  knip:
+    name: Knip
+    uses: ./.github/workflows/node-ci.yml
+    with:
+      run-command: |
+        npm run knip
+
+  lint-actions:
+    name: Lint Actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Download actionlint
+        id: get_actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        shell: bash
+
+      - name: Check workflow files
+        run: ${{ steps.get_actionlint.outputs.executable }} -color
+        shell: bash

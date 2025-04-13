@@ -1,3 +1,10 @@
 {
-  "cSpell.ignoreWords": ["fhir", "waitlist", "onhold", "codeable", "searchset"]
+  "cSpell.ignoreWords": [
+    "fhir",
+    "waitlist",
+    "onhold",
+    "codeable",
+    "searchset",
+    "knip"
+  ]
 }

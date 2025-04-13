@@ -30,6 +30,10 @@ export class MetadataController {
               interaction: [{ code: 'search-type' }],
             },
             {
+              type: 'Observation',
+              interaction: [{ code: 'search-type' }],
+            },
+            {
               type: 'EpisodeOfCare',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
               searchParam: [

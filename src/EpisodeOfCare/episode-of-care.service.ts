@@ -8,8 +8,22 @@ import { wrapInBundle } from '../utils/bundle';
 export class EpisodeOfCareService {
   constructor(private readonly repo: DataStoreService) {}
 
-  async findAll(): Promise<Bundle<EpisodeOfCare & Id>> {
-    const resources = this.repo.episodes;
+  async findAll(query?: {
+    patient?: string;
+  }): Promise<Bundle<EpisodeOfCare & Id>> {
+    let resources = this.repo.episodes;
+
+    if (!query) {
+      return wrapInBundle(resources);
+    }
+
+    const { patient } = query;
+
+    if (patient) {
+      resources = this.repo.episodes.filter((e) =>
+        e.patient.reference?.includes(patient),
+      );
+    }
 
     return wrapInBundle(resources);
   }

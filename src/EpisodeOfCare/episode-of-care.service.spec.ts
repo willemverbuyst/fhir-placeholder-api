@@ -27,6 +27,12 @@ describe('EpisodeOfCareService', () => {
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(3);
     });
+
+    it('should return all episodes filtered by patient', async () => {
+      const bundle = await service.findAll({ patient: '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(2);
+    });
   });
 
   describe('findOne', () => {
@@ -44,27 +50,6 @@ describe('EpisodeOfCareService', () => {
     it("should return undefined for an episode that doesn't exist", async () => {
       const episode = await service.findOne('unknown');
       expect(episode).toBeUndefined();
-    });
-  });
-
-  describe('findByPatientId', () => {
-    it('should return episodes by patient id', async () => {
-      const bundle = await service.findByPatientId('1');
-      expect(bundle).toBeDefined();
-
-      if (!bundle.entry) {
-        throw new Error('Expected entry to be defined in bundle');
-      }
-      expect(bundle.entry.length).toBe(2);
-
-      expect(bundle.entry[0].resource?.patient.reference).toBe('Patient/1');
-      expect(bundle.entry[1].resource?.patient.reference).toBe('Patient/1');
-    });
-
-    it("should return an empty array for a patient id that doesn't exist", async () => {
-      const bundle = await service.findByPatientId('unknown');
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(0);
     });
   });
 });

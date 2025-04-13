@@ -42,7 +42,8 @@ export class MetadataController {
                   definition:
                     'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-patient',
                   type: 'reference',
-                  documentation: 'Search episodes by patient reference',
+                  documentation:
+                    'The patient who is the focus of this episode of care',
                 },
               ],
             },

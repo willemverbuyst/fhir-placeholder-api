@@ -23,4 +23,22 @@ export class PatientService {
   async findOne(id: string): Promise<(Patient & Id) | undefined> {
     return this.repo.patients.find((patient) => patient.id === id);
   }
+
+  async findByOrganization(
+    organization: string,
+  ): Promise<Bundle<Patient & Id>> {
+    const resources = this.repo.patients.filter((p) =>
+      p.managingOrganization?.reference?.includes(organization),
+    );
+
+    return {
+      resourceType: 'Bundle',
+      type: 'searchset',
+      total: resources.length,
+      entry: resources.map((resource) => ({
+        fullUrl: `http://localhost:8080/api/v2/r5/${resource.resourceType}/${resource.id}`,
+        resource,
+      })),
+    };
+  }
 }

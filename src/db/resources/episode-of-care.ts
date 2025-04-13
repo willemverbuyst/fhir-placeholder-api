@@ -1,4 +1,5 @@
 import { EpisodeOfCare } from 'fhir/r5';
+import { Id } from 'src/types';
 import { v4 as uuidV4 } from 'uuid';
 import { getRandomElement } from '../helpers/getRandomElement';
 import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
@@ -15,10 +16,9 @@ export enum EpisodeOfCareStatus {
 
 export function createEpisode(
   patientId: string,
-
   conditionId: string,
-) {
-  const newEpisode: EpisodeOfCare = {
+): EpisodeOfCare & Id {
+  return {
     id: uuidV4(),
     resourceType: 'EpisodeOfCare',
     status: getRandomElement([
@@ -42,6 +42,4 @@ export function createEpisode(
     ],
     type: [{ coding: [getRandomElement(episodeOfCareTypes)] }],
   };
-
-  return newEpisode;
 }

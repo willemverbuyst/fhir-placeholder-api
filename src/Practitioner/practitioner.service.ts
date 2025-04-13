@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Practitioner } from 'fhir/r5';
+import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 
 @Injectable()
 export class PractitionerService {
   constructor(private readonly repo: DataStoreService) {}
 
-  async findAll(): Promise<Bundle<Practitioner>> {
+  async findAll(): Promise<Bundle<Practitioner & Id>> {
     const resources = this.repo.practitioners;
     return {
       resourceType: 'Bundle',
@@ -19,7 +20,7 @@ export class PractitionerService {
     };
   }
 
-  async findOne(id: string): Promise<Practitioner | undefined> {
+  async findOne(id: string): Promise<(Practitioner & Id) | undefined> {
     return this.repo.practitioners.find(
       (practitioner) => practitioner.id === id,
     );

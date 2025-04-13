@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { Bundle, EpisodeOfCare } from 'fhir/r5';
+import { Id } from 'src/types';
 import { GetEpisodeDto } from './dto/get-episode-of-care.dto';
 import { EpisodeOfCareService } from './episode-of-care.service';
 import { episodeOFCareBundleExample } from './examples/episode-of-care-bundle.example';
@@ -37,7 +38,7 @@ export class EpisodeOfCareController {
       }),
     )
     data?: GetEpisodeDto,
-  ): Promise<Bundle<EpisodeOfCare>> {
+  ): Promise<Bundle<EpisodeOfCare & Id>> {
     if (data?.patient) {
       return await this.episodesService.findByPatientId(data.patient);
     }
@@ -52,7 +53,7 @@ export class EpisodeOfCareController {
     description: 'Episode not found',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<EpisodeOfCare> {
+  async findOne(@Param('id') id: string): Promise<EpisodeOfCare & Id> {
     const episode = await this.episodesService.findOne(id);
     if (!episode) {
       throw new NotFoundException('episode not found');

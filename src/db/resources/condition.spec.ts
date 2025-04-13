@@ -27,6 +27,7 @@ describe('createCondition', () => {
     if (!condition.note) {
       throw new Error('Condition note array is empty');
     }
+
     expect(condition.note).toBeInstanceOf(Array);
     expect(condition.note[0]).toHaveProperty('text');
   });

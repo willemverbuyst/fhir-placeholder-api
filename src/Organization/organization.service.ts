@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Organization } from 'fhir/r5';
-import { Id } from 'src/types';
 import { v4 as uuidV4 } from 'uuid';
 import { DataStoreService } from '../db/dataStore.service';
+import { Id } from '../types';
+import { wrapInBundle } from '../utils/bundle';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Injectable()
@@ -26,15 +27,8 @@ export class OrganizationService {
 
   async findAll(): Promise<Bundle<Organization & Id>> {
     const resources = this.repo.organizations;
-    return {
-      resourceType: 'Bundle',
-      type: 'searchset',
-      total: resources.length,
-      entry: resources.map((resource) => ({
-        fullUrl: `http://localhost:8080/api/v2/r5/${resource.resourceType}/${resource.id}`,
-        resource,
-      })),
-    };
+
+    return wrapInBundle(resources);
   }
 
   async findOne(id: string): Promise<(Organization & Id) | undefined> {
@@ -67,14 +61,7 @@ export class OrganizationService {
     const resources = this.repo.organizations.filter(
       (o) => o.name?.toLocaleLowerCase() === name.toLocaleLowerCase(),
     );
-    return {
-      resourceType: 'Bundle',
-      type: 'searchset',
-      total: resources.length,
-      entry: resources.map((resource) => ({
-        fullUrl: `http://localhost:8080/api/v2/r5/${resource.resourceType}/${resource.id}`,
-        resource,
-      })),
-    };
+
+    return wrapInBundle(resources);
   }
 }

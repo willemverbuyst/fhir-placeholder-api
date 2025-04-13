@@ -18,6 +18,8 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 - GET /metadata
 - GET /Patient
+- GET /Patient?organization=\<id\>
+- GET /Patient?general-practitioner=\<id\>
 - GET /Patient/:id
 - GET /EpisodeOfCare
 - GET /EpisodeOfCare/:id

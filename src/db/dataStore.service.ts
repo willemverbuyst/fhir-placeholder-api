@@ -47,7 +47,7 @@ export class DataStoreService {
       const patients = createPatients(
         NUMBER_OF_PATIENTS_PER_ORGANIZATION,
         organization.id,
-        this.practitioners,
+        practitioners,
       );
       this.patients.push(...patients);
 
@@ -65,7 +65,7 @@ export class DataStoreService {
         const encounters = createEncounters(
           NUMBER_OF_ENCOUNTERS_PER_PATIENT,
           patientId,
-          this.episodes,
+          episodes,
         );
         this.encounters.push(...encounters);
 

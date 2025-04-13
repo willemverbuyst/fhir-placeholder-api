@@ -1,4 +1,4 @@
-export const examplePatientBundle = {
+export const patientBundleExample = {
   resourceType: 'Bundle',
   type: 'searchset',
   total: 1,

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Organization } from 'fhir/r5';
+import { Id } from 'src/types';
 import { v4 as uuidV4 } from 'uuid';
 import { DataStoreService } from '../db/dataStore.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
@@ -10,8 +11,8 @@ export class OrganizationService {
 
   async create(
     createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization> {
-    const newOrganization: Organization = {
+  ): Promise<Organization & Id> {
+    const newOrganization: Organization & Id = {
       id: uuidV4(),
       resourceType: 'Organization',
       active: true,
@@ -23,7 +24,7 @@ export class OrganizationService {
     return newOrganization;
   }
 
-  async findAll(): Promise<Bundle<Organization>> {
+  async findAll(): Promise<Bundle<Organization & Id>> {
     const resources = this.repo.organizations;
     return {
       resourceType: 'Bundle',
@@ -36,18 +37,18 @@ export class OrganizationService {
     };
   }
 
-  async findOne(id: string): Promise<Organization | undefined> {
+  async findOne(id: string): Promise<(Organization & Id) | undefined> {
     return this.repo.organizations.find((org) => org.id === id);
   }
 
   async update(
     id: string,
     updateOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization | undefined> {
+  ): Promise<(Organization & Id) | undefined> {
     const organization = await this.findOne(id);
 
     if (organization) {
-      const updatedOrganization: Organization = {
+      const updatedOrganization: Organization & Id = {
         ...organization,
         ...updateOrganizationDto,
       };
@@ -62,7 +63,7 @@ export class OrganizationService {
     return undefined;
   }
 
-  async findByName(name: string): Promise<Bundle<Organization>> {
+  async findByName(name: string): Promise<Bundle<Organization & Id>> {
     const resources = this.repo.organizations.filter(
       (o) => o.name?.toLocaleLowerCase() === name.toLocaleLowerCase(),
     );

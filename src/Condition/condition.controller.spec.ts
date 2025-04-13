@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Condition } from 'fhir/r5';
+import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { ConditionController } from './condition.controller';
@@ -43,7 +44,7 @@ describe('ConditionsController', () => {
 
   describe('findOne', () => {
     it('should call findOne method of ConditionService', async () => {
-      const mockCondition: Condition = {
+      const mockCondition: Condition & Id = {
         id: '1',
         resourceType: 'Condition',
         clinicalStatus: {},

@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Bundle, Organization } from 'fhir/r5';
+import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { OrganizationController } from './organization.controller';
@@ -43,7 +44,7 @@ describe('OrganizationController', () => {
     });
 
     it('should return an array of organizations with name', async () => {
-      const mockOrganizationBundle: Bundle<Organization> = {
+      const mockOrganizationBundle: Bundle<Organization & Id> = {
         resourceType: 'Bundle',
         type: 'searchset',
         total: 1,
@@ -69,7 +70,7 @@ describe('OrganizationController', () => {
 
   describe('findOne', () => {
     it('should call findOne method of OrganizationService', async () => {
-      const mockOrganization: Organization = {
+      const mockOrganization: Organization & Id = {
         id: '1',
         resourceType: 'Organization',
       };
@@ -99,7 +100,7 @@ describe('OrganizationController', () => {
 
   describe('update', () => {
     it('should call update method of OrganizationService', async () => {
-      const mockOrganization: Organization = {
+      const mockOrganization: Organization & Id = {
         id: '1',
         resourceType: 'Organization',
       };

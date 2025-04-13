@@ -3,13 +3,16 @@ import {
   Condition,
   Encounter,
   EpisodeOfCare,
+  Observation,
   Organization,
   Patient,
   Practitioner,
 } from 'fhir/r5';
+import { Id } from 'src/types';
 import {
   NUMBER_OF_ENCOUNTERS_PER_PATIENT,
   NUMBER_OF_EPISODES_PER_PATIENT,
+  NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
@@ -18,6 +21,7 @@ import {
   createConditions,
   createEncounters,
   createEpisodes,
+  createObservations,
   createOrganizations,
   createPatients,
   createPractitioners,
@@ -25,12 +29,13 @@ import {
 
 @Injectable()
 export class DataStoreService {
-  public patients: Patient[] = [];
-  public episodes: EpisodeOfCare[] = [];
-  public conditions: Condition[] = [];
-  public organizations: Organization[] = [];
-  public practitioners: Practitioner[] = [];
-  public encounters: Encounter[] = [];
+  public patients: (Patient & Id)[] = [];
+  public episodes: (EpisodeOfCare & Id)[] = [];
+  public conditions: (Condition & Id)[] = [];
+  public organizations: (Organization & Id)[] = [];
+  public practitioners: (Practitioner & Id)[] = [];
+  public encounters: (Encounter & Id)[] = [];
+  public observations: (Observation & Id)[] = [];
 
   constructor() {
     this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
@@ -43,10 +48,6 @@ export class DataStoreService {
 
     this.patients.forEach((p) => {
       const patientId = p.id;
-      if (!patientId) {
-        throw new Error('Patient ID is missing in createEpisodesForPatients');
-      }
-
       const conditions = createConditions(
         NUMBER_OF_EPISODES_PER_PATIENT,
         patientId,
@@ -62,6 +63,16 @@ export class DataStoreService {
         this.episodes,
       );
       this.encounters.push(...encounters);
+
+      encounters.forEach((encounter) => {
+        const observations = createObservations(
+          NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
+          patientId,
+          encounter.id,
+        );
+
+        this.observations.push(...observations);
+      });
     });
   }
 }

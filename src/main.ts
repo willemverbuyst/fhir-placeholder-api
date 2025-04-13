@@ -7,7 +7,6 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(helmet());
 
   const fhirVersion = app.get(ConfigService).get('fhirVersion');
   if (!fhirVersion) {
@@ -19,6 +18,7 @@ async function bootstrap() {
     throw new Error('serverVersion is not defined');
   }
 
+  app.use(helmet());
   app.enableCors();
   app.setGlobalPrefix(`api/${serverVersion}/${fhirVersion}`);
 

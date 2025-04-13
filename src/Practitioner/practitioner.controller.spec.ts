@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Practitioner } from 'fhir/r5';
+import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 import { testDataStore } from '../test/testDataStore';
 import { PractitionerController } from './practitioner.controller';
@@ -44,7 +45,7 @@ describe('PractitionerController', () => {
 
   describe('findOne', () => {
     it('should call findOne method of PractitionerService', async () => {
-      const mockPractitioner: Practitioner = {
+      const mockPractitioner: Practitioner & Id = {
         id: '1',
         resourceType: 'Practitioner',
       };

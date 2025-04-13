@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { Bundle, Encounter } from 'fhir/r5';
+import { Id } from 'src/types';
 import { EncounterService } from './encounter.service';
 import { encounterBundleExample } from './examples/encounter-bundle.example';
 
@@ -13,7 +14,7 @@ export class EncounterController {
     example: encounterBundleExample,
   })
   @Get()
-  async findAll(): Promise<Bundle<Encounter>> {
+  async findAll(): Promise<Bundle<Encounter & Id>> {
     return await this.encounterService.findAll();
   }
 }

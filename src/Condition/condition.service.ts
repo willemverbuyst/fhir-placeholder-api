@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Condition } from 'fhir/r5';
+import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
 
 @Injectable()
 export class ConditionService {
   constructor(private readonly repo: DataStoreService) {}
 
-  async findAll(): Promise<Bundle<Condition>> {
+  async findAll(): Promise<Bundle<Condition & Id>> {
     const resources = this.repo.conditions;
     return {
       resourceType: 'Bundle',
@@ -19,7 +20,7 @@ export class ConditionService {
     };
   }
 
-  async findOne(id: string): Promise<Condition | undefined> {
+  async findOne(id: string): Promise<(Condition & Id) | undefined> {
     return this.repo.conditions.find((condition) => condition.id === id);
   }
 }

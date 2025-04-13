@@ -1,4 +1,5 @@
 import { Encounter } from 'fhir/r5';
+import { Id } from 'src/types';
 import { v4 as uuidV4 } from 'uuid';
 import { getRandomElement } from '../helpers/getRandomElement';
 
@@ -17,7 +18,7 @@ export enum EncounterStatus {
 export function createEncounter(
   patientId: string,
   episodes: string[],
-): Encounter {
+): Encounter & Id {
   return {
     id: uuidV4(),
     resourceType: 'Encounter',

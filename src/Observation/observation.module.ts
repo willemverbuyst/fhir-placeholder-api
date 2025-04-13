@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DataStoreModule } from 'src/db/dataStore.module';
+import { DataStoreModule } from '../db/dataStore.module';
 import { ObservationController } from './observation.controller';
 import { ObservationService } from './observation.service';
 

@@ -8,17 +8,7 @@ describe('createEncounter', () => {
 
     expect(encounter).toHaveProperty('id');
     expect(encounter.resourceType).toBe('Encounter');
-    expect([
-      EncounterStatus.CANCELLED,
-      EncounterStatus.COMPLETED,
-      EncounterStatus.DISCHARGED,
-      EncounterStatus.DISCONTINUED,
-      EncounterStatus.ENTERED_IN_ERROR,
-      EncounterStatus.IN_PROGRESS,
-      EncounterStatus.ON_HOLD,
-      EncounterStatus.PLANNED,
-      EncounterStatus.UNKNOWN,
-    ]).toContain(encounter.status);
+    expect(Object.values(EncounterStatus)).toContain(encounter.status);
     expect(encounter.subject).toEqual({ reference: `Patient/${patientId}` });
     expect(encounter.episodeOfCare).toHaveLength(1);
 

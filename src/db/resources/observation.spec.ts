@@ -1,5 +1,5 @@
 import { observationCodes } from '../valueSets/observation-code-value-set';
-import { createObservation } from './observation';
+import { createObservation, ObservationStatus } from './observation';
 
 describe('createObservation', () => {
   it('should create an observation with a valid structure', () => {
@@ -9,16 +9,7 @@ describe('createObservation', () => {
 
     expect(observation).toHaveProperty('id');
     expect(observation).toHaveProperty('resourceType', 'Observation');
-    expect([
-      'registered',
-      'preliminary',
-      'final',
-      'amended',
-      'corrected',
-      'cancelled',
-      'entered-in-error',
-      'unknown',
-    ]).toContain(observation.status);
+    expect(Object.values(ObservationStatus)).toContain(observation.status);
     expect(observation.subject).toEqual({ reference: `Patient/${patientId}` });
     expect(observation.encounter).toEqual({
       reference: `Encounter/${encounterId}`,

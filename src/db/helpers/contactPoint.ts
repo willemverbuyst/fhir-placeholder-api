@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { ContactPoint } from 'fhir/r5';
 import { getRandomElement } from './getRandomElement';
 
-export enum ContactUse {
+enum ContactUse {
   HOME = 'home',
   WORK = 'work',
   TEMP = 'temp',
@@ -10,7 +10,7 @@ export enum ContactUse {
   MOBILE = 'mobile',
 }
 
-export enum ContactSystem {
+enum ContactSystem {
   PHONE = 'phone',
   FAX = 'fax',
   EMAIL = 'email',

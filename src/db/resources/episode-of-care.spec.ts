@@ -1,5 +1,5 @@
 import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
-import { createEpisode } from './episode-of-care';
+import { createEpisode, EpisodeOfCareStatus } from './episode-of-care';
 
 describe('createEpisode', () => {
   it('should create an EpisodeOfCare with the correct structure', () => {
@@ -9,15 +9,7 @@ describe('createEpisode', () => {
 
     expect(episode).toHaveProperty('id');
     expect(episode.resourceType).toBe('EpisodeOfCare');
-    expect([
-      'planned',
-      'waitlist',
-      'active',
-      'onhold',
-      'finished',
-      'cancelled',
-      'entered-in-error',
-    ]).toContain(episode.status);
+    expect(Object.values(EpisodeOfCareStatus)).toContain(episode.status);
     expect(episode.patient).toEqual({ reference: `Patient/${patientId}` });
     expect(episode.diagnosis).toHaveLength(1);
 

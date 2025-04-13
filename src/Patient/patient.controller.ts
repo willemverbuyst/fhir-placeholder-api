@@ -43,6 +43,12 @@ export class PatientController {
       return this.patientsService.findByOrganization(data.organization);
     }
 
+    if (data?.['general-practitioner']) {
+      return this.patientsService.findByGeneralPractitioner(
+        data?.['general-practitioner'],
+      );
+    }
+
     return await this.patientsService.findAll();
   }
 

@@ -41,4 +41,24 @@ export class PatientService {
       })),
     };
   }
+
+  async findByGeneralPractitioner(
+    generalPractitioner: string,
+  ): Promise<Bundle<Patient & Id>> {
+    const resources = this.repo.patients.filter((p) =>
+      p.generalPractitioner?.some((g) =>
+        g.reference?.includes(generalPractitioner),
+      ),
+    );
+
+    return {
+      resourceType: 'Bundle',
+      type: 'searchset',
+      total: resources.length,
+      entry: resources.map((resource) => ({
+        fullUrl: `http://localhost:8080/api/v2/r5/${resource.resourceType}/${resource.id}`,
+        resource,
+      })),
+    };
+  }
 }

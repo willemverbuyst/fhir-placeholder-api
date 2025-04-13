@@ -2,7 +2,10 @@
 GET http://localhost:8080/api/v2/r5/Patient
 
 ###
-GET http://localhost:8080/api/v2/r5/Patient?organization=8fe7591e-5989-4c78-b52b-d4ecd55c989d
+GET http://localhost:8080/api/v2/r5/Patient?organization=689bee9a-afca-4531-876e-8430b6d4f486
+
+###
+GET http://localhost:8080/api/v2/r5/Patient?general-practitioner=Practitioner/59f38e89-37c5-4dd1-857f-c8cec0961676
 
 ###
 GET http://localhost:8080/api/v2/r5/Patient/e676cee1-c2cd-401a-be44-29dd9f87ae92

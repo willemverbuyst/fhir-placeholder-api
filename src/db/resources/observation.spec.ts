@@ -24,6 +24,13 @@ describe('createObservation', () => {
       reference: `Encounter/${encounterId}`,
     });
     expect(observation.code.coding).toHaveLength(1);
+    expect(observation).toHaveProperty('note');
+
+    if (!observation.note) {
+      throw new Error('Condition note array is empty');
+    }
+    expect(observation.note).toBeInstanceOf(Array);
+    expect(observation.note[0]).toHaveProperty('text');
   });
 
   it('should select a random code from the observationCodes value set', () => {

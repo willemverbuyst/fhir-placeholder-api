@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { Observation } from 'fhir/r5';
 import { v4 as uuidV4 } from 'uuid';
 import { getRandomElement } from '../helpers/getRandomElement';
@@ -34,5 +35,6 @@ export function createObservation(
     code: { coding: [getRandomElement(observationCodes)] },
     encounter: { reference: `Encounter/${encounterId}` },
     subject: { reference: `Patient/${patientId}` },
+    note: [{ text: faker.lorem.sentence({ min: 5, max: 7 }) }],
   };
 }

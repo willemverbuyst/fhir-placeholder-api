@@ -82,10 +82,72 @@ export const testDataStore = {
     },
   ],
   encounters: [
-    { id: '1', resourceType: 'Encounter' },
-    { id: '2', resourceType: 'Encounter' },
-    { id: '3', resourceType: 'Encounter' },
-    { id: '4', resourceType: 'Encounter' },
-    { id: '5', resourceType: 'Encounter' },
+    {
+      id: '1',
+      resourceType: 'Encounter',
+      subject: { reference: 'Patient/1' },
+    },
+    {
+      id: '2',
+      resourceType: 'Encounter',
+      subject: { reference: 'Patient/2' },
+    },
+    {
+      id: '3',
+      resourceType: 'Encounter',
+      subject: { reference: 'Patient/2' },
+    },
+    {
+      id: '4',
+      resourceType: 'Encounter',
+      subject: { reference: 'Patient/2' },
+    },
+    {
+      id: '5',
+      resourceType: 'Encounter',
+      subject: { reference: 'Patient/2' },
+    },
+  ],
+  observations: [
+    {
+      id: '1',
+      resourceType: 'Observation',
+      encounter: {
+        reference: 'Encounter/1',
+        subject: { reference: 'Patient/1' },
+      },
+    },
+    {
+      id: '2',
+      resourceType: 'Observation',
+      encounter: {
+        reference: 'Encounter/1',
+        subject: { reference: 'Patient/1' },
+      },
+    },
+    {
+      id: '3',
+      resourceType: 'Observation',
+      encounter: {
+        reference: 'Encounter/2',
+        subject: { reference: 'Patient/2' },
+      },
+    },
+    {
+      id: '4',
+      resourceType: 'Observation',
+      encounter: {
+        reference: 'Encounter/2',
+        subject: { reference: 'Patient/2' },
+      },
+    },
+    {
+      id: '5',
+      resourceType: 'Observation',
+      encounter: {
+        reference: 'Encounter/3',
+        subject: { reference: 'Patient/2' },
+      },
+    },
   ],
 };

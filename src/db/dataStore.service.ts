@@ -43,6 +43,9 @@ export class DataStoreService {
 
     this.patients.forEach((p) => {
       const patientId = p.id;
+
+      // Check if patientId is to satisfy TypeScript
+      /* istanbul ignore next */
       if (!patientId) {
         throw new Error('Patient ID is missing in createEpisodesForPatients');
       }

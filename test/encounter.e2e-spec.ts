@@ -31,4 +31,40 @@ describe('EncounterController (e2e)', () => {
         expect(encounters.entry).toHaveLength(5);
       });
   });
+
+  it('/Encounter?patient=2 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Encounter?patient=2')
+      .expect(200)
+      .then((res) => {
+        const encounters = res.body;
+        expect(encounters).toBeDefined();
+        expect(encounters).toHaveProperty('resourceType', 'Bundle');
+        expect(encounters.entry).toHaveLength(4);
+      });
+  });
+
+  it('/Encounter?episode-of-care=2 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Encounter?episode-of-care=2')
+      .expect(200)
+      .then((res) => {
+        const encounters = res.body;
+        expect(encounters).toBeDefined();
+        expect(encounters).toHaveProperty('resourceType', 'Bundle');
+        expect(encounters.entry).toHaveLength(1);
+      });
+  });
+
+  it('/Encounter?patient=2&episode-of-care=2 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Encounter?patient=2&episode-of-care=2')
+      .expect(200)
+      .then((res) => {
+        const encounters = res.body;
+        expect(encounters).toBeDefined();
+        expect(encounters).toHaveProperty('resourceType', 'Bundle');
+        expect(encounters.entry).toHaveLength(1);
+      });
+  });
 });

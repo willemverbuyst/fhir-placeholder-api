@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Organization } from 'fhir/r5';
-import { v4 as uuidV4 } from 'uuid';
 import { DataStoreService } from '../db/dataStore.service';
 import { Id } from '../types';
 import { wrapInBundle } from '../utils/bundle';
+import { createId } from '../utils/id';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class OrganizationService {
     createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization & Id> {
     const newOrganization: Organization & Id = {
-      id: uuidV4(),
+      id: createId(this.repo.organizations.length),
       resourceType: 'Organization',
       active: true,
       ...createOrganizationDto,
@@ -55,13 +55,5 @@ export class OrganizationService {
     }
 
     return undefined;
-  }
-
-  async findByName(name: string): Promise<Bundle<Organization & Id>> {
-    const resources = this.repo.organizations.filter(
-      (o) => o.name?.toLocaleLowerCase() === name.toLocaleLowerCase(),
-    );
-
-    return wrapInBundle(resources);
   }
 }

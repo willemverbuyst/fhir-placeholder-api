@@ -81,15 +81,6 @@ export class MetadataController {
                 { code: 'create' },
                 { code: 'patch' },
               ],
-              searchParam: [
-                {
-                  name: 'name',
-                  definition:
-                    'http://hl7.org/fhir/SearchParameter/Organization-name',
-                  type: 'string',
-                  documentation: 'Search by organization name',
-                },
-              ],
             },
             {
               type: 'Patient',

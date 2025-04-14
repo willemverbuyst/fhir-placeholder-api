@@ -6,15 +6,13 @@ import {
   Param,
   Patch,
   Post,
-  Query,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Bundle, Organization } from 'fhir/r5';
 import * as sanitizeHtml from 'sanitize-html';
 import { Id } from 'src/types';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { GetOrganizationDto } from './dto/get-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { organizationBundleExample } from './examples/organization-bundle.example';
 import { organizationExample } from './examples/organization.example';
@@ -50,27 +48,8 @@ export class OrganizationController {
     description: 'All organizations',
     example: organizationBundleExample,
   })
-  @ApiQuery({
-    name: 'name',
-    required: false,
-    description: 'Name to filter organizations',
-    type: String,
-  })
   @Get()
-  async findAll(
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    data?: GetOrganizationDto,
-  ): Promise<Bundle<Organization & Id>> {
-    if (data?.name) {
-      return this.organizationsService.findByName(data.name);
-    }
-
+  async findAll(): Promise<Bundle<Organization & Id>> {
     return this.organizationsService.findAll();
   }
 

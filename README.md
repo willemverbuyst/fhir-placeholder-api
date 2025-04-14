@@ -34,7 +34,6 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - `GET /Encounter?episode-of-care=<id>`
 - `GET /Observation`
 - `GET /Organization`
-- `GET /Organization?name=<name>`
 - `GET /Organization/:id`
 - `POST /Organization`
 - `PATCH /Organization/:id`

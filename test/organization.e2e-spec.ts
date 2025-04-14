@@ -32,32 +32,6 @@ describe('OrganizationController (e2e)', () => {
       });
   });
 
-  it('/Organization?name=test%20organization (GET) - OK', async () => {
-    return request(app.getHttpServer())
-      .get('/Organization?name=test%20organization')
-      .expect(200)
-      .then((res) => {
-        const organizations = res.body;
-        expect(organizations).toBeDefined();
-        expect(organizations.entry).toHaveLength(2);
-        expect(organizations.entry[0].resource.name).toBe('test organization');
-        expect(organizations.entry[0].resource.name).toBe('test organization');
-      });
-  });
-
-  it('/Organization?name=Acme&city=Somewhere (GET) - Bad Request', async () => {
-    return request(app.getHttpServer())
-      .get('/Organization?name=Acme&city=lala')
-      .expect(400)
-      .then((res) => {
-        const response = res.body;
-        expect(response).toBeDefined();
-        expect(response).toHaveProperty('message', [
-          'property city should not exist',
-        ]);
-      });
-  });
-
   it('/Organization/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
       .get('/Organization/1')

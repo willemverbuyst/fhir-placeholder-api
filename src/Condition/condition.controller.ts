@@ -1,8 +1,16 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { Bundle, Condition } from 'fhir/r5';
 import { Id } from 'src/types';
 import { ConditionService } from './condition.service';
+import { GetConditionDto } from './dto/get-condition.dto';
 import { conditionBundleExample } from './examples/condition-bundle.example';
 import { conditionExample } from './examples/condition.example';
 
@@ -14,9 +22,24 @@ export class ConditionController {
     description: 'All conditions',
     example: conditionBundleExample,
   })
+  @ApiQuery({
+    name: 'patient',
+    required: false,
+    description: 'Patient ID to filter episodes by patient',
+    type: String,
+  })
   @Get()
-  async findAll(): Promise<Bundle<Condition & Id>> {
-    return await this.conditionService.findAll();
+  async findAll(
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    query?: GetConditionDto,
+  ): Promise<Bundle<Condition & Id>> {
+    return await this.conditionService.findAll(query);
   }
 
   @ApiOkResponse({

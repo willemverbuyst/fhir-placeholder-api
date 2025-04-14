@@ -27,6 +27,12 @@ describe('ConditionService', () => {
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
     });
+
+    it('should return all conditions filtered by patient', async () => {
+      const bundle = await service.findAll({ patient: '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
+    });
   });
 
   describe('findOne', () => {

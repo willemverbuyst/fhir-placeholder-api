@@ -42,7 +42,8 @@ export class MetadataController {
                   definition:
                     'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-patient',
                   type: 'reference',
-                  documentation: 'Search episodes by patient reference',
+                  documentation:
+                    'The patient who is the focus of this episode of care',
                 },
               ],
             },
@@ -67,6 +68,24 @@ export class MetadataController {
             {
               type: 'Patient',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'general-practitioner',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Patient-general-practitioner',
+                  type: 'reference',
+                  documentation:
+                    "Patient's nominated general practitioner, not the organization that manages the record",
+                },
+                {
+                  name: 'organization',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Patient-organization',
+                  type: 'reference',
+                  documentation:
+                    'The organization that is the custodian of the patient record',
+                },
+              ],
             },
             {
               type: 'Practitioner',

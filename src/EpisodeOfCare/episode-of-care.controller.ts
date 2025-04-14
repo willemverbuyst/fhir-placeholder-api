@@ -37,12 +37,9 @@ export class EpisodeOfCareController {
         forbidNonWhitelisted: true,
       }),
     )
-    data?: GetEpisodeDto,
+    query?: GetEpisodeDto,
   ): Promise<Bundle<EpisodeOfCare & Id>> {
-    if (data?.patient) {
-      return await this.episodesService.findByPatientId(data.patient);
-    }
-    return await this.episodesService.findAll();
+    return await this.episodesService.findAll(query);
   }
 
   @ApiOkResponse({

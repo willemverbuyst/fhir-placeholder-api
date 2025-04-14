@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Bundle, Practitioner } from 'fhir/r5';
-import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
+import { Id } from '../types';
+import { wrapInBundle } from '../utils/bundle';
 
 @Injectable()
 export class PractitionerService {
@@ -9,15 +10,8 @@ export class PractitionerService {
 
   async findAll(): Promise<Bundle<Practitioner & Id>> {
     const resources = this.repo.practitioners;
-    return {
-      resourceType: 'Bundle',
-      type: 'searchset',
-      total: resources.length,
-      entry: resources.map((resource) => ({
-        fullUrl: `http://localhost:8080/api/v2/r5/${resource.resourceType}/${resource.id}`,
-        resource,
-      })),
-    };
+
+    return wrapInBundle(resources);
   }
 
   async findOne(id: string): Promise<(Practitioner & Id) | undefined> {

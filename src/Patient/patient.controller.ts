@@ -1,8 +1,15 @@
-import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse } from '@nestjs/swagger';
-import { Bundle, EpisodeOfCare, Patient } from 'fhir/r5';
-import { Id } from 'src/types';
-import { episodeOFCareBundleExample } from '../EpisodeOfCare/examples/episode-of-care-bundle.example';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { Bundle, Patient } from 'fhir/r5';
+import { Id } from '../types';
+import { GetPatientDto } from './dto/get-patient.dto';
 import { patientBundleExample } from './examples/patient-bundle.example';
 import { patientExample } from './examples/patient.example';
 import { PatientService } from './patient.service';
@@ -15,9 +22,24 @@ export class PatientController {
     description: 'All patients',
     example: patientBundleExample,
   })
+  @ApiQuery({
+    name: 'organization',
+    required: false,
+    description: 'Filter patients by managing organization',
+    type: String,
+  })
   @Get()
-  async findAll(): Promise<Bundle<Patient & Id>> {
-    return await this.patientsService.findAll();
+  async findAll(
+    @Query(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
+    )
+    query?: GetPatientDto,
+  ): Promise<Bundle<Patient & Id>> {
+    return await this.patientsService.findAll(query);
   }
 
   @ApiOkResponse({
@@ -34,16 +56,5 @@ export class PatientController {
       throw new NotFoundException('patient not found');
     }
     return patient;
-  }
-
-  @ApiOkResponse({
-    description: 'All episodes for patient',
-    example: episodeOFCareBundleExample,
-  })
-  @Get(':id/episodes')
-  async findAllEpisodesForPatient(
-    @Param('id') id: string,
-  ): Promise<Bundle<EpisodeOfCare>> {
-    return await this.patientsService.findAllEpisodesForPatient(id);
   }
 }

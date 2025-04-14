@@ -14,7 +14,7 @@ import {
   NUMBER_OF_EPISODES_PER_PATIENT,
   NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
   NUMBER_OF_ORGANIZATIONS,
-  NUMBER_OF_PATIENTS,
+  NUMBER_OF_PATIENTS_PER_ORGANIZATION,
   NUMBER_OF_PRACTITIONERS,
 } from './dataStore.config';
 import {
@@ -39,40 +39,61 @@ export class DataStoreService {
 
   constructor() {
     this.organizations = createOrganizations(NUMBER_OF_ORGANIZATIONS);
-    this.practitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
-    this.patients = createPatients(
-      NUMBER_OF_PATIENTS,
-      this.organizations,
-      this.practitioners,
-    );
 
-    this.patients.forEach((p) => {
-      const patientId = p.id;
-      const conditions = createConditions(
-        NUMBER_OF_EPISODES_PER_PATIENT,
-        patientId,
+    this.organizations.forEach((organization) => {
+      const practitioners = createPractitioners(NUMBER_OF_PRACTITIONERS);
+      this.practitioners.push(...practitioners);
+
+      const patients = createPatients(
+        NUMBER_OF_PATIENTS_PER_ORGANIZATION,
+        organization.id,
+        practitioners,
       );
-      this.conditions.push(...conditions);
+      this.patients.push(...patients);
 
-      const episodes = createEpisodes(patientId, conditions);
-      this.episodes.push(...episodes);
-
-      const encounters = createEncounters(
-        NUMBER_OF_ENCOUNTERS_PER_PATIENT,
-        patientId,
-        this.episodes,
-      );
-      this.encounters.push(...encounters);
-
-      encounters.forEach((encounter) => {
-        const observations = createObservations(
-          NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
+      patients.forEach((p) => {
+        const patientId = p.id;
+        const conditions = createConditions(
+          NUMBER_OF_EPISODES_PER_PATIENT,
           patientId,
-          encounter.id,
         );
+        this.conditions.push(...conditions);
 
-        this.observations.push(...observations);
+        const episodes = createEpisodes(patientId, conditions);
+        this.episodes.push(...episodes);
+
+        const encounters = createEncounters(
+          NUMBER_OF_ENCOUNTERS_PER_PATIENT,
+          patientId,
+          episodes,
+        );
+        this.encounters.push(...encounters);
+
+        encounters.forEach((encounter) => {
+          const observations = createObservations(
+            NUMBER_OF_OBSERVATIONS_PER_ENCOUNTER,
+            patientId,
+            encounter.id,
+          );
+
+          this.observations.push(...observations);
+        });
       });
     });
+
+    if (process.env.NODE_ENV === 'development') {
+      console.dir(
+        {
+          patients: this.patients.length,
+          episodes: this.episodes.length,
+          conditions: this.conditions.length,
+          organizations: this.organizations.length,
+          practitioners: this.practitioners.length,
+          encounters: this.encounters.length,
+          observations: this.observations.length,
+        },
+        { depth: null, colors: true },
+      );
+    }
   }
 }

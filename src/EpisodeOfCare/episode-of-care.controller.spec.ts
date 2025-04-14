@@ -1,9 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Bundle, EpisodeOfCare } from 'fhir/r5';
+import { EpisodeOfCare } from 'fhir/r5';
 import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
-import { EpisodeOfCareStatus } from '../db/resources/episode-of-care';
 import { testDataStore } from '../test/testDataStore';
 import { EpisodeOfCareController } from './episode-of-care.controller';
 import { EpisodeOfCareService } from './episode-of-care.service';
@@ -21,7 +20,6 @@ describe('EpisodeOfCareController', () => {
           useValue: {
             findAll: jest.fn(),
             findOne: jest.fn(),
-            findByPatientId: jest.fn(),
           },
         },
         { provide: DataStoreService, useValue: testDataStore },
@@ -41,35 +39,6 @@ describe('EpisodeOfCareController', () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
-    });
-
-    it('should return an array of episodes for patient', async () => {
-      const mockEpisodeBundle: Bundle<EpisodeOfCare & Id> = {
-        resourceType: 'Bundle',
-        type: 'searchset',
-        total: 1,
-        entry: [
-          {
-            fullUrl: 'url/epi/1',
-            resource: {
-              id: '1',
-              resourceType: 'EpisodeOfCare',
-              status: EpisodeOfCareStatus.ACTIVE,
-              patient: {
-                reference: 'Patient/1',
-              },
-              diagnosis: [],
-              type: [],
-            },
-          },
-        ],
-      };
-
-      jest
-        .spyOn(service, 'findByPatientId')
-        .mockResolvedValue(mockEpisodeBundle);
-      const result = await controller.findAll({ patient: '1' });
-      expect(result).toEqual(mockEpisodeBundle);
     });
   });
 

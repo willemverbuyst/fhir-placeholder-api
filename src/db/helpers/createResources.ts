@@ -40,15 +40,13 @@ export function createEncounters(
 
 export function createPatients(
   numberOfPatients: number,
-  organizations: (Organization & Id)[],
+  organizationId: string,
   practitioners: (Practitioner & Id)[],
 ): (Patient & Id)[] {
   const practitionerIds = practitioners.map((p) => p.id);
-  const organizationIds = organizations.map((o) => o.id);
-  const firstNewOrganizationId = organizationIds[0];
 
   return Array.from({ length: numberOfPatients }, () => {
-    return createPatient(firstNewOrganizationId, practitionerIds);
+    return createPatient(organizationId, practitionerIds);
   });
 }
 

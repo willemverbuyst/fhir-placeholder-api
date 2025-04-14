@@ -1,4 +1,4 @@
-import { Condition, EpisodeOfCare, Organization, Practitioner } from 'fhir/r5';
+import { Condition, EpisodeOfCare, Practitioner } from 'fhir/r5';
 import { Id } from 'src/types';
 import {
   createConditions,
@@ -81,18 +81,14 @@ describe('createEncounters', () => {
 describe('createPatients', () => {
   it('should create the specified number of patients', () => {
     const numberOfPatients = 3;
-    const organizations: (Organization & Id)[] = [
-      { id: 'organization-1', resourceType: 'Organization' },
-      { id: 'organization-2', resourceType: 'Organization' },
-    ];
+    const organizationId = 'organization-1';
     const practitioners: (Practitioner & Id)[] = [
       { id: 'practitioner-1', resourceType: 'Practitioner' },
       { id: 'practitioner-2', resourceType: 'Practitioner' },
     ];
-
     const patients = createPatients(
       numberOfPatients,
-      organizations,
+      organizationId,
       practitioners,
     );
 
@@ -101,7 +97,7 @@ describe('createPatients', () => {
       expect(patient).toHaveProperty('id');
       expect(patient.resourceType).toBe('Patient');
       expect(patient.managingOrganization?.reference).toBe(
-        `Organization/${organizations[0].id}`,
+        `Organization/${organizationId}`,
       );
       if (patient.generalPractitioner) {
         patient.generalPractitioner.forEach((practitionerRef) => {
@@ -115,16 +111,13 @@ describe('createPatients', () => {
 
   it('should return an empty array if numberOfPatients is 0', () => {
     const numberOfPatients = 0;
-    const organizations: (Organization & Id)[] = [
-      { id: 'organization-1', resourceType: 'Organization' },
-    ];
+    const organizationId = 'organization-1';
     const practitioners: (Practitioner & Id)[] = [
       { id: 'practitioner-1', resourceType: 'Practitioner' },
     ];
-
     const patients = createPatients(
       numberOfPatients,
-      organizations,
+      organizationId,
       practitioners,
     );
 
@@ -135,7 +128,6 @@ describe('createPatients', () => {
 describe('createOrganizations', () => {
   it('should create the specified number of organizations', () => {
     const numberOfOrganizations = 5;
-
     const organizations = createOrganizations(numberOfOrganizations);
 
     expect(organizations).toHaveLength(numberOfOrganizations);

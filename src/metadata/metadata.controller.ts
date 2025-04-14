@@ -24,6 +24,15 @@ export class MetadataController {
             {
               type: 'Condition',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
+                  type: 'reference',
+                  documentation: 'Who has the condition',
+                },
+              ],
             },
             {
               type: 'Encounter',

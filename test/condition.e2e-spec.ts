@@ -23,33 +23,32 @@ describe('ConditionController (e2e)', () => {
       .expect(200)
       .then((res) => {
         const conditions = res.body;
-        console.log(conditions);
         expect(conditions).toBeDefined();
         expect(conditions).toHaveProperty('resourceType', 'Bundle');
-        expect(conditions.entry).toHaveLength(36);
+        expect(conditions.entry).toHaveLength(48);
       });
   });
 
-  it('/Condition?patient=1 (GET) - OK', async () => {
+  it('/Condition?patient=patient-1 (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Condition?patient=Patient/1')
+      .get('/Condition?patient=Patient/patient-1')
       .expect(200)
       .then((res) => {
         const conditions = res.body;
         expect(conditions).toBeDefined();
         expect(conditions).toHaveProperty('resourceType', 'Bundle');
-        expect(conditions.entry).toHaveLength(3);
+        expect(conditions.entry).toHaveLength(4);
       });
   });
 
   it('/Condition/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Condition/1')
+      .get('/Condition/condition-1')
       .expect(200)
       .then((res) => {
         const condition = res.body;
         expect(condition).toBeDefined();
-        expect(condition).toHaveProperty('id', '1');
+        expect(condition).toHaveProperty('id', 'condition-1');
         expect(condition).toHaveProperty('resourceType', 'Condition');
       });
   });

@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DataStoreService } from '../src/db/dataStore.service';
-import { testDataStore } from '../src/test/testDataStore';
 
 describe('PatientController (e2e)', () => {
   let app: INestApplication;
@@ -11,10 +9,7 @@ describe('PatientController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DataStoreService)
-      .useValue({ ...testDataStore })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -28,13 +23,25 @@ describe('PatientController (e2e)', () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(3);
+        expect(patients.entry).toHaveLength(12);
       });
   });
 
   it('/Patient?organization=1 (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Patient?organization=1')
+      .get('/Patient?organization=organization-1')
+      .expect(200)
+      .then((res) => {
+        const patients = res.body;
+        expect(patients).toBeDefined();
+        expect(patients).toHaveProperty('resourceType', 'Bundle');
+        expect(patients.entry).toHaveLength(4);
+      });
+  });
+
+  it('/Patient?general-practitioner=practitioner-1 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Patient?general-practitioner=practitioner-1')
       .expect(200)
       .then((res) => {
         const patients = res.body;
@@ -44,38 +51,28 @@ describe('PatientController (e2e)', () => {
       });
   });
 
-  it('/Patient?general-practitioner=1 (GET) - OK', async () => {
+  it('/Patient?general-practitioner=practitioner-1&organization=organization-1 (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Patient?general-practitioner=1')
+      .get(
+        '/Patient?general-practitioner=practitioner-1&organization=organization-1',
+      )
       .expect(200)
       .then((res) => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(1);
-      });
-  });
-
-  it('/Patient?general-practitioner=1&organization=1 (GET) - OK', async () => {
-    return request(app.getHttpServer())
-      .get('/Patient?general-practitioner=1&organization=1')
-      .expect(200)
-      .then((res) => {
-        const patients = res.body;
-        expect(patients).toBeDefined();
-        expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(1);
+        expect(patients.entry).toHaveLength(2);
       });
   });
 
   it('/Patient/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Patient/1')
+      .get('/Patient/patient-1')
       .expect(200)
       .then((res) => {
         const patient = res.body;
         expect(patient).toBeDefined();
-        expect(patient).toHaveProperty('id', '1');
+        expect(patient).toHaveProperty('id', 'patient-1');
         expect(patient).toHaveProperty('resourceType', 'Patient');
       });
   });

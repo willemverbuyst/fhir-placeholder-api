@@ -75,7 +75,7 @@ export function createEpisodes(
     return createEpisode(
       `patient-${Math.floor(i / episodesPerPatient) + 1}`,
       `condition-${i + 1}`,
-      `episode-${i + 1}`,
+      `episode-of-care-${i + 1}`,
     );
   });
 }

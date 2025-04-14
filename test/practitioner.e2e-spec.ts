@@ -9,10 +9,7 @@ describe('PractitionerController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      // .overrideProvider(DataStoreService)
-      // .useValue({ ...testDataStore })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -24,21 +21,20 @@ describe('PractitionerController (e2e)', () => {
       .expect(200)
       .then((res) => {
         const practitioners = res.body;
-        console.log(practitioners.entry.map((i: any) => i.resource.id));
         expect(practitioners).toBeDefined();
         expect(practitioners).toHaveProperty('resourceType', 'Bundle');
-        expect(practitioners.entry).toHaveLength(8);
+        expect(practitioners.entry).toHaveLength(6);
       });
   });
 
   it('/Practitioner/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Practitioner/1')
+      .get('/Practitioner/practitioner-1')
       .expect(200)
       .then((res) => {
         const practitioner = res.body;
         expect(practitioner).toBeDefined();
-        expect(practitioner).toHaveProperty('id', '1');
+        expect(practitioner).toHaveProperty('id', 'practitioner-1');
         expect(practitioner).toHaveProperty('resourceType', 'Practitioner');
       });
   });

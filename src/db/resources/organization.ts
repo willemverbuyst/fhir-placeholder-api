@@ -1,11 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { Organization } from 'fhir/r5';
-import { Id } from 'src/types';
 import { v4 as uuidV4 } from 'uuid';
+import { Id } from '../../types';
+import { isTest } from '../../utils/environment';
 
-export function createOrganization(): Organization & Id {
+export function createOrganization(index?: number): Organization & Id {
   return {
-    id: uuidV4(),
+    id: isTest ? String(index) : uuidV4(),
     resourceType: 'Organization',
     name: faker.company.name(),
     active: true,

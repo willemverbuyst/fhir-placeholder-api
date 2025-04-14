@@ -1,12 +1,16 @@
 import { faker } from '@faker-js/faker';
 import { Condition } from 'fhir/r5';
-import { Id } from 'src/types';
 import { v4 as uuidV4 } from 'uuid';
+import { Id } from '../../types';
+import { isTest } from '../../utils/environment';
 import { getRandomElement } from '../helpers/getRandomElement';
 
-export function createCondition(patientId: string): Condition & Id {
+export function createCondition(
+  patientId: string,
+  index?: number,
+): Condition & Id {
   return {
-    id: uuidV4(),
+    id: isTest ? String(index) : uuidV4(),
     note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],
     resourceType: 'Condition',
     subject: { reference: `Patient/${patientId}` },

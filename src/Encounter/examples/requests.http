@@ -2,7 +2,7 @@
 GET http://localhost:8080/api/v2/r5/Encounter
 
 ###
-GET http://localhost:8080/api/v2/r5/Encounter?patient=Patient/1c70a74f-adf2-4c29-90b6-951c82a134de
+GET http://localhost:8080/api/v2/r5/Encounter?patient=Patient/patient-10
 
 ###
-GET http://localhost:8080/api/v2/r5/Encounter?episode-of-care=EpisodeOfCare/8c66028e-3b43-40e0-8433-42afa9209db3
+GET http://localhost:8080/api/v2/r5/Encounter?episode-of-care=EpisodeOfCare/episode-of-care-3

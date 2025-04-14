@@ -3,9 +3,10 @@ import { createEpisode, EpisodeOfCareStatus } from './episode-of-care';
 
 describe('createEpisode', () => {
   it('should create an EpisodeOfCare with the correct structure', () => {
-    const patientId = '12345';
-    const conditionId = '67890';
-    const episode = createEpisode(patientId, conditionId);
+    const patientId = 'patient-1';
+    const conditionId = 'condition-1';
+    const episodeId = 'episode-1';
+    const episode = createEpisode(patientId, conditionId, episodeId);
 
     expect(episode).toHaveProperty('id');
     expect(episode.resourceType).toBe('EpisodeOfCare');
@@ -33,19 +34,11 @@ describe('createEpisode', () => {
     expect(episode.type[0].coding).toHaveLength(1);
   });
 
-  it('should generate a unique id for each EpisodeOfCare', () => {
-    const patientId = '12345';
-    const conditionId = '67890';
-    const episode1 = createEpisode(patientId, conditionId);
-    const episode2 = createEpisode(patientId, conditionId);
-
-    expect(episode1.id).not.toBe(episode2.id);
-  });
-
   it('should select a random type from the episodeOfCareTypes value set', () => {
-    const patientId = '12345';
-    const conditionId = '67890';
-    const episode = createEpisode(patientId, conditionId);
+    const patientId = 'patient-1';
+    const conditionId = 'condition-1';
+    const episodeId = 'episode-1';
+    const episode = createEpisode(patientId, conditionId, episodeId);
 
     if (!episode.type) {
       throw new Error('EpisodeOfCare type array is empty');

@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Patient } from 'fhir/r5';
 import { Id } from '../../types';
-import { createId } from '../../utils/id';
 import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
@@ -11,14 +10,14 @@ import { Gender } from './gender';
 
 export function createPatient(
   organizationId: string,
-  practitionerIds: string[],
-  index?: number,
+  practitionerId: string,
+  id: string,
 ): Patient & Id {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
   return {
-    id: createId(index),
+    id,
     name: [{ family: lastName, given: [firstName] }],
     resourceType: 'Patient',
     birthDate: faker.date
@@ -36,7 +35,7 @@ export function createPatient(
     managingOrganization: { reference: `Organization/${organizationId}` },
     generalPractitioner: [
       {
-        reference: `Practitioner/${getRandomElement(practitionerIds)}`,
+        reference: `Practitioner/${practitionerId}`,
       },
     ],
     communication: [

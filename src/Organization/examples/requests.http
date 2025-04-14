@@ -2,16 +2,7 @@
 GET http://localhost:8080/api/v2/r5/Organization
 
 ###
-GET http://localhost:8080/api/v2/r5/Organization?name=Hand%20Inc
-
-###
-GET http://localhost:8080/api/v2/r5/Organization?name=unknown
-
-###
-GET http://localhost:8080/api/v2/r5/Organization?unknown=foo
-
-###
-GET http://localhost:8080/api/v2/r5/Organization/e676cee1-c2cd-401a-be44-29dd9f87ae92
+GET http://localhost:8080/api/v2/r5/Organization/organization-2
 
 ###
 POST http://localhost:8080/api/v2/r5/Organization

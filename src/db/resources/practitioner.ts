@@ -1,18 +1,17 @@
 import { faker } from '@faker-js/faker';
 import { Practitioner } from 'fhir/r5';
 import { Id } from '../../types';
-import { createId } from '../../utils/id';
 import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
 import { getRandomElement } from '../helpers/getRandomElement';
 
-export function createPractitioner(index?: number): Practitioner & Id {
+export function createPractitioner(id: string): Practitioner & Id {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
   return {
-    id: createId(index),
+    id,
     resourceType: 'Practitioner',
     name: [{ family: lastName, given: [firstName] }],
     active: true,

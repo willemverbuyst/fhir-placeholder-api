@@ -21,7 +21,7 @@ export class EpisodeOfCareService {
 
     if (patient) {
       resources = this.repo.episodes.filter((e) =>
-        e.patient.reference?.includes(patient),
+        e.patient.reference?.endsWith(patient),
       );
     }
 
@@ -30,13 +30,5 @@ export class EpisodeOfCareService {
 
   async findOne(id: string): Promise<(EpisodeOfCare & Id) | undefined> {
     return this.repo.episodes.find((episode) => episode.id === id);
-  }
-
-  async findByPatientId(id: string): Promise<Bundle<EpisodeOfCare & Id>> {
-    const resources = this.repo.episodes.filter(
-      (e) => e.patient.reference?.split('/')[1] === id,
-    );
-
-    return wrapInBundle(resources);
   }
 }

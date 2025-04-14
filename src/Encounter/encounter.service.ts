@@ -22,13 +22,13 @@ export class EncounterService {
 
     if (patient) {
       resources = resources.filter((e) =>
-        e.subject?.reference?.includes(patient),
+        e.subject?.reference?.endsWith(patient),
       );
     }
 
     if (episodeOfCare) {
       resources = resources.filter((e) =>
-        e.episodeOfCare?.some((eoc) => eoc.reference?.includes(episodeOfCare)),
+        e.episodeOfCare?.some((eoc) => eoc.reference?.endsWith(episodeOfCare)),
       );
     }
 

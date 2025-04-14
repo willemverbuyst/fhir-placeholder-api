@@ -2,8 +2,9 @@ import { createCondition } from './condition';
 
 describe('createCondition', () => {
   it('should create a Condition resource with the correct structure', () => {
-    const patientId = 'patient-123';
-    const condition = createCondition(patientId);
+    const patientId = 'patient-1';
+    const conditionId = 'condition-1';
+    const condition = createCondition(patientId, conditionId);
 
     expect(condition).toHaveProperty('id');
     expect(condition).toHaveProperty('resourceType', 'Condition');
@@ -33,8 +34,9 @@ describe('createCondition', () => {
   });
 
   it('should generate a random clinicalStatus code from the predefined list', () => {
-    const patientId = 'patient-123';
-    const condition = createCondition(patientId);
+    const patientId = 'patient-1';
+    const conditionId = 'condition-1';
+    const condition = createCondition(patientId, conditionId);
 
     const validCodes = [
       'active',
@@ -53,8 +55,9 @@ describe('createCondition', () => {
   });
 
   it('should associate the condition with the correct patient ID', () => {
-    const patientId = 'patient-456';
-    const condition = createCondition(patientId);
+    const patientId = 'patient-1';
+    const conditionId = 'condition-1';
+    const condition = createCondition(patientId, conditionId);
 
     expect(condition.subject.reference).toBe(`Patient/${patientId}`);
   });

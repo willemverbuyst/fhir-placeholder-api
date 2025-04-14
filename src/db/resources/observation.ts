@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Observation } from 'fhir/r5';
 import { Id } from '../../types';
-import { createId } from '../../utils/id';
 import { getRandomElement } from '../helpers/getRandomElement';
 import { observationCodes } from '../valueSets/observation-code-value-set';
 
@@ -19,10 +18,10 @@ export enum ObservationStatus {
 export function createObservation(
   patientId: string,
   encounterId: string,
-  index?: number,
+  id: string,
 ): Observation & Id {
   return {
-    id: createId(index),
+    id,
     resourceType: 'Observation',
     status: getRandomElement([
       ObservationStatus.AMENDED,

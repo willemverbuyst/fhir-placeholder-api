@@ -2,7 +2,8 @@ import { createOrganization } from './organization';
 
 describe('createOrganization', () => {
   it('should create an organization with a valid structure', () => {
-    const organization = createOrganization();
+    const organizationId = 'organization-1';
+    const organization = createOrganization(organizationId);
 
     expect(organization).toHaveProperty('id');
     expect(organization).toHaveProperty('resourceType', 'Organization');

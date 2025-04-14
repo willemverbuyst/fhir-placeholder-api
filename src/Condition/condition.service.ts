@@ -19,7 +19,7 @@ export class ConditionService {
 
     if (patient) {
       resources = this.repo.conditions.filter((c) =>
-        c.subject.reference?.includes(patient),
+        c.subject.reference?.endsWith(patient),
       );
     }
 

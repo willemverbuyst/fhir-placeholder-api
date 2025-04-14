@@ -16,70 +16,96 @@ import { createOrganization } from '../resources/organization';
 import { createPatient } from '../resources/patient';
 import { createPractitioner } from '../resources/practitioner';
 
-export function createObservations(
-  numberOfObservations: number,
-  patientId: string,
-  encounterId: string,
-): (Observation & Id)[] {
-  return Array.from({ length: numberOfObservations }, (_, index) =>
-    createObservation(patientId, encounterId, index),
-  );
-}
-
-export function createEncounters(
-  numberOfEncounters: number,
-  patientId: string,
-  episodes: (EpisodeOfCare & Id)[],
-): (Encounter & Id)[] {
-  const episodeIds = episodes.map((e) => e.id);
-
-  return Array.from({ length: numberOfEncounters }, (_, index) =>
-    createEncounter(patientId, episodeIds, index),
-  );
-}
-
-export function createPatients(
-  numberOfPatients: number,
-  organizationId: string,
-  practitioners: (Practitioner & Id)[],
-): (Patient & Id)[] {
-  const practitionerIds = practitioners.map((p) => p.id);
-
-  return Array.from({ length: numberOfPatients }, (_, index) => {
-    return createPatient(organizationId, practitionerIds, index);
-  });
-}
-
 export function createOrganizations(
   numberOfOrganizations: number,
 ): (Organization & Id)[] {
-  return Array.from({ length: numberOfOrganizations }, (_, index) =>
-    createOrganization(index),
-  );
-}
-
-export function createConditions(
-  numberOfConditions: number,
-  patientId: string,
-): (Condition & Id)[] {
-  return Array.from({ length: numberOfConditions }, (_, index) => {
-    return createCondition(patientId, index);
-  });
-}
-
-export function createEpisodes(
-  patientId: string,
-  conditions: (Condition & Id)[],
-): (EpisodeOfCare & Id)[] {
-  return conditions.map((c, index) => {
-    return createEpisode(patientId, c.id, index);
+  return Array.from({ length: numberOfOrganizations }, (_, i) => {
+    return createOrganization(`organization-${i + 1}`);
   });
 }
 
 export function createPractitioners(
   numberOfPractitioners: number,
 ): (Practitioner & Id)[] {
-  return Array.from({ length: numberOfPractitioners }, (_, index) =>
-    createPractitioner(index),
+  return Array.from({ length: numberOfPractitioners }, (_, i) => {
+    return createPractitioner(`practitioner-${i + 1}`);
+  });
+}
+
+export function createPatients(
+  numberOfPatients: number,
+  numberOfOrganizations: number,
+  patientsPerPractitioner: number,
+): (Patient & Id)[] {
+  return Array.from(
+    {
+      length: numberOfPatients,
+    },
+    (_, i) => {
+      return createPatient(
+        `organization-${
+          Math.floor(i / (numberOfPatients / numberOfOrganizations)) + 1
+        }`,
+        `practitioner-${
+          Math.floor(i / (numberOfPatients / patientsPerPractitioner)) + 1
+        }`,
+        `patient-${i + 1}`,
+      );
+    },
   );
+}
+
+export function createConditions(
+  numberOfConditions: number,
+  conditionsPerPatient: number,
+): (Condition & Id)[] {
+  return Array.from({ length: numberOfConditions }, (_, i) => {
+    return createCondition(
+      `patient-${Math.floor(i / conditionsPerPatient) + 1}`,
+      `condition-${i + 1}`,
+    );
+  });
+}
+
+export function createEpisodes(
+  numberOfEpisodes: number,
+  episodesPerPatient: number,
+): (EpisodeOfCare & Id)[] {
+  return Array.from({ length: numberOfEpisodes }, (_, i) => {
+    return createEpisode(
+      `patient-${Math.floor(i / episodesPerPatient) + 1}`,
+      `condition-${i + 1}`,
+      `episode-${i + 1}`,
+    );
+  });
+}
+
+export function createEncounters(
+  numberOfEncounters: number,
+  encountersPerPatient: number,
+  episodesPerPatient: number,
+): (Encounter & Id)[] {
+  return Array.from({ length: numberOfEncounters }, (_, i) => {
+    return createEncounter(
+      `patient-${Math.floor(i / encountersPerPatient) + 1}`,
+      `episode-of-care-${
+        Math.floor(i / (encountersPerPatient / episodesPerPatient)) + 1
+      }`,
+      `encounter-${i + 1}`,
+    );
+  });
+}
+
+export function createObservations(
+  numberOfObservations: number,
+  numberOfPatients: number,
+  observationsPerEncounter: number,
+): (Observation & Id)[] {
+  return Array.from({ length: numberOfObservations }, (_, i) => {
+    return createObservation(
+      `patient-${Math.floor(i / numberOfPatients) + 1}`,
+      `encounter-${Math.floor(i / observationsPerEncounter) + 1}`,
+      `observation-${i + 1}`,
+    );
+  });
 }

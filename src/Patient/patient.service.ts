@@ -22,14 +22,14 @@ export class PatientService {
 
     if (organization) {
       resources = resources.filter((p) =>
-        p.managingOrganization?.reference?.includes(organization),
+        p.managingOrganization?.reference?.endsWith(organization),
       );
     }
 
     if (generalPractitioner) {
       resources = resources.filter((p) =>
         p.generalPractitioner?.some((g) =>
-          g.reference?.includes(generalPractitioner),
+          g.reference?.endsWith(generalPractitioner),
         ),
       );
     }

@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DataStoreService } from '../src/db/dataStore.service';
-import { testDataStore } from '../src/test/testDataStore';
 
 describe('PractitionerController (e2e)', () => {
   let app: INestApplication;
@@ -12,8 +10,8 @@ describe('PractitionerController (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
-      .overrideProvider(DataStoreService)
-      .useValue({ ...testDataStore })
+      // .overrideProvider(DataStoreService)
+      // .useValue({ ...testDataStore })
       .compile();
 
     app = moduleFixture.createNestApplication();
@@ -26,9 +24,10 @@ describe('PractitionerController (e2e)', () => {
       .expect(200)
       .then((res) => {
         const practitioners = res.body;
+        console.log(practitioners.entry.map((i: any) => i.resource.id));
         expect(practitioners).toBeDefined();
         expect(practitioners).toHaveProperty('resourceType', 'Bundle');
-        expect(practitioners.entry).toHaveLength(2);
+        expect(practitioners.entry).toHaveLength(8);
       });
   });
 

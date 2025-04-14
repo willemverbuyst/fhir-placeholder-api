@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Practitioner } from 'fhir/r5';
-import { v4 as uuidV4 } from 'uuid';
 import { Id } from '../../types';
-import { isTest } from '../../utils/environment';
+import { createId } from '../../utils/id';
 import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
@@ -13,7 +12,7 @@ export function createPractitioner(index?: number): Practitioner & Id {
   const lastName = faker.person.lastName();
 
   return {
-    id: isTest ? String(index) : uuidV4(),
+    id: createId(index),
     resourceType: 'Practitioner',
     name: [{ family: lastName, given: [firstName] }],
     active: true,

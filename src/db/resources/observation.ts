@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Observation } from 'fhir/r5';
-import { v4 as uuidV4 } from 'uuid';
 import { Id } from '../../types';
-import { isTest } from '../../utils/environment';
+import { createId } from '../../utils/id';
 import { getRandomElement } from '../helpers/getRandomElement';
 import { observationCodes } from '../valueSets/observation-code-value-set';
 
@@ -23,7 +22,7 @@ export function createObservation(
   index?: number,
 ): Observation & Id {
   return {
-    id: isTest ? String(index) : uuidV4(),
+    id: createId(index),
     resourceType: 'Observation',
     status: getRandomElement([
       ObservationStatus.AMENDED,

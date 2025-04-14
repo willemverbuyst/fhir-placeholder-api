@@ -1,7 +1,6 @@
 import { Encounter } from 'fhir/r5';
-import { v4 as uuidV4 } from 'uuid';
 import { Id } from '../../types';
-import { isTest } from '../../utils/environment';
+import { createId } from '../../utils/id';
 import { getRandomElement } from '../helpers/getRandomElement';
 
 export enum EncounterStatus {
@@ -22,7 +21,7 @@ export function createEncounter(
   index?: number,
 ): Encounter & Id {
   return {
-    id: isTest ? String(index) : uuidV4(),
+    id: createId(index),
     resourceType: 'Encounter',
     status: getRandomElement([
       EncounterStatus.CANCELLED,

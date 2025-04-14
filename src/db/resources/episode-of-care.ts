@@ -1,7 +1,6 @@
 import { EpisodeOfCare } from 'fhir/r5';
-import { v4 as uuidV4 } from 'uuid';
 import { Id } from '../../types';
-import { isTest } from '../../utils/environment';
+import { createId } from '../../utils/id';
 import { getRandomElement } from '../helpers/getRandomElement';
 import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
 
@@ -21,7 +20,7 @@ export function createEpisode(
   index?: number,
 ): EpisodeOfCare & Id {
   return {
-    id: isTest ? String(index) : uuidV4(),
+    id: createId(index),
     resourceType: 'EpisodeOfCare',
     status: getRandomElement([
       EpisodeOfCareStatus.PLANNED,

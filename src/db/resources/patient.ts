@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Patient } from 'fhir/r5';
-import { v4 as uuidV4 } from 'uuid';
 import { Id } from '../../types';
-import { isTest } from '../../utils/environment';
+import { createId } from '../../utils/id';
 import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
@@ -19,7 +18,7 @@ export function createPatient(
   const lastName = faker.person.lastName();
 
   return {
-    id: isTest ? String(index) : uuidV4(),
+    id: createId(index),
     name: [{ family: lastName, given: [firstName] }],
     resourceType: 'Patient',
     birthDate: faker.date

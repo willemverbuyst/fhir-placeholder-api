@@ -32,6 +32,18 @@ describe('ConditionController (e2e)', () => {
       });
   });
 
+  it('/Condition?patient=1 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Condition?patient=1')
+      .expect(200)
+      .then((res) => {
+        const conditions = res.body;
+        expect(conditions).toBeDefined();
+        expect(conditions).toHaveProperty('resourceType', 'Bundle');
+        expect(conditions.entry).toHaveLength(1);
+      });
+  });
+
   it('/Condition/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
       .get('/Condition/1')

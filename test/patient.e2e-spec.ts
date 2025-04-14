@@ -32,6 +32,42 @@ describe('PatientController (e2e)', () => {
       });
   });
 
+  it('/Patient?organization=1 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Patient?organization=1')
+      .expect(200)
+      .then((res) => {
+        const patients = res.body;
+        expect(patients).toBeDefined();
+        expect(patients).toHaveProperty('resourceType', 'Bundle');
+        expect(patients.entry).toHaveLength(2);
+      });
+  });
+
+  it('/Patient?general-practitioner=1 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Patient?general-practitioner=1')
+      .expect(200)
+      .then((res) => {
+        const patients = res.body;
+        expect(patients).toBeDefined();
+        expect(patients).toHaveProperty('resourceType', 'Bundle');
+        expect(patients.entry).toHaveLength(1);
+      });
+  });
+
+  it('/Patient?general-practitioner=1&organization=1 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Patient?general-practitioner=1&organization=1')
+      .expect(200)
+      .then((res) => {
+        const patients = res.body;
+        expect(patients).toBeDefined();
+        expect(patients).toHaveProperty('resourceType', 'Bundle');
+        expect(patients.entry).toHaveLength(1);
+      });
+  });
+
   it('/Patient/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
       .get('/Patient/1')

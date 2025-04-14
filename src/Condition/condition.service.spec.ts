@@ -1,16 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { ConditionService } from './condition.service';
 
 describe('ConditionService', () => {
   let service: ConditionService;
+  const mockDataStore = {
+    conditions: [
+      {
+        id: '1',
+        resourceType: 'Condition',
+        subject: {
+          reference: 'Patient/1',
+        },
+      },
+      {
+        id: '2',
+        note: [{ text: 'test note' }],
+        resourceType: 'Condition',
+        subject: {
+          reference: 'Patient/2',
+        },
+      },
+    ],
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ConditionService,
-        { provide: DataStoreService, useValue: { ...testDataStore } },
+        { provide: DataStoreService, useValue: mockDataStore },
       ],
     }).compile();
 

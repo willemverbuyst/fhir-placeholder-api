@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { EpisodeOfCare } from 'fhir/r5';
 import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { EpisodeOfCareController } from './episode-of-care.controller';
 import { EpisodeOfCareService } from './episode-of-care.service';
 
@@ -22,7 +21,7 @@ describe('EpisodeOfCareController', () => {
             findOne: jest.fn(),
           },
         },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Condition } from 'fhir/r5';
 import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { ConditionController } from './condition.controller';
 import { ConditionService } from './condition.service';
 
@@ -22,7 +21,7 @@ describe('ConditionsController', () => {
             findOne: jest.fn(),
           },
         },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

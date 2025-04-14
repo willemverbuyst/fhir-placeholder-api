@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { EncounterController } from './encounter.controller';
 import { EncounterService } from './encounter.service';
 
@@ -13,7 +12,7 @@ describe('EncounterController', () => {
       controllers: [EncounterController],
       providers: [
         { provide: EncounterService, useValue: { findAll: jest.fn() } },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

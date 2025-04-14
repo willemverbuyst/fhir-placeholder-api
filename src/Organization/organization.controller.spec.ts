@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Organization } from 'fhir/r5';
 import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { OrganizationController } from './organization.controller';
 import { OrganizationService } from './organization.service';
 
@@ -24,7 +23,7 @@ describe('OrganizationController', () => {
             update: jest.fn(),
           },
         },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

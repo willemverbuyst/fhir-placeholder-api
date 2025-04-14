@@ -28,6 +28,12 @@ export class PatientController {
     description: 'Filter patients by managing organization',
     type: String,
   })
+  @ApiQuery({
+    name: 'general-practitioner',
+    required: false,
+    description: 'Filter patients by general practitioner',
+    type: String,
+  })
   @Get()
   async findAll(
     @Query(

@@ -16,27 +16,28 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 ## :telephone_receiver: Endpoints (wip)
 
-- GET /metadata
-- GET /Patient
-- GET /Patient?organization=\<id\>
-- GET /Patient?general-practitioner=\<id\>
-- GET /Patient/:id
-- GET /EpisodeOfCare
-- GET /EpisodeOfCare/:id
-- GET /EpisodeOfCare?patient=\<id\>
-- GET /Condition
-- GET /Condition/:id
-- GET /Practitioner
-- GET /Practitioner/:id
-- GET /Organization
-- GET /Organization?name=\<name\>
-- GET /Organization/:id
-- POST /Organization
-- PATCH /Organization/:id
-- GET /Encounter
-- GET /Encounter?patient=\<id\>
-- GET /Encounter?episode-of-care=\<id\>
-- GET /Observation
+- `GET /metadata`
+- `GET /Patient`
+- `GET /Patient?organization=<id>`
+- `GET /Patient?general-practitioner=<id>`
+- `GET /Patient/:id`
+- `GET /EpisodeOfCare`
+- `GET /EpisodeOfCare?patient=<id>`
+- `GET /EpisodeOfCare/:id`
+- `GET /Condition`
+- `GET /Condition?patient=<id>`
+- `GET /Condition/:id`
+- `GET /Practitioner`
+- `GET /Practitioner/:id`
+- `GET /Encounter`
+- `GET /Encounter?patient=<id>`
+- `GET /Encounter?episode-of-care=<id>`
+- `GET /Observation`
+- `GET /Organization`
+- `GET /Organization?name=<name>`
+- `GET /Organization/:id`
+- `POST /Organization`
+- `PATCH /Organization/:id`
 
 ```typescript
 fetch('http://localhost:8080/api/v2/r5/Patient/1')
@@ -64,27 +65,27 @@ curl http://localhost:8080/api/v2/r5/Patient/1
   "resourceType": "Patient",
   "birthDate": "1969-12-05",
   "gender": "other",
-  "telecom": [
-    {
-      "use": "old",
-      "system": "email",
-      "value": "John_Doe27@fhir-placeholder.api"
-    },
-    {
-      "use": "temp",
-      "system": "phone",
-      "value": "(239) 778-3678"
-    }
-  ],
-  "address": [
-    {
-      "use": "old",
-      "type": "physical",
-      "line": ["96298 Long Lane"],
-      "city": "Gibson",
-      "state": "Washington",
-      "postalCode": "09207",
-      "country": "Brunei Darussalam"
+`  "telecom": [
+`    {
+`      "use": "old",
+`      "system": "email",
+`      "value": "John_Doe27@fhir-placeholder.api"
+`    },
+`    {
+`      "use": "temp",
+`      "system": "phone",
+`      "value": "(239) 778-3678"
+`    }
+`  ],
+`  "address": [
+`    {
+`      "use": "old",
+`      "type": "physical",
+`      "line": ["96298 Long Lane"],
+`      "city": "Gibson",
+`      "state": "Washington",
+`      "postalCode": "09207",
+`      "country": "Brunei Darussalam"
     }
   ],
   "managingOrganization": {

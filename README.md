@@ -34,6 +34,8 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - POST /Organization
 - PATCH /Organization/:id
 - GET /Encounter
+- GET /Encounter?patient=\<id\>
+- GET /Encounter?episode-of-care=\<id\>
 - GET /Observation
 
 ```typescript

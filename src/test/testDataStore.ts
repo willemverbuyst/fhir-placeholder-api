@@ -106,11 +106,13 @@ export const testDataStore = {
       id: '1',
       resourceType: 'Encounter',
       subject: { reference: 'Patient/1' },
+      episodeOfCare: [{ reference: 'EpisodeOfCare/1' }],
     },
     {
       id: '2',
       resourceType: 'Encounter',
       subject: { reference: 'Patient/2' },
+      episodeOfCare: [{ reference: 'EpisodeOfCare/2' }],
     },
     {
       id: '3',

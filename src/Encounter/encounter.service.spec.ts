@@ -27,5 +27,26 @@ describe('EncounterService', () => {
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(5);
     });
+
+    it('should return all encounters filtered by patient', async () => {
+      const bundle = await service.findAll({ patient: '2' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(4);
+    });
+
+    it('should return all encounters filtered by episode of care', async () => {
+      const bundle = await service.findAll({ 'episode-of-care': '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
+    });
+
+    it('should return all encounters filtered by patient and episode of care', async () => {
+      const bundle = await service.findAll({
+        patient: '2',
+        'episode-of-care': '2',
+      });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
+    });
   });
 });

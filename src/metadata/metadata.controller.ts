@@ -28,6 +28,23 @@ export class MetadataController {
             {
               type: 'Encounter',
               interaction: [{ code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
+                  type: 'reference',
+                  documentation: 'The patient present at the encounter',
+                },
+                {
+                  name: 'episode-of-care',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Encouter-episode-of-care',
+                  type: 'reference',
+                  documentation:
+                    'Episode(s) of care that this encounter should be recorded against',
+                },
+              ],
             },
             {
               type: 'Observation',

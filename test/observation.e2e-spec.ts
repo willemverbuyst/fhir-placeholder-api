@@ -26,4 +26,40 @@ describe('ObservationController (e2e)', () => {
         expect(observations.entry).toHaveLength(480);
       });
   });
+
+  it('/Observation?patient=patient-2 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Observation?patient=patient-2')
+      .expect(200)
+      .then((res) => {
+        const encounters = res.body;
+        expect(encounters).toBeDefined();
+        expect(encounters).toHaveProperty('resourceType', 'Bundle');
+        expect(encounters.entry).toHaveLength(40);
+      });
+  });
+
+  it('/Observation?encounter=encounter-2 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Observation?encounter=encounter-2')
+      .expect(200)
+      .then((res) => {
+        const encounters = res.body;
+        expect(encounters).toBeDefined();
+        expect(encounters).toHaveProperty('resourceType', 'Bundle');
+        expect(encounters.entry).toHaveLength(2);
+      });
+  });
+
+  it('/Observation?encounter=encounter-2&patient=patient-2 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Observation?encounter=encounter-2&patient=patient-2')
+      .expect(200)
+      .then((res) => {
+        const encounters = res.body;
+        expect(encounters).toBeDefined();
+        expect(encounters).toHaveProperty('resourceType', 'Bundle');
+        expect(encounters.entry).toHaveLength(2);
+      });
+  });
 });

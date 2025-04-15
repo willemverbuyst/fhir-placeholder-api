@@ -98,12 +98,14 @@ export function createEncounters(
 
 export function createObservations(
   numberOfObservations: number,
-  numberOfPatients: number,
+  encountersPerPatient: number,
   observationsPerEncounter: number,
 ): (Observation & Id)[] {
   return Array.from({ length: numberOfObservations }, (_, i) => {
     return createObservation(
-      `patient-${Math.floor(i / numberOfPatients) + 1}`,
+      `patient-${
+        Math.floor(i / (encountersPerPatient * observationsPerEncounter)) + 1
+      }`,
       `encounter-${Math.floor(i / observationsPerEncounter) + 1}`,
       `observation-${i + 1}`,
     );

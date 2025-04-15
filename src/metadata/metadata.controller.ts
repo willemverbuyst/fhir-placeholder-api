@@ -81,6 +81,23 @@ export class MetadataController {
                 { code: 'create' },
                 { code: 'patch' },
               ],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
+                  type: 'reference',
+                  documentation:
+                    'The subject that the observation is about (if patient)',
+                },
+                {
+                  name: 'encounter',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-encounter',
+                  type: 'reference',
+                  documentation: '	Encounter related to the observation',
+                },
+              ],
             },
             {
               type: 'Patient',

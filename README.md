@@ -64,27 +64,27 @@ curl http://localhost:8080/api/v2/r5/Patient/1
   "resourceType": "Patient",
   "birthDate": "1969-12-05",
   "gender": "other",
-`  "telecom": [
-`    {
-`      "use": "old",
-`      "system": "email",
-`      "value": "John_Doe27@fhir-placeholder.api"
-`    },
-`    {
-`      "use": "temp",
-`      "system": "phone",
-`      "value": "(239) 778-3678"
-`    }
-`  ],
-`  "address": [
-`    {
-`      "use": "old",
-`      "type": "physical",
-`      "line": ["96298 Long Lane"],
-`      "city": "Gibson",
-`      "state": "Washington",
-`      "postalCode": "09207",
-`      "country": "Brunei Darussalam"
+  "telecom": [
+    {
+      "use": "old",
+      "system": "email",
+      "value": "John_Doe27@fhir-placeholder.api"
+    },
+    {
+      "use": "temp",
+      "system": "phone",
+      "value": "(239) 778-3678"
+    }
+  ],
+  "address": [
+    {
+      "use": "old",
+      "type": "physical",
+      "line": ["96298 Long Lane"],
+      "city": "Gibson",
+      "state": "Washington",
+      "postalCode": "09207",
+      "country": "Brunei Darussalam"
     }
   ],
   "managingOrganization": {

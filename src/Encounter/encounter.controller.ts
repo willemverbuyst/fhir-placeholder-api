@@ -21,7 +21,7 @@ export class EncounterController {
     type: String,
   })
   @ApiQuery({
-    name: 'episode=of-care',
+    name: 'episode-of-care',
     required: false,
     description: 'Filter encounters by episode of care',
     type: String,

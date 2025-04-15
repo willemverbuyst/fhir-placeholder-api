@@ -9,42 +9,32 @@ describe('ObservationService', () => {
       {
         id: '1',
         resourceType: 'Observation',
-        encounter: {
-          reference: 'Encounter/1',
-          subject: { reference: 'Patient/1' },
-        },
+        encounter: { reference: 'Encounter/1' },
+        subject: { reference: 'Patient/1' },
       },
       {
         id: '2',
         resourceType: 'Observation',
-        encounter: {
-          reference: 'Encounter/1',
-          subject: { reference: 'Patient/1' },
-        },
+        encounter: { reference: 'Encounter/1' },
+        subject: { reference: 'Patient/1' },
       },
       {
         id: '3',
         resourceType: 'Observation',
-        encounter: {
-          reference: 'Encounter/2',
-          subject: { reference: 'Patient/2' },
-        },
+        encounter: { reference: 'Encounter/2' },
+        subject: { reference: 'Patient/2' },
       },
       {
         id: '4',
         resourceType: 'Observation',
-        encounter: {
-          reference: 'Encounter/2',
-          subject: { reference: 'Patient/2' },
-        },
+        encounter: { reference: 'Encounter/2' },
+        subject: { reference: 'Patient/2' },
       },
       {
         id: '5',
         resourceType: 'Observation',
-        encounter: {
-          reference: 'Encounter/3',
-          subject: { reference: 'Patient/2' },
-        },
+        encounter: { reference: 'Encounter/3' },
+        subject: { reference: 'Patient/2' },
       },
     ],
   };
@@ -69,6 +59,27 @@ describe('ObservationService', () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(5);
+    });
+
+    it('should return all observations filtered by patient', async () => {
+      const bundle = await service.findAll({ patient: '2' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(3);
+    });
+
+    it('should return all observations filtered by encounter', async () => {
+      const bundle = await service.findAll({ encounter: '2' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(2);
+    });
+
+    it('should return all observations filtered by patient and encounter', async () => {
+      const bundle = await service.findAll({
+        patient: '2',
+        encounter: '2',
+      });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(2);
     });
   });
 });

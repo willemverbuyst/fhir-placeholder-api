@@ -24,10 +24,36 @@ export class MetadataController {
             {
               type: 'Condition',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
+                  type: 'reference',
+                  documentation: 'Who has the condition',
+                },
+              ],
             },
             {
               type: 'Encounter',
               interaction: [{ code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'patient',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
+                  type: 'reference',
+                  documentation: 'The patient present at the encounter',
+                },
+                {
+                  name: 'episode-of-care',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/Encouter-episode-of-care',
+                  type: 'reference',
+                  documentation:
+                    'Episode(s) of care that this encounter should be recorded against',
+                },
+              ],
             },
             {
               type: 'Observation',
@@ -57,11 +83,19 @@ export class MetadataController {
               ],
               searchParam: [
                 {
-                  name: 'name',
+                  name: 'patient',
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/Organization-name',
-                  type: 'string',
-                  documentation: 'Search by organization name',
+                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
+                  type: 'reference',
+                  documentation:
+                    'The subject that the observation is about (if patient)',
+                },
+                {
+                  name: 'encounter',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/clinical-encounter',
+                  type: 'reference',
+                  documentation: '	Encounter related to the observation',
                 },
               ],
             },

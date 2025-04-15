@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DataStoreService } from '../src/db/dataStore.service';
-import { testDataStore } from '../src/test/testDataStore';
 
 describe('OrganizationController (e2e)', () => {
   let app: INestApplication;
@@ -11,10 +9,7 @@ describe('OrganizationController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DataStoreService)
-      .useValue({ ...testDataStore })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -32,40 +27,14 @@ describe('OrganizationController (e2e)', () => {
       });
   });
 
-  it('/Organization?name=test%20organization (GET) - OK', async () => {
-    return request(app.getHttpServer())
-      .get('/Organization?name=test%20organization')
-      .expect(200)
-      .then((res) => {
-        const organizations = res.body;
-        expect(organizations).toBeDefined();
-        expect(organizations.entry).toHaveLength(2);
-        expect(organizations.entry[0].resource.name).toBe('test organization');
-        expect(organizations.entry[0].resource.name).toBe('test organization');
-      });
-  });
-
-  it('/Organization?name=Acme&city=Somewhere (GET) - Bad Request', async () => {
-    return request(app.getHttpServer())
-      .get('/Organization?name=Acme&city=lala')
-      .expect(400)
-      .then((res) => {
-        const response = res.body;
-        expect(response).toBeDefined();
-        expect(response).toHaveProperty('message', [
-          'property city should not exist',
-        ]);
-      });
-  });
-
   it('/Organization/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Organization/1')
+      .get('/Organization/organization-1')
       .expect(200)
       .then((res) => {
         const organization = res.body;
         expect(organization).toBeDefined();
-        expect(organization).toHaveProperty('id', '1');
+        expect(organization).toHaveProperty('id', 'organization-1');
         expect(organization).toHaveProperty('resourceType', 'Organization');
       });
   });
@@ -83,7 +52,7 @@ describe('OrganizationController (e2e)', () => {
 
   it('/Organization/:id (PATCH) - OK', async () => {
     return request(app.getHttpServer())
-      .patch('/Organization/1')
+      .patch('/Organization/organization-1')
       .set('Accept', 'application/json')
       .send({
         name: 'Updated Organization Name',
@@ -92,7 +61,7 @@ describe('OrganizationController (e2e)', () => {
       .then((res) => {
         const organization = res.body;
         expect(organization).toBeDefined();
-        expect(organization).toHaveProperty('id', '1');
+        expect(organization).toHaveProperty('id', 'organization-1');
         expect(organization).toHaveProperty('resourceType', 'Organization');
         expect(organization).toHaveProperty(
           'name',

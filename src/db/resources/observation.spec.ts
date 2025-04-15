@@ -3,9 +3,14 @@ import { createObservation, ObservationStatus } from './observation';
 
 describe('createObservation', () => {
   it('should create an observation with a valid structure', () => {
-    const patientId = '12345';
-    const encounterId = '67890';
-    const observation = createObservation(patientId, encounterId);
+    const patientId = 'patient-1';
+    const encounterId = 'encounter-1';
+    const observationId = 'observation-1';
+    const observation = createObservation(
+      patientId,
+      encounterId,
+      observationId,
+    );
 
     expect(observation).toHaveProperty('id');
     expect(observation).toHaveProperty('resourceType', 'Observation');
@@ -25,9 +30,14 @@ describe('createObservation', () => {
   });
 
   it('should select a random code from the observationCodes value set', () => {
-    const patientId = '12345';
-    const encounterId = '67890';
-    const observation = createObservation(patientId, encounterId);
+    const patientId = 'patient-1';
+    const encounterId = 'encounter-1';
+    const observationId = 'observation-1';
+    const observation = createObservation(
+      patientId,
+      encounterId,
+      observationId,
+    );
 
     expect(observation.code.coding).toHaveLength(1);
 

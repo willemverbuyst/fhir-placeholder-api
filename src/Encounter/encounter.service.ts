@@ -8,8 +8,29 @@ import { wrapInBundle } from '../utils/bundle';
 export class EncounterService {
   constructor(private readonly repo: DataStoreService) {}
 
-  async findAll(): Promise<Bundle<Encounter & Id>> {
-    const resources = this.repo.encounters;
+  async findAll(query?: {
+    patient?: string;
+    'episode-of-care'?: string;
+  }): Promise<Bundle<Encounter & Id>> {
+    let resources = this.repo.encounters;
+
+    if (!query) {
+      return wrapInBundle(resources);
+    }
+
+    const { patient, 'episode-of-care': episodeOfCare } = query;
+
+    if (patient) {
+      resources = resources.filter((e) =>
+        e.subject?.reference?.endsWith(patient),
+      );
+    }
+
+    if (episodeOfCare) {
+      resources = resources.filter((e) =>
+        e.episodeOfCare?.some((eoc) => eoc.reference?.endsWith(episodeOfCare)),
+      );
+    }
 
     return wrapInBundle(resources);
   }

@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DataStoreService } from '../src/db/dataStore.service';
-import { testDataStore } from '../src/test/testDataStore';
 
 describe('EpisodeOfCareController (e2e)', () => {
   let app: INestApplication;
@@ -11,10 +9,7 @@ describe('EpisodeOfCareController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DataStoreService)
-      .useValue({ ...testDataStore })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -28,21 +23,31 @@ describe('EpisodeOfCareController (e2e)', () => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
         expect(episodes).toHaveProperty('resourceType', 'Bundle');
-        expect(episodes.entry).toHaveLength(3);
+        expect(episodes.entry).toHaveLength(48);
       });
   });
 
-  it('/EpisodeOfCare?patient=1 (GET) - OK', async () => {
+  it('/EpisodeOfCare?patient=patient-1 (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/EpisodeOfCare?patient=1')
+      .get('/EpisodeOfCare?patient=patient-1')
       .expect(200)
       .then((res) => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
         expect(episodes).toHaveProperty('resourceType', 'Bundle');
-        expect(episodes.entry).toHaveLength(2);
-        expect(episodes.entry[0].resource.patient.reference).toBe('Patient/1');
-        expect(episodes.entry[1].resource.patient.reference).toBe('Patient/1');
+        expect(episodes.entry).toHaveLength(4);
+        expect(episodes.entry[0].resource.patient.reference).toBe(
+          'Patient/patient-1',
+        );
+        expect(episodes.entry[1].resource.patient.reference).toBe(
+          'Patient/patient-1',
+        );
+        expect(episodes.entry[2].resource.patient.reference).toBe(
+          'Patient/patient-1',
+        );
+        expect(episodes.entry[3].resource.patient.reference).toBe(
+          'Patient/patient-1',
+        );
       });
   });
 
@@ -61,12 +66,12 @@ describe('EpisodeOfCareController (e2e)', () => {
 
   it('/EpisodeOfCare/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/EpisodeOfCare/1')
+      .get('/EpisodeOfCare/episode-of-care-1')
       .expect(200)
       .then((res) => {
         const episode = res.body;
         expect(episode).toBeDefined();
-        expect(episode).toHaveProperty('id', '1');
+        expect(episode).toHaveProperty('id', 'episode-of-care-1');
         expect(episode).toHaveProperty('resourceType', 'EpisodeOfCare');
       });
   });

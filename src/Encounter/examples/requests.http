@@ -1,2 +1,8 @@
 ###
 GET http://localhost:8080/api/v2/r5/Encounter
+
+###
+GET http://localhost:8080/api/v2/r5/Encounter?patient=Patient/patient-10
+
+###
+GET http://localhost:8080/api/v2/r5/Encounter?episode-of-care=episode-of-care-3

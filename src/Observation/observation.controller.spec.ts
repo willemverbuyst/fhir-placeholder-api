@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { ObservationController } from './observation.controller';
 import { ObservationService } from './observation.service';
 
@@ -18,7 +17,7 @@ describe('ObservationController', () => {
             findAll: jest.fn(),
           },
         },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

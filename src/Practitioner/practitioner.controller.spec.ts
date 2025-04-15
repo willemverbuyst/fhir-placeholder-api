@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Practitioner } from 'fhir/r5';
 import { Id } from 'src/types';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { PractitionerController } from './practitioner.controller';
 import { PractitionerService } from './practitioner.service';
 
@@ -23,7 +22,7 @@ describe('PractitionerController', () => {
             remove: jest.fn(),
           },
         },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

@@ -1,6 +1,5 @@
 import { Encounter } from 'fhir/r5';
-import { Id } from 'src/types';
-import { v4 as uuidV4 } from 'uuid';
+import { Id } from '../../types';
 import { getRandomElement } from '../helpers/getRandomElement';
 
 export enum EncounterStatus {
@@ -17,10 +16,11 @@ export enum EncounterStatus {
 
 export function createEncounter(
   patientId: string,
-  episodes: string[],
+  episodeId: string,
+  id: string,
 ): Encounter & Id {
   return {
-    id: uuidV4(),
+    id,
     resourceType: 'Encounter',
     status: getRandomElement([
       EncounterStatus.CANCELLED,
@@ -34,8 +34,6 @@ export function createEncounter(
       EncounterStatus.UNKNOWN,
     ]),
     subject: { reference: `Patient/${patientId}` },
-    episodeOfCare: [
-      { reference: `EpisodeOfCare/${getRandomElement(episodes)}` },
-    ],
+    episodeOfCare: [{ reference: `EpisodeOfCare/${episodeId}` }],
   };
 }

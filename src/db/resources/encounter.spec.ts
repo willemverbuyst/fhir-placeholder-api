@@ -3,8 +3,9 @@ import { createEncounter, EncounterStatus } from './encounter';
 describe('createEncounter', () => {
   it('should create an Encounter with the correct structure', () => {
     const patientId = 'patient-1';
-    const episodeIds = ['episode-1', 'episode-2', 'episode-3'];
-    const encounter = createEncounter(patientId, episodeIds);
+    const episodeId = 'episode-1';
+    const encounterId = 'encounter-1';
+    const encounter = createEncounter(patientId, episodeId, encounterId);
 
     expect(encounter).toHaveProperty('id');
     expect(encounter.resourceType).toBe('Encounter');
@@ -16,18 +17,6 @@ describe('createEncounter', () => {
       throw new Error('Encounter episodeOfCare array is empty');
     }
 
-    expect(episodeIds).toContain(
-      encounter.episodeOfCare[0].reference?.split('/')[1],
-    );
-  });
-
-  it('should generate a unique id for each Encounter', () => {
-    const patientId = 'patient-1';
-    const episodeIds = ['episode-1', 'episode-2', 'episode-3'];
-
-    const encounter1 = createEncounter(patientId, episodeIds);
-    const encounter2 = createEncounter(patientId, episodeIds);
-
-    expect(encounter1.id).not.toBe(encounter2.id);
+    expect(encounter.episodeOfCare[0].reference?.split('/')[1]).toBe(episodeId);
   });
 });

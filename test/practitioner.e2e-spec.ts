@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DataStoreService } from '../src/db/dataStore.service';
-import { testDataStore } from '../src/test/testDataStore';
 
 describe('PractitionerController (e2e)', () => {
   let app: INestApplication;
@@ -11,10 +9,7 @@ describe('PractitionerController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DataStoreService)
-      .useValue({ ...testDataStore })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
@@ -28,18 +23,18 @@ describe('PractitionerController (e2e)', () => {
         const practitioners = res.body;
         expect(practitioners).toBeDefined();
         expect(practitioners).toHaveProperty('resourceType', 'Bundle');
-        expect(practitioners.entry).toHaveLength(2);
+        expect(practitioners.entry).toHaveLength(6);
       });
   });
 
   it('/Practitioner/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Practitioner/1')
+      .get('/Practitioner/practitioner-1')
       .expect(200)
       .then((res) => {
         const practitioner = res.body;
         expect(practitioner).toBeDefined();
-        expect(practitioner).toHaveProperty('id', '1');
+        expect(practitioner).toHaveProperty('id', 'practitioner-1');
         expect(practitioner).toHaveProperty('resourceType', 'Practitioner');
       });
   });

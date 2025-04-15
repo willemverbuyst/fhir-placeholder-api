@@ -1,16 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { PractitionerService } from './practitioner.service';
 
 describe('PractitionerService', () => {
   let service: PractitionerService;
+  const mockDataStore = {
+    practitioners: [
+      {
+        id: '1',
+        resourceType: 'Practitioner',
+      },
+      {
+        id: '2',
+        resourceType: 'Practitioner',
+      },
+    ],
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PractitionerService,
-        { provide: DataStoreService, useValue: { ...testDataStore } },
+        { provide: DataStoreService, useValue: mockDataStore },
       ],
     }).compile();
 

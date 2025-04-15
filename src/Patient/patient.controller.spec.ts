@@ -2,7 +2,6 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Patient } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { Id } from '../types';
 import { PatientController } from './patient.controller';
 import { PatientService } from './patient.service';
@@ -22,7 +21,7 @@ describe('PatientController', () => {
             findOne: jest.fn(),
           },
         },
-        { provide: DataStoreService, useValue: testDataStore },
+        DataStoreService,
       ],
     }).compile();
 

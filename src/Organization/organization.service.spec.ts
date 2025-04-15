@@ -1,16 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { OrganizationService } from './organization.service';
 
 describe('OrganizationService', () => {
   let service: OrganizationService;
+  const mockDataStore = {
+    organizations: [
+      {
+        id: '1',
+        resourceType: 'Organization',
+        name: 'test organization',
+      },
+      {
+        id: '2',
+        resourceType: 'Organization',
+        name: 'another test organization',
+      },
+      {
+        id: '3',
+        resourceType: 'Organization',
+        name: 'test organization',
+      },
+    ],
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         OrganizationService,
-        { provide: DataStoreService, useValue: { ...testDataStore } },
+        { provide: DataStoreService, useValue: mockDataStore },
       ],
     }).compile();
 
@@ -85,54 +103,6 @@ describe('OrganizationService', () => {
         name: 'Updated Organization',
       });
       expect(updatedOrganization).toBeUndefined();
-    });
-  });
-
-  describe('findByName', () => {
-    it('should return organization with given name', async () => {
-      const bundle = await service.findByName('test organization');
-      expect(bundle).toBeDefined();
-
-      if (!bundle.entry) {
-        throw new Error('Expected entry to be defined in bundle');
-      }
-
-      expect(bundle.entry[0].resource).toHaveProperty(
-        'name',
-        'test organization',
-      );
-    });
-
-    it('should return multiple organizations for given name', async () => {
-      const bundle = await service.findByName('test organization');
-      expect(bundle).toBeDefined();
-
-      if (!bundle.entry) {
-        throw new Error('Expected entry to be defined in bundle');
-      }
-
-      expect(bundle.entry.length).toBe(2);
-      expect(bundle.entry[0].resource).toHaveProperty(
-        'resourceType',
-        'Organization',
-      );
-      expect(bundle.entry[0].resource).toHaveProperty('id', '1');
-      expect(bundle.entry[1].resource).toHaveProperty(
-        'resourceType',
-        'Organization',
-      );
-      expect(bundle.entry[1].resource).toHaveProperty('id', '3');
-    });
-
-    it('should return an empty array when no organizations with given name are found', async () => {
-      const bundle = await service.findByName('unknown');
-      expect(bundle).toBeDefined();
-
-      if (!bundle.entry) {
-        throw new Error('Expected entry to be defined in bundle');
-      }
-
-      expect(bundle.entry.length).toBe(0);
     });
   });
 });

@@ -1,16 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataStoreService } from '../db/dataStore.service';
-import { testDataStore } from '../test/testDataStore';
 import { ConditionService } from './condition.service';
 
 describe('ConditionService', () => {
   let service: ConditionService;
+  const mockDataStore = {
+    conditions: [
+      {
+        id: '1',
+        resourceType: 'Condition',
+        subject: {
+          reference: 'Patient/1',
+        },
+      },
+      {
+        id: '2',
+        note: [{ text: 'test note' }],
+        resourceType: 'Condition',
+        subject: {
+          reference: 'Patient/2',
+        },
+      },
+    ],
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ConditionService,
-        { provide: DataStoreService, useValue: { ...testDataStore } },
+        { provide: DataStoreService, useValue: mockDataStore },
       ],
     }).compile();
 
@@ -26,6 +44,12 @@ describe('ConditionService', () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
+    });
+
+    it('should return all conditions filtered by patient', async () => {
+      const bundle = await service.findAll({ patient: '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
     });
   });
 

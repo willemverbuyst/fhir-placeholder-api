@@ -16,25 +16,29 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 
 ## :telephone_receiver: Endpoints (wip)
 
-- GET /metadata
-- GET /Patient
-- GET /Patient?organization=\<id\>
-- GET /Patient?general-practitioner=\<id\>
-- GET /Patient/:id
-- GET /EpisodeOfCare
-- GET /EpisodeOfCare/:id
-- GET /EpisodeOfCare?patient=\<id\>
-- GET /Condition
-- GET /Condition/:id
-- GET /Practitioner
-- GET /Practitioner/:id
-- GET /Organization
-- GET /Organization?name=\<name\>
-- GET /Organization/:id
-- POST /Organization
-- PATCH /Organization/:id
-- GET /Encounter
-- GET /Observation
+- `GET /metadata`
+- `GET /Patient`
+- `GET /Patient?organization=<id>`
+- `GET /Patient?general-practitioner=<id>`
+- `GET /Patient/:id`
+- `GET /EpisodeOfCare`
+- `GET /EpisodeOfCare?patient=<id>`
+- `GET /EpisodeOfCare/:id`
+- `GET /Condition`
+- `GET /Condition?patient=<id>`
+- `GET /Condition/:id`
+- `GET /Practitioner`
+- `GET /Practitioner/:id`
+- `GET /Encounter`
+- `GET /Encounter?patient=<id>`
+- `GET /Encounter?episode-of-care=<id>`
+- `GET /Observation`
+- `GET /Observation?patient=<id>`
+- `GET /Observation?encounter=<id>`
+- `GET /Organization`
+- `GET /Organization/:id`
+- `POST /Organization`
+- `PATCH /Organization/:id`
 
 ```typescript
 fetch('http://localhost:8080/api/v2/r5/Patient/1')

@@ -1,7 +1,7 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class GetOrganizationDto {
+export class GetConditionDto {
   @IsString()
   @IsOptional()
-  name: string;
+  patient: string;
 }

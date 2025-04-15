@@ -3,9 +3,10 @@ import { createPatient } from './patient';
 
 describe('createPatient', () => {
   it('should create a Patient with a valid structure', () => {
-    const organizationId = '12345';
-    const practitionerIds = ['67890'];
-    const patient = createPatient(organizationId, practitionerIds);
+    const organizationId = 'organization-1';
+    const practitionerId = 'practitioner-1';
+    const patientId = 'patient-1';
+    const patient = createPatient(organizationId, practitionerId, patientId);
 
     expect(patient).toHaveProperty('id');
     expect(patient).toHaveProperty('resourceType', 'Patient');
@@ -46,7 +47,7 @@ describe('createPatient', () => {
 
     expect(patient.generalPractitioner[0]).toHaveProperty('reference');
     expect(patient.generalPractitioner[0].reference).toBe(
-      `Practitioner/${practitionerIds[0]}`,
+      `Practitioner/${practitionerId}`,
     );
     expect(patient).toHaveProperty('communication');
     expect(patient.communication).toBeInstanceOf(Array);
@@ -62,20 +63,11 @@ describe('createPatient', () => {
     expect(patient.communication[0].preferred).toBe(true);
   });
 
-  it('should generate a unique id for each Patient', () => {
-    const organizationId = '12345';
-    const practitionerIds = ['67890'];
-
-    const patient1 = createPatient(organizationId, practitionerIds);
-    const patient2 = createPatient(organizationId, practitionerIds);
-
-    expect(patient1.id).not.toEqual(patient2.id);
-  });
-
   it('should generate a valid birthDate within the specified range', () => {
-    const organizationId = '12345';
-    const practitionerIds = ['67890'];
-    const patient = createPatient(organizationId, practitionerIds);
+    const organizationId = 'organization-1';
+    const practitionerId = 'practitioner-1';
+    const patientId = 'patient-1';
+    const patient = createPatient(organizationId, practitionerId, patientId);
 
     if (!patient.birthDate) {
       throw new Error('Patient birthDate is undefined');
@@ -89,9 +81,10 @@ describe('createPatient', () => {
   });
 
   it('should create telecom entries with valid email and phone', () => {
-    const organizationId = '12345';
-    const practitionerIds = ['67890'];
-    const patient = createPatient(organizationId, practitionerIds);
+    const organizationId = 'organization-1';
+    const practitionerId = 'practitioner-1';
+    const patientId = 'patient-1';
+    const patient = createPatient(organizationId, practitionerId, patientId);
 
     if (!patient.telecom) {
       throw new Error('Patient telecom array is empty');
@@ -107,9 +100,10 @@ describe('createPatient', () => {
   });
 
   it('should create a valid address', () => {
-    const organizationId = '12345';
-    const practitionerIds = ['67890'];
-    const patient = createPatient(organizationId, practitionerIds);
+    const organizationId = 'organization-1';
+    const practitionerId = 'practitioner-1';
+    const patientId = 'patient-1';
+    const patient = createPatient(organizationId, practitionerId, patientId);
 
     if (!patient.address) {
       throw new Error('Patient address array is empty');

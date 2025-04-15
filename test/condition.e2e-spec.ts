@@ -2,8 +2,6 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { DataStoreService } from '../src/db/dataStore.service';
-import { testDataStore } from '../src/test/testDataStore';
 
 describe('ConditionController (e2e)', () => {
   let app: INestApplication;
@@ -11,14 +9,13 @@ describe('ConditionController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(DataStoreService)
-      .useValue({ ...testDataStore })
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     await app.init();
   });
+
+  console.log('ENV', process.env.NODE_ENV);
 
   it('/Condition (GET) - OK', async () => {
     return request(app.getHttpServer())
@@ -28,18 +25,30 @@ describe('ConditionController (e2e)', () => {
         const conditions = res.body;
         expect(conditions).toBeDefined();
         expect(conditions).toHaveProperty('resourceType', 'Bundle');
-        expect(conditions.entry).toHaveLength(2);
+        expect(conditions.entry).toHaveLength(48);
+      });
+  });
+
+  it('/Condition?patient=patient-1 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/Condition?patient=Patient/patient-1')
+      .expect(200)
+      .then((res) => {
+        const conditions = res.body;
+        expect(conditions).toBeDefined();
+        expect(conditions).toHaveProperty('resourceType', 'Bundle');
+        expect(conditions.entry).toHaveLength(4);
       });
   });
 
   it('/Condition/:id (GET) - OK', async () => {
     return request(app.getHttpServer())
-      .get('/Condition/1')
+      .get('/Condition/condition-1')
       .expect(200)
       .then((res) => {
         const condition = res.body;
         expect(condition).toBeDefined();
-        expect(condition).toHaveProperty('id', '1');
+        expect(condition).toHaveProperty('id', 'condition-1');
         expect(condition).toHaveProperty('resourceType', 'Condition');
       });
   });

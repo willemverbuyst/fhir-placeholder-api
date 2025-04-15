@@ -1,18 +1,17 @@
 import { faker } from '@faker-js/faker';
 import { Practitioner } from 'fhir/r5';
-import { Id } from 'src/types';
-import { v4 as uuidV4 } from 'uuid';
+import { Id } from '../../types';
 import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
 import { getRandomElement } from '../helpers/getRandomElement';
 
-export function createPractitioner(): Practitioner & Id {
+export function createPractitioner(id: string): Practitioner & Id {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
   return {
-    id: uuidV4(),
+    id,
     resourceType: 'Practitioner',
     name: [{ family: lastName, given: [firstName] }],
     active: true,

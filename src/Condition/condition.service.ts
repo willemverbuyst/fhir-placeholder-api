@@ -8,8 +8,20 @@ import { wrapInBundle } from '../utils/bundle';
 export class ConditionService {
   constructor(private readonly repo: DataStoreService) {}
 
-  async findAll(): Promise<Bundle<Condition & Id>> {
-    const resources = this.repo.conditions;
+  async findAll(query?: { patient?: string }): Promise<Bundle<Condition & Id>> {
+    let resources = this.repo.conditions;
+
+    if (!query) {
+      return wrapInBundle(resources);
+    }
+
+    const { patient } = query;
+
+    if (patient) {
+      resources = this.repo.conditions.filter((c) =>
+        c.subject.reference?.endsWith(patient),
+      );
+    }
 
     return wrapInBundle(resources);
   }

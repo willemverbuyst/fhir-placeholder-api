@@ -33,6 +33,8 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - `GET /Encounter?patient=<id>`
 - `GET /Encounter?episode-of-care=<id>`
 - `GET /Observation`
+- `GET /Observation?patient=<id>`
+- `GET /Observation?encounter=<id>`
 - `GET /Organization`
 - `GET /Organization/:id`
 - `POST /Organization`

@@ -1,4 +1,5 @@
 import {
+  CONDITIONS_PER_PATIENT,
   ENCOUNTERS_PER_PATIENT,
   EPISODES_PER_PATIENT,
   OBSERVATIONS_PER_ENCOUNTER,
@@ -35,7 +36,10 @@ describe('DataStoreService', () => {
 
   it('should initialize conditions for each patient', () => {
     const expectedConditionsCount =
-      PATIENTS_PER_PRACTITIONER * ORGANIZATIONS * EPISODES_PER_PATIENT;
+      PATIENTS_PER_PRACTITIONER *
+      ORGANIZATIONS *
+      PRACTITIONERS_PER_ORGANIZATION *
+      CONDITIONS_PER_PATIENT;
     expect(dataStoreService.conditions.length).toBe(expectedConditionsCount);
   });
 

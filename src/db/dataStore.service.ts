@@ -39,13 +39,11 @@ export class DataStoreService {
   public observations: (Observation & Id)[] = [];
 
   constructor() {
-    const numberOfPatients =
-      PATIENTS_PER_PRACTITIONER *
-      PRACTITIONERS_PER_ORGANIZATION *
-      ORGANIZATIONS;
     const numberOfOrganizations = ORGANIZATIONS;
     const numberOfPractitioners =
       PRACTITIONERS_PER_ORGANIZATION * ORGANIZATIONS;
+    const numberOfPatients = PATIENTS_PER_PRACTITIONER * numberOfPractitioners;
+    const numberOfConditions = numberOfPatients * CONDITIONS_PER_PATIENT;
 
     this.organizations = createOrganizations({
       numberOfOrganizations,
@@ -58,10 +56,10 @@ export class DataStoreService {
       numberOfOrganizations,
       numberOfPractitioners,
     });
-    this.conditions = createConditions(
-      CONDITIONS_PER_PATIENT * PATIENTS_PER_PRACTITIONER * ORGANIZATIONS,
-      CONDITIONS_PER_PATIENT,
-    );
+    this.conditions = createConditions({
+      numberOfConditions,
+      numberOfPatients,
+    });
     this.episodes = createEpisodes(
       EPISODES_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_PRACTITIONER,
       EPISODES_PER_PATIENT,

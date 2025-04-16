@@ -142,29 +142,42 @@ describe('createEncounters', () => {
 });
 
 describe('createConditions', () => {
-  it('should create the specified number of conditions', () => {
-    const numberOfConditions = 3;
-    const conditionsPerPatient = 3;
-    const conditions = createConditions(
-      numberOfConditions,
-      conditionsPerPatient,
-    );
+  const conditions = createConditions({
+    numberOfConditions: 4,
+    numberOfPatients: 2,
+  });
 
-    expect(conditions).toHaveLength(numberOfConditions);
-    conditions.forEach((condition) => {
-      expect(condition).toHaveProperty('id');
+  it.each`
+    conditionId      | patientId
+    ${'condition-1'} | ${'patient-1'}
+    ${'condition-2'} | ${'patient-1'}
+    ${'condition-3'} | ${'patient-2'}
+    ${'condition-4'} | ${'patient-2'}
+  `(
+    'should assign correct patient to condition $conditionId',
+    ({ conditionId, patientId }) => {
+      const condition = conditions[conditionId.split('-')[1] - 1];
+
+      expect(condition).toHaveProperty('id', conditionId);
       expect(condition.resourceType).toBe('Condition');
-      expect(condition.subject?.reference).toBe('Patient/patient-1');
+      expect(condition.subject?.reference).toBe(`Patient/${patientId}`);
+    },
+  );
+
+  it('should create the specified number of conditions', () => {
+    const conditions = createConditions({
+      numberOfConditions: 4,
+      numberOfPatients: 2,
     });
+
+    expect(conditions).toHaveLength(4);
   });
 
   it('should return an empty array if numberOfConditions is 0', () => {
-    const numberOfConditions = 0;
-    const conditionsPerPatient = 3;
-    const conditions = createConditions(
-      numberOfConditions,
-      conditionsPerPatient,
-    );
+    const conditions = createConditions({
+      numberOfConditions: 0,
+      numberOfPatients: 2,
+    });
 
     expect(conditions).toHaveLength(0);
   });

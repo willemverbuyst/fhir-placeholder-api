@@ -63,13 +63,16 @@ export function createPatients({
   );
 }
 
-export function createConditions(
-  numberOfConditions: number,
-  conditionsPerPatient: number,
-): (Condition & Id)[] {
+export function createConditions({
+  numberOfConditions,
+  numberOfPatients,
+}: {
+  numberOfConditions: number;
+  numberOfPatients: number;
+}): (Condition & Id)[] {
   return Array.from({ length: numberOfConditions }, (_, i) => {
     return createCondition(
-      `patient-${Math.floor(i / conditionsPerPatient) + 1}`,
+      `patient-${Math.floor(i / (numberOfConditions / numberOfPatients)) + 1}`,
       `condition-${i + 1}`,
     );
   });

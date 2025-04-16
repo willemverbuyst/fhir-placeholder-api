@@ -16,27 +16,35 @@ import { createOrganization } from '../resources/organization';
 import { createPatient } from '../resources/patient';
 import { createPractitioner } from '../resources/practitioner';
 
-export function createOrganizations(
-  numberOfOrganizations: number,
-): (Organization & Id)[] {
+export function createOrganizations({
+  numberOfOrganizations,
+}: {
+  numberOfOrganizations: number;
+}): (Organization & Id)[] {
   return Array.from({ length: numberOfOrganizations }, (_, i) => {
     return createOrganization(`organization-${i + 1}`);
   });
 }
 
-export function createPractitioners(
-  numberOfPractitioners: number,
-): (Practitioner & Id)[] {
+export function createPractitioners({
+  numberOfPractitioners,
+}: {
+  numberOfPractitioners: number;
+}): (Practitioner & Id)[] {
   return Array.from({ length: numberOfPractitioners }, (_, i) => {
     return createPractitioner(`practitioner-${i + 1}`);
   });
 }
 
-export function createPatients(
-  numberOfPatients: number,
-  numberOfOrganizations: number,
-  patientsPerPractitioner: number,
-): (Patient & Id)[] {
+export function createPatients({
+  numberOfPatients,
+  numberOfOrganizations,
+  patientsPerPractitioner,
+}: {
+  numberOfPatients: number;
+  numberOfOrganizations: number;
+  patientsPerPractitioner: number;
+}): (Patient & Id)[] {
   return Array.from(
     {
       length: numberOfPatients,

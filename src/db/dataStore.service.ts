@@ -39,16 +39,19 @@ export class DataStoreService {
   public observations: (Observation & Id)[] = [];
 
   constructor() {
-    this.organizations = createOrganizations(ORGANIZATIONS);
-    this.practitioners = createPractitioners(
-      PRACTITIONERS_PER_ORGANIZATION * ORGANIZATIONS,
-    );
-    this.patients = createPatients(
-      PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
-      ORGANIZATIONS,
-      (PATIENTS_PER_ORGANIZATION * ORGANIZATIONS) /
+    this.organizations = createOrganizations({
+      numberOfOrganizations: ORGANIZATIONS,
+    });
+    this.practitioners = createPractitioners({
+      numberOfPractitioners: PRACTITIONERS_PER_ORGANIZATION * ORGANIZATIONS,
+    });
+    this.patients = createPatients({
+      numberOfPatients: PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
+      numberOfOrganizations: ORGANIZATIONS,
+      patientsPerPractitioner:
+        (PATIENTS_PER_ORGANIZATION * ORGANIZATIONS) /
         PRACTITIONERS_PER_ORGANIZATION,
-    );
+    });
     this.conditions = createConditions(
       CONDITIONS_PER_PATIENT * PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
       CONDITIONS_PER_PATIENT,

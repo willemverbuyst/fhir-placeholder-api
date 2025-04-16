@@ -9,10 +9,9 @@ import {
 
 describe('createOrganizations', () => {
   it('should create the specified number of organizations', () => {
-    const numberOfOrganizations = 5;
-    const organizations = createOrganizations(numberOfOrganizations);
+    const organizations = createOrganizations({ numberOfOrganizations: 5 });
 
-    expect(organizations).toHaveLength(numberOfOrganizations);
+    expect(organizations).toHaveLength(5);
     organizations.forEach((organization) => {
       expect(organization).toHaveProperty('id');
       expect(organization.resourceType).toBe('Organization');
@@ -20,9 +19,7 @@ describe('createOrganizations', () => {
   });
 
   it('should return an empty array if numberOfOrganizations is 0', () => {
-    const numberOfOrganizations = 0;
-
-    const organizations = createOrganizations(numberOfOrganizations);
+    const organizations = createOrganizations({ numberOfOrganizations: 0 });
 
     expect(organizations).toHaveLength(0);
   });
@@ -30,11 +27,9 @@ describe('createOrganizations', () => {
 
 describe('createPractitioners', () => {
   it('should create the specified number of practitioners', () => {
-    const numberOfPractitioners = 4;
+    const practitioners = createPractitioners({ numberOfPractitioners: 5 });
 
-    const practitioners = createPractitioners(numberOfPractitioners);
-
-    expect(practitioners).toHaveLength(numberOfPractitioners);
+    expect(practitioners).toHaveLength(5);
     practitioners.forEach((practitioner) => {
       expect(practitioner).toHaveProperty('id');
       expect(practitioner.resourceType).toBe('Practitioner');
@@ -42,9 +37,7 @@ describe('createPractitioners', () => {
   });
 
   it('should return an empty array if numberOfPractitioners is 0', () => {
-    const numberOfPractitioners = 0;
-
-    const practitioners = createPractitioners(numberOfPractitioners);
+    const practitioners = createPractitioners({ numberOfPractitioners: 0 });
 
     expect(practitioners).toHaveLength(0);
   });
@@ -52,16 +45,13 @@ describe('createPractitioners', () => {
 
 describe('createPatients', () => {
   it('should create the specified number of patients', () => {
-    const numberOfPatients = 3;
-    const numberOfOrganizations = 1;
-    const numberOfPractitioners = 1;
-    const patients = createPatients(
-      numberOfPatients,
-      numberOfOrganizations,
-      numberOfPractitioners,
-    );
+    const patients = createPatients({
+      numberOfPatients: 3,
+      numberOfOrganizations: 1,
+      patientsPerPractitioner: 1,
+    });
 
-    expect(patients).toHaveLength(numberOfPatients);
+    expect(patients).toHaveLength(3);
     patients.forEach((patient) => {
       expect(patient).toHaveProperty('id');
       expect(patient.resourceType).toBe('Patient');
@@ -79,14 +69,11 @@ describe('createPatients', () => {
   });
 
   it('should return an empty array if numberOfPatients is 0', () => {
-    const numberOfPatients = 0;
-    const numberOfOrganizations = 1;
-    const numberOfPractitioners = 1;
-    const patients = createPatients(
-      numberOfPatients,
-      numberOfOrganizations,
-      numberOfPractitioners,
-    );
+    const patients = createPatients({
+      numberOfPatients: 0,
+      numberOfOrganizations: 1,
+      patientsPerPractitioner: 1,
+    });
 
     expect(patients).toHaveLength(0);
   });

@@ -15,7 +15,7 @@ import {
   EPISODES_PER_PATIENT,
   OBSERVATIONS_PER_ENCOUNTER,
   ORGANIZATIONS,
-  PATIENTS_PER_ORGANIZATION,
+  PATIENTS_PER_PRACTITIONER,
   PRACTITIONERS_PER_ORGANIZATION,
 } from './dataStore.config';
 import {
@@ -39,29 +39,35 @@ export class DataStoreService {
   public observations: (Observation & Id)[] = [];
 
   constructor() {
+    const numberOfPatients =
+      PATIENTS_PER_PRACTITIONER *
+      PRACTITIONERS_PER_ORGANIZATION *
+      ORGANIZATIONS;
+    const numberOfOrganizations = ORGANIZATIONS;
+    const numberOfPractitioners =
+      PRACTITIONERS_PER_ORGANIZATION * ORGANIZATIONS;
+
     this.organizations = createOrganizations({
-      numberOfOrganizations: ORGANIZATIONS,
+      numberOfOrganizations,
     });
     this.practitioners = createPractitioners({
-      numberOfPractitioners: PRACTITIONERS_PER_ORGANIZATION * ORGANIZATIONS,
+      numberOfPractitioners,
     });
     this.patients = createPatients({
-      numberOfPatients: PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
-      numberOfOrganizations: ORGANIZATIONS,
-      patientsPerPractitioner:
-        (PATIENTS_PER_ORGANIZATION * ORGANIZATIONS) /
-        PRACTITIONERS_PER_ORGANIZATION,
+      numberOfPatients,
+      numberOfOrganizations,
+      numberOfPractitioners,
     });
     this.conditions = createConditions(
-      CONDITIONS_PER_PATIENT * PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
+      CONDITIONS_PER_PATIENT * PATIENTS_PER_PRACTITIONER * ORGANIZATIONS,
       CONDITIONS_PER_PATIENT,
     );
     this.episodes = createEpisodes(
-      EPISODES_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_ORGANIZATION,
+      EPISODES_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_PRACTITIONER,
       EPISODES_PER_PATIENT,
     );
     this.encounters = createEncounters(
-      ENCOUNTERS_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_ORGANIZATION,
+      ENCOUNTERS_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_PRACTITIONER,
       ENCOUNTERS_PER_PATIENT,
       EPISODES_PER_PATIENT,
     );
@@ -69,7 +75,7 @@ export class DataStoreService {
       OBSERVATIONS_PER_ENCOUNTER *
         ENCOUNTERS_PER_PATIENT *
         ORGANIZATIONS *
-        PATIENTS_PER_ORGANIZATION,
+        PATIENTS_PER_PRACTITIONER,
       ENCOUNTERS_PER_PATIENT,
       OBSERVATIONS_PER_ENCOUNTER,
     );

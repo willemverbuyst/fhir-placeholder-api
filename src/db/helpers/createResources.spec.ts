@@ -44,35 +44,56 @@ describe('createPractitioners', () => {
 });
 
 describe('createPatients', () => {
+  const patients = createPatients({
+    numberOfPatients: 8,
+    numberOfOrganizations: 2,
+    numberOfPractitioners: 4,
+  });
+
+  it.each`
+    patientId      | organizationId      | practitionerId
+    ${'patient-1'} | ${'organization-1'} | ${'practitioner-1'}
+    ${'patient-2'} | ${'organization-1'} | ${'practitioner-1'}
+    ${'patient-3'} | ${'organization-1'} | ${'practitioner-2'}
+    ${'patient-4'} | ${'organization-1'} | ${'practitioner-2'}
+    ${'patient-5'} | ${'organization-2'} | ${'practitioner-3'}
+    ${'patient-6'} | ${'organization-2'} | ${'practitioner-3'}
+    ${'patient-7'} | ${'organization-2'} | ${'practitioner-4'}
+    ${'patient-8'} | ${'organization-2'} | ${'practitioner-4'}
+  `(
+    'should assign correct organization and practitioner to patient $patientId',
+    ({ patientId, organizationId, practitionerId }) => {
+      const patient = patients[patientId.split('-')[1] - 1];
+
+      expect(patient).toHaveProperty('id', patientId);
+      expect(patient.resourceType).toBe('Patient');
+      expect(patient.managingOrganization?.reference).toBe(
+        `Organization/${organizationId}`,
+      );
+
+      patient.generalPractitioner?.forEach((practitionerRef: any) => {
+        expect(practitionerRef.reference).toBe(
+          `Practitioner/${practitionerId}`,
+        );
+      });
+    },
+  );
+
   it('should create the specified number of patients', () => {
     const patients = createPatients({
       numberOfPatients: 3,
       numberOfOrganizations: 1,
-      patientsPerPractitioner: 1,
+      numberOfPractitioners: 1,
     });
 
     expect(patients).toHaveLength(3);
-    patients.forEach((patient) => {
-      expect(patient).toHaveProperty('id');
-      expect(patient.resourceType).toBe('Patient');
-      expect(patient.managingOrganization?.reference).toBe(
-        'Organization/organization-1',
-      );
-      if (patient.generalPractitioner) {
-        patient.generalPractitioner.forEach((practitionerRef) => {
-          expect(practitionerRef.reference?.split('/')[1]).toBe(
-            'practitioner-1',
-          );
-        });
-      }
-    });
   });
 
   it('should return an empty array if numberOfPatients is 0', () => {
     const patients = createPatients({
       numberOfPatients: 0,
       numberOfOrganizations: 1,
-      patientsPerPractitioner: 1,
+      numberOfPractitioners: 1,
     });
 
     expect(patients).toHaveLength(0);

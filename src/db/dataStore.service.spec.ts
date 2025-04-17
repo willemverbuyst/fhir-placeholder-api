@@ -65,6 +65,7 @@ describe('DataStoreService', () => {
     const expectedObservationsCount =
       PATIENTS_PER_PRACTITIONER *
       ORGANIZATIONS *
+      PRACTITIONERS_PER_ORGANIZATION *
       ENCOUNTERS_PER_PATIENT *
       OBSERVATIONS_PER_ENCOUNTER;
     expect(dataStoreService.observations.length).toBe(

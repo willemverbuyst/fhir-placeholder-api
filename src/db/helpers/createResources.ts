@@ -107,24 +107,30 @@ export function createEncounters({
     return createEncounter(
       `patient-${Math.floor(i / (numberOfEncounters / numberOfPatients)) + 1}`,
       `episode-of-care-${
-        Math.floor(i / (numberOfEpisodes / numberOfPatients)) + 1
+        Math.floor(i / (numberOfEncounters / numberOfEpisodes)) + 1
       }`,
       `encounter-${i + 1}`,
     );
   });
 }
 
-export function createObservations(
-  numberOfObservations: number,
-  encountersPerPatient: number,
-  observationsPerEncounter: number,
-): (Observation & Id)[] {
+export function createObservations({
+  numberOfObservations,
+  numberOfPatients,
+  numberOfEncounters,
+}: {
+  numberOfObservations: number;
+  numberOfPatients: number;
+  numberOfEncounters: number;
+}): (Observation & Id)[] {
   return Array.from({ length: numberOfObservations }, (_, i) => {
     return createObservation(
       `patient-${
-        Math.floor(i / (encountersPerPatient * observationsPerEncounter)) + 1
+        Math.floor(i / (numberOfObservations / numberOfPatients)) + 1
       }`,
-      `encounter-${Math.floor(i / observationsPerEncounter) + 1}`,
+      `encounter-${
+        Math.floor(i / (numberOfObservations / numberOfEncounters)) + 1
+      }`,
       `observation-${i + 1}`,
     );
   });

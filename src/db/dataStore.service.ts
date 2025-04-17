@@ -46,6 +46,8 @@ export class DataStoreService {
     const numberOfConditions = numberOfPatients * CONDITIONS_PER_PATIENT;
     const numberOfEpisodes = numberOfPatients * EPISODES_PER_PATIENT;
     const numberOfEncounters = numberOfPatients * ENCOUNTERS_PER_PATIENT;
+    const numberOfObservations =
+      numberOfEncounters * OBSERVATIONS_PER_ENCOUNTER;
 
     this.organizations = createOrganizations({
       numberOfOrganizations,
@@ -68,14 +70,11 @@ export class DataStoreService {
       numberOfPatients,
       numberOfEpisodes,
     });
-    this.observations = createObservations(
-      OBSERVATIONS_PER_ENCOUNTER *
-        ENCOUNTERS_PER_PATIENT *
-        ORGANIZATIONS *
-        PATIENTS_PER_PRACTITIONER,
-      ENCOUNTERS_PER_PATIENT,
-      OBSERVATIONS_PER_ENCOUNTER,
-    );
+    this.observations = createObservations({
+      numberOfObservations,
+      numberOfPatients,
+      numberOfEncounters,
+    });
 
     if (process.env.NODE_ENV === 'development') {
       console.dir(

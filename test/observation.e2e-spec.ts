@@ -23,7 +23,7 @@ describe('ObservationController (e2e)', () => {
         const observations = res.body;
         expect(observations).toBeDefined();
         expect(observations).toHaveProperty('resourceType', 'Bundle');
-        expect(observations.entry).toHaveLength(480);
+        expect(observations.entry).toHaveLength(960);
       });
   });
 

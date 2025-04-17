@@ -2,6 +2,7 @@ import {
   createConditions,
   createEncounters,
   createEpisodes,
+  createObservations,
   createOrganizations,
   createPatients,
   createPractitioners,
@@ -104,7 +105,7 @@ describe('createEncounters', () => {
   const encounters = createEncounters({
     numberOfEncounters: 12,
     numberOfPatients: 2,
-    numberOfEpisodes: 6,
+    numberOfEpisodes: 4,
   });
 
   it.each`
@@ -240,5 +241,59 @@ describe('createEpisodes', () => {
     });
 
     expect(episodes).toHaveLength(0);
+  });
+});
+
+describe('createObservations', () => {
+  const encounters = createObservations({
+    numberOfObservations: 12,
+    numberOfEncounters: 6,
+    numberOfPatients: 3,
+  });
+
+  it.each`
+    observationId       | patientId      | encounterId
+    ${'observation-1'}  | ${'patient-1'} | ${'encounter-1'}
+    ${'observation-2'}  | ${'patient-1'} | ${'encounter-1'}
+    ${'observation-3'}  | ${'patient-1'} | ${'encounter-2'}
+    ${'observation-4'}  | ${'patient-1'} | ${'encounter-2'}
+    ${'observation-5'}  | ${'patient-2'} | ${'encounter-3'}
+    ${'observation-6'}  | ${'patient-2'} | ${'encounter-3'}
+    ${'observation-7'}  | ${'patient-2'} | ${'encounter-4'}
+    ${'observation-8'}  | ${'patient-2'} | ${'encounter-4'}
+    ${'observation-9'}  | ${'patient-3'} | ${'encounter-5'}
+    ${'observation-10'} | ${'patient-3'} | ${'encounter-5'}
+    ${'observation-11'} | ${'patient-3'} | ${'encounter-6'}
+    ${'observation-12'} | ${'patient-3'} | ${'encounter-6'}
+  `(
+    'should assign correct patient and encounter to observation $observationId',
+    ({ observationId, patientId, encounterId }) => {
+      const observation =
+        encounters[parseInt(observationId.replace('observation-', ''), 10) - 1];
+      expect(observation).toHaveProperty('id', observationId);
+      expect(observation.resourceType).toBe('Observation');
+      expect(observation.subject?.reference).toBe(`Patient/${patientId}`);
+      expect(observation.encounter?.reference).toBe(`Encounter/${encounterId}`);
+    },
+  );
+
+  it('should create the specified number of observations', () => {
+    const observations = createObservations({
+      numberOfObservations: 12,
+      numberOfEncounters: 6,
+      numberOfPatients: 3,
+    });
+
+    expect(observations).toHaveLength(12);
+  });
+
+  it('should return an empty array if numberOfObservations is 0', () => {
+    const observations = createObservations({
+      numberOfObservations: 0,
+      numberOfEncounters: 6,
+      numberOfPatients: 3,
+    });
+
+    expect(observations).toHaveLength(0);
   });
 });

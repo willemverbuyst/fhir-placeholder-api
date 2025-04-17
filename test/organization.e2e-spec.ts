@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-
+import { NUMBER_OF_ORGANIZATIONS } from '../src/db/dataStore.config';
 describe('OrganizationController (e2e)', () => {
   let app: INestApplication;
 
@@ -23,7 +23,7 @@ describe('OrganizationController (e2e)', () => {
         const organizations = res.body;
         expect(organizations).toBeDefined();
         expect(organizations).toHaveProperty('resourceType', 'Bundle');
-        expect(organizations.entry).toHaveLength(3);
+        expect(organizations.entry).toHaveLength(NUMBER_OF_ORGANIZATIONS);
       });
   });
 

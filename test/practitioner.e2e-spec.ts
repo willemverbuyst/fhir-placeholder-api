@@ -2,6 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
+import { NUMBER_OF_PRACTITIONERS } from '../src/db/dataStore.config';
 
 describe('PractitionerController (e2e)', () => {
   let app: INestApplication;
@@ -23,7 +24,7 @@ describe('PractitionerController (e2e)', () => {
         const practitioners = res.body;
         expect(practitioners).toBeDefined();
         expect(practitioners).toHaveProperty('resourceType', 'Bundle');
-        expect(practitioners.entry).toHaveLength(6);
+        expect(practitioners.entry).toHaveLength(NUMBER_OF_PRACTITIONERS);
       });
   });
 

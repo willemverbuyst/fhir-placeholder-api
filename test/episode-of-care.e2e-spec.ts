@@ -2,7 +2,10 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-
+import {
+  EPISODES_PER_PATIENT,
+  NUMBER_OF_EPISODES,
+} from '../src/db/dataStore.config';
 describe('EpisodeOfCareController (e2e)', () => {
   let app: INestApplication;
 
@@ -23,7 +26,7 @@ describe('EpisodeOfCareController (e2e)', () => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
         expect(episodes).toHaveProperty('resourceType', 'Bundle');
-        expect(episodes.entry).toHaveLength(96);
+        expect(episodes.entry).toHaveLength(NUMBER_OF_EPISODES);
       });
   });
 
@@ -35,7 +38,7 @@ describe('EpisodeOfCareController (e2e)', () => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
         expect(episodes).toHaveProperty('resourceType', 'Bundle');
-        expect(episodes.entry).toHaveLength(4);
+        expect(episodes.entry).toHaveLength(EPISODES_PER_PATIENT);
         expect(episodes.entry[0].resource.patient.reference).toBe(
           'Patient/patient-1',
         );

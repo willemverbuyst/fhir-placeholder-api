@@ -23,7 +23,7 @@ describe('EncounterController (e2e)', () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty('resourceType', 'Bundle');
-        expect(encounters.entry).toHaveLength(240);
+        expect(encounters.entry).toHaveLength(480);
       });
   });
 

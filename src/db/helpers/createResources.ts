@@ -94,16 +94,20 @@ export function createEpisodes({
   });
 }
 
-export function createEncounters(
-  numberOfEncounters: number,
-  encountersPerPatient: number,
-  episodesPerPatient: number,
-): (Encounter & Id)[] {
+export function createEncounters({
+  numberOfEncounters,
+  numberOfPatients,
+  numberOfEpisodes,
+}: {
+  numberOfEncounters: number;
+  numberOfPatients: number;
+  numberOfEpisodes: number;
+}): (Encounter & Id)[] {
   return Array.from({ length: numberOfEncounters }, (_, i) => {
     return createEncounter(
-      `patient-${Math.floor(i / encountersPerPatient) + 1}`,
+      `patient-${Math.floor(i / (numberOfEncounters / numberOfPatients)) + 1}`,
       `episode-of-care-${
-        Math.floor(i / (encountersPerPatient / episodesPerPatient)) + 1
+        Math.floor(i / (numberOfEpisodes / numberOfPatients)) + 1
       }`,
       `encounter-${i + 1}`,
     );

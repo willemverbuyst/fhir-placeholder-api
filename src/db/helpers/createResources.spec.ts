@@ -101,41 +101,57 @@ describe('createPatients', () => {
 });
 
 describe('createEncounters', () => {
-  it('should create the specified number of encounters', () => {
-    const numberOfEncounters = 3;
-    const encountersPerPatient = 3;
-    const episodesPerPatient = 1;
-    const encounters = createEncounters(
-      numberOfEncounters,
-      encountersPerPatient,
-      episodesPerPatient,
-    );
+  const encounters = createEncounters({
+    numberOfEncounters: 12,
+    numberOfPatients: 2,
+    numberOfEpisodes: 6,
+  });
 
-    expect(encounters).toHaveLength(numberOfEncounters);
-    encounters.forEach((encounter) => {
-      expect(encounter).toHaveProperty('id');
+  it.each`
+    encounterId       | patientId      | episodeId
+    ${'encounter-1'}  | ${'patient-1'} | ${'episode-of-care-1'}
+    ${'encounter-2'}  | ${'patient-1'} | ${'episode-of-care-1'}
+    ${'encounter-3'}  | ${'patient-1'} | ${'episode-of-care-1'}
+    ${'encounter-4'}  | ${'patient-1'} | ${'episode-of-care-2'}
+    ${'encounter-5'}  | ${'patient-1'} | ${'episode-of-care-2'}
+    ${'encounter-6'}  | ${'patient-1'} | ${'episode-of-care-2'}
+    ${'encounter-7'}  | ${'patient-2'} | ${'episode-of-care-3'}
+    ${'encounter-8'}  | ${'patient-2'} | ${'episode-of-care-3'}
+    ${'encounter-9'}  | ${'patient-2'} | ${'episode-of-care-3'}
+    ${'encounter-10'} | ${'patient-2'} | ${'episode-of-care-4'}
+    ${'encounter-11'} | ${'patient-2'} | ${'episode-of-care-4'}
+    ${'encounter-12'} | ${'patient-2'} | ${'episode-of-care-4'}
+  `(
+    'should assign correct patient and episode to encounter $encounterId',
+    ({ encounterId, patientId, episodeId }) => {
+      const encounter =
+        encounters[parseInt(encounterId.replace('encounter-', ''), 10) - 1];
+
+      expect(encounter).toHaveProperty('id', encounterId);
       expect(encounter.resourceType).toBe('Encounter');
-      expect(encounter.subject?.reference).toBe('Patient/patient-1');
+      expect(encounter.subject?.reference).toBe(`Patient/${patientId}`);
+      expect(encounter.episodeOfCare?.[0]?.reference).toBe(
+        `EpisodeOfCare/${episodeId}`,
+      );
+    },
+  );
 
-      if (!encounter.episodeOfCare) {
-        throw new Error('EpisodeOfCare is missing');
-      }
-
-      encounter.episodeOfCare.forEach((episodeRef) => {
-        expect(episodeRef.reference?.split('/')[1]).toBe('episode-of-care-1');
-      });
+  it('should create the specified number of encounters', () => {
+    const encounters = createEncounters({
+      numberOfEncounters: 3,
+      numberOfPatients: 1,
+      numberOfEpisodes: 1,
     });
+
+    expect(encounters).toHaveLength(3);
   });
 
   it('should return an empty array if numberOfEncounters is 0', () => {
-    const numberOfEncounters = 0;
-    const encountersPerPatient = 1;
-    const episodesPerPatient = 1;
-    const encounters = createEncounters(
-      numberOfEncounters,
-      encountersPerPatient,
-      episodesPerPatient,
-    );
+    const encounters = createEncounters({
+      numberOfEncounters: 0,
+      numberOfPatients: 1,
+      numberOfEpisodes: 1,
+    });
 
     expect(encounters).toHaveLength(0);
   });
@@ -156,7 +172,8 @@ describe('createConditions', () => {
   `(
     'should assign correct patient to condition $conditionId',
     ({ conditionId, patientId }) => {
-      const condition = conditions[conditionId.slice(-1) - 1];
+      const condition =
+        conditions[parseInt(conditionId.replace('condition-', ''), 10) - 1];
 
       expect(condition).toHaveProperty('id', conditionId);
       expect(condition.resourceType).toBe('Condition');
@@ -198,7 +215,8 @@ describe('createEpisodes', () => {
   `(
     'should assign correct patient to episode $episodeId',
     ({ episodeId, patientId }) => {
-      const episode = episodes[episodeId.slice(-1) - 1];
+      const episode =
+        episodes[parseInt(episodeId.replace('episode-of-care-', ''), 10) - 1];
 
       expect(episode).toHaveProperty('id', episodeId);
       expect(episode.resourceType).toBe('EpisodeOfCare');

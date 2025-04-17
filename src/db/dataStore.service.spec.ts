@@ -54,7 +54,10 @@ describe('DataStoreService', () => {
 
   it('should initialize encounters for each patient', () => {
     const expectedEncountersCount =
-      PATIENTS_PER_PRACTITIONER * ORGANIZATIONS * ENCOUNTERS_PER_PATIENT;
+      PATIENTS_PER_PRACTITIONER *
+      ORGANIZATIONS *
+      PRACTITIONERS_PER_ORGANIZATION *
+      ENCOUNTERS_PER_PATIENT;
     expect(dataStoreService.encounters.length).toBe(expectedEncountersCount);
   });
 

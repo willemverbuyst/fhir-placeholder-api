@@ -63,7 +63,7 @@ describe('createPatients', () => {
   `(
     'should assign correct organization and practitioner to patient $patientId',
     ({ patientId, organizationId, practitionerId }) => {
-      const patient = patients[patientId.split('-')[1] - 1];
+      const patient = patients[patientId.slice(-1) - 1];
 
       expect(patient).toHaveProperty('id', patientId);
       expect(patient.resourceType).toBe('Patient');
@@ -156,7 +156,7 @@ describe('createConditions', () => {
   `(
     'should assign correct patient to condition $conditionId',
     ({ conditionId, patientId }) => {
-      const condition = conditions[conditionId.split('-')[1] - 1];
+      const condition = conditions[conditionId.slice(-1) - 1];
 
       expect(condition).toHaveProperty('id', conditionId);
       expect(condition.resourceType).toBe('Condition');
@@ -184,23 +184,42 @@ describe('createConditions', () => {
 });
 
 describe('createEpisodes', () => {
+  const episodes = createEpisodes({
+    numberOfEpisodes: 4,
+    numberOfPatients: 2,
+  });
+
+  it.each`
+    episodeId              | patientId
+    ${'episode-of-care-1'} | ${'patient-1'}
+    ${'episode-of-care-2'} | ${'patient-1'}
+    ${'episode-of-care-3'} | ${'patient-2'}
+    ${'episode-of-care-4'} | ${'patient-2'}
+  `(
+    'should assign correct patient to episode $episodeId',
+    ({ episodeId, patientId }) => {
+      const episode = episodes[episodeId.slice(-1) - 1];
+
+      expect(episode).toHaveProperty('id', episodeId);
+      expect(episode.resourceType).toBe('EpisodeOfCare');
+      expect(episode.patient?.reference).toBe(`Patient/${patientId}`);
+    },
+  );
+
   it('should create episodes for the given patient and conditions', () => {
-    const numberOfEpisodes = 4;
-    const episodesPerPatient = 4;
-    const episodes = createEpisodes(numberOfEpisodes, episodesPerPatient);
+    const episodes = createEpisodes({
+      numberOfEpisodes: 4,
+      numberOfPatients: 2,
+    });
 
     expect(episodes).toHaveLength(4);
-    episodes.forEach((episode) => {
-      expect(episode).toHaveProperty('id');
-      expect(episode.resourceType).toBe('EpisodeOfCare');
-      expect(episode.patient?.reference).toBe('Patient/patient-1');
-    });
   });
 
   it('should return an empty array if conditions are empty', () => {
-    const numberOfEpisodes = 0;
-    const episodesPerPatient = 4;
-    const episodes = createEpisodes(numberOfEpisodes, episodesPerPatient);
+    const episodes = createEpisodes({
+      numberOfEpisodes: 0,
+      numberOfPatients: 2,
+    });
 
     expect(episodes).toHaveLength(0);
   });

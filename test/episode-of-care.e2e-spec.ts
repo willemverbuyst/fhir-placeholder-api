@@ -23,7 +23,7 @@ describe('EpisodeOfCareController (e2e)', () => {
         const episodes = res.body;
         expect(episodes).toBeDefined();
         expect(episodes).toHaveProperty('resourceType', 'Bundle');
-        expect(episodes.entry).toHaveLength(48);
+        expect(episodes.entry).toHaveLength(96);
       });
   });
 

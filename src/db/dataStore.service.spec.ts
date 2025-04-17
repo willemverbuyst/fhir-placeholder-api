@@ -45,7 +45,10 @@ describe('DataStoreService', () => {
 
   it('should initialize episodes for each patient', () => {
     const expectedEpisodesCount =
-      PATIENTS_PER_PRACTITIONER * ORGANIZATIONS * EPISODES_PER_PATIENT;
+      PATIENTS_PER_PRACTITIONER *
+      ORGANIZATIONS *
+      PRACTITIONERS_PER_ORGANIZATION *
+      EPISODES_PER_PATIENT;
     expect(dataStoreService.episodes.length).toBe(expectedEpisodesCount);
   });
 

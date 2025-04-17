@@ -17,7 +17,7 @@ import {
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
-} from './dataStore.config';
+} from '../../config';
 import {
   createConditions,
   createEncounters,

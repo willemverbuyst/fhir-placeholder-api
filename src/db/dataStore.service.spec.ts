@@ -6,7 +6,7 @@ import {
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
   ORGANIZATIONS,
-} from './dataStore.config';
+} from '../../config';
 import { DataStoreService } from './dataStore.service';
 
 describe('DataStoreService', () => {

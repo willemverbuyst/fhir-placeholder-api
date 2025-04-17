@@ -1,11 +1,9 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import { EPISODES_PER_PATIENT, NUMBER_OF_EPISODES } from '../config';
 import { AppModule } from '../src/app.module';
-import {
-  EPISODES_PER_PATIENT,
-  NUMBER_OF_EPISODES,
-} from '../src/db/dataStore.config';
+
 describe('EpisodeOfCareController (e2e)', () => {
   let app: INestApplication;
 

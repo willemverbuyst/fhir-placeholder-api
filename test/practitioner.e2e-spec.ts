@@ -1,8 +1,8 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import { NUMBER_OF_PRACTITIONERS } from '../config';
 import { AppModule } from '../src/app.module';
-import { NUMBER_OF_PRACTITIONERS } from '../src/db/dataStore.config';
 
 describe('PractitionerController (e2e)', () => {
   let app: INestApplication;

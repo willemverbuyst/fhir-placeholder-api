@@ -1,12 +1,13 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '../src/app.module';
 import {
   ENCOUNTERS_PER_PATIENT,
   NUMBER_OF_OBSERVATIONS,
   OBSERVATIONS_PER_ENCOUNTER,
-} from '../src/db/dataStore.config';
+} from '../config';
+import { AppModule } from '../src/app.module';
+
 describe('ObservationController (e2e)', () => {
   let app: INestApplication;
 

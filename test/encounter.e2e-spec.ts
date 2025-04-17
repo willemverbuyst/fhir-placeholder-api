@@ -1,6 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import {
+  ENCOUNTERS_PER_PATIENT,
+  EPISODES_PER_PATIENT,
+  NUMBER_OF_ENCOUNTERS,
+} from '../config';
 import { AppModule } from '../src/app.module';
 
 describe('EncounterController (e2e)', () => {
@@ -23,7 +28,7 @@ describe('EncounterController (e2e)', () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty('resourceType', 'Bundle');
-        expect(encounters.entry).toHaveLength(240);
+        expect(encounters.entry).toHaveLength(NUMBER_OF_ENCOUNTERS);
       });
   });
 
@@ -35,7 +40,7 @@ describe('EncounterController (e2e)', () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty('resourceType', 'Bundle');
-        expect(encounters.entry).toHaveLength(20);
+        expect(encounters.entry).toHaveLength(ENCOUNTERS_PER_PATIENT);
       });
   });
 
@@ -47,7 +52,9 @@ describe('EncounterController (e2e)', () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty('resourceType', 'Bundle');
-        expect(encounters.entry).toHaveLength(5);
+        expect(encounters.entry).toHaveLength(
+          ENCOUNTERS_PER_PATIENT / EPISODES_PER_PATIENT,
+        );
       });
   });
 
@@ -59,7 +66,9 @@ describe('EncounterController (e2e)', () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty('resourceType', 'Bundle');
-        expect(encounters.entry).toHaveLength(5);
+        expect(encounters.entry).toHaveLength(
+          ENCOUNTERS_PER_PATIENT / EPISODES_PER_PATIENT,
+        );
       });
   });
 });

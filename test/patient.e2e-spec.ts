@@ -1,6 +1,11 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import {
+  NUMBER_OF_ORGANIZATIONS,
+  NUMBER_OF_PATIENTS,
+  NUMBER_OF_PRACTITIONERS,
+} from '../config';
 import { AppModule } from '../src/app.module';
 
 describe('PatientController (e2e)', () => {
@@ -23,7 +28,7 @@ describe('PatientController (e2e)', () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(12);
+        expect(patients.entry).toHaveLength(NUMBER_OF_PATIENTS);
       });
   });
 
@@ -35,7 +40,9 @@ describe('PatientController (e2e)', () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(4);
+        expect(patients.entry).toHaveLength(
+          NUMBER_OF_PATIENTS / NUMBER_OF_ORGANIZATIONS,
+        );
       });
   });
 
@@ -47,7 +54,9 @@ describe('PatientController (e2e)', () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(2);
+        expect(patients.entry).toHaveLength(
+          NUMBER_OF_PATIENTS / NUMBER_OF_PRACTITIONERS,
+        );
       });
   });
 
@@ -61,7 +70,9 @@ describe('PatientController (e2e)', () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty('resourceType', 'Bundle');
-        expect(patients.entry).toHaveLength(2);
+        expect(patients.entry).toHaveLength(
+          NUMBER_OF_PATIENTS / NUMBER_OF_PRACTITIONERS,
+        );
       });
   });
 

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Patient } from 'fhir/r5';
+import { START_DATE } from '../../../config';
 import { Id } from '../../types';
-import { START_DATE } from '../dataStore.config';
 import { createAddress } from '../helpers/address';
 import { createEmail, createPhone } from '../helpers/contactPoint';
 import { getRandomElement } from '../helpers/getRandomElement';

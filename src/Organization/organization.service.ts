@@ -3,7 +3,6 @@ import { Bundle, Organization } from 'fhir/r5';
 import { DataStoreService } from '../db/dataStore.service';
 import { Id } from '../types';
 import { wrapInBundle } from '../utils/bundle';
-import { createId } from '../utils/id';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Injectable()
@@ -14,7 +13,7 @@ export class OrganizationService {
     createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization & Id> {
     const newOrganization: Organization & Id = {
-      id: createId(this.repo.organizations.length),
+      id: String(this.repo.organizations.length),
       resourceType: 'Organization',
       active: true,
       ...createOrganizationDto,

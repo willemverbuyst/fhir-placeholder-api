@@ -1,4 +1,4 @@
-import { START_DATE } from '../dataStore.config';
+import { START_DATE } from '../../../config';
 import { createPatient } from './patient';
 
 describe('createPatient', () => {

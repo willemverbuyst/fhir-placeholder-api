@@ -1,9 +1,0 @@
-export const START_DATE = '1950-01-01';
-
-export const ORGANIZATIONS = 3;
-export const PRACTITIONERS_PER_ORGANIZATION = 2;
-export const PATIENTS_PER_ORGANIZATION = 4;
-export const EPISODES_PER_PATIENT = 4;
-export const CONDITIONS_PER_PATIENT = 4;
-export const ENCOUNTERS_PER_PATIENT = 20;
-export const OBSERVATIONS_PER_ENCOUNTER = 2;

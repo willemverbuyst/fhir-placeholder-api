@@ -10,14 +10,14 @@ import {
 } from 'fhir/r5';
 import { Id } from 'src/types';
 import {
-  CONDITIONS_PER_PATIENT,
-  ENCOUNTERS_PER_PATIENT,
-  EPISODES_PER_PATIENT,
-  OBSERVATIONS_PER_ENCOUNTER,
-  ORGANIZATIONS,
-  PATIENTS_PER_ORGANIZATION,
-  PRACTITIONERS_PER_ORGANIZATION,
-} from './dataStore.config';
+  NUMBER_OF_CONDITIONS,
+  NUMBER_OF_ENCOUNTERS,
+  NUMBER_OF_EPISODES,
+  NUMBER_OF_OBSERVATIONS,
+  NUMBER_OF_ORGANIZATIONS,
+  NUMBER_OF_PATIENTS,
+  NUMBER_OF_PRACTITIONERS,
+} from '../../config';
 import {
   createConditions,
   createEncounters,
@@ -39,37 +39,35 @@ export class DataStoreService {
   public observations: (Observation & Id)[] = [];
 
   constructor() {
-    this.organizations = createOrganizations(ORGANIZATIONS);
-    this.practitioners = createPractitioners(
-      PRACTITIONERS_PER_ORGANIZATION * ORGANIZATIONS,
-    );
-    this.patients = createPatients(
-      PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
-      ORGANIZATIONS,
-      (PATIENTS_PER_ORGANIZATION * ORGANIZATIONS) /
-        PRACTITIONERS_PER_ORGANIZATION,
-    );
-    this.conditions = createConditions(
-      CONDITIONS_PER_PATIENT * PATIENTS_PER_ORGANIZATION * ORGANIZATIONS,
-      CONDITIONS_PER_PATIENT,
-    );
-    this.episodes = createEpisodes(
-      EPISODES_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_ORGANIZATION,
-      EPISODES_PER_PATIENT,
-    );
-    this.encounters = createEncounters(
-      ENCOUNTERS_PER_PATIENT * ORGANIZATIONS * PATIENTS_PER_ORGANIZATION,
-      ENCOUNTERS_PER_PATIENT,
-      EPISODES_PER_PATIENT,
-    );
-    this.observations = createObservations(
-      OBSERVATIONS_PER_ENCOUNTER *
-        ENCOUNTERS_PER_PATIENT *
-        ORGANIZATIONS *
-        PATIENTS_PER_ORGANIZATION,
-      ENCOUNTERS_PER_PATIENT,
-      OBSERVATIONS_PER_ENCOUNTER,
-    );
+    this.organizations = createOrganizations({
+      numberOfOrganizations: NUMBER_OF_ORGANIZATIONS,
+    });
+    this.practitioners = createPractitioners({
+      numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
+    });
+    this.patients = createPatients({
+      numberOfPatients: NUMBER_OF_PATIENTS,
+      numberOfOrganizations: NUMBER_OF_ORGANIZATIONS,
+      numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
+    });
+    this.conditions = createConditions({
+      numberOfConditions: NUMBER_OF_CONDITIONS,
+      numberOfPatients: NUMBER_OF_PATIENTS,
+    });
+    this.episodes = createEpisodes({
+      numberOfEpisodes: NUMBER_OF_EPISODES,
+      numberOfPatients: NUMBER_OF_PATIENTS,
+    });
+    this.encounters = createEncounters({
+      numberOfEncounters: NUMBER_OF_ENCOUNTERS,
+      numberOfPatients: NUMBER_OF_PATIENTS,
+      numberOfEpisodes: NUMBER_OF_EPISODES,
+    });
+    this.observations = createObservations({
+      numberOfObservations: NUMBER_OF_OBSERVATIONS,
+      numberOfPatients: NUMBER_OF_PATIENTS,
+      numberOfEncounters: NUMBER_OF_ENCOUNTERS,
+    });
 
     if (process.env.NODE_ENV === 'development') {
       console.dir(

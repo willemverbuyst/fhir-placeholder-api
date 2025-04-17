@@ -43,4 +43,13 @@ describe('DataStoreService', () => {
   it('should initialize observations for each patient', () => {
     expect(dataStoreService.observations.length).toBe(NUMBER_OF_OBSERVATIONS);
   });
+
+  it('should console.log the initialized data in development mode', () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const logSpy = jest.spyOn(console, 'dir').mockImplementation(() => {});
+    process.env.NODE_ENV = 'development';
+    dataStoreService = new DataStoreService();
+    expect(logSpy).toHaveBeenCalled();
+    logSpy.mockRestore();
+  });
 });

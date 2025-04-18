@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchOrganizations } from "../query/organizations.query";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { createGetOrganizationsQueryOptions } from "../query/organizations.query";
 
 export function Organizations() {
-  const { isPending, error, data } = useQuery({
-    queryKey: ["organizations"],
-    queryFn: fetchOrganizations,
-  });
+  const { isPending, error, data } = useQuery(
+    createGetOrganizationsQueryOptions()
+  );
 
-  if (isPending) return "Loading...";
+  if (isPending) return <LoadingSpinner />;
 
   if (error) return "An error has occurred: " + error.message;
 

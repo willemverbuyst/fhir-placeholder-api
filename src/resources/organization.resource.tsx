@@ -10,7 +10,7 @@ export function OrganizationResource({
   const [showPatients, setShowPatients] = useState<undefined | string>();
 
   return (
-    <section>
+    <section className="flex">
       <div
         className="bg-amber-600 p-5 rounded-md text-white"
         onClick={() => {

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { createGetPatientsForOrganizationQueryOptions } from "../query/patients.query";
+import { PatientResource } from "./patient.resource";
 
 export function Patients({ organizationId }: { organizationId: string }) {
   const { isPending, error, data } = useQuery(
@@ -12,10 +13,10 @@ export function Patients({ organizationId }: { organizationId: string }) {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <section>
-      <ul className="flex flex-col">
-        {data.entry?.map(({ resource }) => (
-          <li key={resource?.id}>{resource?.id}</li>
+    <section className="p-4">
+      <ul className="flex flex-col gap-3">
+        {data.entry?.map((e) => (
+          <PatientResource entry={e} key={e.resource?.id} />
         ))}
       </ul>
     </section>

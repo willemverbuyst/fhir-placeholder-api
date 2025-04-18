@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { Bundle, EpisodeOfCare } from "fhir/r5";
 
-export function createGetEpisodesForPatientsQueryOptions(patientId: string) {
+export function createGetEpisodesForPatientQueryOptions(patientId: string) {
   return queryOptions({
     queryKey: ["episodes", "patient", patientId],
     queryFn: () => fetchEpisodesForPatient(patientId),

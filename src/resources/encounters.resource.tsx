@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetEpisodesForPatientQueryOptions } from "../query/episodes.query";
-import { EpisodeResource } from "./episode.resource";
+import { createGetEncountersForEpisodeQueryOptions } from "../query/encounter.query";
+import { EncounterResource } from "./encounter.resource";
 
-export function Episodes({ patientId }: { patientId: string }) {
+export function Encounters({ episodeId }: { episodeId: string }) {
   const { isPending, error, data } = useQuery(
-    createGetEpisodesForPatientQueryOptions(patientId)
+    createGetEncountersForEpisodeQueryOptions(episodeId)
   );
 
   if (isPending) return <LoadingSpinner />;
@@ -16,7 +16,7 @@ export function Episodes({ patientId }: { patientId: string }) {
     <section className="p-4">
       <ul className="flex flex-col gap-3">
         {data.entry?.map((e) => (
-          <EpisodeResource entry={e} key={e.resource?.id} />
+          <EncounterResource entry={e} key={e.resource?.id} />
         ))}
       </ul>
     </section>

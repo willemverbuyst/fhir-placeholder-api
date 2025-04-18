@@ -1,7 +1,12 @@
 import "./App.css";
+import { Organizations } from "./resources/organizations.resource";
 
 function App() {
-  return <h1>Hello World!</h1>;
+  return (
+    <div>
+      <Organizations />
+    </div>
+  );
 }
 
 export default App;

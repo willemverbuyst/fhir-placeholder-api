@@ -7,21 +7,21 @@ export function EpisodeResource({
 }: {
   entry: BundleEntry<EpisodeOfCare>;
 }) {
-  const [showEncounter, setShowEncounter] = useState<string | undefined>();
+  const [zoomIn, setZoomIn] = useState<string | undefined>();
 
   return (
     <section className="flex">
       <div
         className="bg-blue-900 p-5 rounded-md text-white"
         onClick={() => {
-          if (showEncounter) setShowEncounter(undefined);
-          else setShowEncounter(entry.resource?.id);
+          if (zoomIn) setZoomIn(undefined);
+          else setZoomIn(entry.resource?.id);
         }}
       >
         {entry.resource?.id}
       </div>
 
-      {showEncounter ? <Encounters episodeId={showEncounter} /> : null}
+      {zoomIn ? <Encounters episodeId={zoomIn} /> : null}
     </section>
   );
 }

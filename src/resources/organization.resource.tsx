@@ -7,21 +7,21 @@ export function OrganizationResource({
 }: {
   entry: BundleEntry<Organization>;
 }) {
-  const [showPatients, setShowPatients] = useState<undefined | string>();
+  const [zoomIn, setZoomIn] = useState<string | undefined>();
 
   return (
     <section className="flex">
       <div
         className="bg-amber-600 p-5 rounded-md text-white"
         onClick={() => {
-          if (showPatients) setShowPatients(undefined);
-          else setShowPatients(entry.resource?.id);
+          if (zoomIn) setZoomIn(undefined);
+          else setZoomIn(entry.resource?.id);
         }}
       >
         {entry.resource?.id}
       </div>
 
-      {showPatients ? <Patients organizationId={showPatients} /> : null}
+      {zoomIn ? <Patients organizationId={zoomIn} /> : null}
     </section>
   );
 }

@@ -7,6 +7,7 @@ import {
   Organization,
   Patient,
   Practitioner,
+  PractitionerRole,
 } from 'fhir/r5';
 import { Id } from 'src/types';
 import {
@@ -17,6 +18,7 @@ import {
   NUMBER_OF_ORGANIZATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
+  NUMBER_OF_PRACTITIONER_ROLES,
 } from '../../config';
 import {
   createConditions,
@@ -25,6 +27,7 @@ import {
   createObservations,
   createOrganizations,
   createPatients,
+  createPractitionerRoles,
   createPractitioners,
 } from './helpers/createResources';
 
@@ -35,11 +38,16 @@ export class DataStoreService {
   public conditions: (Condition & Id)[] = [];
   public organizations: (Organization & Id)[] = [];
   public practitioners: (Practitioner & Id)[] = [];
+  public practitionerRoles: (PractitionerRole & Id)[] = [];
   public encounters: (Encounter & Id)[] = [];
   public observations: (Observation & Id)[] = [];
 
   constructor() {
     this.organizations = createOrganizations({
+      numberOfOrganizations: NUMBER_OF_ORGANIZATIONS,
+    });
+    this.practitionerRoles = createPractitionerRoles({
+      numberOfPractitionerRoles: NUMBER_OF_PRACTITIONER_ROLES,
       numberOfOrganizations: NUMBER_OF_ORGANIZATIONS,
     });
     this.practitioners = createPractitioners({
@@ -76,6 +84,7 @@ export class DataStoreService {
           episodes: this.episodes.length,
           conditions: this.conditions.length,
           organizations: this.organizations.length,
+          practitionerRoles: this.practitionerRoles.length,
           practitioners: this.practitioners.length,
           encounters: this.encounters.length,
           observations: this.observations.length,

@@ -6,6 +6,7 @@ import {
   Organization,
   Patient,
   Practitioner,
+  PractitionerRole,
 } from 'fhir/r5';
 import { Id } from 'src/types';
 import { createCondition } from '../resources/condition';
@@ -15,6 +16,7 @@ import { createObservation } from '../resources/observation';
 import { createOrganization } from '../resources/organization';
 import { createPatient } from '../resources/patient';
 import { createPractitioner } from '../resources/practitioner';
+import { createPractitionerRole } from '../resources/practitioner-role';
 
 export function createOrganizations({
   numberOfOrganizations,
@@ -23,6 +25,24 @@ export function createOrganizations({
 }): (Organization & Id)[] {
   return Array.from({ length: numberOfOrganizations }, (_, i) => {
     return createOrganization(`organization-${i + 1}`);
+  });
+}
+
+export function createPractitionerRoles({
+  numberOfPractitionerRoles,
+  numberOfOrganizations,
+}: {
+  numberOfPractitionerRoles: number;
+  numberOfOrganizations: number;
+}): (PractitionerRole & Id)[] {
+  return Array.from({ length: numberOfPractitionerRoles }, (_, i) => {
+    return createPractitionerRole({
+      practitionerRoleId: `practitioner-role-${i + 1}`,
+      organizationId: `organization-${
+        Math.floor(i / (numberOfPractitionerRoles / numberOfOrganizations)) + 1
+      }`,
+      practitionerId: `practitioner-${i + 1}`,
+    });
   });
 }
 

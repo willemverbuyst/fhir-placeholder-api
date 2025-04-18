@@ -10,7 +10,7 @@ export function EncounterResource({
   const [zoomIn, setZoomIn] = useState<string | undefined>();
 
   return (
-    <section className="flex">
+    <section className="flex gap-3">
       <div
         className="bg-green-600 p-5 rounded-md text-white"
         onClick={() => {

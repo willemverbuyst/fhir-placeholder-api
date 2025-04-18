@@ -13,7 +13,7 @@ export function Observations({ encounterId }: { encounterId: string }) {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <section className="p-4">
+    <section>
       <ul className="flex flex-col gap-3">
         {data.entry?.map((e) => (
           <ObservationResource entry={e} key={e.resource?.id} />

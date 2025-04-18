@@ -13,7 +13,7 @@ export function Organizations() {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <section className="p4">
+    <section>
       <ul className="flex flex-col gap-3">
         {data.entry?.map((e) => (
           <OrganizationResource entry={e} key={e.resource?.id} />

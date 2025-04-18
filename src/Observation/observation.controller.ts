@@ -1,7 +1,7 @@
 import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { Bundle, Observation } from 'fhir/r5';
-import { Id } from 'src/types';
+import { Id } from '../types';
 import { GetObservationDto } from './dto/get-observation.dto';
 import { observationBundleExample } from './examples/observation-bundle-example';
 import { ObservationService } from './observation.service';

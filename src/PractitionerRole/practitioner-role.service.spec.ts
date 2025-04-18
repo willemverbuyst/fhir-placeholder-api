@@ -9,10 +9,32 @@ describe('PractitionerRoleService', () => {
       {
         id: '1',
         resourceType: 'PractitionerRole',
+        organization: {
+          reference: 'Organization/1',
+        },
+        practitioner: {
+          reference: 'Practitioner/1',
+        },
       },
       {
         id: '2',
         resourceType: 'PractitionerRole',
+        organization: {
+          reference: 'Organization/1',
+        },
+        practitioner: {
+          reference: 'Practitioner/2',
+        },
+      },
+      {
+        id: '3',
+        resourceType: 'PractitionerRole',
+        organization: {
+          reference: 'Organization/2',
+        },
+        practitioner: {
+          reference: 'Practitioner/3',
+        },
       },
     ],
   };
@@ -36,7 +58,28 @@ describe('PractitionerRoleService', () => {
     it('should return all practitioner roles', async () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(3);
+    });
+
+    it('should return all practitioner roles filtered by organization', async () => {
+      const bundle = await service.findAll({ organization: 'Organization/1' });
+      expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
+    });
+
+    it('should return all practitioner roles filtered by practitioner', async () => {
+      const bundle = await service.findAll({ practitioner: '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
+    });
+
+    it('should return all practitioner roles filtered by practitioner & organization', async () => {
+      const bundle = await service.findAll({
+        practitioner: '3',
+        organization: '2',
+      });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(1);
     });
   });
 });

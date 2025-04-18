@@ -13,7 +13,7 @@ export function PractitionerRoleResource({
   return (
     <section className="flex gap-3">
       <div
-        className="bg-amber-600 py-3 px-5 rounded-md text-white"
+        className="bg-amber-600 py-3 px-5 rounded-md text-white w-[200px]"
         onClick={() => {
           if (zoomIn) setZoomIn(undefined);
           else setZoomIn(entry.resource?.id);

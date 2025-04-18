@@ -7,7 +7,7 @@ export function ObservationResource({
 }) {
   return (
     <section className="flex gap-3">
-      <div className="bg-pink-600 py-3 px-5 rounded-md text-white">
+      <div className="bg-pink-600 py-3 px-5 rounded-md text-white w-[200px]">
         {entry.resource?.id}
       </div>
     </section>

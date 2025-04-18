@@ -11,8 +11,6 @@ export function createGetPractitionerQueryOptions(practitionerId: string) {
 export async function fetchPractitioner(
   practitionerId: string
 ): Promise<Practitioner> {
-  // to mimic a slow response
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch(
     `http://localhost:8080/api/v2/r5/Practitioner/${practitionerId}`
   );

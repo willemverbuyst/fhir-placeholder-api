@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetEpisodesForPatientQueryOptions } from "../query/episodes.query";
+import { createGetEpisodesForConditionQueryOptions } from "../query/episode.query";
 import { EpisodeResource } from "./episode.resource";
 
-export function Episodes({ patientId }: { patientId: string }) {
+export function Episodes({ conditionId }: { conditionId: string }) {
   const { isPending, error, data } = useQuery(
-    createGetEpisodesForPatientQueryOptions(patientId)
+    createGetEpisodesForConditionQueryOptions(conditionId)
   );
 
   if (isPending) return <LoadingSpinner />;

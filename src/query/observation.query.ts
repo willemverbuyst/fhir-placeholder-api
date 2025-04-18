@@ -13,8 +13,6 @@ export function createGetObservationsForEncounterQueryOptions(
 export async function fetchObservationsForEncounter(
   encounterId: string
 ): Promise<Bundle<Observation>> {
-  // to mimic a slow response
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch(
     `http://localhost:8080/api/v2/r5/Observation?encounter=${encounterId}`
   );

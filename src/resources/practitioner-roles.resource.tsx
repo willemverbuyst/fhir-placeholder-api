@@ -1,11 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetPatientsForPractitionerQueryOptions } from "../query/patient.query";
-import { PatientResource } from "./patient.resource";
+import { createGetPractitionerRolesForOrganizationQueryOptions } from "../query/practitioner-role.query";
+import { PractitionerRoleResource } from "./practitioner-role.resource";
 
-export function Patients({ organizationId }: { organizationId: string }) {
+export function PractitionerRoles({
+  organizationId,
+}: {
+  organizationId: string;
+}) {
   const { isPending, error, data } = useQuery(
-    createGetPatientsForPractitionerQueryOptions(organizationId)
+    createGetPractitionerRolesForOrganizationQueryOptions(organizationId)
   );
 
   if (isPending) return <LoadingSpinner />;
@@ -16,7 +20,7 @@ export function Patients({ organizationId }: { organizationId: string }) {
     <section>
       <ul className="flex flex-col gap-3">
         {data.entry?.map((e) => (
-          <PatientResource entry={e} key={e.resource?.id} />
+          <PractitionerRoleResource entry={e} key={e.resource?.id} />
         ))}
       </ul>
     </section>

@@ -1,14 +1,18 @@
-import { BundleEntry, Patient } from "fhir/r5";
+import { BundleEntry, Condition } from "fhir/r5";
 import { useState } from "react";
-import { Conditions } from "./conditions.resource";
+import { Episodes } from "./episodes.resource";
 
-export function PatientResource({ entry }: { entry: BundleEntry<Patient> }) {
+export function ConditionResource({
+  entry,
+}: {
+  entry: BundleEntry<Condition>;
+}) {
   const [zoomIn, setZoomIn] = useState<string | undefined>();
 
   return (
     <section className="flex gap-3">
       <div
-        className="bg-teal-500 py-3 px-5 rounded-md text-white"
+        className="bg-violet-500 py-3 px-5 rounded-md text-white"
         onClick={() => {
           if (zoomIn) setZoomIn(undefined);
           else setZoomIn(entry.resource?.id);
@@ -17,7 +21,7 @@ export function PatientResource({ entry }: { entry: BundleEntry<Patient> }) {
         {entry.resource?.id}
       </div>
 
-      {zoomIn ? <Conditions patientId={zoomIn} /> : null}
+      {zoomIn ? <Episodes conditionId={zoomIn} /> : null}
     </section>
   );
 }

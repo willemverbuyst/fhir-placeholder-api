@@ -9,8 +9,6 @@ export function createGetOrganizationsQueryOptions() {
 }
 
 export async function fetchOrganizations(): Promise<Bundle<Organization>> {
-  // to mimic a slow response
-  await new Promise((resolve) => setTimeout(resolve, 1000));
   const response = await fetch("http://localhost:8080/api/v2/r5/Organization");
 
   return await response.json();

@@ -1,6 +1,6 @@
 import { BundleEntry, Organization } from "fhir/r5";
 import { useState } from "react";
-import { Patients } from "./patients.resource";
+import { PractitionerRoles } from "./practitioner-roles.resource";
 
 export function OrganizationResource({
   entry,
@@ -12,7 +12,7 @@ export function OrganizationResource({
   return (
     <section className="flex gap-3">
       <div
-        className="bg-amber-600 p-5 rounded-md text-white"
+        className="bg-amber-800 py-3 px-5 rounded-md text-white"
         onClick={() => {
           if (zoomIn) setZoomIn(undefined);
           else setZoomIn(entry.resource?.id);
@@ -21,7 +21,7 @@ export function OrganizationResource({
         {entry.resource?.id}
       </div>
 
-      {zoomIn ? <Patients organizationId={zoomIn} /> : null}
+      {zoomIn ? <PractitionerRoles organizationId={zoomIn} /> : null}
     </section>
   );
 }

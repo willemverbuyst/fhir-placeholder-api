@@ -23,6 +23,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - `GET /Patient/:id`
 - `GET /EpisodeOfCare`
 - `GET /EpisodeOfCare?patient=<id>`
+- `GET /EpisodeOfCare?diagnosis-reference=<id>`
 - `GET /EpisodeOfCare/:id`
 - `GET /Condition`
 - `GET /Condition?patient=<id>`

@@ -125,6 +125,28 @@ export class MetadataController {
               type: 'Practitioner',
               interaction: [{ code: 'read' }, { code: 'search-type' }],
             },
+            {
+              type: 'PractitionerRole',
+              interaction: [{ code: 'search-type' }],
+              searchParam: [
+                {
+                  name: 'practitioner',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/PractitionerRole-practitioner',
+                  type: 'reference',
+                  documentation:
+                    'Practitioner that is able to provide the defined services for the organization',
+                },
+                {
+                  name: 'organization',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/PractitionerRole-organization',
+                  type: 'reference',
+                  documentation:
+                    'The identity of the organization the practitioner represents / acts on behalf of',
+                },
+              ],
+            },
           ],
         },
       ],

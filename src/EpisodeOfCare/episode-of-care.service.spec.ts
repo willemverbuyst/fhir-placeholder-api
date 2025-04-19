@@ -11,18 +11,28 @@ describe('EpisodeOfCareService', () => {
         resourceType: 'EpisodeOfCare',
         status: 'active',
         patient: { reference: 'Patient/1' },
+        diagnosis: [
+          { condition: [{ reference: { reference: 'condition/2' } }] },
+        ],
       },
       {
         id: '2',
         resourceType: 'EpisodeOfCare',
         status: 'active',
         patient: { reference: 'Patient/2' },
+        diagnosis: [
+          { condition: [{ reference: { reference: 'condition/2' } }] },
+          { condition: [{ reference: { reference: 'condition/3' } }] },
+        ],
       },
       {
         id: '3',
         resourceType: 'EpisodeOfCare',
         status: 'active',
         patient: { reference: 'Patient/1' },
+        diagnosis: [
+          { condition: [{ reference: { reference: 'condition/4' } }] },
+        ],
       },
     ],
   };
@@ -51,6 +61,12 @@ describe('EpisodeOfCareService', () => {
 
     it('should return all episodes filtered by patient', async () => {
       const bundle = await service.findAll({ patient: '1' });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(2);
+    });
+
+    it('should return all episodes filtered by condition', async () => {
+      const bundle = await service.findAll({ 'diagnosis-reference': '2' });
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
     });

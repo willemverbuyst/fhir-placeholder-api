@@ -5,6 +5,7 @@ import {
   NUMBER_OF_OBSERVATIONS,
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
+  NUMBER_OF_PRACTITIONER_ROLES,
   ORGANIZATIONS,
 } from '../../config';
 import { DataStoreService } from './dataStore.service';
@@ -20,8 +21,20 @@ describe('DataStoreService', () => {
     expect(dataStoreService.organizations.length).toBe(ORGANIZATIONS);
   });
 
+  it('should initialize practitioner roles with the correct number of items', () => {
+    expect(dataStoreService.practitioners.length).toBe(
+      NUMBER_OF_PRACTITIONER_ROLES,
+    );
+  });
+
   it('should initialize practitioners with the correct number of items', () => {
     expect(dataStoreService.practitioners.length).toBe(NUMBER_OF_PRACTITIONERS);
+  });
+
+  it('should have the same number of practitioners as practitioner roles', () => {
+    expect(dataStoreService.practitioners.length).toBe(
+      dataStoreService.practitionerRoles.length,
+    );
   });
 
   it('should initialize patients with the correct number of items', () => {

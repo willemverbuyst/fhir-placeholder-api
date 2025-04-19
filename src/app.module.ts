@@ -13,6 +13,7 @@ import { ObservationModule } from './Observation/observation.module';
 import { OrganizationModule } from './Organization/organization.module';
 import { PatientModule } from './Patient/patient.module';
 import { PractitionerModule } from './Practitioner/practitioner.module';
+import { PractitionerRoleModule } from './PractitionerRole/practitioner-role.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PractitionerModule } from './Practitioner/practitioner.module';
     MetadataModule,
     EncounterModule,
     ObservationModule,
+    PractitionerRoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -29,6 +29,9 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - `GET /Condition/:id`
 - `GET /Practitioner`
 - `GET /Practitioner/:id`
+- `GET /PractitionerRole`
+- `GET /Practitioner?practitioner=<id>`
+- `GET /Practitioner?organization=<id>`
 - `GET /Encounter`
 - `GET /Encounter?patient=<id>`
 - `GET /Encounter?episode-of-care=<id>`

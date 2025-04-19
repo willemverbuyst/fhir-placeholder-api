@@ -28,6 +28,12 @@ export class EpisodeOfCareController {
     description: 'Patient ID to filter episodes by patient',
     type: String,
   })
+  @ApiQuery({
+    name: 'diagnosis reference',
+    required: false,
+    description: 'Diagnosis reference to filter episodes by condition',
+    type: String,
+  })
   @Get()
   async findAll(
     @Query(

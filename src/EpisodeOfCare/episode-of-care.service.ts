@@ -10,6 +10,7 @@ export class EpisodeOfCareService {
 
   async findAll(query?: {
     patient?: string;
+    'diagnosis-reference'?: string;
   }): Promise<Bundle<EpisodeOfCare & Id>> {
     let resources = this.repo.episodes;
 
@@ -17,11 +18,21 @@ export class EpisodeOfCareService {
       return wrapInBundle(resources);
     }
 
-    const { patient } = query;
+    const { patient, 'diagnosis-reference': diagnosisReference } = query;
 
     if (patient) {
       resources = this.repo.episodes.filter((e) =>
         e.patient.reference?.endsWith(patient),
+      );
+    }
+
+    if (diagnosisReference) {
+      resources = this.repo.episodes.filter((e) =>
+        e.diagnosis?.some((d) =>
+          d.condition?.some((c) =>
+            c.reference?.reference?.endsWith(diagnosisReference),
+          ),
+        ),
       );
     }
 

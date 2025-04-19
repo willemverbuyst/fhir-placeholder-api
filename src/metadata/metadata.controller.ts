@@ -71,6 +71,14 @@ export class MetadataController {
                   documentation:
                     'The patient who is the focus of this episode of care',
                 },
+                {
+                  name: 'diagnosis-reference',
+                  definition:
+                    'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-diagnosis-reference',
+                  type: 'reference',
+                  documentation:
+                    'Conditions/problems/diagnoses this episode of care is for (resource reference)',
+                },
               ],
             },
             {

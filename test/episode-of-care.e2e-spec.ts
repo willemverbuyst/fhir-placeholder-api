@@ -52,6 +52,26 @@ describe('EpisodeOfCareController (e2e)', () => {
       });
   });
 
+  it('/EpisodeOfCare?diagnosis-reference=condition-5 (GET) - OK', async () => {
+    return request(app.getHttpServer())
+      .get('/EpisodeOfCare?diagnosis-reference=condition-5')
+      .expect(200)
+      .then((res) => {
+        const episodes = res.body;
+        expect(episodes).toBeDefined();
+        expect(episodes).toHaveProperty('resourceType', 'Bundle');
+        expect(episodes.entry).toHaveLength(1);
+        expect(episodes.entry[0].resource.patient.reference).toBe(
+          'Patient/patient-2',
+        );
+        expect(episodes.entry[0].resource.diagnosis).toEqual([
+          {
+            condition: [{ reference: { reference: 'Condition/condition-5' } }],
+          },
+        ]);
+      });
+  });
+
   it('/EpisodeOfCare?patient=1&title=foo (GET) - OK', async () => {
     return request(app.getHttpServer())
       .get('/EpisodeOfCare?patient=1&title=foo')

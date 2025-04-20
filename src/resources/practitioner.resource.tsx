@@ -1,5 +1,5 @@
 import { Practitioner } from "fhir/r5";
-import { ResourceRenderer } from "../components/ResourceRenderen";
+import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { Patients } from "./patient.resource";
 
 export function PractitionerResource({
@@ -7,10 +7,11 @@ export function PractitionerResource({
 }: {
   practitionerId: string | undefined;
 }) {
+  console.log(practitionerId);
   if (!practitionerId) return null;
 
   return (
-    <ResourceRenderer<Practitioner>
+    <ResourcesRenderer<Practitioner>
       url={`Practitioner/${practitionerId}`}
       className="bg-amber-400"
       renderItem={(resource) => <Patients practitionerId={resource.id} />}

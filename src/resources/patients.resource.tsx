@@ -4,9 +4,9 @@ import { LoadingSpinner } from "../components/LoadingSpinner";
 import { createGetPatientsForPractitionerQueryOptions } from "../query/patient.query";
 import { PatientResource } from "./patient.resource";
 
-export function Patients({ organizationId }: { organizationId: string }) {
+export function Patients({ practitionerId }: { practitionerId: string }) {
   const { isPending, error, data } = useQuery(
-    createGetPatientsForPractitionerQueryOptions(organizationId)
+    createGetPatientsForPractitionerQueryOptions(practitionerId)
   );
 
   if (isPending) return <LoadingSpinner />;

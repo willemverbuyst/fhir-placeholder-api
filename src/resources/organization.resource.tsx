@@ -1,5 +1,5 @@
 import { BundleEntry, Organization } from "fhir/r5";
-import { useState } from "react";
+import { ListItem } from "../components/ListItem";
 import { PractitionerRoles } from "./practitioner-roles.resource";
 
 export function OrganizationResource({
@@ -7,21 +7,15 @@ export function OrganizationResource({
 }: {
   entry: BundleEntry<Organization>;
 }) {
-  const [zoomIn, setZoomIn] = useState<string | undefined>();
+  const id = entry.resource?.id;
+
+  if (!id) return null;
 
   return (
-    <section className="flex gap-3">
-      <div
-        className="bg-amber-800 py-3 px-5 rounded-md text-white w-[200px]"
-        onClick={() => {
-          if (zoomIn) setZoomIn(undefined);
-          else setZoomIn(entry.resource?.id);
-        }}
-      >
-        {entry.resource?.id}
-      </div>
-
-      {zoomIn ? <PractitionerRoles organizationId={zoomIn} /> : null}
-    </section>
+    <ListItem
+      id={id}
+      className="bg-amber-800"
+      children={<PractitionerRoles organizationId={id} />}
+    />
   );
 }

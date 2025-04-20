@@ -1,5 +1,5 @@
 import { BundleEntry, EpisodeOfCare } from "fhir/r5";
-import { useState } from "react";
+import { ListItem } from "../components/ListItem";
 import { Encounters } from "./encounters.resource";
 
 export function EpisodeResource({
@@ -7,21 +7,15 @@ export function EpisodeResource({
 }: {
   entry: BundleEntry<EpisodeOfCare>;
 }) {
-  const [zoomIn, setZoomIn] = useState<string | undefined>();
+  const id = entry.resource?.id;
+
+  if (!id) return null;
 
   return (
-    <section className="flex gap-3">
-      <div
-        className="bg-blue-900 py-3 px-5 rounded-md text-white w-[200px]"
-        onClick={() => {
-          if (zoomIn) setZoomIn(undefined);
-          else setZoomIn(entry.resource?.id);
-        }}
-      >
-        {entry.resource?.id}
-      </div>
-
-      {zoomIn ? <Encounters episodeId={zoomIn} /> : null}
-    </section>
+    <ListItem
+      id={id}
+      className="bg-blue-900"
+      children={<Encounters episodeId={id} />}
+    />
   );
 }

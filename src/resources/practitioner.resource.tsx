@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ErrorMessage } from "../components/ErrorMessage";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { createGetPractitionerQueryOptions } from "../query/practitioner.query";
@@ -15,7 +16,7 @@ export function PractitionerResource({
 
   if (isPending) return <LoadingSpinner />;
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return <ErrorMessage error={error} />;
 
   if (!data.id) return null;
 

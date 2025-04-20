@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { ErrorMessage } from "../components/ErrorMessage";
 import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
@@ -12,7 +13,7 @@ export function Encounters({ episodeId }: { episodeId: string }) {
 
   if (isPending) return <LoadingSpinner />;
 
-  if (error) return <p>`An error has occurred: ${error.message}`</p>;
+  if (error) return <ErrorMessage error={error} />;
 
   if (!data.entry) return null;
 

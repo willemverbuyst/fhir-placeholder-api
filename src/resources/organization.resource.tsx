@@ -1,14 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
+import { Organization } from "fhir/r5";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetOrganizationsQueryOptions } from "../query/organizations.query";
+import { createResourcesQueryOptions } from "../query/resources.query";
 import { PractitionerRoles } from "./practitioner-role.resource";
 
 export function Organizations() {
   const { isPending, error, data } = useQuery(
-    createGetOrganizationsQueryOptions()
+    createResourcesQueryOptions<Organization>({
+      url: "Organization",
+      queryKeys: ["organization"],
+    })
   );
 
   if (isPending) return <LoadingSpinner />;

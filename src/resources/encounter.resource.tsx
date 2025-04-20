@@ -1,14 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
+import { Encounter } from "fhir/r5";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetEncountersForEpisodeQueryOptions } from "../query/encounter.query";
+import { createResourcesQueryOptions } from "../query/resources.query";
 import { Observations } from "./observation.resource";
 
 export function Encounters({ episodeId }: { episodeId: string }) {
   const { isPending, error, data } = useQuery(
-    createGetEncountersForEpisodeQueryOptions(episodeId)
+    createResourcesQueryOptions<Encounter>({
+      url: `Encounter?episode-of-care=${episodeId}`,
+      queryKeys: ["encounter", episodeId],
+    })
   );
 
   if (isPending) return <LoadingSpinner />;

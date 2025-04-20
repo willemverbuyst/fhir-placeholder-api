@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import { Practitioner } from "fhir/r5";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetPractitionerQueryOptions } from "../query/practitioner.query";
+import { createResourceQueryOptions } from "../query/resource.query";
 import { Patients } from "./patient.resource";
 
 export function PractitionerResource({
@@ -11,7 +12,10 @@ export function PractitionerResource({
   practitionerId: string;
 }) {
   const { isPending, error, data } = useQuery(
-    createGetPractitionerQueryOptions(practitionerId)
+    createResourceQueryOptions<Practitioner>({
+      url: `Practitioner/${practitionerId}`,
+      queryKeys: ["practitioner", practitionerId],
+    })
   );
 
   if (isPending) return <LoadingSpinner />;

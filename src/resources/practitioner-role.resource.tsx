@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { PractitionerRole } from "fhir/r5";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { createGetPractitionerRolesForOrganizationQueryOptions } from "../query/practitioner-role.query";
+import { createResourcesQueryOptions } from "../query/resources.query";
 import { PractitionerResource } from "./practitioner.resource";
 
 export function PractitionerRoles({
@@ -12,7 +13,10 @@ export function PractitionerRoles({
   organizationId: string;
 }) {
   const { isPending, error, data } = useQuery(
-    createGetPractitionerRolesForOrganizationQueryOptions(organizationId)
+    createResourcesQueryOptions<PractitionerRole>({
+      url: `PractitionerRole?organization=${organizationId}`,
+      queryKeys: ["practitionerRole", organizationId],
+    })
   );
 
   if (isPending) return <LoadingSpinner />;

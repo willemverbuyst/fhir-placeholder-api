@@ -1,17 +1,33 @@
-import { BundleEntry, Patient } from "fhir/r5";
+import { useQuery } from "@tanstack/react-query";
+import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
-import { Conditions } from "./conditions.resource";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { createGetPatientsForPractitionerQueryOptions } from "../query/patient.query";
+import { Conditions } from "./condition.resource";
 
-export function PatientResource({ entry }: { entry: BundleEntry<Patient> }) {
-  const id = entry.resource?.id;
+export function Patients({ practitionerId }: { practitionerId: string }) {
+  const { isPending, error, data } = useQuery(
+    createGetPatientsForPractitionerQueryOptions(practitionerId)
+  );
 
-  if (!id) return null;
+  if (isPending) return <LoadingSpinner />;
+
+  if (error) return "An error has occurred: " + error.message;
+
+  if (!data.entry) return null;
 
   return (
-    <ListItem
-      id={id}
-      className="bg-teal-500"
-      children={<Conditions patientId={id} />}
-    />
+    <List>
+      {data.entry.map((e) =>
+        e.resource?.id ? (
+          <ListItem
+            key={e.resource.id}
+            id={e.resource.id}
+            className="bg-teal-500"
+            children={<Conditions patientId={e.resource.id} />}
+          />
+        ) : null
+      )}
+    </List>
   );
 }

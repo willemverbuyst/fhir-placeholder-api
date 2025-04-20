@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ListItem } from "../components/ListItem";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { createGetPractitionerQueryOptions } from "../query/practitioner.query";
-import { Patients } from "./patients.resource";
+import { Patients } from "./patient.resource";
 
 export function PractitionerResource({
   practitionerId,

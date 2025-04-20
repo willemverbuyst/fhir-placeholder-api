@@ -1,21 +1,33 @@
-import { BundleEntry, Condition } from "fhir/r5";
+import { useQuery } from "@tanstack/react-query";
+import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
-import { Episodes } from "./episodes.resource";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { createGetConditionsForPatientQueryOptions } from "../query/condition.query";
+import { Episodes } from "./episode.resource";
 
-export function ConditionResource({
-  entry,
-}: {
-  entry: BundleEntry<Condition>;
-}) {
-  const id = entry.resource?.id;
+export function Conditions({ patientId }: { patientId: string }) {
+  const { isPending, error, data } = useQuery(
+    createGetConditionsForPatientQueryOptions(patientId)
+  );
 
-  if (!id) return null;
+  if (isPending) return <LoadingSpinner />;
+
+  if (error) return "An error has occurred: " + error.message;
+
+  if (!data.entry) return null;
 
   return (
-    <ListItem
-      id={id}
-      className="bg-violet-500"
-      children={<Episodes conditionId={id} />}
-    />
+    <List>
+      {data.entry.map((e) =>
+        e.resource?.id ? (
+          <ListItem
+            key={e.resource.id}
+            id={e.resource.id}
+            className="bg-violet-500"
+            children={<Episodes conditionId={e.resource.id} />}
+          />
+        ) : null
+      )}
+    </List>
   );
 }

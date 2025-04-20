@@ -1,21 +1,33 @@
-import { BundleEntry, Organization } from "fhir/r5";
+import { useQuery } from "@tanstack/react-query";
+import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
-import { PractitionerRoles } from "./practitioner-roles.resource";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { createGetOrganizationsQueryOptions } from "../query/organizations.query";
+import { PractitionerRoles } from "./practitioner-role.resource";
 
-export function OrganizationResource({
-  entry,
-}: {
-  entry: BundleEntry<Organization>;
-}) {
-  const id = entry.resource?.id;
+export function Organizations() {
+  const { isPending, error, data } = useQuery(
+    createGetOrganizationsQueryOptions()
+  );
 
-  if (!id) return null;
+  if (isPending) return <LoadingSpinner />;
+
+  if (error) return "An error has occurred: " + error.message;
+
+  if (!data.entry) return null;
 
   return (
-    <ListItem
-      id={id}
-      className="bg-amber-800"
-      children={<PractitionerRoles organizationId={id} />}
-    />
+    <List>
+      {data.entry.map((e) =>
+        e.resource?.id ? (
+          <ListItem
+            key={e.resource.id}
+            id={e.resource.id}
+            className="bg-amber-800"
+            children={<PractitionerRoles organizationId={e.resource.id} />}
+          />
+        ) : null
+      )}
+    </List>
   );
 }

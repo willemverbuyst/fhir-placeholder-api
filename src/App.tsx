@@ -1,4 +1,4 @@
-import { Organizations } from "./resources/organizations.resource";
+import { Organizations } from "./resources/organization.resource";
 
 function App() {
   return (

@@ -1,14 +1,31 @@
-import { BundleEntry, Observation } from "fhir/r5";
+import { useQuery } from "@tanstack/react-query";
+import { List } from "../components/List";
 import { ListItem } from "../components/ListItem";
+import { LoadingSpinner } from "../components/LoadingSpinner";
+import { createGetObservationsForEncounterQueryOptions } from "../query/observation.query";
 
-export function ObservationResource({
-  entry,
-}: {
-  entry: BundleEntry<Observation>;
-}) {
-  const id = entry.resource?.id;
+export function Observations({ encounterId }: { encounterId: string }) {
+  const { isPending, error, data } = useQuery(
+    createGetObservationsForEncounterQueryOptions(encounterId)
+  );
 
-  if (!id) return null;
+  if (isPending) return <LoadingSpinner />;
 
-  return <ListItem id={id} className="bg-pink-600" />;
+  if (error) return "An error has occurred: " + error.message;
+
+  if (!data.entry) return null;
+
+  return (
+    <List>
+      {data.entry.map((e) =>
+        e.resource?.id ? (
+          <ListItem
+            key={e.resource.id}
+            id={e.resource.id}
+            className="bg-pink-600"
+          />
+        ) : null
+      )}
+    </List>
+  );
 }

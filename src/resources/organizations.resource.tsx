@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { List } from "../components/List";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { createGetOrganizationsQueryOptions } from "../query/organizations.query";
 import { OrganizationResource } from "./organization.resource";
@@ -12,13 +13,13 @@ export function Organizations() {
 
   if (error) return "An error has occurred: " + error.message;
 
+  if (!data.entry) return null;
+
   return (
-    <section>
-      <ul className="flex flex-col gap-3">
-        {data.entry?.map((e) => (
-          <OrganizationResource entry={e} key={e.resource?.id} />
-        ))}
-      </ul>
-    </section>
+    <List>
+      {data.entry.map((e) => (
+        <OrganizationResource entry={e} key={e.resource?.id} />
+      ))}
+    </List>
   );
 }

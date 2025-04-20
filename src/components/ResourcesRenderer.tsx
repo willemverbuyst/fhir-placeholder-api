@@ -9,17 +9,15 @@ import { createResourcesQueryOptions } from "../query/resources.query";
 
 export function ResourcesRenderer<T extends Resource>({
   url,
-  queryKeys,
   className,
   renderItem,
 }: {
   url: string;
-  queryKeys: string[];
   className: string;
   renderItem?: (resource: T) => JSX.Element | undefined;
 }) {
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<T>({ url, queryKeys })
+    createResourcesQueryOptions<T>({ url })
   );
 
   if (isPending) return <LoadingSpinner />;

@@ -8,7 +8,6 @@ export function Episodes({ conditionId }: { conditionId: string | undefined }) {
   return (
     <ResourcesRenderer<EpisodeOfCare>
       url={`EpisodeOfCare?diagnosis-reference=${conditionId}`}
-      queryKeys={["episodeOfCare", conditionId]}
       className="bg-blue-900"
       renderItem={(resource) => <Encounters episodeId={resource.id} />}
     />

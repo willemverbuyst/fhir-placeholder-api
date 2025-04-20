@@ -11,7 +11,6 @@ export function Observations({
   return (
     <ResourcesRenderer<Observation>
       url={`Observation?encounter=${encounterId}`}
-      queryKeys={["observation", encounterId]}
       className="bg-pink-600"
     />
   );

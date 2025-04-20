@@ -12,7 +12,6 @@ export function Patients({
   return (
     <ResourcesRenderer<Patient>
       url={`Patient?general-practitioner=${practitionerId}`}
-      queryKeys={["patient", practitionerId]}
       className="bg-teal-500"
       renderItem={(resource) => <Conditions patientId={resource.id} />}
     />

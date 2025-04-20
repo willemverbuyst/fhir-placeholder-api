@@ -12,7 +12,6 @@ export function PractitionerResource({
   return (
     <ResourceRenderer<Practitioner>
       url={`Practitioner/${practitionerId}`}
-      queryKeys={["practitioner", practitionerId]}
       className="bg-amber-400"
       renderItem={(resource) => <Patients practitionerId={resource.id} />}
     />

@@ -3,13 +3,11 @@ import { Resource } from "fhir/r5";
 
 export function createResourceQueryOptions<T extends Resource>({
   url,
-  queryKeys,
 }: {
   url: string;
-  queryKeys: string[];
 }) {
   return queryOptions({
-    queryKey: queryKeys,
+    queryKey: [url],
     queryFn: () => fetchResource<T>(url),
   });
 }

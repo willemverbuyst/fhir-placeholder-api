@@ -12,7 +12,6 @@ export function PractitionerRoles({
   return (
     <ResourcesRenderer<PractitionerRole>
       url={`PractitionerRole?organization=${organizationId}`}
-      queryKeys={["practitionerRole", organizationId]}
       className="bg-amber-600"
       renderItem={(resource) => (
         <PractitionerResource

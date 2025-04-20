@@ -8,7 +8,6 @@ export function Encounters({ episodeId }: { episodeId: string | undefined }) {
   return (
     <ResourcesRenderer<Encounter>
       url={`Encounter?episode-of-care=${episodeId}`}
-      queryKeys={["encounter", episodeId]}
       className="bg-green-600"
       renderItem={(resource) => <Observations encounterId={resource.id} />}
     />

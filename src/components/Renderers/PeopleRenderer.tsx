@@ -13,7 +13,7 @@ export function PeopleRenderer(props: Person): React.JSX.Element {
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="text-center">
           {firstName} {surname}
         </CardTitle>
       </CardHeader>

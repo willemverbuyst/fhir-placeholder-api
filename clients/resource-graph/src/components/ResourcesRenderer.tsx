@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { Bundle, Resource } from "fhir/r5";
 import { JSX } from "react";
-import { ErrorMessage } from "../components/ErrorMessage";
-import { List } from "../components/List";
-import { ListItem } from "../components/ListItem";
-import { LoadingSpinner } from "../components/LoadingSpinner";
 import { createResourcesQueryOptions } from "../query/resources.query";
+import { ErrorMessage } from "./ErrorMessage";
+import { List } from "./List";
+import { ListItem } from "./ListItem";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 function isBundle<T extends Resource>(
   data: T | Bundle<T> | undefined

@@ -24,6 +24,7 @@ describe('createPatient', () => {
     expect(patient).toHaveProperty('gender');
     expect(['male', 'female', 'other', 'unknown']).toContain(patient.gender);
 
+    expect(patient).toHaveProperty('active');
     expect(patient).toHaveProperty('telecom');
     expect(patient.telecom).toBeInstanceOf(Array);
     expect(patient).toHaveProperty('address');

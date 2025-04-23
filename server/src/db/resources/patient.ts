@@ -30,6 +30,7 @@ export function createPatient(
       Gender.UNKNOWN,
       Gender.OTHER,
     ]),
+    active: faker.datatype.boolean(),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],
     managingOrganization: { reference: `Organization/${organizationId}` },

@@ -1,20 +1,17 @@
 import { Patient } from "fhir/r5";
 import React, { useState } from "react";
-import { BookRenderer } from "./components/Renderers/BookRenderer";
 import { PatientRenderer } from "./components/Renderers/PatientRendere";
 import { PeopleRenderer } from "./components/Renderers/PeopleRenderer";
 import { SearchSortAndFilter } from "./components/SearchSortAndFilter";
 import { Button } from "./components/ui/button";
 import { Items } from "./constants";
-import { books } from "./dummyData/books";
 import { patients } from "./dummyData/patient";
 import { persons } from "./dummyData/persons";
-import { Book } from "./interfaces/Book";
 import { Person } from "./interfaces/Person";
 import { cn } from "./lib/utils";
 
 function App(): React.JSX.Element {
-  const [display, setDisplay] = useState<keyof typeof Items>(Items.BOOKS);
+  const [display, setDisplay] = useState<keyof typeof Items>(Items.PATIENTS);
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10 bg-gray-200">
@@ -35,16 +32,7 @@ function App(): React.JSX.Element {
           >
             {Items.PATIENTS}
           </Button>
-          <Button
-            variant="outline"
-            className={cn(
-              "border-primary",
-              display === Items.BOOKS && "bg-primary text-white",
-            )}
-            onClick={() => setDisplay(Items.BOOKS)}
-          >
-            {Items.BOOKS}
-          </Button>
+
           <Button
             variant="outline"
             className={cn(
@@ -73,20 +61,6 @@ function App(): React.JSX.Element {
             >
               {(patient): React.JSX.Element => (
                 <PatientRenderer {...patient} key={patient.id} />
-              )}
-            </SearchSortAndFilter>
-          ) : display === Items.BOOKS ? (
-            <SearchSortAndFilter<Book>
-              dataSource={books}
-              searchProperties={["title", "author"]}
-              filterKeys={["inPrint"]}
-              sortKeys={["author", "title", "pages"]}
-              initialSortProperty={{ property: "title", isDescending: true }}
-              initialFilterProperties={[]}
-              initialSearchQuery=""
-            >
-              {(book): React.JSX.Element => (
-                <BookRenderer {...book} key={book._id} />
               )}
             </SearchSortAndFilter>
           ) : (

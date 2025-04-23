@@ -45,7 +45,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - `PATCH /Organization/:id`
 
 ```typescript
-fetch('http://localhost:8080/api/v2/r5/Patient/1')
+fetch("http://localhost:8080/api/v2/r5/Patient/1")
   .then((response) => response.json())
   .then((json) => console.log(json));
 ```
@@ -104,12 +104,8 @@ curl http://localhost:8080/api/v2/r5/Patient/1
 }
 ```
 
-## :open_book: Swagger Docs
+## Tools to inspect the resources
 
-Go to [http://localhost:8080/api-docs](http://localhost:8080/api-docs)
+### Resource Graph
 
-## :rocket: Run Server
-
-> npm run start
-
-You can change the number of resources in the [config](./src/db/dataStore.config.ts)
+![screenshot](./clients/resource-graph/Screenshot.png)

@@ -1,10 +1,13 @@
+import { Patient } from "fhir/r5";
 import React, { useState } from "react";
 import { BookRenderer } from "./components/Renderers/BookRenderer";
+import { PatientRenderer } from "./components/Renderers/PatientRendere";
 import { PeopleRenderer } from "./components/Renderers/PeopleRenderer";
 import { SearchSortAndFilter } from "./components/SearchSortAndFilter";
 import { Button } from "./components/ui/button";
 import { Items } from "./constants";
 import { books } from "./dummyData/books";
+import { patients } from "./dummyData/patient";
 import { persons } from "./dummyData/persons";
 import { Book } from "./interfaces/Book";
 import { Person } from "./interfaces/Person";
@@ -55,7 +58,24 @@ function App(): React.JSX.Element {
         </section>
 
         <section className="bg-gray-300 p-4 rounded-lg w-full">
-          {display === Items.BOOKS ? (
+          {display === Items.PATIENTS ? (
+            <SearchSortAndFilter<Patient & { id: string }>
+              dataSource={patients}
+              searchProperties={["gender"]}
+              filterKeys={[]}
+              sortKeys={["gender", "birthDate"]}
+              initialSortProperty={{
+                property: "birthDate",
+                isDescending: true,
+              }}
+              initialFilterProperties={[]}
+              initialSearchQuery=""
+            >
+              {(patient): React.JSX.Element => (
+                <PatientRenderer {...patient} key={patient.id} />
+              )}
+            </SearchSortAndFilter>
+          ) : display === Items.BOOKS ? (
             <SearchSortAndFilter<Book>
               dataSource={books}
               searchProperties={["title", "author"]}

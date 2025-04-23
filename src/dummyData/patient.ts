@@ -1,6 +1,6 @@
 import { Patient } from "fhir/r5";
 
-export const patients: Patient[] = [
+export const patients: (Patient & { id: string })[] = [
   {
     id: "patient-1",
     name: [{ family: "Thompson", given: ["Aniya"] }],

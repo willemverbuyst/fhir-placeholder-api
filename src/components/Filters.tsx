@@ -1,5 +1,3 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import React from "react";
 import { Filter } from "../interfaces/Filter";
 
@@ -46,20 +44,20 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
 
   return (
     <section className="flex flex-col gap-2 py-4">
-      <h2>Filter</h2>
       {filterKeys
         .filter((k) => !!k)
         .map((key) => {
           return (
             <React.Fragment key={key.toString()}>
               <div className="flex items-center space-x-2">
-                <Checkbox
+                <input
                   id={`${key.toString()}-true`}
                   checked={filterProperties.some(
                     ({ property, isTruthySelected }) =>
                       property === key && isTruthySelected,
                   )}
-                  onCheckedChange={() => {
+                  type="checkbox"
+                  onChange={() => {
                     onChangeFilter({
                       property: key,
                       isTruthySelected: true,
@@ -67,18 +65,19 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
                   }}
                   className="bg-white"
                 />
-                <Label htmlFor={`${key.toString()}-true`}>
+                <label htmlFor={`${key.toString()}-true`}>
                   {key.toString()}
-                </Label>
+                </label>
               </div>
               <div className="flex items-center space-x-2">
-                <Checkbox
+                <input
                   id={`${key.toString()}-false`}
+                  type="checkbox"
                   checked={filterProperties.some(
                     ({ property, isTruthySelected }) =>
                       property === key && !isTruthySelected,
                   )}
-                  onCheckedChange={() => {
+                  onChange={() => {
                     onChangeFilter({
                       property: key,
                       isTruthySelected: false,
@@ -86,9 +85,9 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
                   }}
                   className="bg-white"
                 />
-                <Label htmlFor={`${key.toString()}-false`}>
+                <label htmlFor={`${key.toString()}-false`}>
                   not {key.toString()}
-                </Label>
+                </label>
               </div>
             </React.Fragment>
           );

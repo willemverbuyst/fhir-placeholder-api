@@ -1,10 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Patient } from "fhir/r5";
 import React from "react";
 
@@ -14,13 +7,13 @@ export function PatientRenderer(
   const { id, name, gender, birthDate, active } = props;
 
   return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle className="text-center uppercase text-xl">
+    <section className="w-[350px] bg-teal-500 text-white rounded-md p-4">
+      <section className="mb-6">
+        <h2 className="text-center uppercase text-xl py-2">
           {name?.map((n) => `${n.given?.join(" ")} ${n.family}`).join(", ")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+        </h2>
+      </section>
+      <section className="flex flex-col gap-2">
         <div className="flex justify-between">
           <label className="font-semibold">gender</label>
           <p>{gender}</p>
@@ -33,11 +26,11 @@ export function PatientRenderer(
           <label className="font-semibold">active</label>
           <p>{JSON.stringify(active)}</p>
         </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
+      </section>
+      <section className="flex justify-between mt-6">
         <label className="font-semibold">id</label>
         <p>{id}</p>
-      </CardFooter>
-    </Card>
+      </section>
+    </section>
   );
 }

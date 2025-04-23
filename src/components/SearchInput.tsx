@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
-import { Input } from "./ui/input";
 
 interface Props {
   searchQuery: string;
@@ -17,8 +16,8 @@ export function SearchInput(props: Props): React.JSX.Element {
   }, [debouncedQuery, setSearchQuery]);
 
   return (
-    <Input
-      className="bg-white"
+    <input
+      className="bg-white border-2 rounded-md p-2"
       value={query}
       id="search"
       placeholder="Search..."

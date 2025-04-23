@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { PatientRenderer } from "./components/Renderers/PatientRendere";
 import { PeopleRenderer } from "./components/Renderers/PeopleRenderer";
 import { SearchSortAndFilter } from "./components/SearchSortAndFilter";
-import { Button } from "./components/ui/button";
 import { Items } from "./constants";
 import { patients } from "./dummyData/patient";
 import { persons } from "./dummyData/persons";
@@ -14,7 +13,7 @@ function App(): React.JSX.Element {
   const [display, setDisplay] = useState<keyof typeof Items>(Items.PATIENTS);
 
   return (
-    <div className="w-full min-h-[100vh] flex flex-col items-center p-10 bg-gray-200">
+    <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
       <header className="flex flex-col items-center">
         <h1 className="text-5xl font-bold">Filter, Search & Sort</h1>
         <em className="text-gray-700 py-2">fhir-placeholder-api</em>
@@ -22,8 +21,7 @@ function App(): React.JSX.Element {
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          <Button
-            variant="outline"
+          <button
             className={cn(
               "border-primary",
               display === Items.PATIENTS && "bg-primary text-white",
@@ -31,10 +29,9 @@ function App(): React.JSX.Element {
             onClick={() => setDisplay(Items.PATIENTS)}
           >
             {Items.PATIENTS}
-          </Button>
+          </button>
 
-          <Button
-            variant="outline"
+          <button
             className={cn(
               "border-primary",
               display === Items.PEOPLE && "bg-primary text-white",
@@ -42,10 +39,10 @@ function App(): React.JSX.Element {
             onClick={() => setDisplay(Items.PEOPLE)}
           >
             {Items.PEOPLE}
-          </Button>
+          </button>
         </section>
 
-        <section className="bg-gray-300 p-4 rounded-lg w-full">
+        <section className="p-4 rounded-lg w-full">
           {display === Items.PATIENTS ? (
             <SearchSortAndFilter<Patient & { id: string }>
               dataSource={patients}

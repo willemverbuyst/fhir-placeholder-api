@@ -7,6 +7,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1973-03-27",
     gender: "female",
+    active: false,
     telecom: [
       {
         use: "work",
@@ -49,6 +50,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1952-04-01",
     gender: "male",
+    active: false,
     telecom: [
       {
         use: "mobile",
@@ -87,6 +89,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1952-03-25",
     gender: "male",
+    active: false,
     telecom: [
       {
         use: "home",
@@ -129,6 +132,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "2001-03-31",
     gender: "unknown",
+    active: false,
     telecom: [
       {
         use: "home",
@@ -171,6 +175,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "2004-05-15",
     gender: "female",
+    active: false,
     telecom: [
       {
         use: "temp",
@@ -213,6 +218,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1985-11-30",
     gender: "female",
+    active: false,
     telecom: [
       {
         use: "home",
@@ -249,6 +255,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1979-04-30",
     gender: "unknown",
+    active: false,
     telecom: [
       {
         use: "home",
@@ -291,6 +298,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1998-06-04",
     gender: "female",
+    active: false,
     telecom: [
       {
         use: "temp",
@@ -333,6 +341,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "2011-09-15",
     gender: "male",
+    active: false,
     telecom: [
       {
         use: "temp",
@@ -375,6 +384,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1952-05-11",
     gender: "other",
+    active: true,
     telecom: [
       {
         use: "temp",
@@ -417,6 +427,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1981-01-24",
     gender: "unknown",
+    active: true,
     telecom: [
       {
         use: "temp",
@@ -459,6 +470,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1990-10-29",
     gender: "unknown",
+    active: true,
     telecom: [
       {
         use: "mobile",
@@ -497,6 +509,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1976-07-18",
     gender: "unknown",
+    active: true,
     telecom: [
       {
         use: "old",
@@ -539,6 +552,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "2014-10-10",
     gender: "male",
+    active: true,
     telecom: [
       {
         use: "mobile",
@@ -581,6 +595,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1962-11-01",
     gender: "unknown",
+    active: true,
     telecom: [
       {
         use: "old",
@@ -623,6 +638,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1971-05-21",
     gender: "female",
+    active: true,
     telecom: [
       {
         use: "temp",
@@ -665,6 +681,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1970-05-29",
     gender: "female",
+    active: true,
     telecom: [
       {
         use: "work",
@@ -707,6 +724,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1968-12-29",
     gender: "male",
+    active: true,
     telecom: [
       {
         use: "old",
@@ -749,6 +767,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1967-10-18",
     gender: "other",
+    active: true,
     telecom: [
       {
         use: "home",
@@ -791,6 +810,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1960-05-21",
     gender: "female",
+    active: true,
     telecom: [
       {
         use: "home",
@@ -829,6 +849,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "2005-04-05",
     gender: "unknown",
+    active: true,
     telecom: [
       {
         use: "home",
@@ -867,6 +888,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1994-03-19",
     gender: "other",
+    active: true,
     telecom: [
       {
         use: "home",
@@ -909,6 +931,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1976-10-06",
     gender: "male",
+    active: true,
     telecom: [
       {
         use: "work",
@@ -951,6 +974,7 @@ export const patients: (Patient & { id: string })[] = [
     resourceType: "Patient",
     birthDate: "1967-04-22",
     gender: "unknown",
+    active: true,
     telecom: [
       {
         use: "home",

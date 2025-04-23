@@ -62,7 +62,7 @@ function App(): React.JSX.Element {
             <SearchSortAndFilter<Patient & { id: string }>
               dataSource={patients}
               searchProperties={["gender"]}
-              filterKeys={[]}
+              filterKeys={["active"]}
               sortKeys={["gender", "birthDate"]}
               initialSortProperty={{
                 property: "birthDate",

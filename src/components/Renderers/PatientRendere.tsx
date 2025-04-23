@@ -11,7 +11,7 @@ import React from "react";
 export function PatientRenderer(
   props: Patient & { id: string },
 ): React.JSX.Element {
-  const { id, name, gender, birthDate } = props;
+  const { id, name, gender, birthDate, active } = props;
 
   return (
     <Card className="w-[400px]">
@@ -23,6 +23,7 @@ export function PatientRenderer(
       <CardContent>
         <p>gender: {gender} </p>
         <p>birthDate: {birthDate}</p>
+        <p>active: {JSON.stringify(active)}</p>
       </CardContent>
       <CardFooter>id: {id}</CardFooter>
     </Card>

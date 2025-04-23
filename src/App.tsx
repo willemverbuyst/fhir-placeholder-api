@@ -17,13 +17,21 @@ function App(): React.JSX.Element {
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10 bg-gray-200">
       <header className="flex flex-col items-center">
         <h1 className="text-5xl font-bold">Filter, Search & Sort</h1>
-        <em className="text-gray-700 py-2">
-          generic ts filter, search and sort functions
-        </em>
+        <em className="text-gray-700 py-2">fhir-placeholder-api</em>
       </header>
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
+          <Button
+            variant="outline"
+            className={cn(
+              "border-primary",
+              display === Items.PATIENTS && "bg-primary text-white",
+            )}
+            onClick={() => setDisplay(Items.PATIENTS)}
+          >
+            {Items.PATIENTS}
+          </Button>
           <Button
             variant="outline"
             className={cn(

@@ -103,3 +103,9 @@ curl http://localhost:8080/api/v2/r5/Patient/1
   ]
 }
 ```
+
+## Tools to inspect the resources
+
+### Resource Graph
+
+![screenshot](./clients/resource-graph/Screenshot.png)

@@ -1,9 +1,11 @@
-import { Patient } from "fhir/r5";
+import { Organization, Patient } from "fhir/r5";
 import React, { useState } from "react";
-import { PatientRenderer } from "./components/Renderers/PatientRendere";
+import { OrganizationRenderer } from "./components/Renderers/OrganizationRenderer";
+import { PatientRenderer } from "./components/Renderers/PatientRenderer";
 import { PeopleRenderer } from "./components/Renderers/PeopleRenderer";
 import { SearchSortAndFilter } from "./components/SearchSortAndFilter";
 import { Items } from "./constants";
+import { organizations } from "./dummyData/organization";
 import { patients } from "./dummyData/patient";
 import { persons } from "./dummyData/persons";
 import { Person } from "./interfaces/Person";
@@ -23,14 +25,22 @@ function App(): React.JSX.Element {
         <section className="flex gap-2 py-4">
           <button
             className={cn(
-              "border-primary",
-              display === Items.PATIENTS && "bg-primary text-white",
+              "py-2 px-4 rounded-md",
+              display === Items.PATIENTS && "bg-teal-500 text-white",
             )}
             onClick={() => setDisplay(Items.PATIENTS)}
           >
             {Items.PATIENTS}
           </button>
-
+          <button
+            className={cn(
+              "border-2 py-2 px-4 rounded-md",
+              display === Items.ORGANIZATION && "bg-amber-800 text-white",
+            )}
+            onClick={() => setDisplay(Items.ORGANIZATION)}
+          >
+            {Items.ORGANIZATION}
+          </button>
           <button
             className={cn(
               "border-primary",
@@ -48,9 +58,9 @@ function App(): React.JSX.Element {
               dataSource={patients}
               searchProperties={["gender"]}
               filterKeys={["active"]}
-              sortKeys={["gender", "birthDate"]}
+              sortKeys={["gender", "birthDate", "id"]}
               initialSortProperty={{
-                property: "birthDate",
+                property: "id",
                 isDescending: true,
               }}
               initialFilterProperties={[]}
@@ -58,6 +68,23 @@ function App(): React.JSX.Element {
             >
               {(patient): React.JSX.Element => (
                 <PatientRenderer {...patient} key={patient.id} />
+              )}
+            </SearchSortAndFilter>
+          ) : display === Items.ORGANIZATION ? (
+            <SearchSortAndFilter<Organization & { id: string }>
+              dataSource={organizations}
+              searchProperties={["name"]}
+              filterKeys={["active"]}
+              sortKeys={["name", "id"]}
+              initialSortProperty={{
+                property: "id",
+                isDescending: true,
+              }}
+              initialFilterProperties={[]}
+              initialSearchQuery=""
+            >
+              {(organization): React.JSX.Element => (
+                <OrganizationRenderer {...organization} key={organization.id} />
               )}
             </SearchSortAndFilter>
           ) : (

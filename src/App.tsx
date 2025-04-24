@@ -31,7 +31,7 @@ function App(): React.JSX.Element {
           </button>
           <button
             className={cn(
-              "border-2 py-2 px-4 rounded-md",
+              "py-2 px-4 rounded-md",
               display === Items.ORGANIZATION && "bg-amber-800 text-white",
             )}
             onClick={() => setDisplay(Items.ORGANIZATION)}

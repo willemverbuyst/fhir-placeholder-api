@@ -10,42 +10,33 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
   const { setSortProperty, sortKeys } = props;
 
   return (
-    <p>test</p>
-    // <Select
-    //   onValueChange={(value) => {
-    //     const [property, direction] = value.split("-") as [
-    //       keyof T,
-    //       "asc" | "desc",
-    //     ];
-    //     setSortProperty({
-    //       property,
-    //       isDescending: direction === "desc",
-    //     });
-    //   }}
-    // >
-    //   <SelectTrigger className="w-[180px] bg-white">
-    //     <SelectValue placeholder="Sort by..." />
-    //   </SelectTrigger>
-    //   <SelectContent>
-    //     <SelectGroup>
-    //       {sortKeys
-    //         .map((k) => String(k))
-    //         .map((key) => (
-    //           <React.Fragment key={key}>
-    //             <SelectItem value={`${key}-asc`}>
-    //               <span className="flex gap-2 items-center">
-    //                 <ArrowDown size={20} /> {key}
-    //               </span>
-    //             </SelectItem>
-    //             <SelectItem value={`${key}-desc`}>
-    //               <span className="flex gap-2 items-center">
-    //                 <ArrowUp size={20} /> {key}
-    //               </span>
-    //             </SelectItem>
-    //           </React.Fragment>
-    //         ))}
-    //     </SelectGroup>
-    //   </SelectContent>
-    // </Select>
+    <form className="text-black w-[200px]">
+      <label htmlFor="sorter" className="block mb-2 text-sm font-medium">
+        Sort by
+      </label>
+      <select
+        id="sorter"
+        className="border text-sm rounded-lg px-5 py-2"
+        onChange={(e) => {
+          const [property, direction] = e.target?.value?.split("-") as [
+            keyof T,
+            "asc" | "desc",
+          ];
+          setSortProperty({
+            property,
+            isDescending: direction === "desc",
+          });
+        }}
+      >
+        {sortKeys
+          .map((k) => String(k))
+          .map((key) => (
+            <React.Fragment key={key}>
+              <option value={`${key}-asc`}>{key} asc</option>
+              <option value={`${key}-desc`}>{key} desc</option>
+            </React.Fragment>
+          ))}
+      </select>
+    </form>
   );
 }

@@ -2,13 +2,10 @@ import { Organization, Patient } from "fhir/r5";
 import React, { useState } from "react";
 import { OrganizationRenderer } from "./components/Renderers/OrganizationRenderer";
 import { PatientRenderer } from "./components/Renderers/PatientRenderer";
-import { PeopleRenderer } from "./components/Renderers/PeopleRenderer";
 import { SearchSortAndFilter } from "./components/SearchSortAndFilter";
 import { Items } from "./constants";
 import { organizations } from "./dummyData/organization";
 import { patients } from "./dummyData/patient";
-import { persons } from "./dummyData/persons";
-import { Person } from "./interfaces/Person";
 import { cn } from "./lib/utils";
 
 function App(): React.JSX.Element {
@@ -40,15 +37,6 @@ function App(): React.JSX.Element {
             onClick={() => setDisplay(Items.ORGANIZATION)}
           >
             {Items.ORGANIZATION}
-          </button>
-          <button
-            className={cn(
-              "border-primary",
-              display === Items.PEOPLE && "bg-primary text-white",
-            )}
-            onClick={() => setDisplay(Items.PEOPLE)}
-          >
-            {Items.PEOPLE}
           </button>
         </section>
 
@@ -87,21 +75,7 @@ function App(): React.JSX.Element {
                 <OrganizationRenderer {...organization} key={organization.id} />
               )}
             </SearchSortAndFilter>
-          ) : (
-            <SearchSortAndFilter<Person>
-              dataSource={persons}
-              searchProperties={["firstName", "surname"]}
-              filterKeys={["married", "eyeColor", "age"]}
-              sortKeys={["firstName", "surname", "age"]}
-              initialSortProperty={{ property: "_id", isDescending: true }}
-              initialFilterProperties={[]}
-              initialSearchQuery=""
-            >
-              {(person): React.JSX.Element => (
-                <PeopleRenderer {...person} key={person._id} />
-              )}
-            </SearchSortAndFilter>
-          )}
+          ) : null}
         </section>
       </main>
     </div>

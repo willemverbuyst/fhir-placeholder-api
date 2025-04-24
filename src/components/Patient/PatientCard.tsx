@@ -1,7 +1,7 @@
 import { Patient } from "fhir/r5";
 import React from "react";
 
-export function PatientRenderer(
+export function PatientCard(
   props: Patient & { id: string },
 ): React.JSX.Element {
   const { id, name, gender, birthDate, active } = props;

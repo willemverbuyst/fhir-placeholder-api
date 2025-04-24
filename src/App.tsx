@@ -1,15 +1,13 @@
-import { Organization, Patient } from "fhir/r5";
 import React, { useState } from "react";
-import { OrganizationRenderer } from "./components/Renderers/OrganizationRenderer";
-import { PatientRenderer } from "./components/Renderers/PatientRenderer";
-import { SearchSortAndFilter } from "./components/SearchSortAndFilter";
+import { OrganizationSearchSortAndFilter } from "./components/Organization/OrganizationSearchSortAndFilter";
+import { PatientSearchSortAndFilter } from "./components/Patient/PatientSearchSortAndFilter";
+import { SelectResourceButton } from "./components/SelectResourceButton";
 import { Items } from "./constants";
-import { organizations } from "./dummyData/organization";
-import { patients } from "./dummyData/patient";
-import { cn } from "./lib/utils";
 
 function App(): React.JSX.Element {
-  const [display, setDisplay] = useState<keyof typeof Items>(Items.PATIENTS);
+  const [display, setDisplay] = useState<keyof typeof Items>(
+    Items.ORGANIZATION,
+  );
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
@@ -20,61 +18,23 @@ function App(): React.JSX.Element {
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          <button
-            className={cn(
-              "py-2 px-4 rounded-md",
-              display === Items.PATIENTS && "bg-teal-500 text-white",
-            )}
-            onClick={() => setDisplay(Items.PATIENTS)}
-          >
-            {Items.PATIENTS}
-          </button>
-          <button
-            className={cn(
-              "py-2 px-4 rounded-md",
-              display === Items.ORGANIZATION && "bg-amber-800 text-white",
-            )}
-            onClick={() => setDisplay(Items.ORGANIZATION)}
-          >
-            {Items.ORGANIZATION}
-          </button>
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-amber-800"
+            caption={Items.ORGANIZATION}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-teal-500"
+            caption={Items.PATIENT}
+          />
         </section>
 
         <section className="p-4 rounded-lg w-full">
-          {display === Items.PATIENTS ? (
-            <SearchSortAndFilter<Patient & { id: string }>
-              dataSource={patients}
-              searchProperties={["gender"]}
-              filterKeys={["active"]}
-              sortKeys={["gender", "birthDate", "id"]}
-              initialSortProperty={{
-                property: "id",
-                isDescending: true,
-              }}
-              initialFilterProperties={[]}
-              initialSearchQuery=""
-            >
-              {(patient): React.JSX.Element => (
-                <PatientRenderer {...patient} key={patient.id} />
-              )}
-            </SearchSortAndFilter>
+          {display === Items.PATIENT ? (
+            <PatientSearchSortAndFilter />
           ) : display === Items.ORGANIZATION ? (
-            <SearchSortAndFilter<Organization & { id: string }>
-              dataSource={organizations}
-              searchProperties={["name"]}
-              filterKeys={["active"]}
-              sortKeys={["name", "id"]}
-              initialSortProperty={{
-                property: "id",
-                isDescending: true,
-              }}
-              initialFilterProperties={[]}
-              initialSearchQuery=""
-            >
-              {(organization): React.JSX.Element => (
-                <OrganizationRenderer {...organization} key={organization.id} />
-              )}
-            </SearchSortAndFilter>
+            <OrganizationSearchSortAndFilter />
           ) : null}
         </section>
       </main>

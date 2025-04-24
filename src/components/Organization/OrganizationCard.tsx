@@ -1,7 +1,7 @@
 import { Organization } from "fhir/r5";
 import React from "react";
 
-export function OrganizationRenderer(
+export function OrganizationCard(
   props: Organization & { id: string },
 ): React.JSX.Element {
   const { id, name, active } = props;

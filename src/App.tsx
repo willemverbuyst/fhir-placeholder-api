@@ -25,8 +25,38 @@ function App(): React.JSX.Element {
           />
           <SelectResourceButton
             setDisplay={setDisplay}
+            className="bg-amber-600"
+            caption={Items.PRACTITIONER_ROLE}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-amber-400"
+            caption={Items.PRACTITIONER}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
             className="bg-teal-500"
             caption={Items.PATIENT}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-violet-500"
+            caption={Items.CONDITION}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-blue-900"
+            caption={Items.EPISODE_OF_CARE}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-green-600"
+            caption={Items.ENCOUNTER}
+          />
+          <SelectResourceButton
+            setDisplay={setDisplay}
+            className="bg-pink-600"
+            caption={Items.OBSERVATION}
           />
         </section>
 

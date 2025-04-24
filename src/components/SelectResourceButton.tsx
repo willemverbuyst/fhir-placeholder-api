@@ -12,7 +12,7 @@ export function SelectResourceButton(props: {
       className={`py-2 px-4 rounded-md text-white ${className}`}
       onClick={() => setDisplay(caption)}
     >
-      {caption}
+      {caption.replace(/_/g, " ")}
     </button>
   );
 }

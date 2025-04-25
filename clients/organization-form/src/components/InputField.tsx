@@ -1,6 +1,6 @@
 import {
-  HTMLInputTypeAttribute,
-  RefObject,
+  type HTMLInputTypeAttribute,
+  type RefObject,
   useImperativeHandle,
   useRef,
   useState,

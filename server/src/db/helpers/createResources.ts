@@ -1,4 +1,4 @@
-import {
+import type {
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -8,7 +8,7 @@ import {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import { Id } from "src/types";
+import type { Id } from "src/types";
 import { createCondition } from "../resources/condition";
 import { createEncounter } from "../resources/encounter";
 import { createEpisode } from "../resources/episode-of-care";

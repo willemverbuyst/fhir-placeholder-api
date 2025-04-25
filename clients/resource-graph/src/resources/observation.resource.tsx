@@ -1,4 +1,4 @@
-import { Observation } from "fhir/r5";
+import type { Observation } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 
 export function Observations({

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { Bundle, Condition } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
-import { Id } from "../types";
+import type { Bundle, Condition } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
+import type { Id } from "../types";
 import { wrapInBundle } from "../utils/bundle";
 
 @Injectable()

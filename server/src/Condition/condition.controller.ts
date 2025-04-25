@@ -7,10 +7,10 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
-import { Bundle, Condition } from "fhir/r5";
-import { Id } from "src/types";
-import { ConditionService } from "./condition.service";
-import { GetConditionDto } from "./dto/get-condition.dto";
+import type { Bundle, Condition } from "fhir/r5";
+import type { Id } from "src/types";
+import type { ConditionService } from "./condition.service";
+import type { GetConditionDto } from "./dto/get-condition.dto";
 import { conditionBundleExample } from "./examples/condition-bundle.example";
 import { conditionExample } from "./examples/condition.example";
 

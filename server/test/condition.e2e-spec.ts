@@ -1,5 +1,5 @@
-import { INestApplication } from "@nestjs/common";
-import { Test, TestingModule } from "@nestjs/testing";
+import type { INestApplication } from "@nestjs/common";
+import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 import { CONDITIONS_PER_PATIENT, NUMBER_OF_CONDITIONS } from "../config";
 import { AppModule } from "../src/app.module";

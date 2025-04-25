@@ -1,4 +1,4 @@
-import { Organization } from "fhir/r5";
+import type { Organization } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { PractitionerRoles } from "./practitioner-role.resource";
 

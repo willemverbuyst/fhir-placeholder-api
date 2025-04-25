@@ -1,4 +1,4 @@
-import { Bundle, Resource } from "fhir/r5";
+import type { Bundle, Resource } from "fhir/r5";
 
 export function wrapInBundle<T extends Resource>(resources: T[]): Bundle<T> {
   return {

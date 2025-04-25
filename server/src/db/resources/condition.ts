@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { Condition } from "fhir/r5";
-import { Id } from "../../types";
+import type { Condition } from "fhir/r5";
+import type { Id } from "../../types";
 import { getRandomElement } from "../helpers/getRandomElement";
 
 export function createCondition(patientId: string, id: string): Condition & Id {

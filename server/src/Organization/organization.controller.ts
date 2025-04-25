@@ -9,14 +9,14 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse } from "@nestjs/swagger";
-import { Bundle, Organization } from "fhir/r5";
+import type { Bundle, Organization } from "fhir/r5";
 import * as sanitizeHtml from "sanitize-html";
-import { Id } from "src/types";
-import { CreateOrganizationDto } from "./dto/create-organization.dto";
-import { UpdateOrganizationDto } from "./dto/update-organization.dto";
+import type { Id } from "src/types";
+import type { CreateOrganizationDto } from "./dto/create-organization.dto";
+import type { UpdateOrganizationDto } from "./dto/update-organization.dto";
 import { organizationBundleExample } from "./examples/organization-bundle.example";
 import { organizationExample } from "./examples/organization.example";
-import { OrganizationService } from "./organization.service";
+import type { OrganizationService } from "./organization.service";
 
 @Controller("Organization")
 export class OrganizationController {

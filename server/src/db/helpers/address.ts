@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Address } from "fhir/r5";
+import type { Address } from "fhir/r5";
 import { getRandomElement } from "./getRandomElement";
 
 enum AddressUse {

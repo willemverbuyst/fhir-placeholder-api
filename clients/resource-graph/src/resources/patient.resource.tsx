@@ -1,4 +1,4 @@
-import { Patient } from "fhir/r5";
+import type { Patient } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { Conditions } from "./condition.resource";
 

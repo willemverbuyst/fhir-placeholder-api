@@ -1,5 +1,5 @@
-import { Patient } from "fhir/r5";
-import React from "react";
+import type { Patient } from "fhir/r5";
+import type React from "react";
 
 export function PatientCard(
   props: Patient & { id: string },

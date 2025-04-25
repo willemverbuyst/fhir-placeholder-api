@@ -1,5 +1,5 @@
-import { Organization } from "fhir/r5";
-import React from "react";
+import type { Organization } from "fhir/r5";
+import type React from "react";
 import { organizations } from "../../dummyData/organization";
 import { SearchSortAndFilter } from "../SearchSortAndFilter";
 import { OrganizationCard } from "./OrganizationCard";

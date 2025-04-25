@@ -7,10 +7,10 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
-import { Bundle, EpisodeOfCare } from "fhir/r5";
-import { Id } from "src/types";
-import { GetEpisodeDto } from "./dto/get-episode-of-care.dto";
-import { EpisodeOfCareService } from "./episode-of-care.service";
+import type { Bundle, EpisodeOfCare } from "fhir/r5";
+import type { Id } from "src/types";
+import type { GetEpisodeDto } from "./dto/get-episode-of-care.dto";
+import type { EpisodeOfCareService } from "./episode-of-care.service";
 import { episodeOFCareBundleExample } from "./examples/episode-of-care-bundle.example";
 import { episodeOfCareExample } from "./examples/episode-of-care.example";
 

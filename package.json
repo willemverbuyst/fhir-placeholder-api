@@ -6,7 +6,8 @@
     "biome:check": "biome check",
     "biome:format": "biome format",
     "biome:format:write": "biome format --write .",
-    "biome:lint": "biome lint"
+    "biome:lint": "biome lint",
+    "biome:lint:write": "biome lint --write ."
   },
   "keywords": [],
   "author": "Willem Verbuyst",

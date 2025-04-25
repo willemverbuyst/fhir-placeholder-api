@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from "react";
+import type React from "react";
+import { useCallback, useState } from "react";
 import { genericFilter } from "../business/filter";
 import { genericSearch } from "../business/search";
 import { genericSort } from "../business/sort";
-import { Filter } from "../interfaces/Filter";
-import { PropsWithChildrenFunction } from "../interfaces/PropsWithChildrenFunction";
-import { Sorter } from "../interfaces/Sorter";
+import type { Filter } from "../interfaces/Filter";
+import type { PropsWithChildrenFunction } from "../interfaces/PropsWithChildrenFunction";
+import type { Sorter } from "../interfaces/Sorter";
 import { Filters } from "./Filters";
 import { SearchInput } from "./SearchInput";
 import { Sorters } from "./Sorters";

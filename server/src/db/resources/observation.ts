@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { Observation } from "fhir/r5";
-import { Id } from "../../types";
+import type { Observation } from "fhir/r5";
+import type { Id } from "../../types";
 import { getRandomElement } from "../helpers/getRandomElement";
 import { observationCodes } from "../valueSets/observation-code-value-set";
 

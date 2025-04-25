@@ -1,5 +1,5 @@
 import React from "react";
-import { Sorter } from "../interfaces/Sorter";
+import type { Sorter } from "../interfaces/Sorter";
 
 interface Props<T> {
   sortKeys: Array<keyof T>;

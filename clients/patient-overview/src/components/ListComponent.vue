@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Patient } from "fhir/r5";
+import type { Patient } from "fhir/r5";
 import { computed, ref, type Ref } from "vue";
 import ListItemComponent from "./ListItemComponent.vue";
 

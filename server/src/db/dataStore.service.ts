@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import {
+import type {
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -9,7 +9,7 @@ import {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import { Id } from "src/types";
+import type { Id } from "src/types";
 import {
   NUMBER_OF_CONDITIONS,
   NUMBER_OF_ENCOUNTERS,

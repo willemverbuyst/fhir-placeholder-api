@@ -1,5 +1,5 @@
-import { Patient } from "fhir/r5";
-import React from "react";
+import type { Patient } from "fhir/r5";
+import type React from "react";
 import { patients } from "../../dummyData/patient";
 import { SearchSortAndFilter } from "../SearchSortAndFilter";
 import { PatientCard } from "./PatientCard";

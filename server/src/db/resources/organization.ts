@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
-import { Organization } from "fhir/r5";
-import { Id } from "../../types";
+import type { Organization } from "fhir/r5";
+import type { Id } from "../../types";
 
 export function createOrganization(id: string): Organization & Id {
   return {

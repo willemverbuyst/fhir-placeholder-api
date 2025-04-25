@@ -1,9 +1,9 @@
 import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
-import { Bundle, Encounter } from "fhir/r5";
-import { Id } from "src/types";
-import { GetEncounterDto } from "./dto/get-encounter.dto";
-import { EncounterService } from "./encounter.service";
+import type { Bundle, Encounter } from "fhir/r5";
+import type { Id } from "src/types";
+import type { GetEncounterDto } from "./dto/get-encounter.dto";
+import type { EncounterService } from "./encounter.service";
 import { encounterBundleExample } from "./examples/encounter-bundle.example";
 
 @Controller("Encounter")

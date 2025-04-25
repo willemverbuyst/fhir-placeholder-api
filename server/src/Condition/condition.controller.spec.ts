@@ -1,7 +1,7 @@
 import { NotFoundException } from "@nestjs/common";
-import { Test, TestingModule } from "@nestjs/testing";
-import { Condition } from "fhir/r5";
-import { Id } from "src/types";
+import { Test, type TestingModule } from "@nestjs/testing";
+import type { Condition } from "fhir/r5";
+import type { Id } from "src/types";
 import { DataStoreService } from "../db/dataStore.service";
 import { ConditionController } from "./condition.controller";
 import { ConditionService } from "./condition.service";

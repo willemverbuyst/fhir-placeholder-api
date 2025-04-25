@@ -7,12 +7,12 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
-import { Bundle, Patient } from "fhir/r5";
-import { Id } from "../types";
-import { GetPatientDto } from "./dto/get-patient.dto";
+import type { Bundle, Patient } from "fhir/r5";
+import type { Id } from "../types";
+import type { GetPatientDto } from "./dto/get-patient.dto";
 import { patientBundleExample } from "./examples/patient-bundle.example";
 import { patientExample } from "./examples/patient.example";
-import { PatientService } from "./patient.service";
+import type { PatientService } from "./patient.service";
 
 @Controller("Patient")
 export class PatientController {

@@ -1,9 +1,9 @@
 import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
-import { Bundle, PractitionerRole } from "fhir/r5";
-import { GetPractitionerRoleDto } from "./dto/get-practitioner-role.dto";
+import type { Bundle, PractitionerRole } from "fhir/r5";
+import type { GetPractitionerRoleDto } from "./dto/get-practitioner-role.dto";
 import { practitionerRoleBundleExample } from "./exampples/practitioner-role-bundle.example";
-import { PractitionerRoleService } from "./practitioner-role.service";
+import type { PractitionerRoleService } from "./practitioner-role.service";
 
 @Controller("PractitionerRole")
 export class PractitionerRoleController {

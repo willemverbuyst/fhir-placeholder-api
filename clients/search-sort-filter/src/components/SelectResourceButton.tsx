@@ -1,5 +1,5 @@
-import React from "react";
-import { Items } from "../constants";
+import type React from "react";
+import type { Items } from "../constants";
 
 export function SelectResourceButton(props: {
   caption: keyof typeof Items;

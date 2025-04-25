@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Bundle, Resource } from "fhir/r5";
-import { JSX } from "react";
+import type { Bundle, Resource } from "fhir/r5";
+import type { JSX } from "react";
 import { createResourcesQueryOptions } from "../query/resources.query";
 import { ErrorMessage } from "./ErrorMessage";
 import { List } from "./List";

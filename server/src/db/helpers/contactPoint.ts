@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { ContactPoint } from "fhir/r5";
+import type { ContactPoint } from "fhir/r5";
 import { getRandomElement } from "./getRandomElement";
 
 enum ContactUse {

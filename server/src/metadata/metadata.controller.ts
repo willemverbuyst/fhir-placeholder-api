@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiOkResponse } from "@nestjs/swagger/dist";
-import { CapabilityStatement } from "fhir/r5";
+import type { CapabilityStatement } from "fhir/r5";
 
 @Controller("metadata")
 export class MetadataController {

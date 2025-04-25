@@ -1,8 +1,8 @@
 import { NotFoundException } from "@nestjs/common";
-import { Test, TestingModule } from "@nestjs/testing";
-import { Patient } from "fhir/r5";
+import { Test, type TestingModule } from "@nestjs/testing";
+import type { Patient } from "fhir/r5";
 import { DataStoreService } from "../db/dataStore.service";
-import { Id } from "../types";
+import type { Id } from "../types";
 import { PatientController } from "./patient.controller";
 import { PatientService } from "./patient.service";
 

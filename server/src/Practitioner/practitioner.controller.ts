@@ -1,10 +1,10 @@
 import { Controller, Get, NotFoundException, Param } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse } from "@nestjs/swagger";
-import { Bundle, Practitioner } from "fhir/r5";
-import { Id } from "src/types";
+import type { Bundle, Practitioner } from "fhir/r5";
+import type { Id } from "src/types";
 import { practitionerBundleExample } from "./examples/practitioner-bundle.example";
 import { practitionerExample } from "./examples/practitioner.example";
-import { PractitionerService } from "./practitioner.service";
+import type { PractitionerService } from "./practitioner.service";
 
 @Controller("Practitioner")
 export class PractitionerController {

@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import type React from "react";
+import { useRef, useState } from "react";
 import "./App.css";
-import InputField, { Api } from "./components/InputField";
+import InputField, { type Api } from "./components/InputField";
 
 interface FormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;

@@ -1,5 +1,5 @@
-import { Encounter } from "fhir/r5";
-import { Id } from "../../types";
+import type { Encounter } from "fhir/r5";
+import type { Id } from "../../types";
 import { getRandomElement } from "../helpers/getRandomElement";
 
 export enum EncounterStatus {

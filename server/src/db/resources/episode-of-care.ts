@@ -1,5 +1,5 @@
-import { EpisodeOfCare } from "fhir/r5";
-import { Id } from "../../types";
+import type { EpisodeOfCare } from "fhir/r5";
+import type { Id } from "../../types";
 import { getRandomElement } from "../helpers/getRandomElement";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
 

@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { Bundle, Organization } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
-import { Id } from "../types";
+import type { Bundle, Organization } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
+import type { Id } from "../types";
 import { wrapInBundle } from "../utils/bundle";
-import { CreateOrganizationDto } from "./dto/create-organization.dto";
+import type { CreateOrganizationDto } from "./dto/create-organization.dto";
 
 @Injectable()
 export class OrganizationService {

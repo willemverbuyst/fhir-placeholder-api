@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { DataStoreService } from '../db/dataStore.service';
-import { ObservationController } from './observation.controller';
-import { ObservationService } from './observation.service';
+import { Test, type TestingModule } from "@nestjs/testing";
+import { DataStoreService } from "../db/dataStore.service";
+import { ObservationController } from "./observation.controller";
+import { ObservationService } from "./observation.service";
 
-describe('ObservationController', () => {
+describe("ObservationController", () => {
   let controller: ObservationController;
   let service: ObservationService;
 
@@ -25,12 +25,12 @@ describe('ObservationController', () => {
     service = module.get<ObservationService>(ObservationService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 
-  describe('findAll', () => {
-    it('should call findAll method of ObservationService', async () => {
+  describe("findAll", () => {
+    it("should call findAll method of ObservationService", async () => {
       await controller.findAll();
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });

@@ -1,4 +1,4 @@
-import { Condition } from "fhir/r5";
+import type { Condition } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { Episodes } from "./episode.resource";
 

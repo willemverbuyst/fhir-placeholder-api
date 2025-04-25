@@ -1,4 +1,4 @@
-import { Encounter } from "fhir/r5";
+import type { Encounter } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { Observations } from "./observation.resource";
 

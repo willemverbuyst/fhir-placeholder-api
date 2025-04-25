@@ -1,6 +1,6 @@
 import {
-  HTMLInputTypeAttribute,
-  RefObject,
+  type HTMLInputTypeAttribute,
+  type RefObject,
   useImperativeHandle,
   useRef,
   useState,
@@ -28,7 +28,7 @@ function InputField(props: {
       },
       setError: (msg: string) => setErrorMessage(msg),
     }),
-    []
+    [],
   );
 
   return (

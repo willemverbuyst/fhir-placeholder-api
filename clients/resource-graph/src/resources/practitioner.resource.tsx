@@ -1,4 +1,4 @@
-import { Practitioner } from "fhir/r5";
+import type { Practitioner } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { Patients } from "./patient.resource";
 

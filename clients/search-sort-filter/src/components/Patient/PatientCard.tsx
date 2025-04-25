@@ -1,5 +1,5 @@
-import { Patient } from "fhir/r5";
-import React from "react";
+import type { Patient } from "fhir/r5";
+import type React from "react";
 
 export function PatientCard(
   props: Patient & { id: string },
@@ -15,20 +15,20 @@ export function PatientCard(
       </section>
       <section className="flex flex-col gap-2">
         <div className="flex justify-between">
-          <label className="font-semibold">gender</label>
+          <p className="font-semibold">gender</p>
           <p>{gender}</p>
         </div>
         <div className="flex justify-between">
-          <label className="font-semibold">birthDate</label>
+          <p className="font-semibold">birthDate</p>
           <p>{birthDate}</p>
         </div>
         <div className="flex justify-between">
-          <label className="font-semibold">active</label>
+          <p className="font-semibold">active</p>
           <p>{JSON.stringify(active)}</p>
         </div>
       </section>
       <section className="flex justify-between mt-6">
-        <label className="font-semibold">id</label>
+        <p className="font-semibold">id</p>
         <p>{id}</p>
       </section>
     </section>

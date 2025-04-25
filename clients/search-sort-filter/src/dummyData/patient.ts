@@ -1,4 +1,4 @@
-import { Patient } from "fhir/r5";
+import type { Patient } from "fhir/r5";
 
 export const patients: (Patient & { id: string })[] = [
   {

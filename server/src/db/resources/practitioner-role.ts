@@ -1,5 +1,5 @@
-import { PractitionerRole } from 'fhir/r5';
-import { Id } from '../../types';
+import type { PractitionerRole } from "fhir/r5";
+import type { Id } from "../../types";
 
 export function createPractitionerRole({
   practitionerRoleId,
@@ -12,7 +12,7 @@ export function createPractitionerRole({
 }): PractitionerRole & Id {
   return {
     id: practitionerRoleId,
-    resourceType: 'PractitionerRole',
+    resourceType: "PractitionerRole",
     organization: { reference: `Organization/${organizationId}` },
     practitioner: { reference: `Practitioner/${practitionerId}` },
   };

@@ -1,19 +1,19 @@
-import { faker } from '@faker-js/faker';
-import { Address } from 'fhir/r5';
-import { getRandomElement } from './getRandomElement';
+import { faker } from "@faker-js/faker";
+import type { Address } from "fhir/r5";
+import { getRandomElement } from "./getRandomElement";
 
 enum AddressUse {
-  HOME = 'home',
-  WORK = 'work',
-  TEMP = 'temp',
-  OLD = 'old',
-  BILLING = 'billing',
+  HOME = "home",
+  WORK = "work",
+  TEMP = "temp",
+  OLD = "old",
+  BILLING = "billing",
 }
 
 enum AddressType {
-  BOTH = 'both',
-  PHYSICAL = 'physical',
-  POSTAL = 'postal',
+  BOTH = "both",
+  PHYSICAL = "physical",
+  POSTAL = "postal",
 }
 
 export function createAddress() {

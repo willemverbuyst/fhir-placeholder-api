@@ -1,4 +1,4 @@
-import { Filter } from "../interfaces/Filter";
+import type { Filter } from "../interfaces/Filter";
 
 export function genericFilter<T>(
   object: T,

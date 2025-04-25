@@ -1,157 +1,157 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger/dist';
-import { CapabilityStatement } from 'fhir/r5';
+import { Controller, Get } from "@nestjs/common";
+import { ApiOkResponse } from "@nestjs/swagger/dist";
+import type { CapabilityStatement } from "fhir/r5";
 
-@Controller('metadata')
+@Controller("metadata")
 export class MetadataController {
   @ApiOkResponse({
-    description: 'CapabilityStatement',
+    description: "CapabilityStatement",
   })
   @Get()
   getCapabilityStatement(): CapabilityStatement {
     return {
-      resourceType: 'CapabilityStatement',
-      id: 'capability-statement-api-v2-5r',
-      status: 'active',
-      date: '2025-04-08',
-      kind: 'instance',
-      fhirVersion: '5.0.0',
-      format: ['json'],
+      resourceType: "CapabilityStatement",
+      id: "capability-statement-api-v2-5r",
+      status: "active",
+      date: "2025-04-08",
+      kind: "instance",
+      fhirVersion: "5.0.0",
+      format: ["json"],
       rest: [
         {
-          mode: 'server',
+          mode: "server",
           resource: [
             {
-              type: 'Condition',
-              interaction: [{ code: 'read' }, { code: 'search-type' }],
+              type: "Condition",
+              interaction: [{ code: "read" }, { code: "search-type" }],
               searchParam: [
                 {
-                  name: 'patient',
+                  name: "patient",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
-                  type: 'reference',
-                  documentation: 'Who has the condition',
+                    "http://hl7.org/fhir/SearchParameter/clinical-patient",
+                  type: "reference",
+                  documentation: "Who has the condition",
                 },
               ],
             },
             {
-              type: 'Encounter',
-              interaction: [{ code: 'search-type' }],
+              type: "Encounter",
+              interaction: [{ code: "search-type" }],
               searchParam: [
                 {
-                  name: 'patient',
+                  name: "patient",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
-                  type: 'reference',
-                  documentation: 'The patient present at the encounter',
+                    "http://hl7.org/fhir/SearchParameter/clinical-patient",
+                  type: "reference",
+                  documentation: "The patient present at the encounter",
                 },
                 {
-                  name: 'episode-of-care',
+                  name: "episode-of-care",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/Encouter-episode-of-care',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/Encouter-episode-of-care",
+                  type: "reference",
                   documentation:
-                    'Episode(s) of care that this encounter should be recorded against',
+                    "Episode(s) of care that this encounter should be recorded against",
                 },
               ],
             },
             {
-              type: 'Observation',
-              interaction: [{ code: 'search-type' }],
+              type: "Observation",
+              interaction: [{ code: "search-type" }],
             },
             {
-              type: 'EpisodeOfCare',
-              interaction: [{ code: 'read' }, { code: 'search-type' }],
+              type: "EpisodeOfCare",
+              interaction: [{ code: "read" }, { code: "search-type" }],
               searchParam: [
                 {
-                  name: 'patient',
+                  name: "patient",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-patient',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/EpisodeOfCare-patient",
+                  type: "reference",
                   documentation:
-                    'The patient who is the focus of this episode of care',
+                    "The patient who is the focus of this episode of care",
                 },
                 {
-                  name: 'diagnosis-reference',
+                  name: "diagnosis-reference",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/EpisodeOfCare-diagnosis-reference',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/EpisodeOfCare-diagnosis-reference",
+                  type: "reference",
                   documentation:
-                    'Conditions/problems/diagnoses this episode of care is for (resource reference)',
+                    "Conditions/problems/diagnoses this episode of care is for (resource reference)",
                 },
               ],
             },
             {
-              type: 'Organization',
+              type: "Organization",
               interaction: [
-                { code: 'read' },
-                { code: 'search-type' },
-                { code: 'create' },
-                { code: 'patch' },
+                { code: "read" },
+                { code: "search-type" },
+                { code: "create" },
+                { code: "patch" },
               ],
               searchParam: [
                 {
-                  name: 'patient',
+                  name: "patient",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/clinical-patient',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/clinical-patient",
+                  type: "reference",
                   documentation:
-                    'The subject that the observation is about (if patient)',
+                    "The subject that the observation is about (if patient)",
                 },
                 {
-                  name: 'encounter',
+                  name: "encounter",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/clinical-encounter',
-                  type: 'reference',
-                  documentation: '	Encounter related to the observation',
+                    "http://hl7.org/fhir/SearchParameter/clinical-encounter",
+                  type: "reference",
+                  documentation: "	Encounter related to the observation",
                 },
               ],
             },
             {
-              type: 'Patient',
-              interaction: [{ code: 'read' }, { code: 'search-type' }],
+              type: "Patient",
+              interaction: [{ code: "read" }, { code: "search-type" }],
               searchParam: [
                 {
-                  name: 'general-practitioner',
+                  name: "general-practitioner",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/Patient-general-practitioner',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/Patient-general-practitioner",
+                  type: "reference",
                   documentation:
                     "Patient's nominated general practitioner, not the organization that manages the record",
                 },
                 {
-                  name: 'organization',
+                  name: "organization",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/Patient-organization',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/Patient-organization",
+                  type: "reference",
                   documentation:
-                    'The organization that is the custodian of the patient record',
+                    "The organization that is the custodian of the patient record",
                 },
               ],
             },
             {
-              type: 'Practitioner',
-              interaction: [{ code: 'read' }, { code: 'search-type' }],
+              type: "Practitioner",
+              interaction: [{ code: "read" }, { code: "search-type" }],
             },
             {
-              type: 'PractitionerRole',
-              interaction: [{ code: 'search-type' }],
+              type: "PractitionerRole",
+              interaction: [{ code: "search-type" }],
               searchParam: [
                 {
-                  name: 'practitioner',
+                  name: "practitioner",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/PractitionerRole-practitioner',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/PractitionerRole-practitioner",
+                  type: "reference",
                   documentation:
-                    'Practitioner that is able to provide the defined services for the organization',
+                    "Practitioner that is able to provide the defined services for the organization",
                 },
                 {
-                  name: 'organization',
+                  name: "organization",
                   definition:
-                    'http://hl7.org/fhir/SearchParameter/PractitionerRole-organization',
-                  type: 'reference',
+                    "http://hl7.org/fhir/SearchParameter/PractitionerRole-organization",
+                  type: "reference",
                   documentation:
-                    'The identity of the organization the practitioner represents / acts on behalf of',
+                    "The identity of the organization the practitioner represents / acts on behalf of",
                 },
               ],
             },

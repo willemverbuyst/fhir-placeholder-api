@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { DataStoreService } from '../db/dataStore.service';
-import { PractitionerRoleController } from './practitioner-role.controller';
-import { PractitionerRoleService } from './practitioner-role.service';
+import { Test, type TestingModule } from "@nestjs/testing";
+import { DataStoreService } from "../db/dataStore.service";
+import { PractitionerRoleController } from "./practitioner-role.controller";
+import { PractitionerRoleService } from "./practitioner-role.service";
 
-describe('PractitionerRoleController', () => {
+describe("PractitionerRoleController", () => {
   let controller: PractitionerRoleController;
   let service: PractitionerRoleService;
 
@@ -27,12 +27,12 @@ describe('PractitionerRoleController', () => {
     service = module.get<PractitionerRoleService>(PractitionerRoleService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 
-  describe('findAll', () => {
-    it('should call findAll method of PractitionerRoleService', () => {
+  describe("findAll", () => {
+    it("should call findAll method of PractitionerRoleService", () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);

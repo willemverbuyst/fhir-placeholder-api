@@ -1,44 +1,44 @@
 export const practitionerBundleExample = {
-  resourceType: 'Bundle',
-  type: 'searchset',
+  resourceType: "Bundle",
+  type: "searchset",
   total: 1,
   entry: [
     {
       fullUrl:
-        'http://localhost:8080/api/v2/r5/Practitioner/9e5267de-6535-40b6-af5f-250318261bcb',
+        "http://localhost:8080/api/v2/r5/Practitioner/9e5267de-6535-40b6-af5f-250318261bcb",
       resource: {
-        id: '9e5267de-6535-40b6-af5f-250318261bcb',
-        resourceType: 'Practitioner',
+        id: "9e5267de-6535-40b6-af5f-250318261bcb",
+        resourceType: "Practitioner",
         name: [
           {
-            family: 'Marks',
-            given: ['Cordelia'],
+            family: "Marks",
+            given: ["Cordelia"],
           },
         ],
         active: true,
-        birthDate: '1997-06-22',
-        gender: 'other',
+        birthDate: "1997-06-22",
+        gender: "other",
         telecom: [
           {
-            use: 'old',
-            system: 'email',
-            value: 'Cordelia_Marks@fhir-placeholder.api',
+            use: "old",
+            system: "email",
+            value: "Cordelia_Marks@fhir-placeholder.api",
           },
           {
-            use: 'temp',
-            system: 'phone',
-            value: '(751) 631-4812',
+            use: "temp",
+            system: "phone",
+            value: "(751) 631-4812",
           },
         ],
         address: [
           {
-            use: 'old',
-            type: 'both',
-            line: ['554 Javonte Cliff'],
-            city: 'South Verdie',
-            state: 'Maine',
-            postalCode: '22848',
-            country: 'Democratic Republic of the Congo',
+            use: "old",
+            type: "both",
+            line: ["554 Javonte Cliff"],
+            city: "South Verdie",
+            state: "Maine",
+            postalCode: "22848",
+            country: "Democratic Republic of the Congo",
           },
         ],
       },

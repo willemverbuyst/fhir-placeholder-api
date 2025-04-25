@@ -2,7 +2,7 @@ export function genericSearch<T>(
   object: T,
   properties: Array<keyof T>,
   query: string,
-  shouldBeCaseSensitive: boolean = false,
+  shouldBeCaseSensitive = false,
 ): boolean {
   if (query === "") {
     return true;
@@ -14,9 +14,9 @@ export function genericSearch<T>(
     if (typeof value === "string" || typeof value === "number") {
       if (shouldBeCaseSensitive) {
         return value.toString().includes(query);
-      } else {
-        return value.toString().toLowerCase().includes(query.toLowerCase());
       }
+
+      return value.toString().toLowerCase().includes(query.toLowerCase());
     }
     return false;
   });

@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { Bundle, Organization } from 'fhir/r5';
-import { DataStoreService } from '../db/dataStore.service';
-import { Id } from '../types';
-import { wrapInBundle } from '../utils/bundle';
-import { CreateOrganizationDto } from './dto/create-organization.dto';
+import { Injectable } from "@nestjs/common";
+import type { Bundle, Organization } from "fhir/r5";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { DataStoreService } from "../db/dataStore.service";
+import type { Id } from "../types";
+import { wrapInBundle } from "../utils/bundle";
+import type { CreateOrganizationDto } from "./dto/create-organization.dto";
 
 @Injectable()
 export class OrganizationService {
@@ -14,7 +15,7 @@ export class OrganizationService {
   ): Promise<Organization & Id> {
     const newOrganization: Organization & Id = {
       id: String(this.repo.organizations.length),
-      resourceType: 'Organization',
+      resourceType: "Organization",
       active: true,
       ...createOrganizationDto,
     };

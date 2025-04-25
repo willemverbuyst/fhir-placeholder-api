@@ -1,16 +1,16 @@
-import { EpisodeOfCare } from 'fhir/r5';
-import { Id } from '../../types';
-import { getRandomElement } from '../helpers/getRandomElement';
-import { episodeOfCareTypes } from '../valueSets/episode-of-care-type-value-set';
+import type { EpisodeOfCare } from "fhir/r5";
+import type { Id } from "../../types";
+import { getRandomElement } from "../helpers/getRandomElement";
+import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
 
 export enum EpisodeOfCareStatus {
-  PLANNED = 'planned',
-  WAITLIST = 'waitlist',
-  ACTIVE = 'active',
-  ONHOLD = 'onhold',
-  FINISHED = 'finished',
-  CANCELLED = 'cancelled',
-  ENTERED_IN_ERROR = 'entered-in-error',
+  PLANNED = "planned",
+  WAITLIST = "waitlist",
+  ACTIVE = "active",
+  ONHOLD = "onhold",
+  FINISHED = "finished",
+  CANCELLED = "cancelled",
+  ENTERED_IN_ERROR = "entered-in-error",
 }
 
 export function createEpisode(
@@ -20,7 +20,7 @@ export function createEpisode(
 ): EpisodeOfCare & Id {
   return {
     id,
-    resourceType: 'EpisodeOfCare',
+    resourceType: "EpisodeOfCare",
     status: getRandomElement([
       EpisodeOfCareStatus.PLANNED,
       EpisodeOfCareStatus.WAITLIST,

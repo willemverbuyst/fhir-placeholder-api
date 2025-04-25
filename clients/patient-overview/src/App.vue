@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ListComponent from './components/ListComponent.vue'
-import TitleComponent from './components/TitleComponent.vue'
+import ListComponent from "./components/ListComponent.vue";
+import TitleComponent from "./components/TitleComponent.vue";
 </script>
 
 <template>

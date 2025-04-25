@@ -1,4 +1,4 @@
-import {
+import type {
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -7,16 +7,16 @@ import {
   Patient,
   Practitioner,
   PractitionerRole,
-} from 'fhir/r5';
-import { Id } from 'src/types';
-import { createCondition } from '../resources/condition';
-import { createEncounter } from '../resources/encounter';
-import { createEpisode } from '../resources/episode-of-care';
-import { createObservation } from '../resources/observation';
-import { createOrganization } from '../resources/organization';
-import { createPatient } from '../resources/patient';
-import { createPractitioner } from '../resources/practitioner';
-import { createPractitionerRole } from '../resources/practitioner-role';
+} from "fhir/r5";
+import type { Id } from "src/types";
+import { createCondition } from "../resources/condition";
+import { createEncounter } from "../resources/encounter";
+import { createEpisode } from "../resources/episode-of-care";
+import { createObservation } from "../resources/observation";
+import { createOrganization } from "../resources/organization";
+import { createPatient } from "../resources/patient";
+import { createPractitioner } from "../resources/practitioner";
+import { createPractitionerRole } from "../resources/practitioner-role";
 
 export function createOrganizations({
   numberOfOrganizations,

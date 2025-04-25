@@ -1,12 +1,12 @@
-import { faker } from '@faker-js/faker';
-import { Patient } from 'fhir/r5';
-import { START_DATE } from '../../../config';
-import { Id } from '../../types';
-import { createAddress } from '../helpers/address';
-import { createEmail, createPhone } from '../helpers/contactPoint';
-import { getRandomElement } from '../helpers/getRandomElement';
-import { languages } from '../valueSets/languages-value-set';
-import { Gender } from './gender';
+import { faker } from "@faker-js/faker";
+import type { Patient } from "fhir/r5";
+import { START_DATE } from "../../../config";
+import type { Id } from "../../types";
+import { createAddress } from "../helpers/address";
+import { createEmail, createPhone } from "../helpers/contactPoint";
+import { getRandomElement } from "../helpers/getRandomElement";
+import { languages } from "../valueSets/languages-value-set";
+import { Gender } from "./gender";
 
 export function createPatient(
   organizationId: string,
@@ -19,11 +19,11 @@ export function createPatient(
   return {
     id,
     name: [{ family: lastName, given: [firstName] }],
-    resourceType: 'Patient',
+    resourceType: "Patient",
     birthDate: faker.date
       .between({ from: START_DATE, to: Date.now() })
       .toISOString()
-      .split('T')[0],
+      .split("T")[0],
     gender: getRandomElement([
       Gender.MALE,
       Gender.FEMALE,

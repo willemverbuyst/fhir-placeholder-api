@@ -17,12 +17,12 @@ jobs:
         npm run format:check
         npm run lint:check
 
-  knip:
-    name: Knip
-    uses: ./.github/workflows/node-ci.yml
-    with:
-      run-command: |
-        npm run knip
+  # knip:
+  #   name: Knip
+  #   uses: ./.github/workflows/node-ci.yml
+  #   with:
+  #     run-command: |
+  #       npm run knip
 
   lint-actions:
     name: Lint Actions

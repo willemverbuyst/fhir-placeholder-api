@@ -5,27 +5,29 @@ import {
   Param,
   Query,
   ValidationPipe,
-} from '@nestjs/common';
-import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
-import { Bundle, Condition } from 'fhir/r5';
-import { Id } from 'src/types';
-import { ConditionService } from './condition.service';
-import { GetConditionDto } from './dto/get-condition.dto';
-import { conditionBundleExample } from './examples/condition-bundle.example';
-import { conditionExample } from './examples/condition.example';
+} from "@nestjs/common";
+import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
+import type { Bundle, Condition } from "fhir/r5";
+import type { Id } from "src/types";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { ConditionService } from "./condition.service";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { GetConditionDto } from "./dto/get-condition.dto";
+import { conditionBundleExample } from "./examples/condition-bundle.example";
+import { conditionExample } from "./examples/condition.example";
 
-@Controller('Condition')
+@Controller("Condition")
 export class ConditionController {
   constructor(private readonly conditionService: ConditionService) {}
 
   @ApiOkResponse({
-    description: 'All conditions',
+    description: "All conditions",
     example: conditionBundleExample,
   })
   @ApiQuery({
-    name: 'patient',
+    name: "patient",
     required: false,
-    description: 'Patient ID to filter episodes by patient',
+    description: "Patient ID to filter episodes by patient",
     type: String,
   })
   @Get()
@@ -43,17 +45,17 @@ export class ConditionController {
   }
 
   @ApiOkResponse({
-    description: 'The condition is returned successfully',
+    description: "The condition is returned successfully",
     example: conditionExample,
   })
   @ApiNotFoundResponse({
-    description: 'Condition not found',
+    description: "Condition not found",
   })
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Condition & Id> {
+  @Get(":id")
+  async findOne(@Param("id") id: string): Promise<Condition & Id> {
     const condition = await this.conditionService.findOne(id);
     if (!condition) {
-      throw new NotFoundException('condition not found');
+      throw new NotFoundException("condition not found");
     }
     return condition;
   }

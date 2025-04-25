@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import {
+import { Injectable } from "@nestjs/common";
+import type {
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -8,8 +8,8 @@ import {
   Patient,
   Practitioner,
   PractitionerRole,
-} from 'fhir/r5';
-import { Id } from 'src/types';
+} from "fhir/r5";
+import type { Id } from "src/types";
 import {
   NUMBER_OF_CONDITIONS,
   NUMBER_OF_ENCOUNTERS,
@@ -19,7 +19,7 @@ import {
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
   NUMBER_OF_PRACTITIONER_ROLES,
-} from '../../config';
+} from "../../config";
 import {
   createConditions,
   createEncounters,
@@ -29,7 +29,7 @@ import {
   createPatients,
   createPractitionerRoles,
   createPractitioners,
-} from './helpers/createResources';
+} from "./helpers/createResources";
 
 @Injectable()
 export class DataStoreService {
@@ -77,7 +77,7 @@ export class DataStoreService {
       numberOfEncounters: NUMBER_OF_ENCOUNTERS,
     });
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === "development") {
       console.dir(
         {
           patients: this.patients.length,

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { OrganizationSearchSortAndFilter } from "./components/Organization/OrganizationSearchSortAndFilter";
 import { PatientSearchSortAndFilter } from "./components/Patient/PatientSearchSortAndFilter";
 import { SelectResourceButton } from "./components/SelectResourceButton";

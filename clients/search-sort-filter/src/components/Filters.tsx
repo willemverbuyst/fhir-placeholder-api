@@ -1,5 +1,5 @@
 import React from "react";
-import { Filter } from "../interfaces/Filter";
+import type { Filter } from "../interfaces/Filter";
 
 interface Props<T> {
   filterKeys: Array<keyof T>;

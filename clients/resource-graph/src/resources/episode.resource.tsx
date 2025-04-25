@@ -1,4 +1,4 @@
-import { EpisodeOfCare } from "fhir/r5";
+import type { EpisodeOfCare } from "fhir/r5";
 import { ResourcesRenderer } from "../components/ResourcesRenderer";
 import { Encounters } from "./encounter.resource";
 

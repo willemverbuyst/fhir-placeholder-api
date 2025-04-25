@@ -1,5 +1,5 @@
-import React from "react";
-import { Items } from "../constants";
+import type React from "react";
+import type { Items } from "../constants";
 
 export function SelectResourceButton(props: {
   caption: keyof typeof Items;
@@ -9,6 +9,7 @@ export function SelectResourceButton(props: {
   const { caption, setDisplay, className } = props;
   return (
     <button
+      type="button"
       className={`py-2 px-4 rounded-md text-white ${className}`}
       onClick={() => setDisplay(caption)}
     >

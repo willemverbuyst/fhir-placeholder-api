@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import type React from "react";
+import { useRef, useState } from "react";
 import "./App.css";
-import InputField, { Api } from "./components/InputField";
+import InputField, { type Api } from "./components/InputField";
 
 interface FormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;
@@ -32,7 +33,7 @@ function App() {
 
   function validate(
     name: FormDataEntryValue | null,
-    description: FormDataEntryValue | null
+    description: FormDataEntryValue | null,
   ) {
     let isValid = true;
     if (
@@ -62,7 +63,9 @@ function App() {
   return organization ? (
     <main>
       <h1>You've created {organization}</h1>
-      <button onClick={goToForm}>CREATE NEW</button>
+      <button type="button" onClick={goToForm}>
+        CREATE NEW
+      </button>
     </main>
   ) : (
     <main>

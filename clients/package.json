@@ -1,0 +1,16 @@
+{
+  "name": "clients",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "biome:check": "biome check",
+    "biome:format": "biome format"
+  },
+  "keywords": [],
+  "author": "Willem Verbuyst",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  }
+}

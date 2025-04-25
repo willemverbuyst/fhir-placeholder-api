@@ -3,8 +3,8 @@ import "./App.css";
 import InputField, { Api } from "./components/InputField";
 
 interface FormElements extends HTMLFormControlsCollection {
-  username: HTMLInputElement;
-  password: HTMLInputElement;
+  name: HTMLInputElement;
+  description: HTMLInputElement;
 }
 
 interface LoginFormElement extends HTMLFormElement {
@@ -12,58 +12,61 @@ interface LoginFormElement extends HTMLFormElement {
 }
 
 function App() {
-  const usernameRef = useRef<Api>(null);
-  const passwordRef = useRef<Api>(null);
+  const nameRef = useRef<Api>(null);
+  const descriptionRef = useRef<Api>(null);
 
-  const [loggedInUser, setLoggedInUser] = useState<string>("");
+  const [organization, setOrganization] = useState<string>("");
 
   function handleSubmit(e: React.FormEvent<LoginFormElement>) {
     e.preventDefault();
     const currentTarget = e.currentTarget;
 
-    const username = currentTarget.elements.username.value;
-    const password = currentTarget.elements.password.value;
-    const isValid = validate(username, password);
+    const name = currentTarget.elements.name.value;
+    const description = currentTarget.elements.description.value;
+    const isValid = validate(name, description);
 
     if (isValid) {
-      setLoggedInUser(username);
+      setOrganization(name);
     }
   }
 
   function validate(
-    username: FormDataEntryValue | null,
-    password: FormDataEntryValue | null
+    name: FormDataEntryValue | null,
+    description: FormDataEntryValue | null
   ) {
     let isValid = true;
-    if (!password || (typeof password === "string" && !password.trim())) {
-      passwordRef.current?.focus();
-      passwordRef.current?.setError("password is missing");
+    if (
+      !description ||
+      (typeof description === "string" && !description.trim())
+    ) {
+      descriptionRef.current?.focus();
+      descriptionRef.current?.setError("description is missing");
       isValid = false;
     } else {
-      passwordRef.current?.setError("");
+      descriptionRef.current?.setError("");
     }
-    if (!username || (typeof username === "string" && !username.trim())) {
-      usernameRef.current?.focus();
-      usernameRef.current?.setError("username is missing");
+    if (!name || (typeof name === "string" && !name.trim())) {
+      nameRef.current?.focus();
+      nameRef.current?.setError("name is missing");
       isValid = false;
     } else {
-      usernameRef.current?.setError("");
+      nameRef.current?.setError("");
     }
     return isValid;
   }
 
   function goToForm() {
-    setLoggedInUser("");
+    setOrganization("");
   }
 
-  return loggedInUser ? (
+  return organization ? (
     <main>
-      <h1>Welcome {loggedInUser}</h1>
-      <button onClick={goToForm}>LOG OUT</button>
+      <h1>You've created {organization}</h1>
+      <button onClick={goToForm}>CREATE NEW</button>
     </main>
   ) : (
     <main>
-      <h1>Login</h1>
+      <h1>Create a new organization</h1>
       <form
         id="loginForm"
         style={{
@@ -74,17 +77,12 @@ function App() {
         }}
         onSubmit={handleSubmit}
       >
+        <InputField id="name" label="NAME" type="text" apiRef={nameRef} />
         <InputField
-          id="username"
-          label="USERNAME"
-          type="text"
-          apiRef={usernameRef}
-        />
-        <InputField
-          id="password"
-          label="PASSWORD"
-          type="password"
-          apiRef={passwordRef}
+          id="description"
+          label="DESCRIPTION"
+          type="description"
+          apiRef={descriptionRef}
         />
 
         <section>

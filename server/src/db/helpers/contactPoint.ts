@@ -1,23 +1,23 @@
-import { faker } from '@faker-js/faker';
-import { ContactPoint } from 'fhir/r5';
-import { getRandomElement } from './getRandomElement';
+import { faker } from "@faker-js/faker";
+import { ContactPoint } from "fhir/r5";
+import { getRandomElement } from "./getRandomElement";
 
 enum ContactUse {
-  HOME = 'home',
-  WORK = 'work',
-  TEMP = 'temp',
-  OLD = 'old',
-  MOBILE = 'mobile',
+  HOME = "home",
+  WORK = "work",
+  TEMP = "temp",
+  OLD = "old",
+  MOBILE = "mobile",
 }
 
 enum ContactSystem {
-  PHONE = 'phone',
-  FAX = 'fax',
-  EMAIL = 'email',
-  PAGER = 'pager',
-  URL = 'url',
-  SMS = 'sms',
-  OTHER = 'other',
+  PHONE = "phone",
+  FAX = "fax",
+  EMAIL = "email",
+  PAGER = "pager",
+  URL = "url",
+  SMS = "sms",
+  OTHER = "other",
 }
 
 export function createEmail(firstName: string, lastName: string) {
@@ -33,7 +33,7 @@ export function createEmail(firstName: string, lastName: string) {
     value: faker.internet.email({
       firstName,
       lastName,
-      provider: 'fhir-placeholder.api',
+      provider: "fhir-placeholder.api",
     }),
   };
 
@@ -50,7 +50,7 @@ export function createPhone() {
       ContactUse.WORK,
     ]),
     system: ContactSystem.PHONE,
-    value: faker.phone.number({ style: 'national' }),
+    value: faker.phone.number({ style: "national" }),
   };
 
   return phone;

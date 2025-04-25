@@ -1,4 +1,4 @@
-export const START_DATE = '1950-01-01';
+export const START_DATE = "1950-01-01";
 
 export const ORGANIZATIONS = 3;
 export const PRACTITIONER_ROLES_PER_ORGANIZATION = 2;

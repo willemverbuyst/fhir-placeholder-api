@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Bundle, Encounter } from 'fhir/r5';
-import { DataStoreService } from '../db/dataStore.service';
-import { Id } from '../types';
-import { wrapInBundle } from '../utils/bundle';
+import { Injectable } from "@nestjs/common";
+import { Bundle, Encounter } from "fhir/r5";
+import { DataStoreService } from "../db/dataStore.service";
+import { Id } from "../types";
+import { wrapInBundle } from "../utils/bundle";
 
 @Injectable()
 export class EncounterService {
@@ -10,7 +10,7 @@ export class EncounterService {
 
   async findAll(query?: {
     patient?: string;
-    'episode-of-care'?: string;
+    "episode-of-care"?: string;
   }): Promise<Bundle<Encounter & Id>> {
     let resources = this.repo.encounters;
 
@@ -18,7 +18,7 @@ export class EncounterService {
       return wrapInBundle(resources);
     }
 
-    const { patient, 'episode-of-care': episodeOfCare } = query;
+    const { patient, "episode-of-care": episodeOfCare } = query;
 
     if (patient) {
       resources = resources.filter((e) =>

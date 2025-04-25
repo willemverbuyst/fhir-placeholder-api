@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { DataStoreModule } from '../db/dataStore.module';
-import { EncounterController } from './encounter.controller';
-import { EncounterService } from './encounter.service';
+import { Module } from "@nestjs/common";
+import { DataStoreModule } from "../db/dataStore.module";
+import { EncounterController } from "./encounter.controller";
+import { EncounterService } from "./encounter.service";
 
 @Module({
   imports: [DataStoreModule],

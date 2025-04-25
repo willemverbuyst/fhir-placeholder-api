@@ -1,29 +1,29 @@
-import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
-import { Bundle, Observation } from 'fhir/r5';
-import { Id } from '../types';
-import { GetObservationDto } from './dto/get-observation.dto';
-import { observationBundleExample } from './examples/observation-bundle-example';
-import { ObservationService } from './observation.service';
+import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
+import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
+import { Bundle, Observation } from "fhir/r5";
+import { Id } from "../types";
+import { GetObservationDto } from "./dto/get-observation.dto";
+import { observationBundleExample } from "./examples/observation-bundle-example";
+import { ObservationService } from "./observation.service";
 
-@Controller('Observation')
+@Controller("Observation")
 export class ObservationController {
   constructor(private readonly observationService: ObservationService) {}
 
   @ApiOkResponse({
-    description: 'All encounters',
+    description: "All encounters",
     example: observationBundleExample,
   })
   @ApiQuery({
-    name: 'patient',
+    name: "patient",
     required: false,
-    description: 'Filter observations by subject',
+    description: "Filter observations by subject",
     type: String,
   })
   @ApiQuery({
-    name: 'encounter',
+    name: "encounter",
     required: false,
-    description: 'Filter observations by encounter',
+    description: "Filter observations by encounter",
     type: String,
   })
   @Get()

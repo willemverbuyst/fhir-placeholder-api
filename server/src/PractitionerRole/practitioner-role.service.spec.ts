@@ -1,39 +1,39 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { DataStoreService } from '../db/dataStore.service';
-import { PractitionerRoleService } from './practitioner-role.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { DataStoreService } from "../db/dataStore.service";
+import { PractitionerRoleService } from "./practitioner-role.service";
 
-describe('PractitionerRoleService', () => {
+describe("PractitionerRoleService", () => {
   let service: PractitionerRoleService;
   const mockDataStore = {
     practitionerRoles: [
       {
-        id: '1',
-        resourceType: 'PractitionerRole',
+        id: "1",
+        resourceType: "PractitionerRole",
         organization: {
-          reference: 'Organization/1',
+          reference: "Organization/1",
         },
         practitioner: {
-          reference: 'Practitioner/1',
+          reference: "Practitioner/1",
         },
       },
       {
-        id: '2',
-        resourceType: 'PractitionerRole',
+        id: "2",
+        resourceType: "PractitionerRole",
         organization: {
-          reference: 'Organization/1',
+          reference: "Organization/1",
         },
         practitioner: {
-          reference: 'Practitioner/2',
+          reference: "Practitioner/2",
         },
       },
       {
-        id: '3',
-        resourceType: 'PractitionerRole',
+        id: "3",
+        resourceType: "PractitionerRole",
         organization: {
-          reference: 'Organization/2',
+          reference: "Organization/2",
         },
         practitioner: {
-          reference: 'Practitioner/3',
+          reference: "Practitioner/3",
         },
       },
     ],
@@ -50,33 +50,33 @@ describe('PractitionerRoleService', () => {
     service = module.get<PractitionerRoleService>(PractitionerRoleService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 
-  describe('findAll', () => {
-    it('should return all practitioner roles', async () => {
+  describe("findAll", () => {
+    it("should return all practitioner roles", async () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(3);
     });
 
-    it('should return all practitioner roles filtered by organization', async () => {
-      const bundle = await service.findAll({ organization: 'Organization/1' });
+    it("should return all practitioner roles filtered by organization", async () => {
+      const bundle = await service.findAll({ organization: "Organization/1" });
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
     });
 
-    it('should return all practitioner roles filtered by practitioner', async () => {
-      const bundle = await service.findAll({ practitioner: '1' });
+    it("should return all practitioner roles filtered by practitioner", async () => {
+      const bundle = await service.findAll({ practitioner: "1" });
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(1);
     });
 
-    it('should return all practitioner roles filtered by practitioner & organization', async () => {
+    it("should return all practitioner roles filtered by practitioner & organization", async () => {
       const bundle = await service.findAll({
-        practitioner: '3',
-        organization: '2',
+        practitioner: "3",
+        organization: "2",
       });
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(1);

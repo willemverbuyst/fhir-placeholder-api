@@ -1,10 +1,10 @@
-import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import * as request from 'supertest';
-import { NUMBER_OF_PRACTITIONERS } from '../config';
-import { AppModule } from '../src/app.module';
+import { INestApplication } from "@nestjs/common";
+import { Test, TestingModule } from "@nestjs/testing";
+import * as request from "supertest";
+import { NUMBER_OF_PRACTITIONERS } from "../config";
+import { AppModule } from "../src/app.module";
 
-describe('PractitionerController (e2e)', () => {
+describe("PractitionerController (e2e)", () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -16,38 +16,38 @@ describe('PractitionerController (e2e)', () => {
     await app.init();
   });
 
-  it('/Practitioner (GET) - OK', async () => {
+  it("/Practitioner (GET) - OK", async () => {
     return request(app.getHttpServer())
-      .get('/Practitioner')
+      .get("/Practitioner")
       .expect(200)
       .then((res) => {
         const practitioners = res.body;
         expect(practitioners).toBeDefined();
-        expect(practitioners).toHaveProperty('resourceType', 'Bundle');
+        expect(practitioners).toHaveProperty("resourceType", "Bundle");
         expect(practitioners.entry).toHaveLength(NUMBER_OF_PRACTITIONERS);
       });
   });
 
-  it('/Practitioner/:id (GET) - OK', async () => {
+  it("/Practitioner/:id (GET) - OK", async () => {
     return request(app.getHttpServer())
-      .get('/Practitioner/practitioner-1')
+      .get("/Practitioner/practitioner-1")
       .expect(200)
       .then((res) => {
         const practitioner = res.body;
         expect(practitioner).toBeDefined();
-        expect(practitioner).toHaveProperty('id', 'practitioner-1');
-        expect(practitioner).toHaveProperty('resourceType', 'Practitioner');
+        expect(practitioner).toHaveProperty("id", "practitioner-1");
+        expect(practitioner).toHaveProperty("resourceType", "Practitioner");
       });
   });
 
-  it('/Practitioner/:id (GET) - Not Found', async () => {
+  it("/Practitioner/:id (GET) - Not Found", async () => {
     return request(app.getHttpServer())
-      .get('/Practitioner/unknown')
+      .get("/Practitioner/unknown")
       .expect(404)
       .then((res) => {
         const response = res.body;
         expect(response).toBeDefined();
-        expect(response).toHaveProperty('message', 'practitioner not found');
+        expect(response).toHaveProperty("message", "practitioner not found");
       });
   });
 });

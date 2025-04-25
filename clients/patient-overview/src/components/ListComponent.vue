@@ -1,53 +1,53 @@
 <script setup lang="ts">
-import { type Patient } from 'fhir/r5'
-import { computed, ref, type Ref } from 'vue'
-import ListItemComponent from './ListItemComponent.vue'
+import { type Patient } from "fhir/r5";
+import { computed, ref, type Ref } from "vue";
+import ListItemComponent from "./ListItemComponent.vue";
 
-const list: Ref<(Patient & { id: string })[]> = ref([])
-const status: Ref<'active' | 'inactive' | 'all'> = ref('all')
-const error = ref(null)
+const list: Ref<(Patient & { id: string })[]> = ref([]);
+const status: Ref<"active" | "inactive" | "all"> = ref("all");
+const error = ref(null);
 
 async function getPatients() {
-  const foo = await fetch('http://localhost:3000/api/v2/r5/Patient')
+  const foo = await fetch("http://localhost:3000/api/v2/r5/Patient")
     .then((response) => response.json())
     .then((json) => (list.value = json.entry.map((e: any) => e.resource)))
-    .catch((err) => (error.value = err))
+    .catch((err) => (error.value = err));
 
-  return foo
+  return foo;
 }
 
 function updateActive(id: string) {
-  const todo = list.value.find((i) => i.id === id)
+  const todo = list.value.find((i) => i.id === id);
 
-  if (!todo) throw new Error('No todo found')
+  if (!todo) throw new Error("No todo found");
 
-  const wasDone = todo.active
+  const wasDone = todo.active;
 
-  todo.active = !wasDone
+  todo.active = !wasDone;
 }
 
-console.error(error)
-getPatients()
+console.error(error);
+getPatients();
 
 function filterDone() {
-  status.value = 'active'
+  status.value = "active";
 }
 function removeFilter() {
-  status.value = 'all'
+  status.value = "all";
 }
 function filterTodo() {
-  status.value = 'inactive'
+  status.value = "inactive";
 }
 
 const classObjectAll = computed(() => ({
-  selected: status.value === 'all'
-}))
+  selected: status.value === "all",
+}));
 const classObjectDone = computed(() => ({
-  selected: status.value === 'active'
-}))
+  selected: status.value === "active",
+}));
 const classObjectTodo = computed(() => ({
-  selected: status.value === 'inactive'
-}))
+  selected: status.value === "inactive",
+}));
 </script>
 
 <template>
@@ -62,10 +62,14 @@ const classObjectTodo = computed(() => ({
     )"
     :key="item.id"
   >
-    <ListItemComponent :id="item.id" :active="Boolean(item.active)" @update-active="updateActive">
+    <ListItemComponent
+      :id="item.id"
+      :active="Boolean(item.active)"
+      @update-active="updateActive"
+    >
       <template #id>{{ item.id }}</template>
       <template #name>{{
-        item.name?.map((n) => n.given?.join(' ') + ' ' + n.family).join(', ')
+        item.name?.map((n) => n.given?.join(" ") + " " + n.family).join(", ")
       }}</template>
       <template v-if="item.active" #birthDate>{{ item.birthDate }}</template>
     </ListItemComponent>

@@ -13,7 +13,7 @@ describe("App", () => {
 
     nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
     descriptionInput = screen.getByLabelText(
-      /description/i
+      /description/i,
     ) as HTMLInputElement;
     button = screen.getByRole("button", { name: /submit/i });
   });
@@ -136,7 +136,7 @@ describe("App", () => {
 
     const nameInputRevisit = screen.getByLabelText(/name/i) as HTMLInputElement;
     const descriptionInputRevisit = screen.getByLabelText(
-      /description/i
+      /description/i,
     ) as HTMLInputElement;
 
     expect(nameInputRevisit.value).toBe("");

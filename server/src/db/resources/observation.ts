@@ -1,18 +1,18 @@
-import { faker } from '@faker-js/faker';
-import { Observation } from 'fhir/r5';
-import { Id } from '../../types';
-import { getRandomElement } from '../helpers/getRandomElement';
-import { observationCodes } from '../valueSets/observation-code-value-set';
+import { faker } from "@faker-js/faker";
+import { Observation } from "fhir/r5";
+import { Id } from "../../types";
+import { getRandomElement } from "../helpers/getRandomElement";
+import { observationCodes } from "../valueSets/observation-code-value-set";
 
 export enum ObservationStatus {
-  REGISTERED = 'registered',
-  PRELIMINARY = 'preliminary',
-  FINAL = 'final',
-  AMENDED = 'amended',
-  CORRECTED = 'corrected',
-  CANCELLED = 'cancelled',
-  ENTERED_IN_ERROR = 'entered-in-error',
-  UNKNOWN = 'unknown',
+  REGISTERED = "registered",
+  PRELIMINARY = "preliminary",
+  FINAL = "final",
+  AMENDED = "amended",
+  CORRECTED = "corrected",
+  CANCELLED = "cancelled",
+  ENTERED_IN_ERROR = "entered-in-error",
+  UNKNOWN = "unknown",
 }
 
 export function createObservation(
@@ -22,7 +22,7 @@ export function createObservation(
 ): Observation & Id {
   return {
     id,
-    resourceType: 'Observation',
+    resourceType: "Observation",
     status: getRandomElement([
       ObservationStatus.AMENDED,
       ObservationStatus.CANCELLED,

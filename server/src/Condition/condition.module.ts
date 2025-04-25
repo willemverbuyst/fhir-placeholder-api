@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { DataStoreModule } from '../db/dataStore.module';
-import { ConditionController } from './condition.controller';
-import { ConditionService } from './condition.service';
+import { Module } from "@nestjs/common";
+import { DataStoreModule } from "../db/dataStore.module";
+import { ConditionController } from "./condition.controller";
+import { ConditionService } from "./condition.service";
 
 @Module({
   imports: [DataStoreModule],

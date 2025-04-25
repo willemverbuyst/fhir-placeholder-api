@@ -1,14 +1,14 @@
 <script setup lang="ts">
 defineProps<{
-  id: string
-  active: boolean
-}>()
+  id: string;
+  active: boolean;
+}>();
 </script>
 
 <template>
   <div class="item">
     <span :class="{ active: active }" @click="$emit('updateActive', id)">
-      {{ id.split('-')[1] }}
+      {{ id.split("-")[1] }}
     </span>
 
     <div class="details">

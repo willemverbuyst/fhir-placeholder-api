@@ -1,12 +1,12 @@
-import { NotFoundException } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-import { Practitioner } from 'fhir/r5';
-import { Id } from 'src/types';
-import { DataStoreService } from '../db/dataStore.service';
-import { PractitionerController } from './practitioner.controller';
-import { PractitionerService } from './practitioner.service';
+import { NotFoundException } from "@nestjs/common";
+import { Test, TestingModule } from "@nestjs/testing";
+import { Practitioner } from "fhir/r5";
+import { Id } from "src/types";
+import { DataStoreService } from "../db/dataStore.service";
+import { PractitionerController } from "./practitioner.controller";
+import { PractitionerService } from "./practitioner.service";
 
-describe('PractitionerController', () => {
+describe("PractitionerController", () => {
   let controller: PractitionerController;
   let service: PractitionerService;
 
@@ -30,38 +30,38 @@ describe('PractitionerController', () => {
     service = module.get<PractitionerService>(PractitionerService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 
-  describe('findAll', () => {
-    it('should call findAll method of PractitionerService', () => {
+  describe("findAll", () => {
+    it("should call findAll method of PractitionerService", () => {
       controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('findOne', () => {
-    it('should call findOne method of PractitionerService', async () => {
+  describe("findOne", () => {
+    it("should call findOne method of PractitionerService", async () => {
       const mockPractitioner: Practitioner & Id = {
-        id: '1',
-        resourceType: 'Practitioner',
+        id: "1",
+        resourceType: "Practitioner",
       };
-      jest.spyOn(service, 'findOne').mockResolvedValue(mockPractitioner);
+      jest.spyOn(service, "findOne").mockResolvedValue(mockPractitioner);
 
-      const result = await controller.findOne('1');
+      const result = await controller.findOne("1");
       expect(result).toEqual(mockPractitioner);
-      expect(service.findOne).toHaveBeenCalledWith('1');
+      expect(service.findOne).toHaveBeenCalledWith("1");
     });
 
-    it('should throw an error if practitioner with id is not found', async () => {
-      jest.spyOn(service, 'findOne').mockResolvedValue(undefined);
+    it("should throw an error if practitioner with id is not found", async () => {
+      jest.spyOn(service, "findOne").mockResolvedValue(undefined);
 
-      await expect(controller.findOne('unknown')).rejects.toThrow(
+      await expect(controller.findOne("unknown")).rejects.toThrow(
         NotFoundException,
       );
-      expect(service.findOne).toHaveBeenCalledWith('unknown');
+      expect(service.findOne).toHaveBeenCalledWith("unknown");
     });
   });
 });

@@ -28,7 +28,7 @@ function InputField(props: {
       },
       setError: (msg: string) => setErrorMessage(msg),
     }),
-    []
+    [],
   );
 
   return (

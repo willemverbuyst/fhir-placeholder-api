@@ -1,30 +1,30 @@
-import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery } from '@nestjs/swagger';
-import { Bundle, PractitionerRole } from 'fhir/r5';
-import { GetPractitionerRoleDto } from './dto/get-practitioner-role.dto';
-import { practitionerRoleBundleExample } from './exampples/practitioner-role-bundle.example';
-import { PractitionerRoleService } from './practitioner-role.service';
+import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
+import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
+import { Bundle, PractitionerRole } from "fhir/r5";
+import { GetPractitionerRoleDto } from "./dto/get-practitioner-role.dto";
+import { practitionerRoleBundleExample } from "./exampples/practitioner-role-bundle.example";
+import { PractitionerRoleService } from "./practitioner-role.service";
 
-@Controller('PractitionerRole')
+@Controller("PractitionerRole")
 export class PractitionerRoleController {
   constructor(
     private readonly practitionerRoleService: PractitionerRoleService,
   ) {}
 
   @ApiOkResponse({
-    description: 'All practitioner roles',
+    description: "All practitioner roles",
     example: practitionerRoleBundleExample,
   })
   @ApiQuery({
-    name: 'organization',
+    name: "organization",
     required: false,
-    description: 'Filter practitioner roles by organization',
+    description: "Filter practitioner roles by organization",
     type: String,
   })
   @ApiQuery({
-    name: 'practitioner',
+    name: "practitioner",
     required: false,
-    description: 'Filter practitioner roles by practitioner',
+    description: "Filter practitioner roles by practitioner",
     type: String,
   })
   @Get()

@@ -8,13 +8,13 @@ import { ListItem } from "./ListItem";
 import { LoadingSpinner } from "./LoadingSpinner";
 
 function isBundle<T extends Resource>(
-  data: T | Bundle<T> | undefined
+  data: T | Bundle<T> | undefined,
 ): data is Bundle<T> {
   return !!data && "entry" in data && !!data.entry;
 }
 
 function isResource<T extends Resource>(
-  data: T | Bundle<T> | undefined
+  data: T | Bundle<T> | undefined,
 ): data is T {
   return !!data && "id" in data && !!data.id;
 }
@@ -28,7 +28,7 @@ export function ResourcesRenderer<T extends Resource>({
   renderItem?: (resource: T) => JSX.Element | undefined;
 }) {
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<T>({ url })
+    createResourcesQueryOptions<T>({ url }),
   );
 
   if (isPending) return <LoadingSpinner />;
@@ -46,7 +46,7 @@ export function ResourcesRenderer<T extends Resource>({
               className={className}
               children={renderItem && renderItem(e.resource)}
             />
-          ) : null
+          ) : null,
         )}
       </List>
     );

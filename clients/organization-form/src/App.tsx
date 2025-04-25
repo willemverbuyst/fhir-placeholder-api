@@ -32,7 +32,7 @@ function App() {
 
   function validate(
     name: FormDataEntryValue | null,
-    description: FormDataEntryValue | null
+    description: FormDataEntryValue | null,
   ) {
     let isValid = true;
     if (

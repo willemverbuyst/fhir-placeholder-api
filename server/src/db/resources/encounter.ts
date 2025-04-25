@@ -1,17 +1,17 @@
-import { Encounter } from 'fhir/r5';
-import { Id } from '../../types';
-import { getRandomElement } from '../helpers/getRandomElement';
+import { Encounter } from "fhir/r5";
+import { Id } from "../../types";
+import { getRandomElement } from "../helpers/getRandomElement";
 
 export enum EncounterStatus {
-  PLANNED = 'planned',
-  IN_PROGRESS = 'in-progress',
-  ON_HOLD = 'on-hold',
-  DISCHARGED = 'discharged',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
-  DISCONTINUED = 'discontinued',
-  ENTERED_IN_ERROR = 'entered-in-error',
-  UNKNOWN = 'unknown',
+  PLANNED = "planned",
+  IN_PROGRESS = "in-progress",
+  ON_HOLD = "on-hold",
+  DISCHARGED = "discharged",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+  DISCONTINUED = "discontinued",
+  ENTERED_IN_ERROR = "entered-in-error",
+  UNKNOWN = "unknown",
 }
 
 export function createEncounter(
@@ -21,7 +21,7 @@ export function createEncounter(
 ): Encounter & Id {
   return {
     id,
-    resourceType: 'Encounter',
+    resourceType: "Encounter",
     status: getRandomElement([
       EncounterStatus.CANCELLED,
       EncounterStatus.COMPLETED,

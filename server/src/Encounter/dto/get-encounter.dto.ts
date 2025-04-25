@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from "class-validator";
 
 export class GetEncounterDto {
   @IsString()
@@ -7,5 +7,5 @@ export class GetEncounterDto {
 
   @IsString()
   @IsOptional()
-  'episode-of-care': string;
+  "episode-of-care": string;
 }

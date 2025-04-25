@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { DataStoreService } from './dataStore.service';
+import { Module } from "@nestjs/common";
+import { DataStoreService } from "./dataStore.service";
 
 @Module({
   providers: [DataStoreService],

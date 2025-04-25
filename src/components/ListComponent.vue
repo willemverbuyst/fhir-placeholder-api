@@ -1,72 +1,73 @@
 <script setup lang="ts">
+import { type Patient } from 'fhir/r5'
 import { computed, ref, type Ref } from 'vue'
 import ListItemComponent from './ListItemComponent.vue'
 
-type Todo = { title: string; id: number; body: string; done: boolean }
-
-const list: Ref<Todo[]> = ref([])
-const status: Ref<'done' | 'todo' | 'all'> = ref('all')
+const list: Ref<(Patient & { id: string })[]> = ref([])
+const status: Ref<'active' | 'inactive' | 'all'> = ref('all')
 const error = ref(null)
 
-async function getPosts() {
-  return await fetch('https://jsonplaceholder.typicode.com/posts')
+async function getPatients() {
+  const foo = await fetch('http://localhost:3000/api/v2/r5/Patient')
     .then((response) => response.json())
-    .then(
-      (json) =>
-        (list.value = json.map((i: Omit<Todo, 'done'>) => ({ ...i, done: Math.random() < 0.5 })))
-    )
+    .then((json) => (list.value = json.entry.map((e: any) => e.resource)))
     .catch((err) => (error.value = err))
+
+  return foo
 }
 
-function updateDone(id: number) {
+function updateActive(id: string) {
   const todo = list.value.find((i) => i.id === id)
 
   if (!todo) throw new Error('No todo found')
 
-  const wasDone = todo.done
+  const wasDone = todo.active
 
-  todo.done = !wasDone
+  todo.active = !wasDone
 }
 
 console.error(error)
-getPosts()
+getPatients()
 
 function filterDone() {
-  status.value = 'done'
+  status.value = 'active'
 }
 function removeFilter() {
   status.value = 'all'
 }
 function filterTodo() {
-  status.value = 'todo'
+  status.value = 'inactive'
 }
 
 const classObjectAll = computed(() => ({
   selected: status.value === 'all'
 }))
 const classObjectDone = computed(() => ({
-  selected: status.value === 'done'
+  selected: status.value === 'active'
 }))
 const classObjectTodo = computed(() => ({
-  selected: status.value === 'todo'
+  selected: status.value === 'inactive'
 }))
 </script>
 
 <template>
   <section class="btn-group">
     <button :class="classObjectAll" @click="removeFilter">All</button>
-    <button :class="classObjectDone" @click="filterDone">Done</button>
-    <button :class="classObjectTodo" @click="filterTodo">To Do</button>
+    <button :class="classObjectDone" @click="filterDone">Active</button>
+    <button :class="classObjectTodo" @click="filterTodo">Inactive</button>
   </section>
   <div
     v-for="item in list.filter((i) =>
-      status === 'all' ? i : status === 'done' ? i.done : !i.done
+      status === 'all' ? i : status === 'active' ? i.active : !i.active
     )"
     :key="item.id"
   >
-    <ListItemComponent :id="item.id" :done="item.done" @update-done="updateDone">
-      <template #heading>{{ item.title }}</template>
-      <template v-if="!item.done" #note>{{ item.body }}</template>
+    <ListItemComponent :id="item.id" :active="Boolean(item.active)" @update-active="updateActive">
+      <template #id>{{ item.id }}</template>
+      <template #name>{{
+        item.name?.map((n) => n.given?.join(' ') + ' ' + n.family).join(', ')
+      }}</template>
+      <template v-if="item.active" #birthDate>{{ item.birthDate }}</template>
     </ListItemComponent>
   </div>
 </template>

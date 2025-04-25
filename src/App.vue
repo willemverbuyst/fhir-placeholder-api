@@ -5,7 +5,7 @@ import TitleComponent from './components/TitleComponent.vue'
 
 <template>
   <header>
-    <TitleComponent msg="Todo App" />
+    <TitleComponent msg="Patients" />
   </header>
 
   <main>

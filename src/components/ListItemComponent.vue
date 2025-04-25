@@ -1,21 +1,24 @@
 <script setup lang="ts">
 defineProps<{
-  id: number
-  done: boolean
+  id: string
+  active: boolean
 }>()
 </script>
 
 <template>
   <div class="item">
-    <span :class="{ done: done }" @click="$emit('updateDone', id)">
-      {{ id }}
+    <span :class="{ active: active }" @click="$emit('updateActive', id)">
+      {{ id.split('-')[1] }}
     </span>
 
     <div class="details">
       <h3>
-        <slot name="heading"></slot>
+        <slot name="name"></slot>
       </h3>
-      <slot name="note"></slot>
+      <p>
+        <slot name="id"></slot>
+      </p>
+      <p><slot name="birthDate"></slot></p>
     </div>
   </div>
 </template>
@@ -42,7 +45,7 @@ span {
   color: #111;
 }
 
-span.done {
+span.active {
   background: var(--color-green);
 }
 

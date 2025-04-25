@@ -96,6 +96,22 @@ describe("App", () => {
     expect(usernameInput.matches(":focus")).toBe(true);
   });
 
+  it.only("should not render error message for updated input ", () => {
+    fireEvent.change(usernameInput, { target: { value: "" } });
+    fireEvent.change(passwordInput, { target: { value: "" } });
+    fireEvent.click(button);
+    fireEvent.change(usernameInput, { target: { value: "John Doe" } });
+    fireEvent.click(button);
+
+    const notExpectedErrorMessage = screen.queryByText(/username is missing/i);
+    expect(notExpectedErrorMessage).not.toBeInTheDocument();
+
+    const errorMessage = screen.getByText(/password is missing/i);
+    expect(errorMessage).toBeDefined();
+    expect(errorMessage).toHaveStyle({ color: "rgb(255, 0, 0)" });
+    expect(passwordInput.matches(":focus")).toBe(true);
+  });
+
   it("should navigate back to empty form", () => {
     fireEvent.change(usernameInput, { target: { value: "John Doe" } });
     fireEvent.change(passwordInput, { target: { value: "any_password_123" } });

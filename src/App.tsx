@@ -39,11 +39,15 @@ function App() {
       passwordRef.current?.focus();
       passwordRef.current?.setError("password is missing");
       isValid = false;
+    } else {
+      passwordRef.current?.setError("");
     }
     if (!username || (typeof username === "string" && !username.trim())) {
       usernameRef.current?.focus();
       usernameRef.current?.setError("username is missing");
       isValid = false;
+    } else {
+      usernameRef.current?.setError("");
     }
     return isValid;
   }

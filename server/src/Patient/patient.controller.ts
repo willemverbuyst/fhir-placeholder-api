@@ -9,10 +9,12 @@ import {
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Patient } from "fhir/r5";
 import type { Id } from "../types";
-import type { GetPatientDto } from "./dto/get-patient.dto";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { GetPatientDto } from "./dto/get-patient.dto";
 import { patientBundleExample } from "./examples/patient-bundle.example";
 import { patientExample } from "./examples/patient.example";
-import type { PatientService } from "./patient.service";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { PatientService } from "./patient.service";
 
 @Controller("Patient")
 export class PatientController {

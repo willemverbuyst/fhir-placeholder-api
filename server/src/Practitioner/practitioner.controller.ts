@@ -4,7 +4,8 @@ import type { Bundle, Practitioner } from "fhir/r5";
 import type { Id } from "src/types";
 import { practitionerBundleExample } from "./examples/practitioner-bundle.example";
 import { practitionerExample } from "./examples/practitioner.example";
-import type { PractitionerService } from "./practitioner.service";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { PractitionerService } from "./practitioner.service";
 
 @Controller("Practitioner")
 export class PractitionerController {

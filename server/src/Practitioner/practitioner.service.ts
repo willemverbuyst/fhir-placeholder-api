@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import type { Bundle, Practitioner } from "fhir/r5";
-import type { DataStoreService } from "../db/dataStore.service";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { DataStoreService } from "../db/dataStore.service";
 import type { Id } from "../types";
 import { wrapInBundle } from "../utils/bundle";
 

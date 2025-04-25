@@ -14,10 +14,10 @@ describe("createOrganizations", () => {
     const organizations = createOrganizations({ numberOfOrganizations: 5 });
 
     expect(organizations).toHaveLength(5);
-    organizations.forEach((organization) => {
+    for (const organization of organizations) {
       expect(organization).toHaveProperty("id");
       expect(organization.resourceType).toBe("Organization");
-    });
+    }
   });
 
   it("should return an empty array if numberOfOrganizations is 0", () => {
@@ -84,10 +84,11 @@ describe("createPractitioners", () => {
     const practitioners = createPractitioners({ numberOfPractitioners: 5 });
 
     expect(practitioners).toHaveLength(5);
-    practitioners.forEach((practitioner) => {
+
+    for (const practitioner of practitioners) {
       expect(practitioner).toHaveProperty("id");
       expect(practitioner.resourceType).toBe("Practitioner");
-    });
+    }
   });
 
   it("should return an empty array if numberOfPractitioners is 0", () => {
@@ -125,11 +126,11 @@ describe("createPatients", () => {
         `Organization/${organizationId}`,
       );
 
-      patient.generalPractitioner?.forEach((practitionerRef: any) => {
-        expect(practitionerRef.reference).toBe(
+      for (const generalPractitioner of patient.generalPractitioner ?? []) {
+        expect(generalPractitioner.reference).toBe(
           `Practitioner/${practitionerId}`,
         );
-      });
+      }
     },
   );
 
@@ -179,7 +180,9 @@ describe("createEncounters", () => {
     "should assign correct patient and episode to encounter $encounterId",
     ({ encounterId, patientId, episodeId }) => {
       const encounter =
-        encounters[Number.parseInt(encounterId.replace("encounter-", ""), 10) - 1];
+        encounters[
+          Number.parseInt(encounterId.replace("encounter-", ""), 10) - 1
+        ];
 
       expect(encounter).toHaveProperty("id", encounterId);
       expect(encounter.resourceType).toBe("Encounter");
@@ -227,7 +230,9 @@ describe("createConditions", () => {
     "should assign correct patient to condition $conditionId",
     ({ conditionId, patientId }) => {
       const condition =
-        conditions[Number.parseInt(conditionId.replace("condition-", ""), 10) - 1];
+        conditions[
+          Number.parseInt(conditionId.replace("condition-", ""), 10) - 1
+        ];
 
       expect(condition).toHaveProperty("id", conditionId);
       expect(condition.resourceType).toBe("Condition");
@@ -270,7 +275,9 @@ describe("createEpisodes", () => {
     "should assign correct patient to episode $episodeId",
     ({ episodeId, patientId }) => {
       const episode =
-        episodes[Number.parseInt(episodeId.replace("episode-of-care-", ""), 10) - 1];
+        episodes[
+          Number.parseInt(episodeId.replace("episode-of-care-", ""), 10) - 1
+        ];
 
       expect(episode).toHaveProperty("id", episodeId);
       expect(episode.resourceType).toBe("EpisodeOfCare");
@@ -322,7 +329,9 @@ describe("createObservations", () => {
     "should assign correct patient and encounter to observation $observationId",
     ({ observationId, patientId, encounterId }) => {
       const observation =
-        encounters[Number.parseInt(observationId.replace("observation-", ""), 10) - 1];
+        encounters[
+          Number.parseInt(observationId.replace("observation-", ""), 10) - 1
+        ];
       expect(observation).toHaveProperty("id", observationId);
       expect(observation.resourceType).toBe("Observation");
       expect(observation.subject?.reference).toBe(`Patient/${patientId}`);

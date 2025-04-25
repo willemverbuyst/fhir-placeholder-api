@@ -44,8 +44,9 @@ export function ResourcesRenderer<T extends Resource>({
               key={e.resource.id}
               id={e.resource.id}
               className={className}
-              children={renderItem && renderItem(e.resource)}
-            />
+            >
+              {renderItem?.(e.resource)}
+            </ListItem>
           ) : null,
         )}
       </List>
@@ -54,12 +55,9 @@ export function ResourcesRenderer<T extends Resource>({
 
   if (isResource(data) && data.id) {
     return (
-      <ListItem
-        key={data.id}
-        id={data.id}
-        className={className}
-        children={renderItem && renderItem(data)}
-      />
+      <ListItem key={data.id} id={data.id} className={className}>
+        {renderItem?.(data)}
+      </ListItem>
     );
   }
 

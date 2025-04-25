@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Patient } from "fhir/r5";
-import { computed, ref, type Ref } from "vue";
+import type { BundleEntry, Patient } from "fhir/r5";
+import { type Ref, computed, ref } from "vue";
 import ListItemComponent from "./ListItemComponent.vue";
 
 const list: Ref<(Patient & { id: string })[]> = ref([]);
@@ -8,12 +8,16 @@ const status: Ref<"active" | "inactive" | "all"> = ref("all");
 const error = ref(null);
 
 async function getPatients() {
-  const foo = await fetch("http://localhost:3000/api/v2/r5/Patient")
+  return await fetch("http://localhost:3000/api/v2/r5/Patient")
     .then((response) => response.json())
-    .then((json) => (list.value = json.entry.map((e: any) => e.resource)))
-    .catch((err) => (error.value = err));
-
-  return foo;
+    .then((json) => {
+      list.value = json.entry.map(
+        (e: BundleEntry<Patient & { id: string }>) => e.resource,
+      );
+    })
+    .catch((err) => {
+      error.value = err;
+    });
 }
 
 function updateActive(id: string) {

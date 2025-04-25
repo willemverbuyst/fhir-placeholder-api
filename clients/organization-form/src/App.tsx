@@ -63,7 +63,9 @@ function App() {
   return organization ? (
     <main>
       <h1>You've created {organization}</h1>
-      <button onClick={goToForm}>CREATE NEW</button>
+      <button type="button" onClick={goToForm}>
+        CREATE NEW
+      </button>
     </main>
   ) : (
     <main>

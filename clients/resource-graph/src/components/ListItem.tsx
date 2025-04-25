@@ -13,7 +13,8 @@ export function ListItem({
 
   return (
     <section className="flex gap-3">
-      <div
+      <button
+        type="button"
         className={`py-3 px-5 rounded-md text-white w-[200px] ${className}`}
         onClick={() => {
           if (zoomIn) setZoomIn(undefined);
@@ -21,7 +22,7 @@ export function ListItem({
         }}
       >
         {id}
-      </div>
+      </button>
       {zoomIn && children ? children : null}
     </section>
   );

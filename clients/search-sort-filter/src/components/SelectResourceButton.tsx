@@ -9,6 +9,7 @@ export function SelectResourceButton(props: {
   const { caption, setDisplay, className } = props;
   return (
     <button
+      type="button"
       className={`py-2 px-4 rounded-md text-white ${className}`}
       onClick={() => setDisplay(caption)}
     >

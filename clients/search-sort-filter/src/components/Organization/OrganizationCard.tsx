@@ -13,12 +13,12 @@ export function OrganizationCard(
       </section>
       <section className="flex flex-col gap-2">
         <div className="flex justify-between">
-          <label className="font-semibold">active</label>
+          <p className="font-semibold">active</p>
           <p>{JSON.stringify(active)}</p>
         </div>
       </section>
       <section className="flex justify-between mt-6">
-        <label className="font-semibold">id</label>
+        <p className="font-semibold">id</p>
         <p>{id}</p>
       </section>
     </section>

@@ -30,9 +30,9 @@ function App(): React.JSX.Element {
         </section>
 
         <section className="p-4 rounded-lg w-full">
-          {display === "PATIENT" ? (
+          {display === "Patient" ? (
             <PatientSearchSortAndFilter />
-          ) : display === "ORGANIZATION" ? (
+          ) : display === "Organization" ? (
             <OrganizationSearchSortAndFilter />
           ) : null}
         </section>

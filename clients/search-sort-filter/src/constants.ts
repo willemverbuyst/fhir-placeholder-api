@@ -1,34 +1,34 @@
 export const RESOURCES = [
   {
-    resourceType: "ORGANIZATION",
+    resourceType: "Organization",
     color: "bg-amber-800",
   },
   {
-    resourceType: "PRACTITIONER_ROLE",
+    resourceType: "PractitionerRole",
     color: "bg-amber-600",
   },
   {
-    resourceType: "PRACTITIONER",
+    resourceType: "Practitioner",
     color: "bg-amber-400",
   },
   {
-    resourceType: "PATIENT",
+    resourceType: "Patient",
     color: "bg-teal-500",
   },
   {
-    resourceType: "CONDITION",
+    resourceType: "Condition",
     color: "bg-violet-500",
   },
   {
-    resourceType: "EPISODE_OF_CARE",
+    resourceType: "EpisodeOfCare",
     color: "bg-blue-900",
   },
   {
-    resourceType: "ENCOUNTER",
+    resourceType: "Encounter",
     color: "bg-green-600",
   },
   {
-    resourceType: "OBSERVATION",
+    resourceType: "Observation",
     color: "bg-pink-600",
   },
 ] as const;

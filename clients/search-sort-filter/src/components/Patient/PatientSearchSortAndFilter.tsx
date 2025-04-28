@@ -1,15 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Bundle, Patient, Resource } from "fhir/r5";
+import type { Patient } from "fhir/r5";
 import type React from "react";
+import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { Card } from "../Card";
 import { SearchSortAndFilter } from "../SearchSortAndFilter";
-
-function isBundle<T extends Resource>(
-  data: T | Bundle<T> | undefined,
-): data is Bundle<T> {
-  return !!data && "entry" in data && !!data.entry;
-}
 
 export function PatientSearchSortAndFilter(): React.JSX.Element | null {
   const { isPending, error, data } = useQuery(
@@ -60,6 +55,7 @@ export function PatientSearchSortAndFilter(): React.JSX.Element | null {
                 ["active", JSON.stringify(patient.active)],
               ])
             }
+            className="bg-teal-500"
           />
         )}
       </SearchSortAndFilter>

@@ -3,12 +3,14 @@ import type React from "react";
 export function Card<T>({
   title,
   labelsAndValues,
+  className,
 }: {
   title: string | undefined;
   labelsAndValues: Map<keyof T, string | undefined>;
+  className: string;
 }): React.JSX.Element {
   return (
-    <section className="w-[350px] bg-teal-500 text-white rounded-md p-4">
+    <section className={`w-[350px] text-white rounded-md p-4 ${className}`}>
       <section className="mb-6">
         <h2 className="text-center uppercase text-xl py-2">{title}</h2>
       </section>

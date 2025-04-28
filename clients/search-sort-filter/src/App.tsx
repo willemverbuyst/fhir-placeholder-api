@@ -1,8 +1,8 @@
 import type React from "react";
 import { useState } from "react";
-import { OrganizationSearchSortAndFilter } from "./components/Organization/OrganizationSearchSortAndFilter";
-import { PatientSearchSortAndFilter } from "./components/Patient/PatientSearchSortAndFilter";
 import { SelectResourceButton } from "./components/SelectResourceButton";
+import { OrganizationSearchSortAndFilter } from "./components/cards/organization.card";
+import { PatientSearchSortAndFilter } from "./components/cards/patient.card";
 import { Items } from "./constants";
 
 function App(): React.JSX.Element {

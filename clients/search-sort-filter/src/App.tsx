@@ -3,11 +3,11 @@ import { useState } from "react";
 import { SelectResourceButton } from "./components/SelectResourceButton";
 import { OrganizationSearchSortAndFilter } from "./components/cards/organization.card";
 import { PatientSearchSortAndFilter } from "./components/cards/patient.card";
-import { Items } from "./constants";
+import { RESOURCES, type ResourceType } from "./constants";
 
 function App(): React.JSX.Element {
-  const [display, setDisplay] = useState<keyof typeof Items>(
-    Items.ORGANIZATION,
+  const [display, setDisplay] = useState<ResourceType>(
+    RESOURCES[0].resourceType,
   );
 
   return (
@@ -19,52 +19,20 @@ function App(): React.JSX.Element {
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-amber-800"
-            caption={Items.ORGANIZATION}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-amber-600"
-            caption={Items.PRACTITIONER_ROLE}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-amber-400"
-            caption={Items.PRACTITIONER}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-teal-500"
-            caption={Items.PATIENT}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-violet-500"
-            caption={Items.CONDITION}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-blue-900"
-            caption={Items.EPISODE_OF_CARE}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-green-600"
-            caption={Items.ENCOUNTER}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-pink-600"
-            caption={Items.OBSERVATION}
-          />
+          {RESOURCES.map((r) => (
+            <SelectResourceButton
+              key={r.resourceType}
+              setDisplay={setDisplay}
+              className={r.color}
+              caption={r.resourceType}
+            />
+          ))}
         </section>
 
         <section className="p-4 rounded-lg w-full">
-          {display === Items.PATIENT ? (
+          {display === "PATIENT" ? (
             <PatientSearchSortAndFilter />
-          ) : display === Items.ORGANIZATION ? (
+          ) : display === "ORGANIZATION" ? (
             <OrganizationSearchSortAndFilter />
           ) : null}
         </section>

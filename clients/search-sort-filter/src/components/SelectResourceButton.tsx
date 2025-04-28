@@ -1,10 +1,10 @@
 import type React from "react";
-import type { Items } from "../constants";
+import type { ResourceType } from "../constants";
 
 export function SelectResourceButton(props: {
-  caption: keyof typeof Items;
+  caption: ResourceType;
   className: string;
-  setDisplay: (item: keyof typeof Items) => void;
+  setDisplay: (item: ResourceType) => void;
 }): React.JSX.Element {
   const { caption, setDisplay, className } = props;
   return (

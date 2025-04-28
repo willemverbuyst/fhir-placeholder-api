@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Bundle, Patient, Resource } from "fhir/r5";
 import type React from "react";
-import { patients } from "../../dummyData/patient";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "../SearchSortAndFilter";
 import { PatientCard } from "./PatientCard";
@@ -24,7 +23,7 @@ export function PatientSearchSortAndFilter(): React.JSX.Element | null {
   if (isBundle(data) && data.entry) {
     return (
       <SearchSortAndFilter<Patient & { id: string }>
-        dataSource={patients}
+        dataSource={data.entry.map((i) => i.resource)}
         searchProperties={["gender"]}
         filterKeys={["active"]}
         sortKeys={["gender", "birthDate", "id"]}

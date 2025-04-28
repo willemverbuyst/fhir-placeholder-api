@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import type { Bundle, Patient, Resource } from "fhir/r5";
 import type React from "react";
 import { createResourcesQueryOptions } from "../../query/resources.query";
+import { Card } from "../Card";
 import { SearchSortAndFilter } from "../SearchSortAndFilter";
-import { PatientCard } from "./PatientCard";
 
 function isBundle<T extends Resource>(
   data: T | Bundle<T> | undefined,
@@ -13,17 +13,29 @@ function isBundle<T extends Resource>(
 
 export function PatientSearchSortAndFilter(): React.JSX.Element | null {
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<Patient>({ url: "Patient" }),
+    createResourcesQueryOptions<Patient & { id: string }>({ url: "Patient" }),
   );
 
   if (isPending) return <p>...loading</p>;
 
   if (error) return <p>...error</p>;
 
-  if (isBundle(data) && data.entry) {
+  if (!isBundle(data) || !data.entry) return null;
+
+  const resources = data.entry.reduce(
+    (acc, item) => {
+      if (item.resource) {
+        acc.push(item.resource);
+      }
+      return acc;
+    },
+    [] as (Patient & { id: string })[],
+  );
+
+  if (resources.length) {
     return (
       <SearchSortAndFilter<Patient & { id: string }>
-        dataSource={data.entry.map((i) => i.resource)}
+        dataSource={resources}
         searchProperties={["gender"]}
         filterKeys={["active"]}
         sortKeys={["gender", "birthDate", "id"]}
@@ -35,7 +47,20 @@ export function PatientSearchSortAndFilter(): React.JSX.Element | null {
         initialSearchQuery=""
       >
         {(patient): React.JSX.Element => (
-          <PatientCard {...patient} key={patient.id} />
+          <Card<Patient>
+            key={patient.id}
+            title={patient.name
+              ?.map((n) => `${n.given?.join(" ")} ${n.family}`)
+              .join(", ")}
+            labelsAndValues={
+              new Map([
+                ["id", patient.id],
+                ["birthDate", patient.birthDate],
+                ["gender", patient.gender],
+                ["active", JSON.stringify(patient.active)],
+              ])
+            }
+          />
         )}
       </SearchSortAndFilter>
     );

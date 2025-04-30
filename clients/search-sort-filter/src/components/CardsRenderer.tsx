@@ -52,7 +52,10 @@ export function CardsRenderer<T extends Resource>(
         initialSearchQuery={initialSearchQuery}
       >
         {(resource): React.JSX.Element => (
-          <section className={`w-[350px] text-white rounded-md p-4 ${bgColor}`}>
+          <section
+            className={`w-[350px] text-white rounded-md p-4 ${bgColor}`}
+            key={resource.id}
+          >
             <section className="mb-6">
               <h2 className="text-center uppercase text-xl py-2">
                 {resource.id}

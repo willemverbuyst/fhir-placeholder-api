@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import type { Organization } from "fhir/r5";
+import type { Resource } from "fhir/r5";
 import type React from "react";
-import type { ConfigItem } from "../../constants";
-import { isBundle } from "../../lib/fhir";
-import { createResourcesQueryOptions } from "../../query/resources.query";
-import { SearchSortAndFilter } from "../SearchSortAndFilter";
+import type { ConfigItem } from "../constants";
+import { isBundle } from "../lib/fhir";
+import { createResourcesQueryOptions } from "../query/resources.query";
+import { SearchSortAndFilter } from "./SearchSortAndFilter";
 
-export function OrganizationCards(
-  props: ConfigItem<Organization>,
+export function CardsRenderer<T extends Resource>(
+  props: ConfigItem<T>,
 ): React.JSX.Element | null {
   const {
     url,
@@ -21,9 +21,7 @@ export function OrganizationCards(
     cardKeys,
   } = props;
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<Organization & { id: string }>({
-      url,
-    }),
+    createResourcesQueryOptions<T & { id: string }>({ url }),
   );
 
   if (isPending) return <p>...loading</p>;
@@ -39,7 +37,7 @@ export function OrganizationCards(
       }
       return acc;
     },
-    [] as (Organization & { id: string })[],
+    [] as (T & { id: string })[],
   );
 
   if (resources.length) {

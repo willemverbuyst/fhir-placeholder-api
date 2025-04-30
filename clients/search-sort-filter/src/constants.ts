@@ -1,4 +1,4 @@
-import type { Organization, Patient, Resource } from "fhir/r5";
+import type { Organization, Patient, Practitioner, Resource } from "fhir/r5";
 import type { Filter } from "./interfaces/Filter";
 import type { Sorter } from "./interfaces/Sorter";
 
@@ -15,7 +15,11 @@ export type ConfigItem<T extends Resource> = {
   url: T["resourceType"];
 };
 
-export const CONFIG_ITEMS: [ConfigItem<Organization>, ConfigItem<Patient>] = [
+export const CONFIG_ITEMS: [
+  ConfigItem<Organization>,
+  ConfigItem<Patient>,
+  ConfigItem<Practitioner>,
+] = [
   {
     resourceType: "Organization",
     bgColor: "bg-amber-800",
@@ -33,7 +37,6 @@ export const CONFIG_ITEMS: [ConfigItem<Organization>, ConfigItem<Patient>] = [
   },
   {
     resourceType: "Patient",
-
     bgColor: "bg-teal-500",
     searchProperties: ["gender"],
     filterKeys: ["active"],
@@ -46,6 +49,21 @@ export const CONFIG_ITEMS: [ConfigItem<Organization>, ConfigItem<Patient>] = [
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Patient",
+  },
+  {
+    resourceType: "Practitioner",
+    bgColor: "bg-amber-600",
+    searchProperties: ["gender"],
+    filterKeys: ["active"],
+    sortKeys: ["gender", "birthDate", "id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id", "birthDate", "gender", "active"],
+    url: "Practitioner",
   },
 ];
 

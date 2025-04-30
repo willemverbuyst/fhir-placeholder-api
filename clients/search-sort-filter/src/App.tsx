@@ -1,8 +1,8 @@
+import { Organization, Patient, Practitioner } from "fhir/r5";
 import type React from "react";
 import { useState } from "react";
+import { CardsRenderer } from "./components/CardsRenderer";
 import { SelectResourceButton } from "./components/SelectResourceButton";
-import { OrganizationCards } from "./components/cards/organization.cards";
-import { PatientCards } from "./components/cards/patient.cards";
 import { CONFIG_ITEMS, type ResourceType } from "./constants";
 
 function App(): React.JSX.Element {
@@ -31,9 +31,11 @@ function App(): React.JSX.Element {
 
         <section className="p-4 rounded-lg w-full">
           {display === "Patient" ? (
-            <PatientCards {...CONFIG_ITEMS[1]} />
+            <CardsRenderer<Patient> {...CONFIG_ITEMS[1]} />
           ) : display === "Organization" ? (
-            <OrganizationCards {...CONFIG_ITEMS[0]} />
+            <CardsRenderer<Organization> {...CONFIG_ITEMS[0]} />
+          ) : display === "Practitioner" ? (
+            <CardsRenderer<Practitioner> {...CONFIG_ITEMS[2]} />
           ) : null}
         </section>
       </main>

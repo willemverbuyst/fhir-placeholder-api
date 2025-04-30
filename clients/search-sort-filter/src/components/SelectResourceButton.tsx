@@ -1,10 +1,10 @@
 import type React from "react";
-import type { ResourceType } from "../constants";
+import type { ConfigItems } from "../constants";
 
 export function SelectResourceButton(props: {
-  caption: ResourceType;
+  caption: keyof ConfigItems;
   className: string;
-  setDisplay: (item: ResourceType) => void;
+  setDisplay: (item: keyof ConfigItems) => void;
 }): React.JSX.Element {
   const { caption, setDisplay, className } = props;
   return (

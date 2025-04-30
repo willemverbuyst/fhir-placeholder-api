@@ -15,12 +15,14 @@ export type ConfigItem<T extends Resource> = {
   url: T["resourceType"];
 };
 
-export const CONFIG_ITEMS: [
-  ConfigItem<Organization>,
-  ConfigItem<Patient>,
-  ConfigItem<Practitioner>,
-] = [
-  {
+export type ConfigItems = {
+  Organization: ConfigItem<Organization>;
+  Patient: ConfigItem<Patient>;
+  Practitioner: ConfigItem<Practitioner>;
+};
+
+export const CONFIG_ITEMS: ConfigItems = {
+  Organization: {
     resourceType: "Organization",
     bgColor: "bg-amber-800",
     searchProperties: ["name"],
@@ -35,7 +37,7 @@ export const CONFIG_ITEMS: [
     cardKeys: ["id", "active"],
     url: "Organization",
   },
-  {
+  Patient: {
     resourceType: "Patient",
     bgColor: "bg-teal-500",
     searchProperties: ["gender"],
@@ -50,7 +52,7 @@ export const CONFIG_ITEMS: [
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Patient",
   },
-  {
+  Practitioner: {
     resourceType: "Practitioner",
     bgColor: "bg-amber-600",
     searchProperties: ["gender"],
@@ -65,9 +67,7 @@ export const CONFIG_ITEMS: [
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Practitioner",
   },
-];
-
-export type ResourceType = (typeof CONFIG_ITEMS)[number]["resourceType"];
+};
 
 // export const CONFIG_ITEMS = [
 //   {

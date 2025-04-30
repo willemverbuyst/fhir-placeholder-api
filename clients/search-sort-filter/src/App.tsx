@@ -1,14 +1,11 @@
-import { Organization, Patient, Practitioner } from "fhir/r5";
 import type React from "react";
 import { useState } from "react";
-import { CardsRenderer } from "./components/CardsRenderer";
+import { ItemMap } from "./components/ItemMap";
 import { SelectResourceButton } from "./components/SelectResourceButton";
-import { CONFIG_ITEMS, type ResourceType } from "./constants";
+import { CONFIG_ITEMS, type ConfigItems } from "./constants";
 
 function App(): React.JSX.Element {
-  const [display, setDisplay] = useState<ResourceType>(
-    CONFIG_ITEMS[0].resourceType,
-  );
+  const [display, setDisplay] = useState<keyof ConfigItems>("Organization");
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
@@ -19,25 +16,17 @@ function App(): React.JSX.Element {
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          {CONFIG_ITEMS.map((r) => (
+          {Object.keys(CONFIG_ITEMS).map((k) => (
             <SelectResourceButton
-              key={r.resourceType}
+              key={k}
               setDisplay={setDisplay}
-              className={r.bgColor}
-              caption={r.resourceType}
+              className={CONFIG_ITEMS[k as keyof typeof CONFIG_ITEMS].bgColor}
+              caption={k as keyof typeof CONFIG_ITEMS}
             />
           ))}
         </section>
 
-        <section className="p-4 rounded-lg w-full">
-          {display === "Patient" ? (
-            <CardsRenderer<Patient> {...CONFIG_ITEMS[1]} />
-          ) : display === "Organization" ? (
-            <CardsRenderer<Organization> {...CONFIG_ITEMS[0]} />
-          ) : display === "Practitioner" ? (
-            <CardsRenderer<Practitioner> {...CONFIG_ITEMS[2]} />
-          ) : null}
-        </section>
+        <section className="p-4 rounded-lg w-full">{ItemMap[display]}</section>
       </main>
     </div>
   );

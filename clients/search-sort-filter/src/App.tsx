@@ -1,8 +1,8 @@
 import type React from "react";
 import { useState } from "react";
 import { SelectResourceButton } from "./components/SelectResourceButton";
-import { OrganizationSearchSortAndFilter } from "./components/cards/organization.card";
-import { PatientSearchSortAndFilter } from "./components/cards/patient.card";
+import { OrganizationCards } from "./components/cards/organization.cards";
+import { PatientCards } from "./components/cards/patient.cards";
 import { RESOURCES, type ResourceType } from "./constants";
 
 function App(): React.JSX.Element {
@@ -23,7 +23,7 @@ function App(): React.JSX.Element {
             <SelectResourceButton
               key={r.resourceType}
               setDisplay={setDisplay}
-              className={r.color}
+              className={r.bgColor}
               caption={r.resourceType}
             />
           ))}
@@ -31,9 +31,9 @@ function App(): React.JSX.Element {
 
         <section className="p-4 rounded-lg w-full">
           {display === "Patient" ? (
-            <PatientSearchSortAndFilter />
+            <PatientCards {...RESOURCES[1]} />
           ) : display === "Organization" ? (
-            <OrganizationSearchSortAndFilter />
+            <OrganizationCards {...RESOURCES[0]} />
           ) : null}
         </section>
       </main>

@@ -1,10 +1,10 @@
 import type React from "react";
-import type { Items } from "../constants";
+import type { ConfigItems } from "../constants.tsx";
 
 export function SelectResourceButton(props: {
-  caption: keyof typeof Items;
+  caption: keyof ConfigItems;
   className: string;
-  setDisplay: (item: keyof typeof Items) => void;
+  setDisplay: (item: keyof ConfigItems) => void;
 }): React.JSX.Element {
   const { caption, setDisplay, className } = props;
   return (
@@ -13,7 +13,7 @@ export function SelectResourceButton(props: {
       className={`py-2 px-4 rounded-md text-white ${className}`}
       onClick={() => setDisplay(caption)}
     >
-      {caption.replace(/_/g, " ")}
+      {caption}
     </button>
   );
 }

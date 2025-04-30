@@ -3,7 +3,7 @@ import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, PractitionerRole } from "fhir/r5";
 // biome-ignore lint/style/useImportType: nestjs quirk
 import { GetPractitionerRoleDto } from "./dto/get-practitioner-role.dto";
-import { practitionerRoleBundleExample } from "./exampples/practitioner-role-bundle.example";
+import { practitionerRoleBundleExample } from "./examples/practitioner-role-bundle.example";
 // biome-ignore lint/style/useImportType: nestjs quirk
 import { PractitionerRoleService } from "./practitioner-role.service";
 

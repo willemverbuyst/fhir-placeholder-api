@@ -1,14 +1,10 @@
 import type React from "react";
 import { useState } from "react";
-import { OrganizationSearchSortAndFilter } from "./components/Organization/OrganizationSearchSortAndFilter";
-import { PatientSearchSortAndFilter } from "./components/Patient/PatientSearchSortAndFilter";
 import { SelectResourceButton } from "./components/SelectResourceButton";
-import { Items } from "./constants";
+import { CONFIG_ITEMS, type ConfigItems } from "./constants.tsx";
 
 function App(): React.JSX.Element {
-  const [display, setDisplay] = useState<keyof typeof Items>(
-    Items.ORGANIZATION,
-  );
+  const [display, setDisplay] = useState<keyof ConfigItems>("Organization");
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
@@ -19,54 +15,18 @@ function App(): React.JSX.Element {
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-amber-800"
-            caption={Items.ORGANIZATION}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-amber-600"
-            caption={Items.PRACTITIONER_ROLE}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-amber-400"
-            caption={Items.PRACTITIONER}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-teal-500"
-            caption={Items.PATIENT}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-violet-500"
-            caption={Items.CONDITION}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-blue-900"
-            caption={Items.EPISODE_OF_CARE}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-green-600"
-            caption={Items.ENCOUNTER}
-          />
-          <SelectResourceButton
-            setDisplay={setDisplay}
-            className="bg-pink-600"
-            caption={Items.OBSERVATION}
-          />
+          {Object.keys(CONFIG_ITEMS).map((k) => (
+            <SelectResourceButton
+              key={k}
+              setDisplay={setDisplay}
+              className={CONFIG_ITEMS[k as keyof typeof CONFIG_ITEMS].bgColor}
+              caption={k as keyof typeof CONFIG_ITEMS}
+            />
+          ))}
         </section>
 
         <section className="p-4 rounded-lg w-full">
-          {display === Items.PATIENT ? (
-            <PatientSearchSortAndFilter />
-          ) : display === Items.ORGANIZATION ? (
-            <OrganizationSearchSortAndFilter />
-          ) : null}
+          {CONFIG_ITEMS[display].card}
         </section>
       </main>
     </div>

@@ -3,11 +3,11 @@ import { useState } from "react";
 import { SelectResourceButton } from "./components/SelectResourceButton";
 import { OrganizationCards } from "./components/cards/organization.cards";
 import { PatientCards } from "./components/cards/patient.cards";
-import { RESOURCES, type ResourceType } from "./constants";
+import { CONFIG_ITEMS, type ResourceType } from "./constants";
 
 function App(): React.JSX.Element {
   const [display, setDisplay] = useState<ResourceType>(
-    RESOURCES[0].resourceType,
+    CONFIG_ITEMS[0].resourceType,
   );
 
   return (
@@ -19,7 +19,7 @@ function App(): React.JSX.Element {
 
       <main className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          {RESOURCES.map((r) => (
+          {CONFIG_ITEMS.map((r) => (
             <SelectResourceButton
               key={r.resourceType}
               setDisplay={setDisplay}
@@ -31,9 +31,9 @@ function App(): React.JSX.Element {
 
         <section className="p-4 rounded-lg w-full">
           {display === "Patient" ? (
-            <PatientCards {...RESOURCES[1]} />
+            <PatientCards {...CONFIG_ITEMS[1]} />
           ) : display === "Organization" ? (
-            <OrganizationCards {...RESOURCES[0]} />
+            <OrganizationCards {...CONFIG_ITEMS[0]} />
           ) : null}
         </section>
       </main>

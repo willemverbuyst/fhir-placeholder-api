@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Organization } from "fhir/r5";
 import type React from "react";
-import type { OrganizationConfig } from "../../constants";
+import type { ConfigItem } from "../../constants";
 import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "../SearchSortAndFilter";
 
 export function OrganizationCards(
-  props: OrganizationConfig,
+  props: ConfigItem<Organization>,
 ): React.JSX.Element | null {
   const {
     url,

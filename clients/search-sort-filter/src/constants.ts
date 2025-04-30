@@ -1,34 +1,21 @@
-import type { Organization, Patient } from "fhir/r5";
+import type { Organization, Patient, Resource } from "fhir/r5";
 import type { Filter } from "./interfaces/Filter";
 import type { Sorter } from "./interfaces/Sorter";
 
-export type PatientConfig = {
-  resourceType: Patient["resourceType"];
+export type ConfigItem<T extends Resource> = {
+  resourceType: T["resourceType"];
   bgColor: string;
-  filterKeys: (keyof Patient)[];
-  sortKeys: (keyof Patient)[];
-  searchProperties: (keyof Patient)[];
-  initialSortProperty: Sorter<Patient>;
-  initialFilterProperties: Filter<Patient>[];
+  filterKeys: (keyof T)[];
+  sortKeys: (keyof T)[];
+  searchProperties: (keyof T)[];
+  initialSortProperty: Sorter<T>;
+  initialFilterProperties: Filter<T>[];
   initialSearchQuery: "";
-  cardKeys: (keyof Patient)[];
-  url: Patient["resourceType"];
+  cardKeys: (keyof T)[];
+  url: T["resourceType"];
 };
 
-export type OrganizationConfig = {
-  resourceType: Organization["resourceType"];
-  bgColor: string;
-  filterKeys: (keyof Organization)[];
-  sortKeys: (keyof Organization)[];
-  searchProperties: (keyof Organization)[];
-  initialSortProperty: Sorter<Organization>;
-  initialFilterProperties: Filter<Organization>[];
-  initialSearchQuery: "";
-  cardKeys: (keyof Organization)[];
-  url: Organization["resourceType"];
-};
-
-export const RESOURCES: [OrganizationConfig, PatientConfig] = [
+export const CONFIG_ITEMS: [ConfigItem<Organization>, ConfigItem<Patient>] = [
   {
     resourceType: "Organization",
     bgColor: "bg-amber-800",
@@ -62,9 +49,9 @@ export const RESOURCES: [OrganizationConfig, PatientConfig] = [
   },
 ];
 
-export type ResourceType = (typeof RESOURCES)[number]["resourceType"];
+export type ResourceType = (typeof CONFIG_ITEMS)[number]["resourceType"];
 
-// export const RESOURCES = [
+// export const CONFIG_ITEMS = [
 //   {
 //     resourceType: "Organization",
 //     bgColor: "bg-amber-800",

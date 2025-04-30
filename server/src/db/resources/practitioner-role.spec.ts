@@ -13,6 +13,7 @@ describe("createOrganization", () => {
 
     expect(practitionerRole).toHaveProperty("id", practitionerRoleId);
     expect(practitionerRole).toHaveProperty("resourceType", "PractitionerRole");
+    expect(practitionerRole).toHaveProperty("active", true);
     expect(practitionerRole.organization).toEqual({
       reference: `Organization/${organizationId}`,
     });

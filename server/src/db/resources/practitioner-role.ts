@@ -15,5 +15,6 @@ export function createPractitionerRole({
     resourceType: "PractitionerRole",
     organization: { reference: `Organization/${organizationId}` },
     practitioner: { reference: `Practitioner/${practitionerId}` },
+    active: true,
   };
 }

@@ -1,4 +1,10 @@
-import type { Organization, Patient, Practitioner, Resource } from "fhir/r5";
+import type {
+  Organization,
+  Patient,
+  Practitioner,
+  PractitionerRole,
+  Resource,
+} from "fhir/r5";
 import type { Filter } from "./interfaces/Filter";
 import type { Sorter } from "./interfaces/Sorter";
 
@@ -17,8 +23,9 @@ export type ConfigItem<T extends Resource> = {
 
 export type ConfigItems = {
   Organization: ConfigItem<Organization>;
-  Patient: ConfigItem<Patient>;
+  PractitionerRole: ConfigItem<PractitionerRole>;
   Practitioner: ConfigItem<Practitioner>;
+  Patient: ConfigItem<Patient>;
 };
 
 export const CONFIG_ITEMS: ConfigItems = {
@@ -37,6 +44,36 @@ export const CONFIG_ITEMS: ConfigItems = {
     cardKeys: ["id", "active"],
     url: "Organization",
   },
+  PractitionerRole: {
+    resourceType: "PractitionerRole",
+    bgColor: "bg-amber-600",
+    searchProperties: [],
+    filterKeys: ["active"],
+    sortKeys: ["id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id", "active"],
+    url: "PractitionerRole",
+  },
+  Practitioner: {
+    resourceType: "Practitioner",
+    bgColor: "bg-amber-400",
+    searchProperties: ["gender"],
+    filterKeys: ["active"],
+    sortKeys: ["gender", "birthDate", "id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id", "birthDate", "gender", "active"],
+    url: "Practitioner",
+  },
   Patient: {
     resourceType: "Patient",
     bgColor: "bg-teal-500",
@@ -51,21 +88,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Patient",
-  },
-  Practitioner: {
-    resourceType: "Practitioner",
-    bgColor: "bg-amber-600",
-    searchProperties: ["gender"],
-    filterKeys: ["active"],
-    sortKeys: ["gender", "birthDate", "id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
-    initialFilterProperties: [],
-    initialSearchQuery: "",
-    cardKeys: ["id", "birthDate", "gender", "active"],
-    url: "Practitioner",
   },
 };
 

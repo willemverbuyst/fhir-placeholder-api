@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
-import type { ConfigItem } from "../constants";
+import { CONFIG_ITEMS, type ConfigItems } from "../constants.tsx";
 import { isBundle } from "../lib/fhir";
 import { createResourcesQueryOptions } from "../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
 
-export function CardsRenderer<T extends Resource>(
-  props: ConfigItem<T>,
-): React.JSX.Element | null {
+export function CardsRenderer<T extends Resource>(props: {
+  resourceType: keyof ConfigItems;
+}): React.JSX.Element | null {
   const {
     url,
     filterKeys,
@@ -19,7 +19,7 @@ export function CardsRenderer<T extends Resource>(
     searchProperties,
     bgColor,
     cardKeys,
-  } = props;
+  } = CONFIG_ITEMS[props.resourceType];
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url }),
   );

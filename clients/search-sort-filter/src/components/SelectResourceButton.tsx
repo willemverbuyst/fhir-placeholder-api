@@ -1,5 +1,5 @@
 import type React from "react";
-import type { ConfigItems } from "../constants";
+import type { ConfigItems } from "../constants.tsx";
 
 export function SelectResourceButton(props: {
   caption: keyof ConfigItems;

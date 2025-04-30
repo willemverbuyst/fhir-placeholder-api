@@ -1,8 +1,7 @@
 import type React from "react";
 import { useState } from "react";
-import { ItemMap } from "./components/ItemMap";
 import { SelectResourceButton } from "./components/SelectResourceButton";
-import { CONFIG_ITEMS, type ConfigItems } from "./constants";
+import { CONFIG_ITEMS, type ConfigItems } from "./constants.tsx";
 
 function App(): React.JSX.Element {
   const [display, setDisplay] = useState<keyof ConfigItems>("Organization");
@@ -26,7 +25,9 @@ function App(): React.JSX.Element {
           ))}
         </section>
 
-        <section className="p-4 rounded-lg w-full">{ItemMap[display]}</section>
+        <section className="p-4 rounded-lg w-full">
+          {CONFIG_ITEMS[display].card}
+        </section>
       </main>
     </div>
   );

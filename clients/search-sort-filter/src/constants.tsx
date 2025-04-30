@@ -7,6 +7,8 @@ import type {
   PractitionerRole,
   Resource,
 } from "fhir/r5";
+import type React from "react";
+import { CardsRenderer } from "./components/CardsRenderer";
 import type { Filter } from "./interfaces/Filter";
 import type { Sorter } from "./interfaces/Sorter";
 
@@ -21,6 +23,7 @@ export type ConfigItem<T extends Resource> = {
   initialSearchQuery: "";
   cardKeys: (keyof T)[];
   url: T["resourceType"];
+  card: React.JSX.Element | null;
 };
 
 export type ConfigItems = {
@@ -47,6 +50,7 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "active"],
     url: "Organization",
+    card: <CardsRenderer<Organization> resourceType={"Organization"} />,
   },
   PractitionerRole: {
     resourceType: "PractitionerRole",
@@ -62,6 +66,7 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "active"],
     url: "PractitionerRole",
+    card: <CardsRenderer<PractitionerRole> resourceType={"PractitionerRole"} />,
   },
   Practitioner: {
     resourceType: "Practitioner",
@@ -77,6 +82,7 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Practitioner",
+    card: <CardsRenderer<Practitioner> resourceType={"Practitioner"} />,
   },
   Patient: {
     resourceType: "Patient",
@@ -92,6 +98,7 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Patient",
+    card: <CardsRenderer<Patient> resourceType={"Patient"} />,
   },
   Condition: {
     resourceType: "Condition",
@@ -107,6 +114,7 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id"],
     url: "Condition",
+    card: <CardsRenderer<Condition> resourceType={"Condition"} />,
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
@@ -122,56 +130,12 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id"],
     url: "EpisodeOfCare",
+    card: <CardsRenderer<EpisodeOfCare> resourceType={"EpisodeOfCare"} />,
   },
 };
 
 // export const CONFIG_ITEMS = [
-//   {
-//     resourceType: "Organization",
-//     bgColor: "bg-amber-800",
-//     searchProperties: ["name"],
-//     filterKeys: ["active"],
-//     sortKeys: ["name", "id"],
-//     initialSortProperty: {
-//       property: "id",
-//       isDescending: true,
-//     },
-//     initialFilterProperties: [],
-//     initialSearchQuery: "",
-//     cardKeys: ["id", "active"],
-//   },
-//   {
-//     resourceType: "PractitionerRole",
-//     bgColor: "bg-amber-600",
-//   },
-//   {
-//     resourceType: "Practitioner",
-//     bgColor: "bg-amber-400",
-//   },
-//   {
-//     resourceType: "Patient",
 
-//     bgColor: "bg-teal-500",
-//     searchProperties: ["gender"],
-//     filterKeys: ["active"],
-//     sortKeys: ["gender", "birthDate", "id"],
-//     initialSortProperty: {
-//       property: "id",
-//       isDescending: true,
-//     },
-//     initialFilterProperties: [],
-//     initialSearchQuery: "",
-//     cardKeys: ["id", "birthDate", "gender", "active"],
-//     url: "/Patient",
-//   },
-//   {
-//     resourceType: "Condition",
-//     bgColor: "bg-violet-500",
-//   },
-//   {
-//     resourceType: "EpisodeOfCare",
-//     bgColor: "bg-blue-900",
-//   },
 //   {
 //     resourceType: "Encounter",
 //     bgColor: "bg-green-600",

@@ -1,4 +1,6 @@
 import type {
+  Condition,
+  EpisodeOfCare,
   Organization,
   Patient,
   Practitioner,
@@ -22,6 +24,8 @@ export type ConfigItem<T extends Resource> = {
 };
 
 export type ConfigItems = {
+  Condition: ConfigItem<Condition>;
+  EpisodeOfCare: ConfigItem<EpisodeOfCare>;
   Organization: ConfigItem<Organization>;
   PractitionerRole: ConfigItem<PractitionerRole>;
   Practitioner: ConfigItem<Practitioner>;
@@ -88,6 +92,36 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Patient",
+  },
+  Condition: {
+    resourceType: "Condition",
+    bgColor: "bg-violet-500",
+    searchProperties: [],
+    filterKeys: [],
+    sortKeys: ["id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id"],
+    url: "Condition",
+  },
+  EpisodeOfCare: {
+    resourceType: "EpisodeOfCare",
+    bgColor: "bg-blue-900",
+    searchProperties: [],
+    filterKeys: [],
+    sortKeys: ["id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id"],
+    url: "EpisodeOfCare",
   },
 };
 

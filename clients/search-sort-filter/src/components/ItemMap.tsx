@@ -1,4 +1,6 @@
 import type {
+  Condition,
+  EpisodeOfCare,
   Organization,
   Patient,
   Practitioner,
@@ -14,5 +16,9 @@ export const ItemMap: Record<keyof ConfigItems, React.JSX.Element> = {
   Practitioner: <CardsRenderer<Practitioner> {...CONFIG_ITEMS.Practitioner} />,
   PractitionerRole: (
     <CardsRenderer<PractitionerRole> {...CONFIG_ITEMS.PractitionerRole} />
+  ),
+  Condition: <CardsRenderer<Condition> {...CONFIG_ITEMS.Condition} />,
+  EpisodeOfCare: (
+    <CardsRenderer<EpisodeOfCare> {...CONFIG_ITEMS.EpisodeOfCare} />
   ),
 };

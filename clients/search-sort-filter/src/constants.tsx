@@ -1,6 +1,8 @@
 import type {
   Condition,
+  Encounter,
   EpisodeOfCare,
+  Observation,
   Organization,
   Patient,
   Practitioner,
@@ -33,6 +35,8 @@ export type ConfigItems = {
   PractitionerRole: ConfigItem<PractitionerRole>;
   Practitioner: ConfigItem<Practitioner>;
   Patient: ConfigItem<Patient>;
+  Encounter: ConfigItem<Encounter>;
+  Observation: ConfigItem<Observation>;
 };
 
 export const CONFIG_ITEMS: ConfigItems = {
@@ -132,16 +136,36 @@ export const CONFIG_ITEMS: ConfigItems = {
     url: "EpisodeOfCare",
     card: <CardsRenderer<EpisodeOfCare> resourceType={"EpisodeOfCare"} />,
   },
+  Encounter: {
+    resourceType: "Encounter",
+    bgColor: "bg-green-600",
+    searchProperties: [],
+    filterKeys: [],
+    sortKeys: ["id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id"],
+    url: "Encounter",
+    card: <CardsRenderer<Encounter> resourceType={"Encounter"} />,
+  },
+  Observation: {
+    resourceType: "Observation",
+    bgColor: "bg-pink-600",
+    searchProperties: [],
+    filterKeys: [],
+    sortKeys: ["id"],
+    initialSortProperty: {
+      property: "id",
+      isDescending: true,
+    },
+    initialFilterProperties: [],
+    initialSearchQuery: "",
+    cardKeys: ["id"],
+    url: "Observation",
+    card: <CardsRenderer<Observation> resourceType={"Observation"} />,
+  },
 };
-
-// export const CONFIG_ITEMS = [
-
-//   {
-//     resourceType: "Encounter",
-//     bgColor: "bg-green-600",
-//   },
-//   {
-//     resourceType: "Observation",
-//     bgColor: "bg-pink-600",
-//   },
-// ] as const;

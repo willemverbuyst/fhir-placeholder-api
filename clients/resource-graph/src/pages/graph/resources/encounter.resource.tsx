@@ -1,5 +1,5 @@
 import type { Encounter } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 import { Observations } from "./observation.resource";
 
 export function Encounters({ episodeId }: { episodeId: string | undefined }) {

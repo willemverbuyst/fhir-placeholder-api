@@ -1,4 +1,4 @@
-import { Organizations } from "../../resources/organization.resource";
+import { Organizations } from "./resources/organization.resource";
 
 export function Graph() {
   return (

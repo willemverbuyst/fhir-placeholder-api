@@ -1,5 +1,5 @@
 import type { Observation } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 
 export function Observations({
   encounterId,

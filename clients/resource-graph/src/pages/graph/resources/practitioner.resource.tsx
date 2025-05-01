@@ -1,5 +1,5 @@
 import type { Practitioner } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 import { Patients } from "./patient.resource";
 
 export function PractitionerResource({

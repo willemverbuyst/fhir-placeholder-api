@@ -1,5 +1,5 @@
 import type { EpisodeOfCare } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 import { Encounters } from "./encounter.resource";
 
 export function Episodes({ conditionId }: { conditionId: string | undefined }) {

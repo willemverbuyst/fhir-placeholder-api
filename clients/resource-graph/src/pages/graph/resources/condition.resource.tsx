@@ -1,5 +1,5 @@
 import type { Condition } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 import { Episodes } from "./episode.resource";
 
 export function Conditions({ patientId }: { patientId: string | undefined }) {

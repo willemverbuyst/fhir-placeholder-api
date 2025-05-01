@@ -1,5 +1,5 @@
 import type { PractitionerRole } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 import { PractitionerResource } from "./practitioner.resource";
 
 export function PractitionerRoles({

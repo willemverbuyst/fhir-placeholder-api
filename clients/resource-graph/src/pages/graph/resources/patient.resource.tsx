@@ -1,5 +1,5 @@
 import type { Patient } from "fhir/r5";
-import { ResourcesRenderer } from "../components/ResourcesRenderer";
+import { ResourcesRenderer } from "../ResourcesRenderer";
 import { Conditions } from "./condition.resource";
 
 export function Patients({

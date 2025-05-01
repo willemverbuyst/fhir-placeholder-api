@@ -1,12 +1,13 @@
-import { Organizations } from "./resources/organization.resource";
+import { Route, Routes } from "react-router";
+import { Cards } from "./Cards";
+import { Graph } from "./Graph";
 
 function App() {
   return (
-    <div className="overflow-x-auto p-10">
-      <div className="flex justify-center">
-        <Organizations />
-      </div>
-    </div>
+    <Routes>
+      <Route path="graph" element={<Graph />} />
+      <Route path="cards" element={<Cards />} />
+    </Routes>
   );
 }
 

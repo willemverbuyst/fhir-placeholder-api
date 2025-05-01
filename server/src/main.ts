@@ -40,7 +40,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api-docs", app, document);
 
-  const port = app.get(ConfigService).get("PORT") || 3000;
+  const port = app.get(ConfigService).get("PORT") || 8080;
   await app.listen(port, () => {
     console.log(
       `Server is running on http://localhost:${port}/api/v2/${fhirVersion}`,

@@ -20,12 +20,12 @@ export function Header() {
         Graph
       </NavLink>
       <NavLink
-        to="/cards"
+        to="/search-sort-filter"
         style={({ isActive }) => ({
           color: isActive ? "red" : "black",
         })}
       >
-        Cards
+        Search Sort Filter
       </NavLink>
       <NavLink
         to="/create-organization"

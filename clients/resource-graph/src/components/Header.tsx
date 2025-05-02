@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 export function Header() {
   return (
-    <nav className="flex gap-2 p-3">
+    <nav className="flex gap-4 p-3">
       <NavLink
         to="/"
         style={({ isActive }) => ({
@@ -26,6 +26,14 @@ export function Header() {
         })}
       >
         Cards
+      </NavLink>
+      <NavLink
+        to="/create-organization"
+        style={({ isActive }) => ({
+          color: isActive ? "red" : "black",
+        })}
+      >
+        Create Organization
       </NavLink>
     </nav>
   );

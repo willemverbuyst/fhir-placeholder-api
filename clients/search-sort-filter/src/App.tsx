@@ -1,7 +1,37 @@
+import type {
+  Condition,
+  Encounter,
+  EpisodeOfCare,
+  Observation,
+  Organization,
+  Patient,
+  Practitioner,
+  PractitionerRole,
+} from "fhir/r5";
 import type React from "react";
 import { useState } from "react";
+import { CardsRenderer } from "./components/CardsRenderer.tsx";
 import { SelectResourceButton } from "./components/SelectResourceButton";
 import { CONFIG_ITEMS, type ConfigItems } from "./constants.tsx";
+
+const ItemMap = {
+  Condition: <CardsRenderer<Condition> item={CONFIG_ITEMS.Condition} />,
+  EpisodeOfCare: (
+    <CardsRenderer<EpisodeOfCare> item={CONFIG_ITEMS.EpisodeOfCare} />
+  ),
+  Organization: (
+    <CardsRenderer<Organization> item={CONFIG_ITEMS.Organization} />
+  ),
+  PractitionerRole: (
+    <CardsRenderer<PractitionerRole> item={CONFIG_ITEMS.PractitionerRole} />
+  ),
+  Practitioner: (
+    <CardsRenderer<Practitioner> item={CONFIG_ITEMS.Practitioner} />
+  ),
+  Patient: <CardsRenderer<Patient> item={CONFIG_ITEMS.Patient} />,
+  Encounter: <CardsRenderer<Encounter> item={CONFIG_ITEMS.Encounter} />,
+  Observation: <CardsRenderer<Observation> item={CONFIG_ITEMS.Observation} />,
+};
 
 function App(): React.JSX.Element {
   const [display, setDisplay] = useState<keyof ConfigItems>("Organization");
@@ -25,9 +55,7 @@ function App(): React.JSX.Element {
           ))}
         </section>
 
-        <section className="p-4 rounded-lg w-full">
-          {CONFIG_ITEMS[display].card}
-        </section>
+        <section className="p-4 rounded-lg w-full">{ItemMap[display]}</section>
       </main>
     </div>
   );

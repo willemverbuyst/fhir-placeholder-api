@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
-import { CONFIG_ITEMS, type ConfigItems } from "../constants.tsx";
+import type { ConfigItem } from "../constants";
 import { isBundle } from "../lib/fhir";
 import { createResourcesQueryOptions } from "../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
 
 export function CardsRenderer<T extends Resource>(props: {
-  resourceType: keyof ConfigItems;
+  item: ConfigItem<T>;
 }): React.JSX.Element | null {
   const {
     url,
@@ -19,7 +19,7 @@ export function CardsRenderer<T extends Resource>(props: {
     searchProperties,
     bgColor,
     cardKeys,
-  } = CONFIG_ITEMS[props.resourceType];
+  } = props.item;
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url }),
   );
@@ -42,7 +42,7 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (resources.length) {
     return (
-      <SearchSortAndFilter
+      <SearchSortAndFilter<T>
         dataSource={resources}
         searchProperties={searchProperties}
         filterKeys={filterKeys}
@@ -67,10 +67,9 @@ export function CardsRenderer<T extends Resource>(props: {
                   <div key={String(key)} className="flex justify-between">
                     <p className="font-semibold">{String(key)}</p>
                     <p>
-                      {/* @ts-ignore */}
                       {typeof resource[key] === "boolean"
                         ? JSON.stringify(resource[key])
-                        : resource[key]}
+                        : String(resource[key])}
                     </p>
                   </div>
                 );

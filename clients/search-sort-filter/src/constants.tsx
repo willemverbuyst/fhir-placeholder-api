@@ -9,8 +9,6 @@ import type {
   PractitionerRole,
   Resource,
 } from "fhir/r5";
-import type React from "react";
-import { CardsRenderer } from "./components/CardsRenderer";
 import type { Filter } from "./interfaces/Filter";
 import type { Sorter } from "./interfaces/Sorter";
 
@@ -25,7 +23,6 @@ export type ConfigItem<T extends Resource> = {
   initialSearchQuery: "";
   cardKeys: (keyof T)[];
   url: T["resourceType"];
-  card: React.JSX.Element | null;
 };
 
 export type ConfigItems = {
@@ -54,7 +51,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "active"],
     url: "Organization",
-    card: <CardsRenderer<Organization> resourceType={"Organization"} />,
   },
   PractitionerRole: {
     resourceType: "PractitionerRole",
@@ -70,7 +66,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "active"],
     url: "PractitionerRole",
-    card: <CardsRenderer<PractitionerRole> resourceType={"PractitionerRole"} />,
   },
   Practitioner: {
     resourceType: "Practitioner",
@@ -86,7 +81,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Practitioner",
-    card: <CardsRenderer<Practitioner> resourceType={"Practitioner"} />,
   },
   Patient: {
     resourceType: "Patient",
@@ -102,7 +96,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
     url: "Patient",
-    card: <CardsRenderer<Patient> resourceType={"Patient"} />,
   },
   Condition: {
     resourceType: "Condition",
@@ -118,7 +111,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id"],
     url: "Condition",
-    card: <CardsRenderer<Condition> resourceType={"Condition"} />,
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
@@ -134,7 +126,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id"],
     url: "EpisodeOfCare",
-    card: <CardsRenderer<EpisodeOfCare> resourceType={"EpisodeOfCare"} />,
   },
   Encounter: {
     resourceType: "Encounter",
@@ -150,7 +141,6 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id"],
     url: "Encounter",
-    card: <CardsRenderer<Encounter> resourceType={"Encounter"} />,
   },
   Observation: {
     resourceType: "Observation",
@@ -166,6 +156,5 @@ export const CONFIG_ITEMS: ConfigItems = {
     initialSearchQuery: "",
     cardKeys: ["id"],
     url: "Observation",
-    card: <CardsRenderer<Observation> resourceType={"Observation"} />,
   },
 };

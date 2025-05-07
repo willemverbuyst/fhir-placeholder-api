@@ -8,7 +8,7 @@ const status: Ref<"active" | "inactive" | "all"> = ref("all");
 const error = ref(null);
 
 async function getPatients() {
-  return await fetch("http://localhost:3000/api/v2/r5/Patient")
+  return await fetch("http://localhost:8080/api/v2/r5/Patient")
     .then((response) => response.json())
     .then((json) => {
       list.value = json.entry.map(

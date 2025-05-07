@@ -1,27 +1,15 @@
 version: 2
 updates:
-  # Root package.json
   - package-ecosystem: "npm"
-    directory: "/" 
+    directory: "/" # Root of the monorepo
     schedule:
       interval: "weekly"
-
-  - package-ecosystem: "npm"
-    directory: "./server"
-    schedule:
-      interval: "weekly"
-
-  - package-ecosystem: "npm"
-    directory: "./clients/patient-overview"
-    schedule:
-      interval: "weekly"
-
-  - package-ecosystem: "npm"
-    directory: "./clients/resource-graph"
-    schedule:
-      interval: "weekly"
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    # This tells Dependabot to use pnpm by targeting pnpm-lock.yaml
+    allow:
+      - dependency-type: "direct"
       
-    
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

@@ -8,8 +8,6 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
-    "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
     "build-only": "vite build",
     "type-check": "vue-tsc --build --force"
   },
@@ -24,7 +22,6 @@
     "@vitejs/plugin-vue": "^5.0.3",
     "@vue/test-utils": "^2.4.4",
     "@vue/tsconfig": "^0.5.1",
-    "cypress": "^13.6.3",
     "jsdom": "^24.0.0",
     "npm-run-all2": "^6.1.1",
     "start-server-and-test": "^2.0.3",

@@ -11,11 +11,29 @@ permissions:
 jobs:
   format-and-lint:
     name: Format & Lint
-    uses: ./.github/workflows/node-ci.yml
-    with:
-      run-command: |
-        npm run format:check
-        npm run lint:check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./.nvmrc"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Format Code
+        run: pnpm run format:check
+
+      - name: Lint Code
+        run: pnpm run lint:check
+
 
   # knip:
   #   name: Knip

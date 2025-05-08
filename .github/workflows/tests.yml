@@ -12,16 +12,24 @@ jobs:
   tests:
     name: Run tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./server"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: npm i
-      - name: Unit Tests
-        run: npm run test
-      - name: E2E
-        run: npm run test:e2e
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./.nvmrc"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Unit Tests
+        run: pnpm --filter ./server... run test
+
+      - name: Run E2E Tests
+        run: pnpm --filter ./server... run test:e2e

@@ -2,6 +2,7 @@
   "name": "clients",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "format:check": "biome format",
     "format:write": "biome format --write .",
@@ -14,5 +15,6 @@
   "description": "",
   "devDependencies": {
     "@biomejs/biome": "1.9.4"
-  }
+  },
+  "packageManager": "pnpm@10.10.0"
 }

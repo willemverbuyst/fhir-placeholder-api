@@ -1,0 +1,4 @@
+packages:
+  - "clients/patient-overview"
+  - "clients/resource-graph"
+  - "server"

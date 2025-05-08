@@ -9,7 +9,7 @@ export class LoggerMiddleware implements NestMiddleware {
         "%s %s",
         req.method,
         req.originalUrl,
-        Object.keys(req.body).length ? { body: req.body } : "",
+        Object.keys(req.body ?? {}).length ? { body: req.body } : "",
       );
     }
 

@@ -1,5 +1,6 @@
 import { type MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config/dist";
+import { AppointmentModule } from "./Appointment/appointment.module";
 import { ConditionModule } from "./Condition/condition.module";
 import { EncounterModule } from "./Encounter/encounter.module";
 import { EpisodeOfCareModule } from "./EpisodeOfCare/episode-of-care.module";
@@ -33,6 +34,7 @@ import { LoggerMiddleware } from "./middlewares/logger.middlewares";
     EncounterModule,
     ObservationModule,
     PractitionerRoleModule,
+    AppointmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

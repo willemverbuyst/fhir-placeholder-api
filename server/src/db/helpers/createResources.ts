@@ -1,4 +1,5 @@
 import type {
+  Appointment,
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -9,6 +10,7 @@ import type {
   PractitionerRole,
 } from "fhir/r5";
 import type { Id } from "src/types";
+import { createAppointment } from "../resources/appointment";
 import { createCondition } from "../resources/condition";
 import { createEncounter } from "../resources/encounter";
 import { createEpisode } from "../resources/episode-of-care";
@@ -152,6 +154,21 @@ export function createObservations({
         Math.floor(i / (numberOfObservations / numberOfEncounters)) + 1
       }`,
       `observation-${i + 1}`,
+    );
+  });
+}
+
+export function createAppointments({
+  numberOfAppointments,
+  numberOfPatients,
+}: {
+  numberOfAppointments: number;
+  numberOfPatients: number;
+}): (Appointment & Id)[] {
+  return Array.from({ length: numberOfAppointments }, (_, i) => {
+    return createAppointment(
+      `patient-${Math.floor(i / (numberOfAppointments / numberOfPatients)) + 1}`,
+      `condition-${i + 1}`,
     );
   });
 }

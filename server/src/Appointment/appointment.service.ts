@@ -1,12 +1,14 @@
 import { Injectable } from "@nestjs/common";
+import type { Appointment, Bundle } from "fhir/r5";
+import { wrapInBundle } from "src/utils/bundle";
+// biome-ignore lint/style/useImportType: nestjs quirk
+import { DataStoreService } from "../db/dataStore.service";
 
 @Injectable()
 export class AppointmentService {
-  findAll() {
-    return "This action returns all appointments";
-  }
+  constructor(private readonly repo: DataStoreService) {}
 
-  findOne(id: number) {
-    return `This action returns a #${id} appointment`;
+  async findAll(): Promise<Bundle<Appointment>> {
+    return wrapInBundle(this.repo.appointments);
   }
 }

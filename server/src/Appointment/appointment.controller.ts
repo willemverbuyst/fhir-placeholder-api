@@ -1,4 +1,5 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
+import type { Appointment, Bundle } from "fhir/r5";
 // biome-ignore lint/style/useImportType: nestjs quirk
 import { AppointmentService } from "./appointment.service";
 
@@ -7,12 +8,7 @@ export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
   @Get()
-  findAll() {
-    return this.appointmentService.findAll();
-  }
-
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.appointmentService.findOne(+id);
+  async findAll(): Promise<Bundle<Appointment>> {
+    return await this.appointmentService.findAll();
   }
 }

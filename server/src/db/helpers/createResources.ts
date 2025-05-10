@@ -168,7 +168,7 @@ export function createAppointments({
   return Array.from({ length: numberOfAppointments }, (_, i) => {
     return createAppointment(
       `patient-${Math.floor(i / (numberOfAppointments / numberOfPatients)) + 1}`,
-      `condition-${i + 1}`,
+      `appointment-${i + 1}`,
     );
   });
 }

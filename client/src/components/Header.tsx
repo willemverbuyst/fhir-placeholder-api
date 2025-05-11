@@ -28,12 +28,12 @@ export function Header() {
         Search Sort Filter
       </NavLink>
       <NavLink
-        to="/create-organization"
+        to="/create"
         style={({ isActive }) => ({
           color: isActive ? "red" : "black",
         })}
       >
-        Create Organization
+        Create
       </NavLink>
     </nav>
   );

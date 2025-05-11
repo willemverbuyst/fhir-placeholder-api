@@ -10,7 +10,7 @@ import type {
 } from "fhir/r5";
 import { useState } from "react";
 import { CardsRenderer } from "./CardsRenderer.tsx";
-import { SelectResourceButton } from "./SelectResourceButton";
+import { SelectResourceButton } from "./SelectResourceButton.tsx";
 import { CONFIG_ITEMS, type ConfigItems } from "./constants.tsx";
 
 const ItemMap = {

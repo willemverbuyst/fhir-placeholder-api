@@ -23,6 +23,7 @@ export type ConfigItem<T extends Resource> = {
   initialSortProperty: Sorter<T>;
   initialFilterProperties: Filter<T>[];
   initialSearchQuery: "";
+  // biome-ignore lint/suspicious/noExplicitAny: <TODO>
   cardRows?: Partial<Record<keyof T, string | ((v: any) => string)>>;
 };
 

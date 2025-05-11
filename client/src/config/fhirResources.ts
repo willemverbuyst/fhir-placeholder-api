@@ -3,6 +3,7 @@ import type {
   Condition,
   Encounter,
   EpisodeOfCare,
+  HumanName,
   Observation,
   Organization,
   Patient,
@@ -22,7 +23,7 @@ export type ConfigItem<T extends Resource> = {
   initialSortProperty: Sorter<T>;
   initialFilterProperties: Filter<T>[];
   initialSearchQuery: "";
-  cardKeys: (keyof T)[];
+  cardRows?: Partial<Record<keyof T, string | ((v: any) => string)>>;
 };
 
 export type ConfigItems = {
@@ -50,7 +51,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id"],
+    cardRows: { id: "id" },
   },
   Condition: {
     resourceType: "Condition",
@@ -64,7 +65,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id"],
+    cardRows: { id: "id" },
   },
   Encounter: {
     resourceType: "Encounter",
@@ -78,7 +79,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id"],
+    cardRows: { id: "id" },
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
@@ -92,7 +93,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id"],
+    cardRows: { id: "id" },
   },
   Observation: {
     resourceType: "Observation",
@@ -106,7 +107,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id"],
+    cardRows: { id: "id" },
   },
   Organization: {
     resourceType: "Organization",
@@ -120,7 +121,11 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id", "active", "name"],
+    cardRows: {
+      id: "id",
+      active: (v) => JSON.stringify(v),
+      name: "name",
+    },
   },
   Patient: {
     resourceType: "Patient",
@@ -134,7 +139,16 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id", "birthDate", "gender", "active"],
+    cardRows: {
+      id: "id",
+      birthDate: "birthDate",
+      active: (v) => JSON.stringify(v),
+      gender: "gender",
+      name: (v) =>
+        v
+          ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
+          .join(", "),
+    },
   },
   Practitioner: {
     resourceType: "Practitioner",
@@ -148,7 +162,16 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id", "birthDate", "gender", "active"],
+    cardRows: {
+      id: "id",
+      birthDate: "birthDate",
+      active: (v) => JSON.stringify(v),
+      gender: "gender",
+      name: (v) =>
+        v
+          ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
+          .join(", "),
+    },
   },
   PractitionerRole: {
     resourceType: "PractitionerRole",
@@ -162,6 +185,9 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardKeys: ["id", "active"],
+    cardRows: {
+      id: "id",
+      active: (v) => JSON.stringify(v),
+    },
   },
 };

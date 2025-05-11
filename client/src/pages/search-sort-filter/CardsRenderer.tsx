@@ -18,7 +18,7 @@ export function CardsRenderer<T extends Resource>(props: {
     initialSortProperty,
     searchProperties,
     bgColor,
-    cardKeys,
+    cardRows,
   } = props.item;
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
@@ -62,14 +62,14 @@ export function CardsRenderer<T extends Resource>(props: {
               </h2>
             </section>
             <section className="flex flex-col gap-2">
-              {cardKeys.map((key) => {
+              {Object.entries(cardRows ?? {}).map(([k, v]) => {
                 return (
-                  <div key={String(key)} className="flex justify-between">
-                    <p className="font-semibold">{String(key)}</p>
+                  <div key={String(k)} className="flex justify-between">
+                    <p className="font-semibold">{String(k)}</p>
                     <p>
-                      {typeof resource[key] === "boolean"
-                        ? JSON.stringify(resource[key])
-                        : String(resource[key])}
+                      {typeof v === "string"
+                        ? resource[k as keyof typeof cardRows]
+                        : v(resource[k as keyof typeof cardRows])}
                     </p>
                   </div>
                 );

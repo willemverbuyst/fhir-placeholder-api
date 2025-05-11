@@ -9,27 +9,30 @@ import type {
   PractitionerRole,
 } from "fhir/r5";
 import { useState } from "react";
+import {
+  type ConfigItems,
+  FHIR_RESOURCES,
+} from "../../config/fhirResources.ts";
 import { CardsRenderer } from "./CardsRenderer.tsx";
 import { SelectResourceButton } from "./SelectResourceButton.tsx";
-import { CONFIG_ITEMS, type ConfigItems } from "./constants.tsx";
 
 const ItemMap = {
-  Condition: <CardsRenderer<Condition> item={CONFIG_ITEMS.Condition} />,
+  Condition: <CardsRenderer<Condition> item={FHIR_RESOURCES.Condition} />,
   EpisodeOfCare: (
-    <CardsRenderer<EpisodeOfCare> item={CONFIG_ITEMS.EpisodeOfCare} />
+    <CardsRenderer<EpisodeOfCare> item={FHIR_RESOURCES.EpisodeOfCare} />
   ),
   Organization: (
-    <CardsRenderer<Organization> item={CONFIG_ITEMS.Organization} />
+    <CardsRenderer<Organization> item={FHIR_RESOURCES.Organization} />
   ),
   PractitionerRole: (
-    <CardsRenderer<PractitionerRole> item={CONFIG_ITEMS.PractitionerRole} />
+    <CardsRenderer<PractitionerRole> item={FHIR_RESOURCES.PractitionerRole} />
   ),
   Practitioner: (
-    <CardsRenderer<Practitioner> item={CONFIG_ITEMS.Practitioner} />
+    <CardsRenderer<Practitioner> item={FHIR_RESOURCES.Practitioner} />
   ),
-  Patient: <CardsRenderer<Patient> item={CONFIG_ITEMS.Patient} />,
-  Encounter: <CardsRenderer<Encounter> item={CONFIG_ITEMS.Encounter} />,
-  Observation: <CardsRenderer<Observation> item={CONFIG_ITEMS.Observation} />,
+  Patient: <CardsRenderer<Patient> item={FHIR_RESOURCES.Patient} />,
+  Encounter: <CardsRenderer<Encounter> item={FHIR_RESOURCES.Encounter} />,
+  Observation: <CardsRenderer<Observation> item={FHIR_RESOURCES.Observation} />,
 };
 
 export function SearchSortFilter() {
@@ -39,12 +42,14 @@ export function SearchSortFilter() {
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
       <div className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          {Object.keys(CONFIG_ITEMS).map((k) => (
+          {Object.keys(FHIR_RESOURCES).map((k) => (
             <SelectResourceButton
               key={k}
               setDisplay={setDisplay}
-              className={CONFIG_ITEMS[k as keyof typeof CONFIG_ITEMS].bgColor}
-              caption={k as keyof typeof CONFIG_ITEMS}
+              className={
+                FHIR_RESOURCES[k as keyof typeof FHIR_RESOURCES].bgColor
+              }
+              caption={k as keyof typeof FHIR_RESOURCES}
             />
           ))}
         </section>

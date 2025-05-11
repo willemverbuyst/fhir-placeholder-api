@@ -1,4 +1,5 @@
 import type { Encounter } from "fhir/r5";
+import { FHIR_RESOURCES } from "../../../config/fhirResources";
 import { ResourcesRenderer } from "../ResourcesRenderer";
 import { Observations } from "./observation.resource";
 
@@ -8,7 +9,7 @@ export function Encounters({ episodeId }: { episodeId: string | undefined }) {
   return (
     <ResourcesRenderer<Encounter>
       url={`Encounter?episode-of-care=${episodeId}`}
-      className="bg-green-600"
+      className={`${FHIR_RESOURCES.Encounter.bgColor}`}
       renderItem={(resource) => <Observations encounterId={resource.id} />}
     />
   );

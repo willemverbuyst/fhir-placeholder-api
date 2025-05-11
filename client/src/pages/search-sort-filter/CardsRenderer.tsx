@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
+import type { ConfigItem } from "../../config/fhirResources";
 import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
-import type { ConfigItem } from "./constants";
 
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;

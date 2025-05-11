@@ -1,4 +1,5 @@
 import type { Appointment } from "fhir/r5";
+import { FHIR_RESOURCES } from "../../../config/fhirResources";
 import { ResourcesRenderer } from "../ResourcesRenderer";
 
 export function Appointments({ patientId }: { patientId: string | undefined }) {
@@ -7,7 +8,7 @@ export function Appointments({ patientId }: { patientId: string | undefined }) {
   return (
     <ResourcesRenderer<Appointment>
       url={`Appointment?patient=${patientId}`}
-      className="bg-gray-500"
+      className={`${FHIR_RESOURCES.Appointment.bgColor}`}
     />
   );
 }

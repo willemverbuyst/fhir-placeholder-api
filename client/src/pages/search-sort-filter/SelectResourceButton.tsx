@@ -1,5 +1,5 @@
 import type React from "react";
-import type { ConfigItems } from "./constants.tsx";
+import type { ConfigItems } from "../../config/fhirResources";
 
 export function SelectResourceButton(props: {
   caption: keyof ConfigItems;

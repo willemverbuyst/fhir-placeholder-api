@@ -1,4 +1,5 @@
 import type { Observation } from "fhir/r5";
+import { FHIR_RESOURCES } from "../../../config/fhirResources";
 import { ResourcesRenderer } from "../ResourcesRenderer";
 
 export function Observations({
@@ -11,7 +12,7 @@ export function Observations({
   return (
     <ResourcesRenderer<Observation>
       url={`Observation?encounter=${encounterId}`}
-      className="bg-pink-600"
+      className={`${FHIR_RESOURCES.Observation.bgColor}`}
     />
   );
 }

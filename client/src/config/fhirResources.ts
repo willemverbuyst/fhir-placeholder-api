@@ -15,7 +15,7 @@ import type { Sorter } from "../interfaces/Sorter";
 
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
-  bgColor: string;
+  bgColor: `bg-${string}-${number}${number}${number}`;
   filterKeys: (keyof T)[];
   sortKeys: (keyof T)[];
   searchProperties: (keyof T)[];
@@ -41,7 +41,7 @@ export type ConfigItems = {
 export const FHIR_RESOURCES: ConfigItems = {
   Appointment: {
     resourceType: "Appointment",
-    bgColor: "bg-amber-800",
+    bgColor: "bg-teal-600",
     searchProperties: ["id"],
     filterKeys: [],
     sortKeys: ["id"],
@@ -116,7 +116,7 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Organization: {
     resourceType: "Organization",
-    bgColor: "bg-amber-800",
+    bgColor: "bg-amber-950",
     searchProperties: ["name"],
     filterKeys: ["active"],
     sortKeys: ["name", "id"],
@@ -131,7 +131,7 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Patient: {
     resourceType: "Patient",
-    bgColor: "bg-teal-500",
+    bgColor: "bg-amber-400",
     searchProperties: ["gender"],
     filterKeys: ["active"],
     sortKeys: ["gender", "birthDate", "id"],
@@ -146,7 +146,7 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Practitioner: {
     resourceType: "Practitioner",
-    bgColor: "bg-amber-400",
+    bgColor: "bg-amber-600",
     searchProperties: ["gender"],
     filterKeys: ["active"],
     sortKeys: ["gender", "birthDate", "id"],
@@ -161,7 +161,7 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   PractitionerRole: {
     resourceType: "PractitionerRole",
-    bgColor: "bg-amber-600",
+    bgColor: "bg-amber-800",
     searchProperties: [],
     filterKeys: ["active"],
     sortKeys: ["id"],

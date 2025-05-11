@@ -13,7 +13,7 @@ export function PractitionerResource({
   return (
     <ResourcesRenderer<Practitioner>
       url={`Practitioner/${practitionerId}`}
-      className="bg-amber-400"
+      className="bg-amber-600"
       renderItem={(resource) => <Patients practitionerId={resource.id} />}
     />
   );

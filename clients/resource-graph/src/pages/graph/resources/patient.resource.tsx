@@ -13,7 +13,7 @@ export function Patients({
   return (
     <ResourcesRenderer<Patient>
       url={`Patient?general-practitioner=${practitionerId}`}
-      className="bg-teal-500"
+      className="bg-amber-400"
       renderItem={(resource) => (
         <section className="flex flex-col gap-3">
           <Conditions patientId={resource.id} />

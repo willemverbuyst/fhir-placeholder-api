@@ -1,15 +1,27 @@
 import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
+import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Appointment, Bundle } from "fhir/r5";
 import type { Id } from "src/types";
 // biome-ignore lint/style/useImportType: nestjs quirk
 import { AppointmentService } from "./appointment.service";
 // biome-ignore lint/style/useImportType: nestjs quirk
 import { GetAppointmentDto } from "./dto/get-appointment.dto";
+import { appointmentBundleExample } from "./examples/appointment-bundle.example";
 
 @Controller("Appointment")
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
+  @ApiOkResponse({
+    description: "All conditions",
+    example: appointmentBundleExample,
+  })
+  @ApiQuery({
+    name: "patient",
+    required: false,
+    description: "Patient ID to filter appointments by patient",
+    type: String,
+  })
   @Get()
   async findAll(
     @Query(

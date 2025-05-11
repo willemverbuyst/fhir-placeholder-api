@@ -1,4 +1,5 @@
 import type {
+  Appointment,
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -17,6 +18,7 @@ import { CardsRenderer } from "./CardsRenderer.tsx";
 import { SelectResourceButton } from "./SelectResourceButton.tsx";
 
 const ItemMap = {
+  Appointment: <CardsRenderer<Appointment> item={FHIR_RESOURCES.Appointment} />,
   Condition: <CardsRenderer<Condition> item={FHIR_RESOURCES.Condition} />,
   EpisodeOfCare: (
     <CardsRenderer<EpisodeOfCare> item={FHIR_RESOURCES.EpisodeOfCare} />

@@ -16,8 +16,6 @@ describe("ConditionController (e2e)", () => {
     await app.init();
   });
 
-  console.log("ENV", process.env.NODE_ENV);
-
   it("/Condition (GET) - OK", async () => {
     return request(app.getHttpServer())
       .get("/Condition")

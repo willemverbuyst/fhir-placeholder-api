@@ -6,7 +6,7 @@ export function Organizations() {
   return (
     <ResourcesRenderer<Organization>
       url={"Organization"}
-      className="bg-amber-800"
+      className="bg-amber-950"
       renderItem={(resource) => (
         <PractitionerRoles organizationId={resource.id} />
       )}

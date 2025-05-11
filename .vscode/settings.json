@@ -5,7 +5,8 @@
     "onhold",
     "codeable",
     "searchset",
-    "knip"
+    "knip",
+    "noshow"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.defaultFormatter": "biomejs.biome",

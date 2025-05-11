@@ -1,0 +1,5 @@
+###
+GET http://localhost:8080/api/v2/r5/Appointment
+
+###
+GET http://localhost:8080/api/v2/r5/Appointment?patient=patient-1

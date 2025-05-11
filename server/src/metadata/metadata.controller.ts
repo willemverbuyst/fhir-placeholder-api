@@ -22,6 +22,20 @@ export class MetadataController {
           mode: "server",
           resource: [
             {
+              type: "Appointment",
+              interaction: [{ code: "search-type" }],
+              searchParam: [
+                {
+                  name: "patient",
+                  definition:
+                    "http://hl7.org/fhir/SearchParameter/clinical-patient",
+                  type: "reference",
+                  documentation:
+                    "One of the individuals of the appointment is this patient",
+                },
+              ],
+            },
+            {
               type: "Condition",
               interaction: [{ code: "read" }, { code: "search-type" }],
               searchParam: [

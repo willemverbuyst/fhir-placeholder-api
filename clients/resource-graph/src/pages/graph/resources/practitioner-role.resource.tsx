@@ -12,7 +12,7 @@ export function PractitionerRoles({
   return (
     <ResourcesRenderer<PractitionerRole>
       url={`PractitionerRole?organization=${organizationId}`}
-      className="bg-amber-600"
+      className="bg-amber-800"
       renderItem={(resource) => (
         <PractitionerResource
           practitionerId={resource.practitioner?.reference?.split("/")[1]}

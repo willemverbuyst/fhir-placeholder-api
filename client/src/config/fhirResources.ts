@@ -23,7 +23,6 @@ export type ConfigItem<T extends Resource> = {
   initialFilterProperties: Filter<T>[];
   initialSearchQuery: "";
   cardKeys: (keyof T)[];
-  url: T["resourceType"];
 };
 
 export type ConfigItems = {
@@ -52,7 +51,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id"],
-    url: "Appointment",
   },
   Condition: {
     resourceType: "Condition",
@@ -67,7 +65,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id"],
-    url: "Condition",
   },
   Encounter: {
     resourceType: "Encounter",
@@ -82,7 +79,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id"],
-    url: "Encounter",
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
@@ -97,7 +93,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id"],
-    url: "EpisodeOfCare",
   },
   Observation: {
     resourceType: "Observation",
@@ -112,7 +107,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id"],
-    url: "Observation",
   },
   Organization: {
     resourceType: "Organization",
@@ -127,7 +121,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id", "active", "name"],
-    url: "Organization",
   },
   Patient: {
     resourceType: "Patient",
@@ -142,7 +135,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
-    url: "Patient",
   },
   Practitioner: {
     resourceType: "Practitioner",
@@ -157,7 +149,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id", "birthDate", "gender", "active"],
-    url: "Practitioner",
   },
   PractitionerRole: {
     resourceType: "PractitionerRole",
@@ -172,6 +163,5 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardKeys: ["id", "active"],
-    url: "PractitionerRole",
   },
 };

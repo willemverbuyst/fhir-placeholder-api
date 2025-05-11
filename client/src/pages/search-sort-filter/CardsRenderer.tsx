@@ -10,7 +10,7 @@ export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
   const {
-    url,
+    resourceType,
     filterKeys,
     sortKeys,
     initialFilterProperties,
@@ -21,7 +21,7 @@ export function CardsRenderer<T extends Resource>(props: {
     cardKeys,
   } = props.item;
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<T & { id: string }>({ url }),
+    createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
 
   if (isPending) return <p>...loading</p>;

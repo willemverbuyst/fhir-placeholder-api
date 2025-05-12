@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
+import { Card } from "../../components/Card";
 import type { ConfigItem } from "../../config/fhirResources";
 import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
@@ -52,30 +53,27 @@ export function CardsRenderer<T extends Resource>(props: {
         initialSearchQuery={initialSearchQuery}
       >
         {(resource): React.JSX.Element => (
-          <section
-            className={`w-[350px] text-white rounded-md p-4 ${bgColor}`}
+          <Card
             key={resource.id}
-          >
-            <section className="mb-6">
-              <h2 className="text-center uppercase text-xl py-2">
-                {resource.id}
-              </h2>
-            </section>
-            <section className="flex flex-col gap-2">
-              {Object.entries(cardRows ?? {}).map(([k, v]) => {
-                return (
-                  <div key={String(k)} className="flex justify-between">
-                    <p className="font-semibold">{String(k)}</p>
-                    <p>
-                      {typeof v === "string"
-                        ? resource[k as keyof typeof cardRows]
-                        : v(resource[k as keyof typeof cardRows])}
-                    </p>
-                  </div>
-                );
-              })}
-            </section>
-          </section>
+            bgColor={bgColor}
+            headerText={resource.id}
+            content={
+              <section className="flex flex-col gap-2">
+                {Object.entries(cardRows ?? {}).map(([k, v]) => {
+                  return (
+                    <div key={String(k)} className="flex justify-between">
+                      <p className="font-semibold">{String(k)}</p>
+                      <p>
+                        {typeof v === "string"
+                          ? resource[k as keyof typeof cardRows]
+                          : v(resource[k as keyof typeof cardRows])}
+                      </p>
+                    </div>
+                  );
+                })}
+              </section>
+            }
+          />
         )}
       </SearchSortAndFilter>
     );

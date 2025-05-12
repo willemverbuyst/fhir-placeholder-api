@@ -6,7 +6,7 @@ export function Card({
   headerText,
   content,
   bgColor,
-}: { headerText: string; bgColor?: BGColor; content: React.JSX.Element }) {
+}: { headerText?: string; bgColor?: BGColor; content: React.JSX.Element }) {
   return (
     <section
       className={cn(
@@ -14,7 +14,9 @@ export function Card({
         bgColor ?? "bg-white text-black border-2",
       )}
     >
-      <h2 className="uppercase text-2xl text-center">{headerText}</h2>
+      {!!headerText && (
+        <h2 className="uppercase text-xl text-center">{headerText}</h2>
+      )}
       <section>{content}</section>
     </section>
   );

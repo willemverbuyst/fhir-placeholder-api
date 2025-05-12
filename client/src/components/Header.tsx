@@ -9,7 +9,7 @@ export function Header() {
           color: isActive ? "red" : "black",
         })}
       >
-        Home
+        Capability Statement
       </NavLink>
       <NavLink
         to="/graph"

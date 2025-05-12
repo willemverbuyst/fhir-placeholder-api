@@ -14,9 +14,11 @@ import type {
 import type { Filter } from "../interfaces/Filter";
 import type { Sorter } from "../interfaces/Sorter";
 
+export type BGColor = `bg-${string}-${number}${number}${number}`;
+
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
-  bgColor: `bg-${string}-${number}${number}${number}`;
+  bgColor: BGColor;
   filterKeys: (keyof T)[];
   sortKeys: (keyof T)[];
   searchProperties: (keyof T)[];

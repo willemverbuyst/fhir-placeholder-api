@@ -1,4 +1,4 @@
-import type { Bundle, Resource } from "fhir/r5";
+import type { Bundle, Reference, Resource } from "fhir/r5";
 
 export function isBundle<T extends Resource>(
   data: T | Bundle<T> | undefined,
@@ -10,4 +10,8 @@ export function isResource<T extends Resource>(
   data: T | Bundle<T> | undefined,
 ): data is T {
   return !!data && "id" in data && !!data.id;
+}
+
+export function getIdFromReference(reference: Reference) {
+  return reference.reference?.split("/")[1];
 }

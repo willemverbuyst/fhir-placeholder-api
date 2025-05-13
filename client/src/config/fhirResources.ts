@@ -1,5 +1,7 @@
 import type {
+  Annotation,
   Appointment,
+  CodeableConcept,
   Condition,
   Encounter,
   EpisodeOfCare,
@@ -9,10 +11,12 @@ import type {
   Patient,
   Practitioner,
   PractitionerRole,
+  Reference,
   Resource,
 } from "fhir/r5";
 import type { Filter } from "../interfaces/Filter";
 import type { Sorter } from "../interfaces/Sorter";
+import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
 
@@ -68,7 +72,14 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: "id",
+      subject: (v: Reference) => getIdFromReference(v) ?? "",
+      note: (v: Annotation[] | undefined) =>
+        v?.map((n) => n.text).join(" ") ?? "",
+      clinicalStatus: (v: CodeableConcept) =>
+        v.coding?.map((c) => c.code).join(", ") ?? "",
+    },
   },
   Encounter: {
     resourceType: "Encounter",

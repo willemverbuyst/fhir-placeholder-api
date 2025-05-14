@@ -20,14 +20,19 @@ import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
 
+export type MappedResource<T extends Resource> = Partial<
+  Record<keyof T, string>
+>;
+export type MappedResources<T extends Resource> = MappedResource<T>[];
+
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  filterKeys: (keyof T)[];
-  sortKeys: (keyof T)[];
-  searchProperties: (keyof T)[];
-  initialSortProperty: Sorter<T>;
-  initialFilterProperties: Filter<T>[];
+  filterKeys: (keyof MappedResource<T>)[];
+  sortKeys: (keyof MappedResource<T>)[];
+  searchProperties: (keyof MappedResource<T>)[];
+  initialSortProperty: Sorter<MappedResource<T>>;
+  initialFilterProperties: Filter<MappedResource<T>>[];
   initialSearchQuery: "";
   // biome-ignore lint/suspicious/noExplicitAny: <TODO>
   cardRows: Partial<Record<keyof T, string | ((v: any) => string)>>;

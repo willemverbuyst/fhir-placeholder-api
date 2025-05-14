@@ -2,7 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
 import { Card } from "../../components/Card";
-import type { ConfigItem } from "../../config/fhirResources";
+import type {
+  ConfigItem,
+  MappedResource,
+  MappedResources,
+} from "../../config/fhirResources";
 import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
@@ -41,16 +45,16 @@ export function CardsRenderer<T extends Resource>(props: {
     [] as (T & { id: string })[],
   );
 
-  const mappedResources = resources.reduce((acc, it) => {
-    const mappedResource: { [k: string]: string } = {};
+  const mappedResources = resources.reduce((acc: MappedResources<T>, it) => {
+    const mappedResource: MappedResource<T> = {};
     // biome-ignore lint/complexity/noForEach: <explanation>
     Object.entries(it).forEach(([k, v]) => {
       if (!(k in cardRows)) return;
-      const key = k as keyof typeof cardRows;
+      const key = k as keyof T;
       if (typeof cardRows[key] === "string") {
-        mappedResource[k] = v;
+        mappedResource[key] = v;
       } else {
-        mappedResource[k] = cardRows[key]?.(v) ?? "";
+        mappedResource[key] = cardRows[key]?.(v) ?? "";
       }
     });
     if (Object.keys(mappedResource).length) {
@@ -61,7 +65,7 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (resources.length) {
     return (
-      <SearchSortAndFilter
+      <SearchSortAndFilter<MappedResource<T>>
         dataSource={mappedResources}
         searchProperties={searchProperties}
         filterKeys={filterKeys}

@@ -62,7 +62,7 @@ export class MetadataController {
                 {
                   name: "episode-of-care",
                   definition:
-                    "http://hl7.org/fhir/SearchParameter/Encouter-episode-of-care",
+                    "http://hl7.org/fhir/SearchParameter/Encounter-episode-of-care",
                   type: "reference",
                   documentation:
                     "Episode(s) of care that this encounter should be recorded against",

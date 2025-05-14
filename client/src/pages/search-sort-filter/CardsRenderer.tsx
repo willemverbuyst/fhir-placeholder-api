@@ -41,10 +41,28 @@ export function CardsRenderer<T extends Resource>(props: {
     [] as (T & { id: string })[],
   );
 
+  const mappedResources = resources.reduce((acc, it) => {
+    const mappedResource: { [k: string]: string } = {};
+    // biome-ignore lint/complexity/noForEach: <explanation>
+    Object.entries(it).forEach(([k, v]) => {
+      if (!(k in cardRows)) return;
+      const key = k as keyof typeof cardRows;
+      if (typeof cardRows[key] === "string") {
+        mappedResource[k] = v;
+      } else {
+        mappedResource[k] = cardRows[key]?.(v) ?? "";
+      }
+    });
+    if (Object.keys(mappedResource).length) {
+      acc.push(mappedResource);
+    }
+    return acc;
+  }, []);
+
   if (resources.length) {
     return (
-      <SearchSortAndFilter<T>
-        dataSource={resources}
+      <SearchSortAndFilter
+        dataSource={mappedResources}
         searchProperties={searchProperties}
         filterKeys={filterKeys}
         sortKeys={sortKeys}
@@ -59,15 +77,11 @@ export function CardsRenderer<T extends Resource>(props: {
             headerText={resource.id}
             content={
               <section className="flex flex-col gap-2">
-                {Object.entries(cardRows ?? {}).map(([k, v]) => {
+                {Object.entries(resource).map(([k, v]) => {
                   return (
                     <div key={String(k)} className="flex justify-between">
                       <p className="font-semibold">{String(k)}</p>
-                      <p>
-                        {typeof v === "string"
-                          ? resource[k as keyof typeof cardRows]
-                          : v(resource[k as keyof typeof cardRows])}
-                      </p>
+                      <p>{v}</p>
                     </div>
                   );
                 })}

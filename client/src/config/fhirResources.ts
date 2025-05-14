@@ -30,7 +30,7 @@ export type ConfigItem<T extends Resource> = {
   initialFilterProperties: Filter<T>[];
   initialSearchQuery: "";
   // biome-ignore lint/suspicious/noExplicitAny: <TODO>
-  cardRows?: Partial<Record<keyof T, string | ((v: any) => string)>>;
+  cardRows: Partial<Record<keyof T, string | ((v: any) => string)>>;
 };
 
 export type ConfigItems = {
@@ -63,7 +63,7 @@ export const FHIR_RESOURCES: ConfigItems = {
   Condition: {
     resourceType: "Condition",
     bgColor: "bg-violet-500",
-    searchProperties: [],
+    searchProperties: ["note"],
     filterKeys: [],
     sortKeys: ["id"],
     initialSortProperty: {
@@ -144,7 +144,7 @@ export const FHIR_RESOURCES: ConfigItems = {
   Patient: {
     resourceType: "Patient",
     bgColor: "bg-amber-400",
-    searchProperties: ["gender"],
+    searchProperties: ["gender", "name"],
     filterKeys: ["active"],
     sortKeys: ["gender", "birthDate", "id"],
     initialSortProperty: {

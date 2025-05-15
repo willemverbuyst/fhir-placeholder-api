@@ -1,15 +1,19 @@
 import type {
+  Address,
   Annotation,
   Appointment,
   AppointmentParticipant,
   CodeableConcept,
   Condition,
+  ContactPoint,
   Encounter,
   EpisodeOfCare,
+  EpisodeOfCareDiagnosis,
   HumanName,
   Observation,
   Organization,
   Patient,
+  PatientCommunication,
   Practitioner,
   PractitionerRole,
   Reference,
@@ -66,8 +70,8 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialSearchQuery: "",
     cardRows: {
       id: "id",
-      subject: (v: Reference) => getIdFromReference(v) ?? "",
       status: "status",
+      subject: (v: Reference) => getIdFromReference(v) ?? "",
       participant: (v: AppointmentParticipant[]) =>
         v.map((p) => (p.actor && getIdFromReference(p.actor)) ?? "").join(", "),
     },
@@ -105,7 +109,13 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: "id",
+      status: "status",
+      subject: (v: Reference) => getIdFromReference(v) ?? "",
+      episodeOfCare: (v: Reference[]) =>
+        v.map((r) => getIdFromReference(r) ?? "").join(", "),
+    },
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
@@ -119,7 +129,23 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: "id",
+      status: "status",
+      patient: (v: Reference) => getIdFromReference(v) ?? "",
+      type: (v: CodeableConcept[]) =>
+        v.map((c) => c.coding?.map((c) => c.code).join(", ") ?? "").join(", "),
+      diagnosis: (v: EpisodeOfCareDiagnosis[]) =>
+        v
+          .map((e) =>
+            e.condition
+              ?.map(
+                (c) => (c.reference && getIdFromReference(c.reference)) ?? "",
+              )
+              .join(", "),
+          )
+          .join(", "),
+    },
   },
   Observation: {
     resourceType: "Observation",
@@ -133,7 +159,16 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: "id",
+      status: "status",
+      code: (v: CodeableConcept) =>
+        v.coding?.map((c) => c.code).join(", ") ?? "",
+      encounter: (v: Reference) => getIdFromReference(v) ?? "",
+      subject: (v: Reference) => getIdFromReference(v) ?? "",
+      note: (v: Annotation[] | undefined) =>
+        v?.map((n) => n.text).join(" ") ?? "",
+    },
   },
   Organization: {
     resourceType: "Organization",
@@ -174,6 +209,19 @@ export const FHIR_RESOURCES: ConfigItems = {
         v
           ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
           .join(", "),
+      telecom: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
+      managingOrganization: (v: Reference) => getIdFromReference(v) ?? "",
+      generalPractitioner: (v: Reference[]) =>
+        v.map((p) => getIdFromReference(p)).join(", ") ?? "",
+      communication: (v: PatientCommunication[]) =>
+        v.map((p) => p.language.coding?.map((c) => c.code)).join(", ") ?? "",
+      address: (v: Address[]) =>
+        v
+          .map(
+            (a) =>
+              `${a.line?.join(", ")} ${a.city} ${a.state} ${a.postalCode} ${a.country}`,
+          )
+          .join(", "),
     },
   },
   Practitioner: {
@@ -197,6 +245,14 @@ export const FHIR_RESOURCES: ConfigItems = {
         v
           ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
           .join(", "),
+      telecom: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
+      address: (v: Address[]) =>
+        v
+          .map(
+            (a) =>
+              `${a.line?.join(", ")} ${a.city} ${a.state} ${a.postalCode} ${a.country}`,
+          )
+          .join(", "),
     },
   },
   PractitionerRole: {
@@ -214,6 +270,8 @@ export const FHIR_RESOURCES: ConfigItems = {
     cardRows: {
       id: "id",
       active: (v) => JSON.stringify(v),
+      organization: (v) => getIdFromReference(v) ?? "",
+      practitioner: (v) => getIdFromReference(v) ?? "",
     },
   },
 };

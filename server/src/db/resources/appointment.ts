@@ -22,10 +22,12 @@ export enum AppointmentParticipantStatus {
   NEEDS_ACTION = "needs-action",
 }
 
-export function createAppointment(
-  patientId: string,
-  id: string,
-): Appointment & Id {
+export function createAppointment({
+  patientId,
+  practitionerId,
+  id,
+}: { patientId: string; practitionerId: string; id: string }): Appointment &
+  Id {
   return {
     id,
     resourceType: "Appointment",
@@ -35,6 +37,12 @@ export function createAppointment(
       {
         actor: {
           reference: `Patient/${patientId}`,
+        },
+        status: getRandomElement(Object.values(AppointmentParticipantStatus)),
+      },
+      {
+        actor: {
+          reference: `Practitioner/${practitionerId}`,
         },
         status: getRandomElement(Object.values(AppointmentParticipantStatus)),
       },

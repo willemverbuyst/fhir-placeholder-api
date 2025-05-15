@@ -82,6 +82,7 @@ export class DataStoreService {
     });
     this.appointments = createAppointments({
       numberOfAppointments: NUMBER_OF_APPOINTMENTS,
+      numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
       numberOfPatients: NUMBER_OF_PATIENTS,
     });
 

@@ -1,6 +1,7 @@
 import type {
   Annotation,
   Appointment,
+  AppointmentParticipant,
   CodeableConcept,
   Condition,
   Encounter,
@@ -63,7 +64,13 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: "id",
+      subject: (v: Reference) => getIdFromReference(v) ?? "",
+      status: "status",
+      participant: (v: AppointmentParticipant[]) =>
+        v.map((p) => (p.actor && getIdFromReference(p.actor)) ?? "").join(", "),
+    },
   },
   Condition: {
     resourceType: "Condition",

@@ -8,11 +8,15 @@ import { getRandomElement } from "../helpers/getRandomElement";
 import { languages } from "../valueSets/languages-value-set";
 import { Gender } from "./gender";
 
-export function createPatient(
-  organizationId: string,
-  practitionerId: string,
-  id: string,
-): Patient & Id {
+export function createPatient({
+  organizationId,
+  practitionerId,
+  id,
+}: {
+  organizationId: string;
+  practitionerId: string;
+  id: string;
+}): Patient & Id {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 

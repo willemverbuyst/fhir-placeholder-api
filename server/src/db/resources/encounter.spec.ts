@@ -1,11 +1,15 @@
-import { createEncounter, EncounterStatus } from "./encounter";
+import { EncounterStatus, createEncounter } from "./encounter";
 
 describe("createEncounter", () => {
   it("should create an Encounter with the correct structure", () => {
     const patientId = "patient-1";
     const episodeId = "episode-1";
     const encounterId = "encounter-1";
-    const encounter = createEncounter(patientId, episodeId, encounterId);
+    const encounter = createEncounter({
+      patientId,
+      episodeId,
+      id: encounterId,
+    });
 
     expect(encounter).toHaveProperty("id");
     expect(encounter.resourceType).toBe("Encounter");

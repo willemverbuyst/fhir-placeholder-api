@@ -15,24 +15,19 @@ export enum ObservationStatus {
   UNKNOWN = "unknown",
 }
 
-export function createObservation(
-  patientId: string,
-  encounterId: string,
-  id: string,
-): Observation & Id {
+export function createObservation({
+  patientId,
+  encounterId,
+  id,
+}: {
+  patientId: string;
+  encounterId: string;
+  id: string;
+}): Observation & Id {
   return {
     id,
     resourceType: "Observation",
-    status: getRandomElement([
-      ObservationStatus.AMENDED,
-      ObservationStatus.CANCELLED,
-      ObservationStatus.CORRECTED,
-      ObservationStatus.ENTERED_IN_ERROR,
-      ObservationStatus.FINAL,
-      ObservationStatus.PRELIMINARY,
-      ObservationStatus.REGISTERED,
-      ObservationStatus.UNKNOWN,
-    ]),
+    status: getRandomElement(Object.values(ObservationStatus)),
     code: { coding: [getRandomElement(observationCodes)] },
     encounter: { reference: `Encounter/${encounterId}` },
     subject: { reference: `Patient/${patientId}` },

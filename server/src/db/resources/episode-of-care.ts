@@ -13,23 +13,19 @@ export enum EpisodeOfCareStatus {
   ENTERED_IN_ERROR = "entered-in-error",
 }
 
-export function createEpisode(
-  patientId: string,
-  conditionId: string,
-  id: string,
-): EpisodeOfCare & Id {
+export function createEpisode({
+  patientId,
+  conditionId,
+  id,
+}: {
+  patientId: string;
+  conditionId: string;
+  id: string;
+}): EpisodeOfCare & Id {
   return {
     id,
     resourceType: "EpisodeOfCare",
-    status: getRandomElement([
-      EpisodeOfCareStatus.PLANNED,
-      EpisodeOfCareStatus.WAITLIST,
-      EpisodeOfCareStatus.ACTIVE,
-      EpisodeOfCareStatus.ONHOLD,
-      EpisodeOfCareStatus.FINISHED,
-      EpisodeOfCareStatus.CANCELLED,
-      EpisodeOfCareStatus.ENTERED_IN_ERROR,
-    ]),
+    status: getRandomElement(Object.values(EpisodeOfCareStatus)),
     patient: { reference: `Patient/${patientId}` },
     diagnosis: [
       {

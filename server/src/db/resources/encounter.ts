@@ -14,25 +14,19 @@ export enum EncounterStatus {
   UNKNOWN = "unknown",
 }
 
-export function createEncounter(
-  patientId: string,
-  episodeId: string,
-  id: string,
-): Encounter & Id {
+export function createEncounter({
+  patientId,
+  episodeId,
+  id,
+}: {
+  patientId: string;
+  episodeId: string;
+  id: string;
+}): Encounter & Id {
   return {
     id,
     resourceType: "Encounter",
-    status: getRandomElement([
-      EncounterStatus.CANCELLED,
-      EncounterStatus.COMPLETED,
-      EncounterStatus.DISCHARGED,
-      EncounterStatus.DISCONTINUED,
-      EncounterStatus.ENTERED_IN_ERROR,
-      EncounterStatus.IN_PROGRESS,
-      EncounterStatus.ON_HOLD,
-      EncounterStatus.PLANNED,
-      EncounterStatus.UNKNOWN,
-    ]),
+    status: getRandomElement(Object.values(EncounterStatus)),
     subject: { reference: `Patient/${patientId}` },
     episodeOfCare: [{ reference: `EpisodeOfCare/${episodeId}` }],
   };

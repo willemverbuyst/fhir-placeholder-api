@@ -1,16 +1,16 @@
 import { observationCodes } from "../valueSets/observation-code-value-set";
-import { createObservation, ObservationStatus } from "./observation";
+import { ObservationStatus, createObservation } from "./observation";
 
 describe("createObservation", () => {
   it("should create an observation with a valid structure", () => {
     const patientId = "patient-1";
     const encounterId = "encounter-1";
     const observationId = "observation-1";
-    const observation = createObservation(
+    const observation = createObservation({
       patientId,
       encounterId,
-      observationId,
-    );
+      id: observationId,
+    });
 
     expect(observation).toHaveProperty("id");
     expect(observation).toHaveProperty("resourceType", "Observation");
@@ -33,11 +33,11 @@ describe("createObservation", () => {
     const patientId = "patient-1";
     const encounterId = "encounter-1";
     const observationId = "observation-1";
-    const observation = createObservation(
+    const observation = createObservation({
       patientId,
       encounterId,
-      observationId,
-    );
+      id: observationId,
+    });
 
     expect(observation.code.coding).toHaveLength(1);
 

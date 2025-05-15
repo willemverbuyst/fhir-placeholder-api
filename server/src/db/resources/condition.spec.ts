@@ -4,7 +4,7 @@ describe("createCondition", () => {
   it("should create a Condition resource with the correct structure", () => {
     const patientId = "patient-1";
     const conditionId = "condition-1";
-    const condition = createCondition(patientId, conditionId);
+    const condition = createCondition({ patientId, id: conditionId });
 
     expect(condition).toHaveProperty("id");
     expect(condition).toHaveProperty("resourceType", "Condition");
@@ -36,7 +36,7 @@ describe("createCondition", () => {
   it("should generate a random clinicalStatus code from the predefined list", () => {
     const patientId = "patient-1";
     const conditionId = "condition-1";
-    const condition = createCondition(patientId, conditionId);
+    const condition = createCondition({ patientId, id: conditionId });
 
     const validCodes = [
       "active",
@@ -57,7 +57,7 @@ describe("createCondition", () => {
   it("should associate the condition with the correct patient ID", () => {
     const patientId = "patient-1";
     const conditionId = "condition-1";
-    const condition = createCondition(patientId, conditionId);
+    const condition = createCondition({ patientId, id: conditionId });
 
     expect(condition.subject.reference).toBe(`Patient/${patientId}`);
   });

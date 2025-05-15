@@ -3,7 +3,10 @@ import type { Condition } from "fhir/r5";
 import type { Id } from "../../types";
 import { getRandomElement } from "../helpers/getRandomElement";
 
-export function createCondition(patientId: string, id: string): Condition & Id {
+export function createCondition({
+  patientId,
+  id,
+}: { patientId: string; id: string }): Condition & Id {
   return {
     id,
     note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],

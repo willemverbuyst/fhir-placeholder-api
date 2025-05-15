@@ -6,7 +6,11 @@ describe("createPatient", () => {
     const organizationId = "organization-1";
     const practitionerId = "practitioner-1";
     const patientId = "patient-1";
-    const patient = createPatient(organizationId, practitionerId, patientId);
+    const patient = createPatient({
+      organizationId,
+      practitionerId,
+      id: patientId,
+    });
 
     expect(patient).toHaveProperty("id");
     expect(patient).toHaveProperty("resourceType", "Patient");
@@ -68,7 +72,11 @@ describe("createPatient", () => {
     const organizationId = "organization-1";
     const practitionerId = "practitioner-1";
     const patientId = "patient-1";
-    const patient = createPatient(organizationId, practitionerId, patientId);
+    const patient = createPatient({
+      organizationId,
+      practitionerId,
+      id: patientId,
+    });
 
     if (!patient.birthDate) {
       throw new Error("Patient birthDate is undefined");
@@ -85,7 +93,11 @@ describe("createPatient", () => {
     const organizationId = "organization-1";
     const practitionerId = "practitioner-1";
     const patientId = "patient-1";
-    const patient = createPatient(organizationId, practitionerId, patientId);
+    const patient = createPatient({
+      organizationId,
+      practitionerId,
+      id: patientId,
+    });
 
     if (!patient.telecom) {
       throw new Error("Patient telecom array is empty");
@@ -104,7 +116,11 @@ describe("createPatient", () => {
     const organizationId = "organization-1";
     const practitionerId = "practitioner-1";
     const patientId = "patient-1";
-    const patient = createPatient(organizationId, practitionerId, patientId);
+    const patient = createPatient({
+      organizationId,
+      practitionerId,
+      id: patientId,
+    });
 
     if (!patient.address) {
       throw new Error("Patient address array is empty");

@@ -26,7 +26,7 @@ export function createOrganizations({
   numberOfOrganizations: number;
 }): (Organization & Id)[] {
   return Array.from({ length: numberOfOrganizations }, (_, i) => {
-    return createOrganization(`organization-${i + 1}`);
+    return createOrganization({ id: `organization-${i + 1}` });
   });
 }
 
@@ -54,7 +54,7 @@ export function createPractitioners({
   numberOfPractitioners: number;
 }): (Practitioner & Id)[] {
   return Array.from({ length: numberOfPractitioners }, (_, i) => {
-    return createPractitioner(`practitioner-${i + 1}`);
+    return createPractitioner({ id: `practitioner-${i + 1}` });
   });
 }
 
@@ -72,15 +72,15 @@ export function createPatients({
       length: numberOfPatients,
     },
     (_, i) => {
-      return createPatient(
-        `organization-${
+      return createPatient({
+        organizationId: `organization-${
           Math.floor(i / (numberOfPatients / numberOfOrganizations)) + 1
         }`,
-        `practitioner-${
+        practitionerId: `practitioner-${
           Math.floor(i / (numberOfPatients / numberOfPractitioners)) + 1
         }`,
-        `patient-${i + 1}`,
-      );
+        id: `patient-${i + 1}`,
+      });
     },
   );
 }
@@ -93,10 +93,10 @@ export function createConditions({
   numberOfPatients: number;
 }): (Condition & Id)[] {
   return Array.from({ length: numberOfConditions }, (_, i) => {
-    return createCondition(
-      `patient-${Math.floor(i / (numberOfConditions / numberOfPatients)) + 1}`,
-      `condition-${i + 1}`,
-    );
+    return createCondition({
+      patientId: `patient-${Math.floor(i / (numberOfConditions / numberOfPatients)) + 1}`,
+      id: `condition-${i + 1}`,
+    });
   });
 }
 
@@ -108,11 +108,11 @@ export function createEpisodes({
   numberOfPatients: number;
 }): (EpisodeOfCare & Id)[] {
   return Array.from({ length: numberOfEpisodes }, (_, i) => {
-    return createEpisode(
-      `patient-${Math.floor(i / (numberOfEpisodes / numberOfPatients)) + 1}`,
-      `condition-${i + 1}`,
-      `episode-of-care-${i + 1}`,
-    );
+    return createEpisode({
+      patientId: `patient-${Math.floor(i / (numberOfEpisodes / numberOfPatients)) + 1}`,
+      conditionId: `condition-${i + 1}`,
+      id: `episode-of-care-${i + 1}`,
+    });
   });
 }
 
@@ -126,13 +126,13 @@ export function createEncounters({
   numberOfEpisodes: number;
 }): (Encounter & Id)[] {
   return Array.from({ length: numberOfEncounters }, (_, i) => {
-    return createEncounter(
-      `patient-${Math.floor(i / (numberOfEncounters / numberOfPatients)) + 1}`,
-      `episode-of-care-${
+    return createEncounter({
+      patientId: `patient-${Math.floor(i / (numberOfEncounters / numberOfPatients)) + 1}`,
+      episodeId: `episode-of-care-${
         Math.floor(i / (numberOfEncounters / numberOfEpisodes)) + 1
       }`,
-      `encounter-${i + 1}`,
-    );
+      id: `encounter-${i + 1}`,
+    });
   });
 }
 
@@ -146,15 +146,15 @@ export function createObservations({
   numberOfEncounters: number;
 }): (Observation & Id)[] {
   return Array.from({ length: numberOfObservations }, (_, i) => {
-    return createObservation(
-      `patient-${
+    return createObservation({
+      patientId: `patient-${
         Math.floor(i / (numberOfObservations / numberOfPatients)) + 1
       }`,
-      `encounter-${
+      encounterId: `encounter-${
         Math.floor(i / (numberOfObservations / numberOfEncounters)) + 1
       }`,
-      `observation-${i + 1}`,
-    );
+      id: `observation-${i + 1}`,
+    });
   });
 }
 

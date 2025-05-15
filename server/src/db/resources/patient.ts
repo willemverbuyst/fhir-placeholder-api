@@ -28,12 +28,7 @@ export function createPatient({
       .between({ from: START_DATE, to: Date.now() })
       .toISOString()
       .split("T")[0],
-    gender: getRandomElement([
-      Gender.MALE,
-      Gender.FEMALE,
-      Gender.UNKNOWN,
-      Gender.OTHER,
-    ]),
+    gender: getRandomElement(Object.values(Gender)),
     active: faker.datatype.boolean(),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],

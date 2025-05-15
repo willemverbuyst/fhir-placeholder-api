@@ -18,18 +18,8 @@ enum AddressType {
 
 export function createAddress() {
   const address: Address = {
-    use: getRandomElement([
-      AddressUse.BILLING,
-      AddressUse.HOME,
-      AddressUse.OLD,
-      AddressUse.TEMP,
-      AddressUse.WORK,
-    ]),
-    type: getRandomElement([
-      AddressType.BOTH,
-      AddressType.PHYSICAL,
-      AddressType.POSTAL,
-    ]),
+    use: getRandomElement(Object.values(AddressUse)),
+    type: getRandomElement(Object.values(AddressType)),
     line: [faker.location.streetAddress()],
     city: faker.location.city(),
     state: faker.location.state(),

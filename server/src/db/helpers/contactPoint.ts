@@ -22,13 +22,7 @@ enum ContactSystem {
 
 export function createEmail(firstName: string, lastName: string) {
   const email: ContactPoint = {
-    use: getRandomElement([
-      ContactUse.HOME,
-      ContactUse.MOBILE,
-      ContactUse.OLD,
-      ContactUse.TEMP,
-      ContactUse.WORK,
-    ]),
+    use: getRandomElement(Object.values(ContactUse)),
     system: ContactSystem.EMAIL,
     value: faker.internet.email({
       firstName,
@@ -42,13 +36,7 @@ export function createEmail(firstName: string, lastName: string) {
 
 export function createPhone() {
   const phone: ContactPoint = {
-    use: getRandomElement([
-      ContactUse.HOME,
-      ContactUse.MOBILE,
-      ContactUse.OLD,
-      ContactUse.TEMP,
-      ContactUse.WORK,
-    ]),
+    use: getRandomElement(Object.values(ContactUse)),
     system: ContactSystem.PHONE,
     value: faker.phone.number({ style: "national" }),
   };

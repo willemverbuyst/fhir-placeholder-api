@@ -50,14 +50,11 @@ export function CardsRenderer<T extends Resource>(props: {
     Object.entries(it).forEach(([k, v]) => {
       if (!(k in cardRows)) return;
       const key = k as keyof T;
-      if (typeof cardRows[key]?.display === "string") {
-        mappedResource[key] = { display: v, value: v };
-      } else {
-        mappedResource[key] = {
-          display: cardRows[key]?.display?.(v) ?? "",
-          value: v,
-        };
-      }
+
+      mappedResource[key] = {
+        display: cardRows[key]?.display?.(v) ?? "",
+        value: v,
+      };
     });
     if (Object.keys(mappedResource).length) {
       acc.push(mappedResource);

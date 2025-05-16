@@ -40,7 +40,7 @@ export type ConfigItem<T extends Resource> = {
   initialSearchQuery: "";
   cardRows: Partial<
     // biome-ignore lint/suspicious/noExplicitAny: <TODO>
-    Record<keyof T, { display: string | ((v: any) => string); value: keyof T }>
+    Record<keyof T, { display: (v: any) => string; value: keyof T }>
   >;
 };
 
@@ -69,8 +69,8 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: { display: (v: string) => v, value: "id" },
+      status: { display: (v: string) => v, value: "status" },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
@@ -96,7 +96,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
+      id: { display: (v: string) => v, value: "id" },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
@@ -125,8 +125,8 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: { display: (v: string) => v, value: "id" },
+      status: { display: (v: string) => v, value: "status" },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
@@ -150,8 +150,8 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: { display: (v: string) => v, value: "id" },
+      status: { display: (v: string) => v, value: "status" },
       patient: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "patient",
@@ -190,8 +190,8 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: { display: (v: string) => v, value: "id" },
+      status: { display: (v: string) => v, value: "status" },
       code: {
         display: (v: CodeableConcept) =>
           v.coding?.map((c) => c.code).join(", ") ?? "",
@@ -224,9 +224,9 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
+      id: { display: (v: string) => v, value: "id" },
       active: { display: (v) => JSON.stringify(v), value: "active" },
-      name: { display: "name", value: "name" },
+      name: { display: (v: string) => v, value: "name" },
     },
   },
   Patient: {
@@ -241,10 +241,10 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      birthDate: { display: "birthDate", value: "birthDate" },
+      id: { display: (v: string) => v, value: "id" },
+      birthDate: { display: (v: string) => v, value: "birthDate" },
       active: { display: (v) => JSON.stringify(v), value: "active" },
-      gender: { display: "gender", value: "gender" },
+      gender: { display: (v: string) => v, value: "gender" },
       name: {
         display: (v) =>
           v
@@ -294,10 +294,10 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      birthDate: { display: "birthDate", value: "birthDate" },
+      id: { display: (v: string) => v, value: "id" },
+      birthDate: { display: (v: string) => v, value: "birthDate" },
       active: { display: (v) => JSON.stringify(v), value: "active" },
-      gender: { display: "gender", value: "gender" },
+      gender: { display: (v: string) => v, value: "gender" },
       name: {
         display: (v) =>
           v
@@ -333,7 +333,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
+      id: { display: (v: string) => v, value: "id" },
       active: { display: (v) => JSON.stringify(v), value: "active" },
       organization: {
         display: (v: Reference) => getIdFromReference(v) ?? "",

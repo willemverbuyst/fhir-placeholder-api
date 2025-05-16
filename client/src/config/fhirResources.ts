@@ -147,7 +147,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-blue-900",
     searchProperties: [],
     filterKeys: [],
-    sortKeys: ["id"],
+    sortKeys: ["id", "status"],
     initialSortProperty: {
       property: "id",
       isDescending: true,

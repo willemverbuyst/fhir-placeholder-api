@@ -51,10 +51,13 @@ export function CardsRenderer<T extends Resource>(props: {
     Object.entries(it).forEach(([k, v]) => {
       if (!(k in cardRows)) return;
       const key = k as keyof T;
-      if (typeof cardRows[key] === "string") {
-        mappedResource[key] = v;
+      if (typeof cardRows[key]?.display === "string") {
+        mappedResource[key] = { display: v, value: v };
       } else {
-        mappedResource[key] = cardRows[key]?.(v) ?? "";
+        mappedResource[key] = {
+          display: cardRows[key]?.display?.(v) ?? "",
+          value: v,
+        };
       }
     });
     if (Object.keys(mappedResource).length) {
@@ -76,16 +79,16 @@ export function CardsRenderer<T extends Resource>(props: {
       >
         {(resource): React.JSX.Element => (
           <Card
-            key={resource.id}
+            key={resource.id?.display}
             bgColor={bgColor}
-            headerText={resource.id}
+            headerText={resource.id?.display}
             content={
               <section className="flex flex-col gap-2">
                 {Object.entries(resource).map(([k, v]) => {
                   return (
                     <div key={String(k)} className="flex justify-between">
                       <p className="font-semibold">{String(k)}</p>
-                      <p>{v}</p>
+                      <p>{v.display}</p>
                     </div>
                   );
                 })}

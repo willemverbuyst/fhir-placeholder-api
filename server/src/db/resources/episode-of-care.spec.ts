@@ -1,12 +1,12 @@
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
-import { createEpisode, EpisodeOfCareStatus } from "./episode-of-care";
+import { EpisodeOfCareStatus, createEpisode } from "./episode-of-care";
 
 describe("createEpisode", () => {
   it("should create an EpisodeOfCare with the correct structure", () => {
     const patientId = "patient-1";
     const conditionId = "condition-1";
     const episodeId = "episode-1";
-    const episode = createEpisode(patientId, conditionId, episodeId);
+    const episode = createEpisode({ patientId, conditionId, id: episodeId });
 
     expect(episode).toHaveProperty("id");
     expect(episode.resourceType).toBe("EpisodeOfCare");
@@ -38,7 +38,7 @@ describe("createEpisode", () => {
     const patientId = "patient-1";
     const conditionId = "condition-1";
     const episodeId = "episode-1";
-    const episode = createEpisode(patientId, conditionId, episodeId);
+    const episode = createEpisode({ patientId, conditionId, id: episodeId });
 
     if (!episode.type) {
       throw new Error("EpisodeOfCare type array is empty");

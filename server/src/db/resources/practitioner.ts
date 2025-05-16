@@ -6,7 +6,7 @@ import { createAddress } from "../helpers/address";
 import { createEmail, createPhone } from "../helpers/contactPoint";
 import { getRandomElement } from "../helpers/getRandomElement";
 
-export function createPractitioner(id: string): Practitioner & Id {
+export function createPractitioner({ id }: { id: string }): Practitioner & Id {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 

@@ -6,6 +6,8 @@ export function genericFilter<T>(
 ): boolean {
   return filterProperties.every((filterProperty) => {
     const { property, isTruthySelected } = filterProperty;
-    return isTruthySelected ? object[property] : !object[property];
+
+    // @ts-expect-error
+    return isTruthySelected ? object[property].value : !object[property].value;
   });
 }

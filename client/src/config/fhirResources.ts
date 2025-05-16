@@ -1,14 +1,19 @@
 import type {
+  Address,
   Annotation,
   Appointment,
+  AppointmentParticipant,
   CodeableConcept,
   Condition,
+  ContactPoint,
   Encounter,
   EpisodeOfCare,
+  EpisodeOfCareDiagnosis,
   HumanName,
   Observation,
   Organization,
   Patient,
+  PatientCommunication,
   Practitioner,
   PractitionerRole,
   Reference,
@@ -21,7 +26,7 @@ import { getIdFromReference } from "../lib/fhir";
 export type BGColor = `bg-${string}-${number}${number}${number}`;
 
 export type MappedResource<T extends Resource> = Partial<
-  Record<keyof T, string>
+  Record<keyof T, { display: string; value: keyof T }>
 >;
 export type MappedResources<T extends Resource> = MappedResource<T>[];
 
@@ -34,8 +39,10 @@ export type ConfigItem<T extends Resource> = {
   initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
   initialSearchQuery: "";
-  // biome-ignore lint/suspicious/noExplicitAny: <TODO>
-  cardRows: Partial<Record<keyof T, string | ((v: any) => string)>>;
+  cardRows: Partial<
+    // biome-ignore lint/suspicious/noExplicitAny: <TODO>
+    Record<keyof T, { display: string | ((v: any) => string); value: keyof T }>
+  >;
 };
 
 export type ConfigItems = {
@@ -63,7 +70,21 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: { display: "id", value: "id" },
+      status: { display: "status", value: "status" },
+      subject: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "subject",
+      },
+      participant: {
+        display: (v: AppointmentParticipant[]) =>
+          v
+            .map((p) => (p.actor && getIdFromReference(p.actor)) ?? "")
+            .join(", "),
+        value: "participant",
+      },
+    },
   },
   Condition: {
     resourceType: "Condition",
@@ -78,12 +99,21 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: "id",
-      subject: (v: Reference) => getIdFromReference(v) ?? "",
-      note: (v: Annotation[] | undefined) =>
-        v?.map((n) => n.text).join(" ") ?? "",
-      clinicalStatus: (v: CodeableConcept) =>
-        v.coding?.map((c) => c.code).join(", ") ?? "",
+      id: { display: "id", value: "id" },
+      subject: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "subject",
+      },
+      note: {
+        display: (v: Annotation[] | undefined) =>
+          v?.map((n) => n.text).join(" ") ?? "",
+        value: "note",
+      },
+      clinicalStatus: {
+        display: (v: CodeableConcept) =>
+          v.coding?.map((c) => c.code).join(", ") ?? "",
+        value: "clinicalStatus",
+      },
     },
   },
   Encounter: {
@@ -98,21 +128,60 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: { display: "id", value: "id" },
+      status: { display: "status", value: "status" },
+      subject: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "subject",
+      },
+      episodeOfCare: {
+        display: (v: Reference[]) =>
+          v.map((r) => getIdFromReference(r) ?? "").join(", "),
+        value: "episodeOfCare",
+      },
+    },
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
     bgColor: "bg-blue-900",
     searchProperties: [],
     filterKeys: [],
-    sortKeys: ["id"],
+    sortKeys: ["id", "status"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: { display: "id", value: "id" },
+      status: { display: "status", value: "status" },
+      patient: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "patient",
+      },
+      type: {
+        display: (v: CodeableConcept[]) =>
+          v
+            .map((c) => c.coding?.map((c) => c.code).join(", ") ?? "")
+            .join(", "),
+        value: "type",
+      },
+      diagnosis: {
+        display: (v: EpisodeOfCareDiagnosis[]) =>
+          v
+            .map((e) =>
+              e.condition
+                ?.map(
+                  (c) => (c.reference && getIdFromReference(c.reference)) ?? "",
+                )
+                .join(", "),
+            )
+            .join(", "),
+        value: "diagnosis",
+      },
+    },
   },
   Observation: {
     resourceType: "Observation",
@@ -126,7 +195,28 @@ export const FHIR_RESOURCES: ConfigItems = {
     },
     initialFilterProperties: [],
     initialSearchQuery: "",
-    cardRows: { id: "id" },
+    cardRows: {
+      id: { display: "id", value: "id" },
+      status: { display: "status", value: "status" },
+      code: {
+        display: (v: CodeableConcept) =>
+          v.coding?.map((c) => c.code).join(", ") ?? "",
+        value: "code",
+      },
+      encounter: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "encounter",
+      },
+      subject: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "subject",
+      },
+      note: {
+        display: (v: Annotation[] | undefined) =>
+          v?.map((n) => n.text).join(" ") ?? "",
+        value: "note",
+      },
+    },
   },
   Organization: {
     resourceType: "Organization",
@@ -141,9 +231,9 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: "id",
-      active: (v) => JSON.stringify(v),
-      name: "name",
+      id: { display: "id", value: "id" },
+      active: { display: (v) => JSON.stringify(v), value: "active" },
+      name: { display: "name", value: "name" },
     },
   },
   Patient: {
@@ -159,14 +249,45 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: "id",
-      birthDate: "birthDate",
-      active: (v) => JSON.stringify(v),
-      gender: "gender",
-      name: (v) =>
-        v
-          ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
-          .join(", "),
+      id: { display: "id", value: "id" },
+      birthDate: { display: "birthDate", value: "birthDate" },
+      active: { display: (v) => JSON.stringify(v), value: "active" },
+      gender: { display: "gender", value: "gender" },
+      name: {
+        display: (v) =>
+          v
+            ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
+            .join(", "),
+        value: "name",
+      },
+      telecom: {
+        display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
+        value: "telecom",
+      },
+      managingOrganization: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "managingOrganization",
+      },
+      generalPractitioner: {
+        display: (v: Reference[]) =>
+          v.map((p) => getIdFromReference(p)).join(", ") ?? "",
+        value: "generalPractitioner",
+      },
+      communication: {
+        display: (v: PatientCommunication[]) =>
+          v.map((p) => p.language.coding?.map((c) => c.code)).join(", ") ?? "",
+        value: "communication",
+      },
+      address: {
+        display: (v: Address[]) =>
+          v
+            .map(
+              (a) =>
+                `${a.line?.join(", ")} ${a.city} ${a.state} ${a.postalCode} ${a.country}`,
+            )
+            .join(", "),
+        value: "address",
+      },
     },
   },
   Practitioner: {
@@ -182,14 +303,31 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: "id",
-      birthDate: "birthDate",
-      active: (v) => JSON.stringify(v),
-      gender: "gender",
-      name: (v) =>
-        v
-          ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
-          .join(", "),
+      id: { display: "id", value: "id" },
+      birthDate: { display: "birthDate", value: "birthDate" },
+      active: { display: (v) => JSON.stringify(v), value: "active" },
+      gender: { display: "gender", value: "gender" },
+      name: {
+        display: (v) =>
+          v
+            ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
+            .join(", "),
+        value: "name",
+      },
+      telecom: {
+        display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
+        value: "telecom",
+      },
+      address: {
+        display: (v: Address[]) =>
+          v
+            .map(
+              (a) =>
+                `${a.line?.join(", ")} ${a.city} ${a.state} ${a.postalCode} ${a.country}`,
+            )
+            .join(", "),
+        value: "address",
+      },
     },
   },
   PractitionerRole: {
@@ -205,8 +343,16 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: "id",
-      active: (v) => JSON.stringify(v),
+      id: { display: "id", value: "id" },
+      active: { display: (v) => JSON.stringify(v), value: "active" },
+      organization: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "organization",
+      },
+      practitioner: {
+        display: (v: Reference) => getIdFromReference(v) ?? "",
+        value: "practitioner",
+      },
     },
   },
 };

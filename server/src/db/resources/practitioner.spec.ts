@@ -4,7 +4,7 @@ import { createPractitioner } from "./practitioner";
 describe("createPractitioner", () => {
   it("should create a Practitioner with a valid structure", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner(practitionerId);
+    const practitioner = createPractitioner({ id: practitionerId });
 
     expect(practitioner).toHaveProperty("id");
     expect(practitioner).toHaveProperty("resourceType", "Practitioner");
@@ -32,7 +32,7 @@ describe("createPractitioner", () => {
 
   it("should generate a valid birthDate within the specified range", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner(practitionerId);
+    const practitioner = createPractitioner({ id: practitionerId });
 
     if (!practitioner.birthDate) {
       throw new Error("Practitioner birthDate is undefined");
@@ -47,7 +47,7 @@ describe("createPractitioner", () => {
 
   it("should create telecom entries with valid email and phone", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner(practitionerId);
+    const practitioner = createPractitioner({ id: practitionerId });
 
     if (!practitioner.telecom) {
       throw new Error("Practitioner telecom array is undefined");
@@ -64,7 +64,7 @@ describe("createPractitioner", () => {
 
   it("should create a valid address", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner(practitionerId);
+    const practitioner = createPractitioner({ id: practitionerId });
 
     if (!practitioner.address) {
       throw new Error("Practitioner address array is undefined");

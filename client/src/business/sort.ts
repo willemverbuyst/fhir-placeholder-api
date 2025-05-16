@@ -4,11 +4,11 @@ export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
   const { property, isDescending } = propertyType;
   const result = (): number => {
     // @ts-expect-error
-    if (a[property].value > b[property].value) {
+    if (a[property].display > b[property].display) {
       return 1;
     }
     // @ts-expect-error
-    if (a[property].value < b[property].value) {
+    if (a[property].display < b[property].display) {
       return -1;
     }
     return 0;

@@ -34,7 +34,6 @@ export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
   filterKeys: (keyof MappedResource<T>)[];
-  sortKeys: (keyof MappedResource<T>)[];
   searchProperties: (keyof MappedResource<T>)[];
   initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
@@ -63,7 +62,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-teal-600",
     searchProperties: ["id"],
     filterKeys: [],
-    sortKeys: ["id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -91,7 +89,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-violet-500",
     searchProperties: ["note"],
     filterKeys: [],
-    sortKeys: ["id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -121,7 +118,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-green-600",
     searchProperties: [],
     filterKeys: [],
-    sortKeys: ["id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -147,7 +143,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-blue-900",
     searchProperties: [],
     filterKeys: [],
-    sortKeys: ["id", "status"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -188,7 +183,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-pink-600",
     searchProperties: [],
     filterKeys: [],
-    sortKeys: ["id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -223,7 +217,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-amber-950",
     searchProperties: ["name"],
     filterKeys: ["active"],
-    sortKeys: ["name", "id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -241,7 +234,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-amber-400",
     searchProperties: ["gender", "name"],
     filterKeys: ["active"],
-    sortKeys: ["gender", "birthDate", "id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -295,7 +287,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-amber-600",
     searchProperties: ["gender"],
     filterKeys: ["active"],
-    sortKeys: ["gender", "birthDate", "id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -335,7 +326,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     bgColor: "bg-amber-800",
     searchProperties: [],
     filterKeys: ["active"],
-    sortKeys: ["id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,

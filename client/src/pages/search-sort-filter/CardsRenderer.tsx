@@ -17,7 +17,6 @@ export function CardsRenderer<T extends Resource>(props: {
   const {
     resourceType,
     filterKeys,
-    sortKeys,
     initialFilterProperties,
     initialSearchQuery,
     initialSortProperty,
@@ -72,7 +71,7 @@ export function CardsRenderer<T extends Resource>(props: {
         dataSource={mappedResources}
         searchProperties={searchProperties}
         filterKeys={filterKeys}
-        sortKeys={sortKeys}
+        sortKeys={Object.keys(cardRows) as (keyof T)[]}
         initialSortProperty={initialSortProperty}
         initialFilterProperties={initialFilterProperties}
         initialSearchQuery={initialSearchQuery}

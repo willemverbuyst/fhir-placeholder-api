@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 export function Header() {
   return (
-    <section className="flex flex-col items-center my-6">
+    <section className="flex flex-col items-center py-6">
       <h1 className="text-3xl">Fhir Placeholder Api</h1>
       <nav className="flex gap-4 p-3">
         <NavLink

@@ -55,30 +55,39 @@ export function CardsRenderer<T extends Resource>(props: {
   }, []);
 
   function getSortKeys() {
-    return Object.entries(cardRows).reduce((acc, [k, v]) => {
-      if (v.sorter) {
-        acc.push(k);
-      }
-      return acc;
-    }, [] as string[]);
+    return Object.entries(cardRows).reduce(
+      (acc, [k, v]) => {
+        if (v.sorter) {
+          acc.push(k as keyof T);
+        }
+        return acc;
+      },
+      [] as (keyof T)[],
+    );
   }
 
   function getFilterKeys() {
-    return Object.entries(cardRows).reduce((acc, [k, v]) => {
-      if (v.filter) {
-        acc.push(k);
-      }
-      return acc;
-    }, [] as string[]);
+    return Object.entries(cardRows).reduce(
+      (acc, [k, v]) => {
+        if (v.filter) {
+          acc.push(k as keyof T);
+        }
+        return acc;
+      },
+      [] as (keyof T)[],
+    );
   }
 
   function getSearchProperties() {
-    return Object.entries(cardRows).reduce((acc, [k, v]) => {
-      if (v.search) {
-        acc.push(k);
-      }
-      return acc;
-    }, [] as string[]);
+    return Object.entries(cardRows).reduce(
+      (acc, [k, v]) => {
+        if (v.search) {
+          acc.push(k as keyof T);
+        }
+        return acc;
+      },
+      [] as (keyof T)[],
+    );
   }
 
   function getInitialSortProperty() {
@@ -98,9 +107,9 @@ export function CardsRenderer<T extends Resource>(props: {
     return (
       <SearchSortAndFilter<MappedResource<T>>
         dataSource={mappedResources}
-        searchProperties={getSearchProperties() as (keyof T)[]}
-        filterKeys={getFilterKeys() as (keyof T)[]}
-        sortKeys={getSortKeys() as (keyof T)[]}
+        searchProperties={getSearchProperties()}
+        filterKeys={getFilterKeys()}
+        sortKeys={getSortKeys()}
         initialSortProperty={getInitialSortProperty()}
         initialFilterProperties={initialFilterProperties}
       >

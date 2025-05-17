@@ -18,7 +18,7 @@ export function SearchInput(props: Props): React.JSX.Element {
 
   return (
     <input
-      className="bg-white border-2 rounded-md p-2"
+      className="bg-white border-2 rounded-md p-2 text-black"
       value={query}
       id="search"
       placeholder="Search..."

@@ -9,7 +9,8 @@ export function genericSearch<T>(
   }
 
   return properties.some((property) => {
-    const value = object[property];
+    // @ts-expect-error
+    const value = object[property].display;
 
     if (typeof value === "string" || typeof value === "number") {
       if (shouldBeCaseSensitive) {

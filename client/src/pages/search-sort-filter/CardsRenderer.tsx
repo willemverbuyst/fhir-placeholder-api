@@ -19,7 +19,6 @@ export function CardsRenderer<T extends Resource>(props: {
     initialFilterProperties,
     initialSearchQuery,
     initialSortProperty,
-    searchProperties,
     bgColor,
     cardRows,
   } = props.item;
@@ -79,11 +78,20 @@ export function CardsRenderer<T extends Resource>(props: {
     }, [] as string[]);
   }
 
+  function getSearchProperties() {
+    return Object.entries(cardRows).reduce((acc, [k, v]) => {
+      if (v.search) {
+        acc.push(k);
+      }
+      return acc;
+    }, [] as string[]);
+  }
+
   if (resources.length) {
     return (
       <SearchSortAndFilter<MappedResource<T>>
         dataSource={mappedResources}
-        searchProperties={searchProperties}
+        searchProperties={getSearchProperties() as (keyof T)[]}
         filterKeys={getFilterKeys() as (keyof T)[]}
         sortKeys={getSortKeys() as (keyof T)[]}
         initialSortProperty={initialSortProperty}

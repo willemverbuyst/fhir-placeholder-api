@@ -33,7 +33,6 @@ export type MappedResources<T extends Resource> = MappedResource<T>[];
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  searchProperties: (keyof MappedResource<T>)[];
   initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
   initialSearchQuery: "";
@@ -46,6 +45,7 @@ export type ConfigItem<T extends Resource> = {
         value: keyof T;
         sorter?: boolean;
         filter?: boolean;
+        search?: boolean;
       }
     >
   >;
@@ -67,7 +67,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Appointment: {
     resourceType: "Appointment",
     bgColor: "bg-teal-600",
-    searchProperties: ["id"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -75,12 +74,23 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
-      status: { display: (v: string) => v, value: "status", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        search: true,
+      },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
         sorter: true,
+        search: true,
       },
       participant: {
         display: (v: AppointmentParticipant[]) =>
@@ -94,7 +104,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Condition: {
     resourceType: "Condition",
     bgColor: "bg-violet-500",
-    searchProperties: ["note"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -102,17 +111,24 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
         sorter: true,
+        search: true,
       },
       note: {
         display: (v: Annotation[] | undefined) =>
           v?.map((n) => n.text).join(" ") ?? "",
         value: "note",
         sorter: true,
+        search: true,
       },
       clinicalStatus: {
         display: (v: CodeableConcept) =>
@@ -124,7 +140,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Encounter: {
     resourceType: "Encounter",
     bgColor: "bg-green-600",
-    searchProperties: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -132,12 +147,18 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
       status: { display: (v: string) => v, value: "status", sorter: true },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
         sorter: true,
+        search: true,
       },
       episodeOfCare: {
         display: (v: Reference[]) =>
@@ -149,7 +170,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
     bgColor: "bg-blue-900",
-    searchProperties: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -157,12 +177,18 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
       status: { display: (v: string) => v, value: "status", sorter: true },
       patient: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "patient",
         sorter: true,
+        search: true,
       },
       type: {
         display: (v: CodeableConcept[]) =>
@@ -190,7 +216,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Observation: {
     resourceType: "Observation",
     bgColor: "bg-pink-600",
-    searchProperties: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -198,7 +223,12 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
       status: { display: (v: string) => v, value: "status", sorter: true },
       code: {
         display: (v: CodeableConcept) =>
@@ -215,18 +245,19 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
         sorter: true,
+        search: true,
       },
       note: {
         display: (v: Annotation[] | undefined) =>
           v?.map((n) => n.text).join(" ") ?? "",
         value: "note",
+        search: true,
       },
     },
   },
   Organization: {
     resourceType: "Organization",
     bgColor: "bg-amber-950",
-    searchProperties: ["name"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -241,13 +272,17 @@ export const FHIR_RESOURCES: ConfigItems = {
         sorter: true,
         filter: true,
       },
-      name: { display: (v: string) => v, value: "name", sorter: true },
+      name: {
+        display: (v: string) => v,
+        value: "name",
+        sorter: true,
+        search: true,
+      },
     },
   },
   Patient: {
     resourceType: "Patient",
     bgColor: "bg-amber-400",
-    searchProperties: ["gender", "name"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -255,7 +290,12 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
       birthDate: {
         display: (v: string) => v,
         value: "birthDate",
@@ -275,6 +315,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             .join(", "),
         value: "name",
         sorter: true,
+        search: true,
       },
       telecom: {
         display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
@@ -311,7 +352,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Practitioner: {
     resourceType: "Practitioner",
     bgColor: "bg-amber-600",
-    searchProperties: ["gender"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -339,6 +379,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             .join(", "),
         value: "name",
         sorter: true,
+        search: true,
       },
       telecom: {
         display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
@@ -359,7 +400,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   PractitionerRole: {
     resourceType: "PractitionerRole",
     bgColor: "bg-amber-800",
-    searchProperties: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -367,7 +407,12 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id", sorter: true },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
       active: {
         display: (v) => JSON.stringify(v),
         value: "active",

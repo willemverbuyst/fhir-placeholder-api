@@ -39,8 +39,11 @@ export type ConfigItem<T extends Resource> = {
   initialFilterProperties: Filter<MappedResource<T>>[];
   initialSearchQuery: "";
   cardRows: Partial<
-    // biome-ignore lint/suspicious/noExplicitAny: <TODO>
-    Record<keyof T, { display: (v: any) => string; value: keyof T }>
+    Record<
+      keyof T,
+      // biome-ignore lint/suspicious/noExplicitAny: <TODO>
+      { display: (v: any) => string; value: keyof T; sorter?: boolean }
+    >
   >;
 };
 
@@ -69,11 +72,12 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      status: { display: (v: string) => v, value: "status" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      status: { display: (v: string) => v, value: "status", sorter: true },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
       },
       participant: {
         display: (v: AppointmentParticipant[]) =>
@@ -96,15 +100,17 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
       },
       note: {
         display: (v: Annotation[] | undefined) =>
           v?.map((n) => n.text).join(" ") ?? "",
         value: "note",
+        sorter: true,
       },
       clinicalStatus: {
         display: (v: CodeableConcept) =>
@@ -125,11 +131,12 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      status: { display: (v: string) => v, value: "status" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      status: { display: (v: string) => v, value: "status", sorter: true },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
       },
       episodeOfCare: {
         display: (v: Reference[]) =>
@@ -150,11 +157,12 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      status: { display: (v: string) => v, value: "status" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      status: { display: (v: string) => v, value: "status", sorter: true },
       patient: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "patient",
+        sorter: true,
       },
       type: {
         display: (v: CodeableConcept[]) =>
@@ -162,6 +170,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             .map((c) => c.coding?.map((c) => c.code).join(", ") ?? "")
             .join(", "),
         value: "type",
+        sorter: true,
       },
       diagnosis: {
         display: (v: EpisodeOfCareDiagnosis[]) =>
@@ -190,20 +199,23 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      status: { display: (v: string) => v, value: "status" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      status: { display: (v: string) => v, value: "status", sorter: true },
       code: {
         display: (v: CodeableConcept) =>
           v.coding?.map((c) => c.code).join(", ") ?? "",
         value: "code",
+        sorter: true,
       },
       encounter: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "encounter",
+        sorter: true,
       },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
       },
       note: {
         display: (v: Annotation[] | undefined) =>
@@ -224,9 +236,13 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
-      name: { display: (v: string) => v, value: "name" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+      },
+      name: { display: (v: string) => v, value: "name", sorter: true },
     },
   },
   Patient: {
@@ -241,16 +257,25 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      birthDate: { display: (v: string) => v, value: "birthDate" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
-      gender: { display: (v: string) => v, value: "gender" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      birthDate: {
+        display: (v: string) => v,
+        value: "birthDate",
+        sorter: true,
+      },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+      },
+      gender: { display: (v: string) => v, value: "gender", sorter: true },
       name: {
         display: (v) =>
           v
             ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
             .join(", "),
         value: "name",
+        sorter: true,
       },
       telecom: {
         display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
@@ -259,11 +284,13 @@ export const FHIR_RESOURCES: ConfigItems = {
       managingOrganization: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "managingOrganization",
+        sorter: true,
       },
       generalPractitioner: {
         display: (v: Reference[]) =>
           v.map((p) => getIdFromReference(p)).join(", ") ?? "",
         value: "generalPractitioner",
+        sorter: true,
       },
       communication: {
         display: (v: PatientCommunication[]) =>
@@ -294,16 +321,25 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      birthDate: { display: (v: string) => v, value: "birthDate" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
-      gender: { display: (v: string) => v, value: "gender" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      birthDate: {
+        display: (v: string) => v,
+        value: "birthDate",
+        sorter: true,
+      },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+      },
+      gender: { display: (v: string) => v, value: "gender", sorter: true },
       name: {
         display: (v) =>
           v
             ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
             .join(", "),
         value: "name",
+        sorter: true,
       },
       telecom: {
         display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
@@ -333,15 +369,21 @@ export const FHIR_RESOURCES: ConfigItems = {
     initialFilterProperties: [],
     initialSearchQuery: "",
     cardRows: {
-      id: { display: (v: string) => v, value: "id" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+      },
       organization: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "organization",
+        sorter: true,
       },
       practitioner: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "practitioner",
+        sorter: true,
       },
     },
   },

@@ -14,13 +14,8 @@ import { SearchSortAndFilter } from "./SearchSortAndFilter";
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
-  const {
-    resourceType,
-    initialFilterProperties,
-    initialSortProperty,
-    bgColor,
-    cardRows,
-  } = props.item;
+  const { resourceType, initialFilterProperties, bgColor, cardRows } =
+    props.item;
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
@@ -86,6 +81,19 @@ export function CardsRenderer<T extends Resource>(props: {
     }, [] as string[]);
   }
 
+  function getInitialSortProperty() {
+    const sortProperty = Object.values(cardRows).find(
+      (v) => v.sorter === "asc" || v.sorter === "desc",
+    );
+
+    return sortProperty
+      ? {
+          property: sortProperty.value as keyof T,
+          isDescending: sortProperty.sorter === "desc",
+        }
+      : { property: "id" as keyof T, isDescending: false };
+  }
+
   if (resources.length) {
     return (
       <SearchSortAndFilter<MappedResource<T>>
@@ -93,7 +101,7 @@ export function CardsRenderer<T extends Resource>(props: {
         searchProperties={getSearchProperties() as (keyof T)[]}
         filterKeys={getFilterKeys() as (keyof T)[]}
         sortKeys={getSortKeys() as (keyof T)[]}
-        initialSortProperty={initialSortProperty}
+        initialSortProperty={getInitialSortProperty()}
         initialFilterProperties={initialFilterProperties}
       >
         {(resource): React.JSX.Element => (

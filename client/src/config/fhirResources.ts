@@ -20,7 +20,6 @@ import type {
   Resource,
 } from "fhir/r5";
 import type { Filter } from "../interfaces/Filter";
-import type { Sorter } from "../interfaces/Sorter";
 import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
@@ -33,7 +32,6 @@ export type MappedResources<T extends Resource> = MappedResource<T>[];
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
   cardRows: Partial<
     Record<
@@ -42,7 +40,7 @@ export type ConfigItem<T extends Resource> = {
         // biome-ignore lint/suspicious/noExplicitAny: <TODO>
         display: (v: any) => string;
         value: keyof T;
-        sorter?: boolean;
+        sorter?: boolean | "asc" | "desc";
         filter?: boolean;
         search?: boolean;
       }
@@ -85,16 +83,12 @@ export const FHIR_RESOURCES: ConfigItems = {
   Appointment: {
     resourceType: "Appointment",
     bgColor: "bg-teal-600",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
         value: "id",
-        sorter: true,
+        sorter: "asc",
         search: true,
       },
       status: {
@@ -121,16 +115,12 @@ export const FHIR_RESOURCES: ConfigItems = {
   Condition: {
     resourceType: "Condition",
     bgColor: "bg-violet-500",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
         value: "id",
-        sorter: true,
+        sorter: "desc",
         search: true,
       },
       subject: {
@@ -156,16 +146,12 @@ export const FHIR_RESOURCES: ConfigItems = {
   Encounter: {
     resourceType: "Encounter",
     bgColor: "bg-green-600",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
         value: "id",
-        sorter: true,
+        sorter: "desc",
         search: true,
       },
       status: { display: (v: string) => v, value: "status", sorter: true },
@@ -185,16 +171,12 @@ export const FHIR_RESOURCES: ConfigItems = {
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
     bgColor: "bg-blue-900",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
         value: "id",
-        sorter: true,
+        sorter: "asc",
         search: true,
       },
       status: { display: (v: string) => v, value: "status", sorter: true },
@@ -230,10 +212,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Observation: {
     resourceType: "Observation",
     bgColor: "bg-pink-600",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {
@@ -271,10 +249,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Organization: {
     resourceType: "Organization",
     bgColor: "bg-amber-950",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: { display: (v: string) => v, value: "id", sorter: true },
@@ -295,10 +269,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Patient: {
     resourceType: "Patient",
     bgColor: "bg-amber-400",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {
@@ -325,7 +295,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
             .join(", "),
         value: "name",
-        sorter: true,
+        sorter: "asc",
         search: true,
       },
       telecom: {
@@ -363,10 +333,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Practitioner: {
     resourceType: "Practitioner",
     bgColor: "bg-amber-600",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: { display: (v: string) => v, value: "id", sorter: true },
@@ -388,7 +354,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
             .join(", "),
         value: "name",
-        sorter: true,
+        sorter: "asc",
         search: true,
       },
       telecom: {
@@ -410,10 +376,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   PractitionerRole: {
     resourceType: "PractitionerRole",
     bgColor: "bg-amber-800",
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
     cardRows: {
       id: {

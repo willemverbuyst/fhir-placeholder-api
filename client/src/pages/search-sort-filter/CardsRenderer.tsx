@@ -16,7 +16,6 @@ export function CardsRenderer<T extends Resource>(props: {
 }): React.JSX.Element | null {
   const {
     resourceType,
-    filterKeys,
     initialFilterProperties,
     initialSearchQuery,
     initialSortProperty,
@@ -71,12 +70,21 @@ export function CardsRenderer<T extends Resource>(props: {
     }, [] as string[]);
   }
 
+  function getFilterKeys() {
+    return Object.entries(cardRows).reduce((acc, [k, v]) => {
+      if (v.filter) {
+        acc.push(k);
+      }
+      return acc;
+    }, [] as string[]);
+  }
+
   if (resources.length) {
     return (
       <SearchSortAndFilter<MappedResource<T>>
         dataSource={mappedResources}
         searchProperties={searchProperties}
-        filterKeys={filterKeys}
+        filterKeys={getFilterKeys() as (keyof T)[]}
         sortKeys={getSortKeys() as (keyof T)[]}
         initialSortProperty={initialSortProperty}
         initialFilterProperties={initialFilterProperties}

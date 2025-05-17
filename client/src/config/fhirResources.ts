@@ -33,7 +33,6 @@ export type MappedResources<T extends Resource> = MappedResource<T>[];
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  filterKeys: (keyof MappedResource<T>)[];
   searchProperties: (keyof MappedResource<T>)[];
   initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
@@ -41,8 +40,13 @@ export type ConfigItem<T extends Resource> = {
   cardRows: Partial<
     Record<
       keyof T,
-      // biome-ignore lint/suspicious/noExplicitAny: <TODO>
-      { display: (v: any) => string; value: keyof T; sorter?: boolean }
+      {
+        // biome-ignore lint/suspicious/noExplicitAny: <TODO>
+        display: (v: any) => string;
+        value: keyof T;
+        sorter?: boolean;
+        filter?: boolean;
+      }
     >
   >;
 };
@@ -64,7 +68,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Appointment",
     bgColor: "bg-teal-600",
     searchProperties: ["id"],
-    filterKeys: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -92,7 +95,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Condition",
     bgColor: "bg-violet-500",
     searchProperties: ["note"],
-    filterKeys: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -123,7 +125,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Encounter",
     bgColor: "bg-green-600",
     searchProperties: [],
-    filterKeys: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -149,7 +150,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "EpisodeOfCare",
     bgColor: "bg-blue-900",
     searchProperties: [],
-    filterKeys: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -191,7 +191,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Observation",
     bgColor: "bg-pink-600",
     searchProperties: [],
-    filterKeys: [],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -228,7 +227,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Organization",
     bgColor: "bg-amber-950",
     searchProperties: ["name"],
-    filterKeys: ["active"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -241,6 +239,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v) => JSON.stringify(v),
         value: "active",
         sorter: true,
+        filter: true,
       },
       name: { display: (v: string) => v, value: "name", sorter: true },
     },
@@ -249,7 +248,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Patient",
     bgColor: "bg-amber-400",
     searchProperties: ["gender", "name"],
-    filterKeys: ["active"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -267,6 +265,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v) => JSON.stringify(v),
         value: "active",
         sorter: true,
+        filter: true,
       },
       gender: { display: (v: string) => v, value: "gender", sorter: true },
       name: {
@@ -313,7 +312,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "Practitioner",
     bgColor: "bg-amber-600",
     searchProperties: ["gender"],
-    filterKeys: ["active"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -331,6 +329,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v) => JSON.stringify(v),
         value: "active",
         sorter: true,
+        filter: true,
       },
       gender: { display: (v: string) => v, value: "gender", sorter: true },
       name: {
@@ -361,7 +360,6 @@ export const FHIR_RESOURCES: ConfigItems = {
     resourceType: "PractitionerRole",
     bgColor: "bg-amber-800",
     searchProperties: [],
-    filterKeys: ["active"],
     initialSortProperty: {
       property: "id",
       isDescending: true,
@@ -374,6 +372,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v) => JSON.stringify(v),
         value: "active",
         sorter: true,
+        filter: true,
       },
       organization: {
         display: (v: Reference) => getIdFromReference(v) ?? "",

@@ -35,7 +35,6 @@ export type ConfigItem<T extends Resource> = {
   bgColor: BGColor;
   initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
-  initialSearchQuery: "";
   cardRows: Partial<
     Record<
       keyof T,
@@ -91,7 +90,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -128,7 +126,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -164,7 +161,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -194,7 +190,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -240,7 +235,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -282,7 +276,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: { display: (v: string) => v, value: "id", sorter: true },
       active: {
@@ -307,7 +300,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -376,7 +368,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: { display: (v: string) => v, value: "id", sorter: true },
       birthDate: {
@@ -424,7 +415,6 @@ export const FHIR_RESOURCES: ConfigItems = {
       isDescending: true,
     },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
       id: {
         display: (v: string) => v,

@@ -17,7 +17,6 @@ export function CardsRenderer<T extends Resource>(props: {
   const {
     resourceType,
     initialFilterProperties,
-    initialSearchQuery,
     initialSortProperty,
     bgColor,
     cardRows,
@@ -96,7 +95,6 @@ export function CardsRenderer<T extends Resource>(props: {
         sortKeys={getSortKeys() as (keyof T)[]}
         initialSortProperty={initialSortProperty}
         initialFilterProperties={initialFilterProperties}
-        initialSearchQuery={initialSearchQuery}
       >
         {(resource): React.JSX.Element => (
           <Card

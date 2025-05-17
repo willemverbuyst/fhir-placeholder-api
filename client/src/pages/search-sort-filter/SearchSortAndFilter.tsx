@@ -16,7 +16,6 @@ interface Props<T> {
   sortKeys: Array<keyof T>;
   searchProperties: Array<keyof T>;
   initialSortProperty: Sorter<T>;
-  initialSearchQuery: string;
   initialFilterProperties: Array<Filter<T>>;
 }
 
@@ -34,7 +33,6 @@ export function SearchSortAndFilter<T>(
     filterKeys,
     sortKeys,
     initialFilterProperties,
-    initialSearchQuery,
     initialSortProperty,
     searchProperties,
     children,
@@ -42,7 +40,7 @@ export function SearchSortAndFilter<T>(
   const [searchSortAndFilterState, setSearchSortAndFilterState] = useState<
     SearchSortAndFilterState<T>
   >({
-    searchQuery: initialSearchQuery,
+    searchQuery: "",
     sortProperty: initialSortProperty,
     filterProperties: initialFilterProperties,
   });
@@ -53,7 +51,7 @@ export function SearchSortAndFilter<T>(
     <section>
       <section className="flex flex-col gap-2">
         <SearchInput
-          searchQuery={initialSearchQuery}
+          searchQuery={""}
           setSearchQuery={useCallback(
             (searchQuery) =>
               setSearchSortAndFilterState((prev) => ({

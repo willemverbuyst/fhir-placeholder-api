@@ -51,16 +51,35 @@ export type ConfigItem<T extends Resource> = {
   >;
 };
 
+type AppFhirResource =
+  | Appointment
+  | Condition
+  | Encounter
+  | EpisodeOfCare
+  | Observation
+  | Organization
+  | Patient
+  | Practitioner
+  | PractitionerRole;
+
+export const APP_RESOURCE_TYPES: AppFhirResource["resourceType"][] = [
+  "Appointment",
+  "Condition",
+  "Encounter",
+  "EpisodeOfCare",
+  "Observation",
+  "Organization",
+  "Patient",
+  "Practitioner",
+  "PractitionerRole",
+] as const;
+
+export type AppResourceType = (typeof APP_RESOURCE_TYPES)[number];
+
 export type ConfigItems = {
-  Appointment: ConfigItem<Appointment>;
-  Condition: ConfigItem<Condition>;
-  Encounter: ConfigItem<Encounter>;
-  EpisodeOfCare: ConfigItem<EpisodeOfCare>;
-  Observation: ConfigItem<Observation>;
-  Organization: ConfigItem<Organization>;
-  Patient: ConfigItem<Patient>;
-  Practitioner: ConfigItem<Practitioner>;
-  PractitionerRole: ConfigItem<PractitionerRole>;
+  [K in AppResourceType]: ConfigItem<
+    Extract<AppFhirResource, { resourceType: K }>
+  >;
 };
 
 export const FHIR_RESOURCES: ConfigItems = {
@@ -431,4 +450,4 @@ export const FHIR_RESOURCES: ConfigItems = {
       },
     },
   },
-};
+} as const;

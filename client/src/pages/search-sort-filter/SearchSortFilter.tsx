@@ -11,7 +11,8 @@ import type {
 } from "fhir/r5";
 import { useState } from "react";
 import {
-  type ConfigItems,
+  APP_RESOURCE_TYPES,
+  type AppResourceType,
   FHIR_RESOURCES,
 } from "../../config/fhirResources.ts";
 import { CardsRenderer } from "./CardsRenderer.tsx";
@@ -38,20 +39,18 @@ const ItemMap = {
 };
 
 export function SearchSortFilter() {
-  const [display, setDisplay] = useState<keyof ConfigItems>("Organization");
+  const [display, setDisplay] = useState<AppResourceType>("Organization");
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
       <div className="flex flex-col items-center">
         <section className="flex gap-2 py-4">
-          {Object.keys(FHIR_RESOURCES).map((k) => (
+          {APP_RESOURCE_TYPES.map((k) => (
             <SelectResourceButton
               key={k}
               setDisplay={setDisplay}
-              className={
-                FHIR_RESOURCES[k as keyof typeof FHIR_RESOURCES].bgColor
-              }
-              caption={k as keyof typeof FHIR_RESOURCES}
+              className={FHIR_RESOURCES[k].bgColor}
+              caption={k}
             />
           ))}
         </section>

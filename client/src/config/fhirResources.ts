@@ -155,7 +155,12 @@ export const FHIR_RESOURCES: ConfigItems = {
         sorter: "desc",
         search: true,
       },
-      status: { display: (v: string) => v, value: "status", sorter: true },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        filter: true,
+      },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
@@ -180,7 +185,12 @@ export const FHIR_RESOURCES: ConfigItems = {
         sorter: "asc",
         search: true,
       },
-      status: { display: (v: string) => v, value: "status", sorter: true },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        filter: true,
+      },
       patient: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "patient",
@@ -221,7 +231,12 @@ export const FHIR_RESOURCES: ConfigItems = {
         sorter: true,
         search: true,
       },
-      status: { display: (v: string) => v, value: "status", sorter: true },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        filter: true,
+      },
       code: {
         display: (v: CodeableConcept) =>
           v.coding?.map((c) => c.code).join(", ") ?? "",

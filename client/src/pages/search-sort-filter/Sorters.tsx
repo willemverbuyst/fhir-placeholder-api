@@ -11,8 +11,8 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
 
   return (
     <form className="w-[200px]">
-      <label htmlFor="sorter" className="block mb-2 text-sm font-medium">
-        Sort by
+      <label htmlFor="sorter" className="block mb-2 text-xl">
+        sort by
       </label>
       <select
         id="sorter"

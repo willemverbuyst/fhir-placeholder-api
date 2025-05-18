@@ -12,7 +12,7 @@ import { Sorters } from "./Sorters";
 
 interface Props<T> {
   dataSource: Array<T>;
-  filterKeys: Array<keyof T>;
+  filterKeys: Record<keyof T, Set<string | boolean>>;
   sortKeys: Array<keyof T>;
   searchProperties: Array<keyof T>;
   initialSortProperty: Sorter<T>;
@@ -32,7 +32,6 @@ export function SearchSortAndFilter<T>(
     dataSource,
     filterKeys,
     sortKeys,
-    initialFilterProperties,
     initialSortProperty,
     searchProperties,
     children,
@@ -42,7 +41,7 @@ export function SearchSortAndFilter<T>(
   >({
     searchQuery: "",
     sortProperty: initialSortProperty,
-    filterProperties: initialFilterProperties,
+    filterProperties: [],
   });
   const { searchQuery, sortProperty, filterProperties } =
     searchSortAndFilterState;
@@ -70,7 +69,7 @@ export function SearchSortAndFilter<T>(
             });
           }}
         />
-        <Filters<T>
+        <Filters
           filterKeys={filterKeys}
           filterProperties={filterProperties}
           setFilterProperties={(filterProperties): void => {

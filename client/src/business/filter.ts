@@ -1,13 +1,12 @@
 import type { Filter } from "../interfaces/Filter";
 
 export function genericFilter<T>(
-  object: T,
+  resource: T,
   filterProperties: Array<Filter<T>>,
 ): boolean {
-  return filterProperties.every((filterProperty) => {
-    const { property, isTruthySelected } = filterProperty;
+  return filterProperties.every((filter) => {
+    const key = filter.property as keyof T;
 
-    // @ts-expect-error
-    return isTruthySelected ? object[property].value : !object[property].value;
+    return resource[key].value === filter.value;
   });
 }

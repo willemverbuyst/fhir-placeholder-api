@@ -96,6 +96,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         value: "status",
         sorter: true,
         search: true,
+        filter: true,
       },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
@@ -288,7 +289,12 @@ export const FHIR_RESOURCES: ConfigItems = {
         sorter: true,
         filter: true,
       },
-      gender: { display: (v: string) => v, value: "gender", sorter: true },
+      gender: {
+        display: (v: string) => v,
+        value: "gender",
+        sorter: true,
+        filter: true,
+      },
       name: {
         display: (v) =>
           v
@@ -347,7 +353,12 @@ export const FHIR_RESOURCES: ConfigItems = {
         sorter: true,
         filter: true,
       },
-      gender: { display: (v: string) => v, value: "gender", sorter: true },
+      gender: {
+        display: (v: string) => v,
+        value: "gender",
+        sorter: true,
+        filter: true,
+      },
       name: {
         display: (v) =>
           v

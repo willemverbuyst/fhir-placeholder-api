@@ -68,13 +68,22 @@ export function CardsRenderer<T extends Resource>(props: {
 
   function getFilterKeys() {
     return Object.entries(cardRows).reduce(
-      (acc, [k, v]) => {
+      (acc, it) => {
+        const [k, v] = it;
+
         if (v.filter) {
-          acc.push(k as keyof T);
+          const filterKeys = new Set<string | boolean>();
+          for (const r of resources) {
+            // @ts-ignore
+            filterKeys.add(r[k]);
+          }
+
+          // @ts-ignore
+          acc[k] = filterKeys;
         }
         return acc;
       },
-      [] as (keyof T)[],
+      {} as Record<keyof T, Set<string | boolean>>,
     );
   }
 

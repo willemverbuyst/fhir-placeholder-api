@@ -7,7 +7,7 @@ import { SearchSortFilter } from "./pages/search-sort-filter/SearchSortFilter";
 
 function App() {
   return (
-    <>
+    <div className="bg-slate-800 text-white">
       <Header />
       <main>
         <Routes>
@@ -17,7 +17,7 @@ function App() {
           <Route path="create" element={<Create />} />
         </Routes>
       </main>
-    </>
+    </div>
   );
 }
 

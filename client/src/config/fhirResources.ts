@@ -20,7 +20,6 @@ import type {
   Resource,
 } from "fhir/r5";
 import type { Filter } from "../interfaces/Filter";
-import type { Sorter } from "../interfaces/Sorter";
 import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
@@ -33,49 +32,77 @@ export type MappedResources<T extends Resource> = MappedResource<T>[];
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  filterKeys: (keyof MappedResource<T>)[];
-  sortKeys: (keyof MappedResource<T>)[];
-  searchProperties: (keyof MappedResource<T>)[];
-  initialSortProperty: Sorter<MappedResource<T>>;
   initialFilterProperties: Filter<MappedResource<T>>[];
-  initialSearchQuery: "";
   cardRows: Partial<
-    // biome-ignore lint/suspicious/noExplicitAny: <TODO>
-    Record<keyof T, { display: string | ((v: any) => string); value: keyof T }>
+    Record<
+      keyof T,
+      {
+        // biome-ignore lint/suspicious/noExplicitAny: <TODO>
+        display: (v: any) => string;
+        value: keyof T;
+        sorter?: boolean | "asc" | "desc";
+        filter?: boolean;
+        search?: boolean;
+      }
+    >
   >;
 };
 
+type AppFhirResource =
+  | Appointment
+  | Condition
+  | Encounter
+  | EpisodeOfCare
+  | Observation
+  | Organization
+  | Patient
+  | Practitioner
+  | PractitionerRole;
+
+export const APP_RESOURCE_TYPES: AppFhirResource["resourceType"][] = [
+  "Appointment",
+  "Condition",
+  "Encounter",
+  "EpisodeOfCare",
+  "Observation",
+  "Organization",
+  "Patient",
+  "Practitioner",
+  "PractitionerRole",
+] as const;
+
+export type AppResourceType = (typeof APP_RESOURCE_TYPES)[number];
+
 export type ConfigItems = {
-  Appointment: ConfigItem<Appointment>;
-  Condition: ConfigItem<Condition>;
-  Encounter: ConfigItem<Encounter>;
-  EpisodeOfCare: ConfigItem<EpisodeOfCare>;
-  Observation: ConfigItem<Observation>;
-  Organization: ConfigItem<Organization>;
-  Patient: ConfigItem<Patient>;
-  Practitioner: ConfigItem<Practitioner>;
-  PractitionerRole: ConfigItem<PractitionerRole>;
+  [K in AppResourceType]: ConfigItem<
+    Extract<AppFhirResource, { resourceType: K }>
+  >;
 };
 
 export const FHIR_RESOURCES: ConfigItems = {
   Appointment: {
     resourceType: "Appointment",
     bgColor: "bg-teal-600",
-    searchProperties: ["id"],
-    filterKeys: [],
-    sortKeys: ["id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: "asc",
+        search: true,
+      },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        search: true,
+        filter: true,
+      },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
+        search: true,
       },
       participant: {
         display: (v: AppointmentParticipant[]) =>
@@ -89,25 +116,26 @@ export const FHIR_RESOURCES: ConfigItems = {
   Condition: {
     resourceType: "Condition",
     bgColor: "bg-violet-500",
-    searchProperties: ["note"],
-    filterKeys: [],
-    sortKeys: ["id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: "desc",
+        search: true,
+      },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
+        search: true,
       },
       note: {
         display: (v: Annotation[] | undefined) =>
           v?.map((n) => n.text).join(" ") ?? "",
         value: "note",
+        sorter: true,
+        search: true,
       },
       clinicalStatus: {
         display: (v: CodeableConcept) =>
@@ -119,21 +147,25 @@ export const FHIR_RESOURCES: ConfigItems = {
   Encounter: {
     resourceType: "Encounter",
     bgColor: "bg-green-600",
-    searchProperties: [],
-    filterKeys: [],
-    sortKeys: ["id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: "desc",
+        search: true,
+      },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        filter: true,
+      },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
+        search: true,
       },
       episodeOfCare: {
         display: (v: Reference[]) =>
@@ -145,21 +177,25 @@ export const FHIR_RESOURCES: ConfigItems = {
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
     bgColor: "bg-blue-900",
-    searchProperties: [],
-    filterKeys: [],
-    sortKeys: ["id", "status"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: "asc",
+        search: true,
+      },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        filter: true,
+      },
       patient: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "patient",
+        sorter: true,
+        search: true,
       },
       type: {
         display: (v: CodeableConcept[]) =>
@@ -167,6 +203,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             .map((c) => c.coding?.map((c) => c.code).join(", ") ?? "")
             .join(", "),
         value: "type",
+        sorter: true,
       },
       diagnosis: {
         display: (v: EpisodeOfCareDiagnosis[]) =>
@@ -186,79 +223,101 @@ export const FHIR_RESOURCES: ConfigItems = {
   Observation: {
     resourceType: "Observation",
     bgColor: "bg-pink-600",
-    searchProperties: [],
-    filterKeys: [],
-    sortKeys: ["id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      status: { display: "status", value: "status" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
+      status: {
+        display: (v: string) => v,
+        value: "status",
+        sorter: true,
+        filter: true,
+      },
       code: {
         display: (v: CodeableConcept) =>
           v.coding?.map((c) => c.code).join(", ") ?? "",
         value: "code",
+        sorter: true,
       },
       encounter: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "encounter",
+        sorter: true,
       },
       subject: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "subject",
+        sorter: true,
+        search: true,
       },
       note: {
         display: (v: Annotation[] | undefined) =>
           v?.map((n) => n.text).join(" ") ?? "",
         value: "note",
+        search: true,
       },
     },
   },
   Organization: {
     resourceType: "Organization",
     bgColor: "bg-amber-950",
-    searchProperties: ["name"],
-    filterKeys: ["active"],
-    sortKeys: ["name", "id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
-      name: { display: "name", value: "name" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+        filter: true,
+      },
+      name: {
+        display: (v: string) => v,
+        value: "name",
+        sorter: true,
+        search: true,
+      },
     },
   },
   Patient: {
     resourceType: "Patient",
     bgColor: "bg-amber-400",
-    searchProperties: ["gender", "name"],
-    filterKeys: ["active"],
-    sortKeys: ["gender", "birthDate", "id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      birthDate: { display: "birthDate", value: "birthDate" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
-      gender: { display: "gender", value: "gender" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
+      birthDate: {
+        display: (v: string) => v,
+        value: "birthDate",
+        sorter: true,
+      },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+        filter: true,
+      },
+      gender: {
+        display: (v: string) => v,
+        value: "gender",
+        sorter: true,
+        filter: true,
+      },
       name: {
         display: (v) =>
           v
             ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
             .join(", "),
         value: "name",
+        sorter: "asc",
+        search: true,
       },
       telecom: {
         display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
@@ -267,11 +326,13 @@ export const FHIR_RESOURCES: ConfigItems = {
       managingOrganization: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "managingOrganization",
+        sorter: true,
       },
       generalPractitioner: {
         display: (v: Reference[]) =>
           v.map((p) => getIdFromReference(p)).join(", ") ?? "",
         value: "generalPractitioner",
+        sorter: true,
       },
       communication: {
         display: (v: PatientCommunication[]) =>
@@ -293,26 +354,34 @@ export const FHIR_RESOURCES: ConfigItems = {
   Practitioner: {
     resourceType: "Practitioner",
     bgColor: "bg-amber-600",
-    searchProperties: ["gender"],
-    filterKeys: ["active"],
-    sortKeys: ["gender", "birthDate", "id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      birthDate: { display: "birthDate", value: "birthDate" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
-      gender: { display: "gender", value: "gender" },
+      id: { display: (v: string) => v, value: "id", sorter: true },
+      birthDate: {
+        display: (v: string) => v,
+        value: "birthDate",
+        sorter: true,
+      },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+        filter: true,
+      },
+      gender: {
+        display: (v: string) => v,
+        value: "gender",
+        sorter: true,
+        filter: true,
+      },
       name: {
         display: (v) =>
           v
             ?.map((i: HumanName) => `${i.family} ${i.given?.join(" ")}`)
             .join(", "),
         value: "name",
+        sorter: "asc",
+        search: true,
       },
       telecom: {
         display: (v: ContactPoint[]) => v.map((t) => t.value).join(", "),
@@ -333,26 +402,30 @@ export const FHIR_RESOURCES: ConfigItems = {
   PractitionerRole: {
     resourceType: "PractitionerRole",
     bgColor: "bg-amber-800",
-    searchProperties: [],
-    filterKeys: ["active"],
-    sortKeys: ["id"],
-    initialSortProperty: {
-      property: "id",
-      isDescending: true,
-    },
     initialFilterProperties: [],
-    initialSearchQuery: "",
     cardRows: {
-      id: { display: "id", value: "id" },
-      active: { display: (v) => JSON.stringify(v), value: "active" },
+      id: {
+        display: (v: string) => v,
+        value: "id",
+        sorter: true,
+        search: true,
+      },
+      active: {
+        display: (v) => JSON.stringify(v),
+        value: "active",
+        sorter: true,
+        filter: true,
+      },
       organization: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "organization",
+        sorter: true,
       },
       practitioner: {
         display: (v: Reference) => getIdFromReference(v) ?? "",
         value: "practitioner",
+        sorter: true,
       },
     },
   },
-};
+} as const;

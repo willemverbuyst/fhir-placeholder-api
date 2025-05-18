@@ -12,11 +12,10 @@ import { Sorters } from "./Sorters";
 
 interface Props<T> {
   dataSource: Array<T>;
-  filterKeys: Array<keyof T>;
+  filterKeys: Record<keyof T, Set<string | boolean>>;
   sortKeys: Array<keyof T>;
   searchProperties: Array<keyof T>;
   initialSortProperty: Sorter<T>;
-  initialSearchQuery: string;
   initialFilterProperties: Array<Filter<T>>;
 }
 
@@ -33,8 +32,6 @@ export function SearchSortAndFilter<T>(
     dataSource,
     filterKeys,
     sortKeys,
-    initialFilterProperties,
-    initialSearchQuery,
     initialSortProperty,
     searchProperties,
     children,
@@ -42,9 +39,9 @@ export function SearchSortAndFilter<T>(
   const [searchSortAndFilterState, setSearchSortAndFilterState] = useState<
     SearchSortAndFilterState<T>
   >({
-    searchQuery: initialSearchQuery,
+    searchQuery: "",
     sortProperty: initialSortProperty,
-    filterProperties: initialFilterProperties,
+    filterProperties: [],
   });
   const { searchQuery, sortProperty, filterProperties } =
     searchSortAndFilterState;
@@ -53,7 +50,7 @@ export function SearchSortAndFilter<T>(
     <section>
       <section className="flex flex-col gap-2">
         <SearchInput
-          searchQuery={initialSearchQuery}
+          searchQuery={""}
           setSearchQuery={useCallback(
             (searchQuery) =>
               setSearchSortAndFilterState((prev) => ({
@@ -72,7 +69,7 @@ export function SearchSortAndFilter<T>(
             });
           }}
         />
-        <Filters<T>
+        <Filters
           filterKeys={filterKeys}
           filterProperties={filterProperties}
           setFilterProperties={(filterProperties): void => {

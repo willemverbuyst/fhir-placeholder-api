@@ -14,17 +14,8 @@ import { SearchSortAndFilter } from "./SearchSortAndFilter";
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
-  const {
-    resourceType,
-    filterKeys,
-    sortKeys,
-    initialFilterProperties,
-    initialSearchQuery,
-    initialSortProperty,
-    searchProperties,
-    bgColor,
-    cardRows,
-  } = props.item;
+  const { resourceType, initialFilterProperties, bgColor, cardRows } =
+    props.item;
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
@@ -51,14 +42,11 @@ export function CardsRenderer<T extends Resource>(props: {
     Object.entries(it).forEach(([k, v]) => {
       if (!(k in cardRows)) return;
       const key = k as keyof T;
-      if (typeof cardRows[key]?.display === "string") {
-        mappedResource[key] = { display: v, value: v };
-      } else {
-        mappedResource[key] = {
-          display: cardRows[key]?.display?.(v) ?? "",
-          value: v,
-        };
-      }
+
+      mappedResource[key] = {
+        display: cardRows[key]?.display?.(v) ?? "",
+        value: v,
+      };
     });
     if (Object.keys(mappedResource).length) {
       acc.push(mappedResource);
@@ -66,16 +54,73 @@ export function CardsRenderer<T extends Resource>(props: {
     return acc;
   }, []);
 
+  function getSortKeys() {
+    return Object.entries(cardRows).reduce(
+      (acc, [k, v]) => {
+        if (v.sorter) {
+          acc.push(k as keyof T);
+        }
+        return acc;
+      },
+      [] as (keyof T)[],
+    );
+  }
+
+  function getFilterKeys() {
+    return Object.entries(cardRows).reduce(
+      (acc, it) => {
+        const [k, v] = it;
+
+        if (v.filter) {
+          const filterKeys = new Set<string | boolean>();
+          for (const r of resources) {
+            // @ts-ignore
+            filterKeys.add(r[k]);
+          }
+
+          // @ts-ignore
+          acc[k] = filterKeys;
+        }
+        return acc;
+      },
+      {} as Record<keyof T, Set<string | boolean>>,
+    );
+  }
+
+  function getSearchProperties() {
+    return Object.entries(cardRows).reduce(
+      (acc, [k, v]) => {
+        if (v.search) {
+          acc.push(k as keyof T);
+        }
+        return acc;
+      },
+      [] as (keyof T)[],
+    );
+  }
+
+  function getInitialSortProperty() {
+    const sortProperty = Object.values(cardRows).find(
+      (v) => v.sorter === "asc" || v.sorter === "desc",
+    );
+
+    return sortProperty
+      ? {
+          property: sortProperty.value as keyof T,
+          isDescending: sortProperty.sorter === "desc",
+        }
+      : { property: "id" as keyof T, isDescending: false };
+  }
+
   if (resources.length) {
     return (
       <SearchSortAndFilter<MappedResource<T>>
         dataSource={mappedResources}
-        searchProperties={searchProperties}
-        filterKeys={filterKeys}
-        sortKeys={sortKeys}
-        initialSortProperty={initialSortProperty}
+        searchProperties={getSearchProperties()}
+        filterKeys={getFilterKeys()}
+        sortKeys={getSortKeys()}
+        initialSortProperty={getInitialSortProperty()}
         initialFilterProperties={initialFilterProperties}
-        initialSearchQuery={initialSearchQuery}
       >
         {(resource): React.JSX.Element => (
           <Card

@@ -20,14 +20,10 @@ import type {
   Resource,
 } from "fhir/r5";
 import type { Filter } from "../interfaces/Filter";
+import type { MappedResource } from "../interfaces/MappedResource";
 import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
-
-export type MappedResource<T extends Resource> = Partial<
-  Record<keyof T, { display: string; value: keyof T }>
->;
-export type MappedResources<T extends Resource> = MappedResource<T>[];
 
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];

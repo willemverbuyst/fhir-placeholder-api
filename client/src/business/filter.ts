@@ -7,7 +7,6 @@ export function genericFilter<T>(
   return filterProperties.every((filter) => {
     const key = filter.property as keyof T;
 
-    // @ts-expect-error
-    return resource[key].display === filter.value;
+    return resource[key] === filter.value;
   });
 }

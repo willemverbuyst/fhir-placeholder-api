@@ -16,7 +16,6 @@ interface Props<T> {
   sortKeys: Array<keyof T>;
   searchProperties: Array<keyof T>;
   initialSortProperty: Sorter<T>;
-  initialFilterProperties: Array<Filter<T>>;
 }
 
 interface SearchSortAndFilterState<T> {

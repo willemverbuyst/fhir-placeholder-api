@@ -14,8 +14,7 @@ import { SearchSortAndFilter } from "./SearchSortAndFilter";
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
-  const { resourceType, initialFilterProperties, bgColor, cardRows } =
-    props.item;
+  const { resourceType, bgColor, cardRows } = props.item;
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
@@ -119,7 +118,6 @@ export function CardsRenderer<T extends Resource>(props: {
         filterKeys={getFilterKeys()}
         sortKeys={getSortKeys()}
         initialSortProperty={getInitialSortProperty()}
-        initialFilterProperties={initialFilterProperties}
       >
         {(resource): React.JSX.Element => (
           <Card

@@ -19,8 +19,6 @@ import type {
   Reference,
   Resource,
 } from "fhir/r5";
-import type { Filter } from "../interfaces/Filter";
-import type { MappedResource } from "../interfaces/MappedResource";
 import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
@@ -28,7 +26,6 @@ export type BGColor = `bg-${string}-${number}${number}${number}`;
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  initialFilterProperties: Filter<MappedResource<T>>[];
   cardRows: Partial<
     Record<
       keyof T,
@@ -78,7 +75,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Appointment: {
     resourceType: "Appointment",
     bgColor: "bg-teal-600",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -107,7 +103,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Condition: {
     resourceType: "Condition",
     bgColor: "bg-violet-500",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -134,7 +129,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Encounter: {
     resourceType: "Encounter",
     bgColor: "bg-green-600",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -160,7 +154,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
     bgColor: "bg-blue-900",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -201,7 +194,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Observation: {
     resourceType: "Observation",
     bgColor: "bg-pink-600",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -237,7 +229,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Organization: {
     resourceType: "Organization",
     bgColor: "bg-amber-950",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -258,7 +249,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Patient: {
     resourceType: "Patient",
     bgColor: "bg-amber-400",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -319,7 +309,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   Practitioner: {
     resourceType: "Practitioner",
     bgColor: "bg-amber-600",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,
@@ -364,7 +353,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   PractitionerRole: {
     resourceType: "PractitionerRole",
     bgColor: "bg-amber-800",
-    initialFilterProperties: [],
     cardRows: {
       id: {
         display: (v: string) => v,

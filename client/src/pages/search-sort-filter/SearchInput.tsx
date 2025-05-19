@@ -17,13 +17,18 @@ export function SearchInput(props: Props): React.JSX.Element {
   }, [debouncedQuery, setSearchQuery]);
 
   return (
-    <input
-      className="bg-white border-2 rounded-md p-2 text-black"
-      value={query}
-      id="search"
-      placeholder="Search..."
-      aria-label="Search"
-      onChange={(event): void => setQuery(event.target.value)}
-    />
+    <section>
+      <label htmlFor="sorter" className="block mb-2 text-xl">
+        search
+      </label>
+      <input
+        className="bg-white border-2 rounded-md p-2 text-black h-[40px] w-[800px]"
+        value={query}
+        id="search"
+        placeholder="Search..."
+        aria-label="Search"
+        onChange={(event): void => setQuery(event.target.value)}
+      />
+    </section>
   );
 }

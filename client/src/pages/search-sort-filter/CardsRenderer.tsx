@@ -73,9 +73,9 @@ export function CardsRenderer<T extends Resource>(props: {
 
         if (v.filter) {
           const filterKeys = new Set<string | boolean>();
-          for (const r of resources) {
+          for (const r of mappedResources) {
             // @ts-ignore
-            filterKeys.add(r[k]);
+            filterKeys.add(r[k].display);
           }
 
           // @ts-ignore

@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
 import { Card } from "../../components/Card";
+import type { ConfigItem } from "../../config/fhirResources";
 import type {
-  ConfigItem,
   MappedResource,
   MappedResources,
-} from "../../config/fhirResources";
+} from "../../interfaces/MappedResource";
 import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
@@ -14,8 +14,7 @@ import { SearchSortAndFilter } from "./SearchSortAndFilter";
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
-  const { resourceType, initialFilterProperties, bgColor, cardRows } =
-    props.item;
+  const { resourceType, bgColor, cardRows } = props.item;
   const { isPending, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
@@ -43,10 +42,7 @@ export function CardsRenderer<T extends Resource>(props: {
       if (!(k in cardRows)) return;
       const key = k as keyof T;
 
-      mappedResource[key] = {
-        display: cardRows[key]?.display?.(v) ?? "",
-        value: v,
-      };
+      mappedResource[key] = cardRows[key]?.display?.(v) ?? "";
     });
     if (Object.keys(mappedResource).length) {
       acc.push(mappedResource);
@@ -73,7 +69,7 @@ export function CardsRenderer<T extends Resource>(props: {
 
         if (v.filter) {
           const filterKeys = new Set<string | boolean>();
-          for (const r of resources) {
+          for (const r of mappedResources) {
             // @ts-ignore
             filterKeys.add(r[k]);
           }
@@ -100,14 +96,16 @@ export function CardsRenderer<T extends Resource>(props: {
   }
 
   function getInitialSortProperty() {
-    const sortProperty = Object.values(cardRows).find(
-      (v) => v.sorter === "asc" || v.sorter === "desc",
+    const property = Object.entries(cardRows).find(
+      ([_, v]) => v.sorter === "asc" || v.sorter === "desc",
     );
 
-    return sortProperty
+    const [k, v] = property ?? [];
+
+    return k && v
       ? {
-          property: sortProperty.value as keyof T,
-          isDescending: sortProperty.sorter === "desc",
+          property: k as keyof T,
+          isDescending: v.sorter === "desc",
         }
       : { property: "id" as keyof T, isDescending: false };
   }
@@ -120,20 +118,19 @@ export function CardsRenderer<T extends Resource>(props: {
         filterKeys={getFilterKeys()}
         sortKeys={getSortKeys()}
         initialSortProperty={getInitialSortProperty()}
-        initialFilterProperties={initialFilterProperties}
       >
         {(resource): React.JSX.Element => (
           <Card
-            key={resource.id?.display}
+            key={resource.id}
             bgColor={bgColor}
-            headerText={resource.id?.display}
+            headerText={resource.id}
             content={
               <section className="flex flex-col gap-2">
                 {Object.entries(resource).map(([k, v]) => {
                   return (
                     <div key={String(k)} className="flex justify-between">
                       <p className="font-semibold">{String(k)}</p>
-                      <p>{v.display}</p>
+                      <p>{v}</p>
                     </div>
                   );
                 })}

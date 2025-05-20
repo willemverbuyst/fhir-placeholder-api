@@ -47,65 +47,28 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
         ([key, v]) => (
           <div key={key}>
             <h3 className="text-xl mb-2">{key}</h3>
-            {Array.from(v).every((i) => typeof i === "boolean") ? (
-              <>
-                <div className="flex items-center space-x-2">
-                  <input
-                    id={key}
-                    checked={filterProperties.some(
-                      ({ property, value }) => property === key && value,
-                    )}
-                    type="checkbox"
-                    onChange={() => {
-                      onChangeFilter({
-                        property: key as keyof T,
-                        value: true,
-                      });
-                    }}
-                    className="bg-white"
-                  />
-                  <label htmlFor={key}>{key}</label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <input
-                    id={`not-${key}`}
-                    checked={filterProperties.some(
-                      ({ property, value }) => property === key && !value,
-                    )}
-                    type="checkbox"
-                    onChange={() => {
-                      onChangeFilter({
-                        property: key as keyof T,
-                        value: false,
-                      });
-                    }}
-                    className="bg-white"
-                  />
-                  <label htmlFor={key}>not {key}</label>
-                </div>
-              </>
-            ) : Array.from(v).every((i) => typeof i === "string") ? (
-              (Array.from(v) as string[]).map((filter) => (
-                <div key={filter} className="flex items-center space-x-2">
-                  <input
-                    id={filter}
-                    checked={filterProperties.some(
-                      ({ property, value }) =>
-                        property === key && filter === value,
-                    )}
-                    type="checkbox"
-                    onChange={() => {
-                      onChangeFilter({
-                        property: key as keyof T,
-                        value: filter,
-                      });
-                    }}
-                    className="bg-white"
-                  />
-                  <label htmlFor={filter}>{filter}</label>
-                </div>
-              ))
-            ) : null}
+            {Array.from(v).every((i) => typeof i === "string")
+              ? (Array.from(v) as string[]).map((filter) => (
+                  <div key={filter} className="flex items-center space-x-2">
+                    <input
+                      id={filter}
+                      checked={filterProperties.some(
+                        ({ property, value }) =>
+                          property === key && filter === value,
+                      )}
+                      type="checkbox"
+                      onChange={() => {
+                        onChangeFilter({
+                          property: key as keyof T,
+                          value: filter,
+                        });
+                      }}
+                      className="bg-white"
+                    />
+                    <label htmlFor={filter}>{filter}</label>
+                  </div>
+                ))
+              : null}
           </div>
         ),
       )}

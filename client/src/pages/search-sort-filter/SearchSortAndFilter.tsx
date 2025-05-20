@@ -16,7 +16,6 @@ interface Props<T> {
   sortKeys: Array<keyof T>;
   searchProperties: Array<keyof T>;
   initialSortProperty: Sorter<T>;
-  initialFilterProperties: Array<Filter<T>>;
 }
 
 interface SearchSortAndFilterState<T> {
@@ -48,7 +47,7 @@ export function SearchSortAndFilter<T>(
 
   return (
     <section>
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col gap-2 items-center w-full">
         <SearchInput
           searchQuery={""}
           setSearchQuery={useCallback(

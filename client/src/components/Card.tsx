@@ -10,7 +10,7 @@ export function Card({
   return (
     <section
       className={cn(
-        "flex flex-col gap-2 text-white p-4 rounded-md w-[600px]",
+        "flex flex-col gap-2 text-white p-4 rounded-md w-[350px]",
         bgColor ?? "bg-white text-black border-2",
       )}
     >

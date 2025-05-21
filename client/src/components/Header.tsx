@@ -2,9 +2,9 @@ import { NavLink } from "react-router";
 
 export function Header() {
   return (
-    <section className="flex flex-col items-center py-6">
-      <h1 className="text-3xl">Fhir Placeholder Api</h1>
-      <nav className="flex gap-4 p-3">
+    <section className="flex flex-col w-[350px] gap-6 py-6">
+      <h1 className="text-4xl text-center">Fhir Placeholder Api</h1>
+      <nav className="flex flex-col gap-2 items-start">
         <NavLink
           to="/"
           className="aria-[current=page]:text-blue-500 hover:underline"

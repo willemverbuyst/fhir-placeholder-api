@@ -9,7 +9,7 @@ import type {
 } from "../../interfaces/MappedResource";
 import { isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
-import { SearchSortAndFilter } from "./SearchSortAndFilter";
+import { SearchSortFilter } from "./SearchSortFilter";
 
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
@@ -112,7 +112,7 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (resources.length) {
     return (
-      <SearchSortAndFilter<MappedResource<T>>
+      <SearchSortFilter<MappedResource<T>>
         dataSource={mappedResources}
         searchProperties={getSearchProperties()}
         filterKeys={getFilterKeys()}
@@ -128,7 +128,10 @@ export function CardsRenderer<T extends Resource>(props: {
               <section className="flex flex-col gap-2">
                 {Object.entries(resource).map(([k, v]) => {
                   return (
-                    <div key={String(k)} className="flex justify-between">
+                    <div
+                      key={String(k)}
+                      className="flex flex-col md:flex-row md:justify-between"
+                    >
                       <p className="font-semibold">{String(k)}</p>
                       <p>{v}</p>
                     </div>
@@ -138,7 +141,7 @@ export function CardsRenderer<T extends Resource>(props: {
             }
           />
         )}
-      </SearchSortAndFilter>
+      </SearchSortFilter>
     );
   }
   return null;

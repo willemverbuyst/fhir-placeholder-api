@@ -1,5 +1,6 @@
 import type React from "react";
 import type { ConfigItems } from "../../config/fhirResources";
+import { cn } from "../../lib/utils";
 
 export function SelectResourceButton(props: {
   caption: keyof ConfigItems;
@@ -10,7 +11,10 @@ export function SelectResourceButton(props: {
   return (
     <button
       type="button"
-      className={`py-2 px-4 rounded-md text-white ${className}`}
+      className={cn(
+        "py-2 px-4 rounded-md text-white w-[350px] text-center",
+        className,
+      )}
       onClick={() => setDisplay(caption)}
     >
       {caption}

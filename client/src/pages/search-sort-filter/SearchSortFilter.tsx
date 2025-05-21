@@ -80,7 +80,7 @@ export function SearchSortFilter<T>(
         />
       </section>
 
-      <div className="grid grid-cols-1 gap-2">
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2">
         {children &&
           dataSource
             .filter((a) =>

@@ -12,7 +12,7 @@ export function SelectResourceButton(props: {
     <button
       type="button"
       className={cn(
-        "py-2 px-4 rounded-md text-white w-[350px] text-center",
+        "py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center",
         className,
       )}
       onClick={() => setDisplay(caption)}

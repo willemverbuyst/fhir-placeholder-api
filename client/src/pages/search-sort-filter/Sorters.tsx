@@ -10,13 +10,13 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
   const { setSortProperty, sortKeys } = props;
 
   return (
-    <section className="flex flex-col gap-2 items-start w-[350px]">
+    <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px]">
       <label htmlFor="sorter" className="text-xl ">
         sort by
       </label>
       <select
         id="sorter"
-        className="border-2 text-sm rounded-lg px-5 py-2 bg-white text-black h-[40px] w-[350px]"
+        className="border-2 text-sm rounded-lg px-5 py-2 bg-white text-black h-[40px] w-full"
         onChange={(e) => {
           const [property, direction] = e.target?.value?.split("-") as [
             keyof T,

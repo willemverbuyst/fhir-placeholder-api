@@ -17,12 +17,12 @@ export function SearchInput(props: Props): React.JSX.Element {
   }, [debouncedQuery, setSearchQuery]);
 
   return (
-    <section className="flex flex-col gap-2 items-start w-[350px]">
+    <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px]">
       <label htmlFor="sorter" className="text-xl">
         search
       </label>
       <input
-        className="bg-white border-2 rounded-md p-2 text-black h-[40px] w-[350px]"
+        className="bg-white border-2 rounded-md p-2 text-black h-[40px] w-full"
         value={query}
         id="search"
         placeholder="Search..."

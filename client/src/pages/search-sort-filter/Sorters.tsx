@@ -10,7 +10,7 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
   const { setSortProperty, sortKeys } = props;
 
   return (
-    <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px]">
+    <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px] lg:w-[900px]">
       <label htmlFor="sorter" className="text-xl ">
         sort by
       </label>

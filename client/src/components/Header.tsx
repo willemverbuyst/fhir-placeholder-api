@@ -2,8 +2,8 @@ import { NavLink } from "react-router";
 
 export function Header() {
   return (
-    <section className="flex flex-col w-[350px] sm:w-[600px] gap-6 py-6">
-      <h1 className="text-4xl text-center">Fhir Placeholder Api</h1>
+    <section className="flex flex-col w-[350px] sm:w-[600px] lg:w-[900px] gap-6 py-6">
+      <h1 className="text-4xl lg:text-6xl text-center">Fhir Placeholder Api</h1>
       <nav className="flex flex-col sm:flex-row gap-2 items-start sm:justify-evenly">
         <NavLink
           to="/"

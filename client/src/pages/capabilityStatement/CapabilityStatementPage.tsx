@@ -16,11 +16,11 @@ export function CapabilityStatementPage() {
 
   if (isResource(data) && data.id) {
     return (
-      <section className="w-[50vw] m-auto">
+      <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
         {data.rest?.map((i) => {
           if (i.mode === "server") {
             return (
-              <section key={i.mode} className="grid grid-cols-1 gap-4">
+              <section key={i.mode} className="grid grid-cols-1 gap-2">
                 {i.resource?.map((r) => (
                   <Card
                     key={r.type}
@@ -71,7 +71,7 @@ export function CapabilityStatementPage() {
           }
           return null;
         })}
-      </section>
+      </div>
     );
   }
   return null;

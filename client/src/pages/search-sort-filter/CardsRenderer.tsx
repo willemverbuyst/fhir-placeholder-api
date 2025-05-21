@@ -130,7 +130,7 @@ export function CardsRenderer<T extends Resource>(props: {
                   return (
                     <div
                       key={String(k)}
-                      className="flex flex-col md:flex-row md:justify-between"
+                      className="flex flex-col lg:flex-row lg:justify-between"
                     >
                       <p className="font-semibold">{String(k)}</p>
                       <p>{v}</p>

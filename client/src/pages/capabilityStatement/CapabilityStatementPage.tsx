@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import type { CapabilityStatement as TCapabilityStatement } from "fhir/r5";
+import type { CapabilityStatement } from "fhir/r5";
 import { Card } from "../../components/Card";
 import { type ConfigItems, FHIR_RESOURCES } from "../../config/fhirResources";
 import { isResource } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 
-export function CapabilityStatement() {
+export function CapabilityStatementPage() {
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<TCapabilityStatement>({ url: "metadata" }),
+    createResourcesQueryOptions<CapabilityStatement>({ url: "metadata" }),
   );
 
   if (isPending) return <p>...loading</p>;

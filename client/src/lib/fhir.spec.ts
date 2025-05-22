@@ -109,6 +109,12 @@ describe("isResource", () => {
     expect(isResource(obj)).toBe(false);
   });
 
+  it("returns false for object without resourceType property", () => {
+    const obj = { id: "123" };
+    // @ts-ignore -force passing a resource without resourceType
+    expect(isResource(obj)).toBe(false);
+  });
+
   it("returns false for object with id as undefined", () => {
     const obj = { resourceType: "Patient", id: undefined };
     expect(isResource(obj)).toBe(false);
@@ -180,6 +186,41 @@ describe("getResourcesFromBundle", () => {
       entry: [
         { resource: { resourceType: "Patient", id: "1" } },
         {},
+        { resource: { resourceType: "Patient", id: "2" } },
+      ],
+    };
+    const result = getResourcesFromBundle(bundle);
+    expect(result).toHaveLength(2);
+    expect(result[0]).toEqual({ resourceType: "Patient", id: "1" });
+    expect(result[1]).toEqual({ resourceType: "Patient", id: "2" });
+  });
+
+  it("skips entries without a resourceType property", () => {
+    const bundle: Bundle = {
+      resourceType: "Bundle",
+      type: "searchset",
+      total: 2,
+      entry: [
+        { resource: { resourceType: "Patient", id: "1" } },
+        // @ts-ignore -force passing a resource without resourceType
+        { resource: { id: "2" } },
+        { resource: { resourceType: "Patient", id: "3" } },
+      ],
+    };
+    const result = getResourcesFromBundle(bundle);
+    expect(result).toHaveLength(2);
+    expect(result[0]).toEqual({ resourceType: "Patient", id: "1" });
+    expect(result[1]).toEqual({ resourceType: "Patient", id: "3" });
+  });
+
+  it("skips entries without an id property", () => {
+    const bundle: Bundle = {
+      resourceType: "Bundle",
+      type: "searchset",
+      total: 2,
+      entry: [
+        { resource: { resourceType: "Patient", id: "1" } },
+        { resource: { resourceType: "Patient" } },
         { resource: { resourceType: "Patient", id: "2" } },
       ],
     };

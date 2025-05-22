@@ -1,6 +1,6 @@
 import type { Bundle, Reference, Resource } from "fhir/r5";
 
-export function hasId<T extends Resource>(data: T): data is T {
+export function hasId<T extends Resource>(data: T): data is T & { id: string } {
   return "id" in data && !!data.id;
 }
 
@@ -16,8 +16,8 @@ export function isBundle<T extends Resource>(
 
 export function isResource<T extends Resource>(
   data: T | Bundle<T> | undefined,
-): data is T {
-  return !!data && "id" in data && !!data.id;
+): data is T & { id: string } {
+  return !!data && hasId(data) && hasResourceType(data);
 }
 
 export function getIdFromReference(reference: Reference) {
@@ -26,12 +26,19 @@ export function getIdFromReference(reference: Reference) {
 
 export function getResourcesFromBundle<T extends Resource>(
   data: Bundle<T> | undefined,
-): T[] {
+): (T & { id: string })[] {
   if (!isBundle(data) || !data.entry) return [];
-  return data.entry.reduce((acc, item) => {
-    if (item.resource) {
-      acc.push(item.resource);
-    }
-    return acc;
-  }, [] as T[]);
+  return data.entry.reduce(
+    (acc, item) => {
+      if (
+        item.resource &&
+        hasId(item.resource) &&
+        hasResourceType(item.resource)
+      ) {
+        acc.push(item.resource);
+      }
+      return acc;
+    },
+    [] as (T & { id: string })[],
+  );
 }

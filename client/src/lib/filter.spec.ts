@@ -15,7 +15,7 @@ describe("genericFilter", () => {
 
   test("should return true when all filter properties match", () => {
     const testObject = {
-      foo: 1,
+      foo: "123",
       bar: "test",
       quux: true,
       quuz: false,
@@ -23,10 +23,10 @@ describe("genericFilter", () => {
 
     expect(
       genericFilter(testObject, [
-        { property: "foo", isTruthySelected: true },
-        { property: "bar", isTruthySelected: true },
-        { property: "quux", isTruthySelected: true },
-        { property: "quuz", isTruthySelected: false },
+        { property: "foo", value: "123" },
+        { property: "bar", value: "test" },
+        { property: "quux", value: true },
+        { property: "quuz", value: false },
       ]),
     ).toBe(true);
   });
@@ -41,10 +41,8 @@ describe("genericFilter", () => {
 
     expect(
       genericFilter(testObject, [
-        { property: "foo", isTruthySelected: true },
-        { property: "bar", isTruthySelected: true },
-        { property: "quux", isTruthySelected: true },
-        { property: "quuz", isTruthySelected: true },
+        { property: "bar", value: "something" },
+        { property: "quux", value: true },
       ]),
     ).toBe(false);
   });

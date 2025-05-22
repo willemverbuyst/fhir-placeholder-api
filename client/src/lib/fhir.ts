@@ -1,5 +1,13 @@
 import type { Bundle, Reference, Resource } from "fhir/r5";
 
+export function hasId<T extends Resource>(data: T): data is T {
+  return "id" in data && !!data.id;
+}
+
+export function hasResourceType<T extends Resource>(data: T): data is T {
+  return "resourceType" in data && !!data.resourceType;
+}
+
 export function isBundle<T extends Resource>(
   data: T | Bundle<T> | undefined,
 ): data is Bundle<T> {

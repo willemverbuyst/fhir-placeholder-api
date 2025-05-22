@@ -3,10 +3,57 @@ import { describe, expect, it } from "vitest";
 import {
   getIdFromReference,
   getResourcesFromBundle,
+  hasId,
+  hasResourceType,
   isBundle,
   isResource,
 } from "./fhir";
 
+describe("hasId", () => {
+  it("returns true for a resource with a non-empty id", () => {
+    const resource = { resourceType: "Patient", id: "123" };
+    expect(hasId(resource)).toBe(true);
+  });
+
+  it("returns false for a resource with an empty id", () => {
+    const resource = { resourceType: "Patient", id: "" };
+    expect(hasId(resource)).toBe(false);
+  });
+
+  it("returns false for a resource without an id property", () => {
+    const resource = { resourceType: "Patient" };
+    expect(hasId(resource)).toBe(false);
+  });
+
+  it("returns false for a resource with id as undefined", () => {
+    const resource = { resourceType: "Patient", id: undefined };
+    expect(hasId(resource)).toBe(false);
+  });
+});
+describe("hasResourceType", () => {
+  it("returns true for a resource with a non-empty resourceType", () => {
+    const resource = { resourceType: "Patient", id: "123" };
+    expect(hasResourceType(resource)).toBe(true);
+  });
+
+  it("returns false for a resource with an empty resourceType", () => {
+    const resource = { resourceType: "", id: "123" };
+    // @ts-ignore -force passing a resource without resourceType
+    expect(hasResourceType(resource)).toBe(false);
+  });
+
+  it("returns false for a resource without an resourceType property", () => {
+    const resource = { id: "123" };
+    // @ts-ignore -force passing a resource without resourceType
+    expect(hasResourceType(resource)).toBe(false);
+  });
+
+  it("returns false for a resource with resourceType as undefined", () => {
+    const resource = { resourceType: undefined, id: "123" };
+    // @ts-ignore -force passing a resource without resourceType
+    expect(hasResourceType(resource)).toBe(false);
+  });
+});
 describe("isBundle", () => {
   it("returns true for a valid Bundle object", () => {
     const bundle: Bundle = {

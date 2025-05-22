@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import type { CapabilityStatement as TCapabilityStatement } from "fhir/r5";
+import type { CapabilityStatement } from "fhir/r5";
 import { Card } from "../../components/Card";
 import { type ConfigItems, FHIR_RESOURCES } from "../../config/fhirResources";
 import { isResource } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 
-export function CapabilityStatement() {
+export function CapabilityStatementPage() {
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<TCapabilityStatement>({ url: "metadata" }),
+    createResourcesQueryOptions<CapabilityStatement>({ url: "metadata" }),
   );
 
   if (isPending) return <p>...loading</p>;
@@ -16,11 +16,11 @@ export function CapabilityStatement() {
 
   if (isResource(data) && data.id) {
     return (
-      <section className="w-[50vw] m-auto">
+      <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
         {data.rest?.map((i) => {
           if (i.mode === "server") {
             return (
-              <section key={i.mode} className="grid grid-cols-1 gap-4">
+              <section key={i.mode} className="grid grid-cols-1 gap-2">
                 {i.resource?.map((r) => (
                   <Card
                     key={r.type}
@@ -71,7 +71,7 @@ export function CapabilityStatement() {
           }
           return null;
         })}
-      </section>
+      </div>
     );
   }
   return null;

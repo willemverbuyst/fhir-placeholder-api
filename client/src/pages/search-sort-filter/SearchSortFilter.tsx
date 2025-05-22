@@ -1,62 +1,95 @@
-import type {
-  Appointment,
-  Condition,
-  Encounter,
-  EpisodeOfCare,
-  Observation,
-  Organization,
-  Patient,
-  Practitioner,
-  PractitionerRole,
-} from "fhir/r5";
-import { useState } from "react";
-import {
-  APP_RESOURCE_TYPES,
-  type AppResourceType,
-  FHIR_RESOURCES,
-} from "../../config/fhirResources.ts";
-import { CardsRenderer } from "./CardsRenderer.tsx";
-import { SelectResourceButton } from "./SelectResourceButton.tsx";
+import type React from "react";
+import { useCallback, useState } from "react";
+import { genericFilter } from "../../business/filter";
+import { genericSearch } from "../../business/search";
+import { genericSort } from "../../business/sort";
+import type { Filter } from "../../interfaces/Filter";
+import type { PropsWithChildrenFunction } from "../../interfaces/PropsWithChildrenFunction";
+import type { Sorter } from "../../interfaces/Sorter";
+import { Filters } from "./Filters";
+import { SearchInput } from "./SearchInput";
+import { Sorters } from "./Sorters";
 
-const ItemMap = {
-  Appointment: <CardsRenderer<Appointment> item={FHIR_RESOURCES.Appointment} />,
-  Condition: <CardsRenderer<Condition> item={FHIR_RESOURCES.Condition} />,
-  EpisodeOfCare: (
-    <CardsRenderer<EpisodeOfCare> item={FHIR_RESOURCES.EpisodeOfCare} />
-  ),
-  Organization: (
-    <CardsRenderer<Organization> item={FHIR_RESOURCES.Organization} />
-  ),
-  PractitionerRole: (
-    <CardsRenderer<PractitionerRole> item={FHIR_RESOURCES.PractitionerRole} />
-  ),
-  Practitioner: (
-    <CardsRenderer<Practitioner> item={FHIR_RESOURCES.Practitioner} />
-  ),
-  Patient: <CardsRenderer<Patient> item={FHIR_RESOURCES.Patient} />,
-  Encounter: <CardsRenderer<Encounter> item={FHIR_RESOURCES.Encounter} />,
-  Observation: <CardsRenderer<Observation> item={FHIR_RESOURCES.Observation} />,
-};
+interface Props<T> {
+  dataSource: Array<T>;
+  filterKeys: Record<keyof T, Set<string | boolean>>;
+  sortKeys: Array<keyof T>;
+  searchProperties: Array<keyof T>;
+  initialSortProperty: Sorter<T>;
+}
 
-export function SearchSortFilter() {
-  const [display, setDisplay] = useState<AppResourceType>("Organization");
+interface SearchSortAndFilterState<T> {
+  searchQuery: string;
+  sortProperty: Sorter<T>;
+  filterProperties: Array<Filter<T>>;
+}
+
+export function SearchSortFilter<T>(
+  props: PropsWithChildrenFunction<Props<T>, T>,
+): React.JSX.Element {
+  const {
+    dataSource,
+    filterKeys,
+    sortKeys,
+    initialSortProperty,
+    searchProperties,
+    children,
+  } = props;
+  const [searchSortAndFilterState, setSearchSortAndFilterState] = useState<
+    SearchSortAndFilterState<T>
+  >({
+    searchQuery: "",
+    sortProperty: initialSortProperty,
+    filterProperties: [],
+  });
+  const { searchQuery, sortProperty, filterProperties } =
+    searchSortAndFilterState;
 
   return (
-    <div className="w-full min-h-[100vh] flex flex-col items-center p-10">
-      <div className="flex flex-col items-center">
-        <section className="flex gap-2 py-4">
-          {APP_RESOURCE_TYPES.map((k) => (
-            <SelectResourceButton
-              key={k}
-              setDisplay={setDisplay}
-              className={FHIR_RESOURCES[k].bgColor}
-              caption={k}
-            />
-          ))}
-        </section>
+    <section className="flex flex-col gap-6 items-center">
+      <section className="flex flex-col gap-6 items-center">
+        <SearchInput
+          searchQuery={""}
+          setSearchQuery={useCallback(
+            (searchQuery) =>
+              setSearchSortAndFilterState((prev) => ({
+                ...prev,
+                searchQuery,
+              })),
+            [],
+          )}
+        />
+        <Sorters<T>
+          sortKeys={sortKeys}
+          setSortProperty={(sortProperty): void => {
+            setSearchSortAndFilterState({
+              ...searchSortAndFilterState,
+              sortProperty,
+            });
+          }}
+        />
+        <Filters
+          filterKeys={filterKeys}
+          filterProperties={filterProperties}
+          setFilterProperties={(filterProperties): void => {
+            setSearchSortAndFilterState({
+              ...searchSortAndFilterState,
+              filterProperties,
+            });
+          }}
+        />
+      </section>
 
-        <section className="p-4 rounded-lg w-full">{ItemMap[display]}</section>
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2">
+        {children &&
+          dataSource
+            .filter((a) =>
+              genericSearch(a, searchProperties, searchQuery, false),
+            )
+            .sort((a, b) => genericSort(a, b, sortProperty))
+            .filter((a) => genericFilter(a, filterProperties))
+            .map((d) => children(d))}
       </div>
-    </div>
+    </section>
   );
 }

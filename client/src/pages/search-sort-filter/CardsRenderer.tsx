@@ -7,7 +7,7 @@ import type {
   MappedResource,
   MappedResources,
 } from "../../interfaces/MappedResource";
-import { isBundle } from "../../lib/fhir";
+import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
 
@@ -23,17 +23,9 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (error) return <p>...error</p>;
 
-  if (!isBundle(data) || !data.entry) return null;
+  if (!isBundle(data)) return <p>...no data</p>;
 
-  const resources = data.entry.reduce(
-    (acc, item) => {
-      if (item.resource) {
-        acc.push(item.resource);
-      }
-      return acc;
-    },
-    [] as (T & { id: string })[],
-  );
+  const resources = getResourcesFromBundle<T>(data);
 
   const mappedResources = resources.reduce((acc: MappedResources<T>, it) => {
     const mappedResource: MappedResource<T> = {};

@@ -15,3 +15,15 @@ export function isResource<T extends Resource>(
 export function getIdFromReference(reference: Reference) {
   return reference.reference?.split("/")[1];
 }
+
+export function getResourcesFromBundle<T extends Resource>(
+  data: Bundle<T> | undefined,
+): T[] {
+  if (!isBundle(data) || !data.entry) return [];
+  return data.entry.reduce((acc, item) => {
+    if (item.resource) {
+      acc.push(item.resource);
+    }
+    return acc;
+  }, [] as T[]);
+}

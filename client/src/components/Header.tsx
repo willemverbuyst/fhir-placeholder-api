@@ -1,35 +1,26 @@
 import { NavLink } from "react-router";
 
+function MenuItem({ text, path }: { text: string; path: string }) {
+  return (
+    <NavLink
+      to={path}
+      className="flex h-full items-center p-4 aria-[current=page]:text-white hover:text-white hover:bg-white/10 transition-colors ease-in-out"
+    >
+      {text}
+    </NavLink>
+  );
+}
+
 export function Header() {
   return (
-    <section className="flex flex-col w-[350px] sm:w-[600px] lg:w-[900px] gap-6 py-6">
-      <h1 className="text-4xl lg:text-6xl text-center">Fhir Placeholder Api</h1>
-      <nav className="flex flex-col sm:flex-row gap-2 items-start sm:justify-evenly">
-        <NavLink
-          to="/"
-          className="aria-[current=page]:text-blue-500 hover:underline"
-        >
-          Capability Statement
-        </NavLink>
-        <NavLink
-          to="/graph"
-          className="aria-[current=page]:text-blue-500 hover:underline"
-        >
-          Graph
-        </NavLink>
-        <NavLink
-          to="/search-sort-filter"
-          className="aria-[current=page]:text-blue-500 hover:underline"
-        >
-          Search Sort Filter
-        </NavLink>
-        <NavLink
-          to="/create"
-          className="aria-[current=page]:text-blue-500 hover:underline"
-        >
-          Create
-        </NavLink>
+    <header className="w-full sticky flex items-center top-0 bg-gradient-to-r from-gray-900 to-gray-700 text-zinc-200 px-4">
+      <h1 className="text-3xl p-2">Fhir Placeholder Api</h1>
+      <nav className="flex-1 flex items-center justify-end text-zinc-200">
+        <MenuItem text="Home" path="/" />
+        <MenuItem text="Graph" path="/graph" />
+        <MenuItem text="Search Sort Filter" path="/search-sort-filter" />
+        <MenuItem text="Create" path="/create" />
       </nav>
-    </section>
+    </header>
   );
 }

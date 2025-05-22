@@ -7,7 +7,7 @@ import { SearchSortFilterPage } from "./pages/search-sort-filter/SearchSortFilte
 
 function App() {
   return (
-    <div className="bg-slate-800 text-white w-full min-h-screen flex flex-col items-center">
+    <div className="bg-slate-800 text-white w-full min-h-screen flex flex-col items-center gap-10">
       <Header />
       <main>
         <Routes>

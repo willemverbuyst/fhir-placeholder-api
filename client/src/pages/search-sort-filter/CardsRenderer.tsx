@@ -8,6 +8,7 @@ import type {
   MappedResources,
 } from "../../interfaces/MappedResource";
 import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
+import { getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortAndFilter } from "./SearchSortAndFilter";
 
@@ -41,18 +42,6 @@ export function CardsRenderer<T extends Resource>(props: {
     }
     return acc;
   }, []);
-
-  function getSortKeys() {
-    return Object.entries(cardRows).reduce(
-      (acc, [k, v]) => {
-        if (v.sorter) {
-          acc.push(k as keyof T);
-        }
-        return acc;
-      },
-      [] as (keyof T)[],
-    );
-  }
 
   function getFilterKeys() {
     return Object.entries(cardRows).reduce(
@@ -108,7 +97,7 @@ export function CardsRenderer<T extends Resource>(props: {
         dataSource={mappedResources}
         searchProperties={getSearchProperties()}
         filterKeys={getFilterKeys()}
-        sortKeys={getSortKeys()}
+        sortKeys={getSortKeys<T>(cardRows)}
         initialSortProperty={getInitialSortProperty()}
       >
         {(resource): React.JSX.Element => (

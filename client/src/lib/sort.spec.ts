@@ -1,5 +1,7 @@
-import { describe, expect, test } from "vitest";
-import { genericSort } from "./sort";
+import type { Patient } from "fhir/r5";
+import { describe, expect, it } from "vitest";
+import type { CardRows } from "../config/fhirResources";
+import { genericSort, getSortKeys } from "./sort";
 
 const testObject1 = {
   foo: 1,
@@ -13,7 +15,7 @@ const testObject2 = {
 };
 
 describe("genericSort", () => {
-  test("should return 1", () => {
+  it("should return 1", () => {
     expect(
       genericSort(testObject1, testObject2, {
         property: "foo",
@@ -28,7 +30,7 @@ describe("genericSort", () => {
     ).toBe(1);
   });
 
-  test("should return -1", () => {
+  it("should return -1", () => {
     expect(
       genericSort(testObject1, testObject2, {
         property: "foo",
@@ -43,7 +45,7 @@ describe("genericSort", () => {
     ).toBe(-1);
   });
 
-  test("should return 0", () => {
+  it("should return 0", () => {
     expect(
       genericSort(testObject1, testObject2, {
         property: "quuz",
@@ -56,5 +58,33 @@ describe("genericSort", () => {
         isDescending: true,
       }),
     ).toBe(-0);
+  });
+});
+describe("getSortKeys", () => {
+  it("should return keys with sorter property", () => {
+    const cardRows: CardRows<Patient> = {
+      name: { sorter: true, display: () => "Name" },
+      id: { sorter: true, display: () => "ID" },
+      birthDate: { sorter: false, display: () => "BirthDate" },
+    };
+    const result = getSortKeys<Patient>(cardRows);
+    expect(result).toContain("name");
+    expect(result).toContain("id");
+    expect(result.length).toBe(2);
+  });
+
+  it("should return an empty array if no sorter properties are present", () => {
+    const cardRows: CardRows<Patient> = {
+      name: { sorter: false, display: () => "Name" },
+      id: { display: () => "ID" },
+      birthDate: { display: () => "BirthDate" },
+    };
+    const result = getSortKeys<Patient>(cardRows);
+    expect(result).toEqual([]);
+  });
+
+  it("should handle empty input", () => {
+    const result = getSortKeys<Patient>({});
+    expect(result).toEqual([]);
   });
 });

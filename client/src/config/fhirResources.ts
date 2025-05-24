@@ -14,21 +14,20 @@ import { getIdFromReference } from "../lib/fhir";
 
 export type BGColor = `bg-${string}-${number}${number}${number}`;
 
+export type CardRows<T> = {
+  [K in keyof T]?: {
+    // biome-ignore lint/suspicious/noExplicitAny: this can be any type
+    display: (v: any) => string | undefined;
+    sorter?: boolean | "asc" | "desc";
+    filter?: boolean;
+    search?: boolean;
+  };
+};
+
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
   bgColor: BGColor;
-  cardRows: Partial<
-    Record<
-      keyof T,
-      {
-        // biome-ignore lint/suspicious/noExplicitAny: this can be any type
-        display: (v: any) => string | undefined;
-        sorter?: boolean | "asc" | "desc";
-        filter?: boolean;
-        search?: boolean;
-      }
-    >
-  >;
+  cardRows: CardRows<T>;
 };
 
 type AppFhirResource =

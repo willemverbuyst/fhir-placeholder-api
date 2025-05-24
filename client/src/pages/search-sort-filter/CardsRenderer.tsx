@@ -7,7 +7,8 @@ import type {
   MappedResource,
   MappedResources,
 } from "../../interfaces/MappedResource";
-import { isBundle } from "../../lib/fhir";
+import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
+import { getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortFilter } from "./SearchSortFilter";
 
@@ -23,17 +24,9 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (error) return <p>...error</p>;
 
-  if (!isBundle(data) || !data.entry) return null;
+  if (!isBundle(data)) return <p>...no data</p>;
 
-  const resources = data.entry.reduce(
-    (acc, item) => {
-      if (item.resource) {
-        acc.push(item.resource);
-      }
-      return acc;
-    },
-    [] as (T & { id: string })[],
-  );
+  const resources = getResourcesFromBundle<T>(data);
 
   const mappedResources = resources.reduce((acc: MappedResources<T>, it) => {
     const mappedResource: MappedResource<T> = {};
@@ -49,18 +42,6 @@ export function CardsRenderer<T extends Resource>(props: {
     }
     return acc;
   }, []);
-
-  function getSortKeys() {
-    return Object.entries(cardRows).reduce(
-      (acc, [k, v]) => {
-        if (v.sorter) {
-          acc.push(k as keyof T);
-        }
-        return acc;
-      },
-      [] as (keyof T)[],
-    );
-  }
 
   function getFilterKeys() {
     return Object.entries(cardRows).reduce(
@@ -116,7 +97,7 @@ export function CardsRenderer<T extends Resource>(props: {
         dataSource={mappedResources}
         searchProperties={getSearchProperties()}
         filterKeys={getFilterKeys()}
-        sortKeys={getSortKeys()}
+        sortKeys={getSortKeys<T>(cardRows)}
         initialSortProperty={getInitialSortProperty()}
       >
         {(resource): React.JSX.Element => (

@@ -16,7 +16,7 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
       </label>
       <select
         id="sorter"
-        className="border-2 text-sm rounded-lg px-5 py-2 bg-white text-black h-[40px] w-full"
+        className="rounded-md border-2 border-pink-500 bg-white backdrop-blur-md p-2 font-bold text-sky-900 w-full h-[40px] outline-pink-500 focus:outline caret-pink-500"
         onChange={(e) => {
           const [property, direction] = e.target?.value?.split("-") as [
             keyof T,

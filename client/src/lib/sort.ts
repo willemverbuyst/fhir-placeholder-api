@@ -1,5 +1,6 @@
 import type { CardRows } from "../config/fhirResources";
 import type { Sorter } from "../interfaces/Sorter";
+import { hasKeyWithValue, isObject, typedEntries } from "./utils";
 
 export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
   const { property, isDescending } = propertyType;
@@ -16,10 +17,10 @@ export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
 }
 
 export function getSortKeys<T>(cardRows: CardRows<T>) {
-  return Object.entries(cardRows).reduce(
+  return typedEntries(cardRows).reduce(
     (acc, [k, v]) => {
-      if (v && typeof v === "object" && "sorter" in v && v.sorter) {
-        acc.push(k as keyof T);
+      if (isObject(v) && hasKeyWithValue(v, "sorter")) {
+        acc.push(k);
       }
       return acc;
     },

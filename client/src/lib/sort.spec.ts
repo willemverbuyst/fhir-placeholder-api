@@ -60,6 +60,7 @@ describe("genericSort", () => {
     ).toBe(-0);
   });
 });
+
 describe("getSortKeys", () => {
   it("should return keys with sorter property", () => {
     const cardRows: CardRows<Patient> = {

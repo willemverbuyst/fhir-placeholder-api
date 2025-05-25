@@ -19,7 +19,7 @@ export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
 export function getSortKeys<T>(cardRows: CardRows<T>) {
   return typedEntries(cardRows).reduce(
     (acc, [k, v]) => {
-      if (isObject(v) && hasKeyWithValue(v, "sorter")) {
+      if (isObject(v) && hasKeyWithValue(v, "sorter") && v.sorter) {
         acc.push(k);
       }
       return acc;

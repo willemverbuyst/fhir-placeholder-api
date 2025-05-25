@@ -1,4 +1,8 @@
+import type { Resource } from "fhir/r5";
+import type { CardRows } from "../config/fhirResources";
 import type { Filter } from "../interfaces/Filter";
+import type { MappedResources } from "../interfaces/MappedResource";
+import { hasKeyWithValue, typedEntries } from "./utils";
 
 export function genericFilter<T>(
   resource: T,
@@ -9,4 +13,28 @@ export function genericFilter<T>(
 
     return resource[key] === filter.value;
   });
+}
+
+export function getFilterKeys<T extends Resource>(
+  cardRows: CardRows<T>,
+  mappedResources: MappedResources<T>,
+) {
+  return typedEntries(cardRows).reduce(
+    (acc, it) => {
+      const [k, v] = it;
+
+      if (v?.filter) {
+        const filterKeys = new Set<string>();
+        for (const r of mappedResources) {
+          if (hasKeyWithValue(r, k)) {
+            filterKeys.add(r[k]);
+          }
+        }
+
+        acc[k] = filterKeys;
+      }
+      return acc;
+    },
+    {} as Record<keyof T, Set<string>>,
+  );
 }

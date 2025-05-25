@@ -4,15 +4,17 @@ import { cn } from "../../lib/utils";
 
 export function SelectResourceButton(props: {
   caption: keyof ConfigItems;
-  className: string;
+  isSelected?: boolean;
   setDisplay: (item: keyof ConfigItems) => void;
 }): React.JSX.Element {
-  const { caption, setDisplay } = props;
+  const { caption, setDisplay, isSelected } = props;
   return (
     <button
       type="button"
       className={cn(
-        "py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer bg-pink-500 font-bold transition-colors hover:bg-sky-900",
+        "py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors",
+        isSelected ? "bg-pink-500" : "bg-sky-900",
+        !isSelected && "hover:bg-sky-700",
       )}
       onClick={() => setDisplay(caption)}
     >

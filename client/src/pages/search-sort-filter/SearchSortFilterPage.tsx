@@ -48,8 +48,8 @@ export function SearchSortFilterPage() {
           <SelectResourceButton
             key={k}
             setDisplay={setDisplay}
-            className={FHIR_RESOURCES[k].bgColor}
             caption={k}
+            isSelected={display === k}
           />
         ))}
       </div>

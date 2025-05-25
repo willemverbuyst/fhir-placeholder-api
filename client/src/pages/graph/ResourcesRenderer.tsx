@@ -10,11 +10,9 @@ import { ListItem } from "./ListItem";
 
 export function ResourcesRenderer<T extends Resource>({
   url,
-  className,
   renderItem,
 }: {
   url: string;
-  className: string;
   renderItem?: (resource: T) => JSX.Element | undefined;
 }) {
   const { isPending, error, data } = useQuery(
@@ -30,11 +28,7 @@ export function ResourcesRenderer<T extends Resource>({
       <List>
         {data.entry?.map((e) =>
           e.resource?.id ? (
-            <ListItem
-              key={e.resource.id}
-              id={e.resource.id}
-              className={className}
-            >
+            <ListItem key={e.resource.id} id={e.resource.id}>
               {renderItem?.(e.resource)}
             </ListItem>
           ) : null,
@@ -45,7 +39,7 @@ export function ResourcesRenderer<T extends Resource>({
 
   if (isResource(data) && data.id) {
     return (
-      <ListItem key={data.id} id={data.id} className={className}>
+      <ListItem key={data.id} id={data.id}>
         {renderItem?.(data)}
       </ListItem>
     );

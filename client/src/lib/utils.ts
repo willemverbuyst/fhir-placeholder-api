@@ -30,10 +30,10 @@ export function hasKey<O extends object, K extends PropertyKey>(
   return key in obj;
 }
 
-export function hasKeyWithValue<O extends object, K extends PropertyKey>(
+export function hasKeyWithValue<O extends object, K extends keyof O>(
   obj: O,
   key: K,
-): key is K & keyof O {
+): obj is O & Record<K, NonNullable<O[K]>> {
   return hasKey(obj, key) && obj[key] !== undefined && obj[key] !== null;
 }
 

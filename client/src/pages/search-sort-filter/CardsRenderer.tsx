@@ -10,7 +10,7 @@ import type {
 import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
 import { getFilterKeys } from "../../lib/filter";
 import { getSearchProperties } from "../../lib/search";
-import { getSortKeys } from "../../lib/sort";
+import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortFilter } from "./SearchSortFilter";
 
@@ -45,21 +45,6 @@ export function CardsRenderer<T extends Resource>(props: {
     return acc;
   }, []);
 
-  function getInitialSortProperty() {
-    const property = Object.entries(cardRows).find(
-      ([_, v]) => v.sorter === "asc" || v.sorter === "desc",
-    );
-
-    const [k, v] = property ?? [];
-
-    return k && v
-      ? {
-          property: k as keyof T,
-          isDescending: v.sorter === "desc",
-        }
-      : { property: "id" as keyof T, isDescending: false };
-  }
-
   if (resources.length) {
     return (
       <SearchSortFilter<MappedResource<T>>
@@ -67,7 +52,7 @@ export function CardsRenderer<T extends Resource>(props: {
         searchProperties={getSearchProperties<T>(cardRows)}
         filterKeys={getFilterKeys<T>(cardRows, mappedResources)}
         sortKeys={getSortKeys<T>(cardRows)}
-        initialSortProperty={getInitialSortProperty()}
+        initialSortProperty={getInitialSortProperty<T>(cardRows)}
       >
         {(resource): React.JSX.Element => (
           <Card

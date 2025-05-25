@@ -27,3 +27,18 @@ export function getSortKeys<T>(cardRows: CardRows<T>) {
     [] as (keyof T)[],
   );
 }
+
+export function getInitialSortProperty<T>(cardRows: CardRows<T>) {
+  const property = typedEntries(cardRows).find(
+    ([_, v]) => v?.sorter === "asc" || v?.sorter === "desc",
+  );
+
+  const [k, v] = property ?? [];
+
+  return k && v
+    ? {
+        property: k,
+        isDescending: v.sorter === "desc",
+      }
+    : { property: "id" as keyof T, isDescending: false };
+}

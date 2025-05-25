@@ -14,7 +14,7 @@ export function ListItem({
       <button
         type="button"
         className={
-          "p-4 rounded-md text-white w-[200px] bg-sky-900 hover:bg-sky-700"
+          "flex justify-center p-4 rounded-md text-white w-[200px] bg-sky-900 hover:bg-sky-700 cursor-pointer"
         }
         onClick={() => {
           if (zoomIn) setZoomIn(undefined);

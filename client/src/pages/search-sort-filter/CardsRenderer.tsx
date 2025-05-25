@@ -3,12 +3,10 @@ import type { Resource } from "fhir/r5";
 import type React from "react";
 import { Card } from "../../components/Card";
 import type { ConfigItem } from "../../config/fhirResources";
-import type {
-  MappedResource,
-  MappedResources,
-} from "../../interfaces/MappedResource";
+import type { MappedResource } from "../../interfaces/MappedResource";
 import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
 import { getFilterKeys } from "../../lib/filter";
+import { getMappedResources } from "../../lib/mappedResources";
 import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
@@ -23,27 +21,11 @@ export function CardsRenderer<T extends Resource>(props: {
   );
 
   if (isPending) return <p>...loading</p>;
-
   if (error) return <p>...error</p>;
-
   if (!isBundle(data)) return <p>...no data</p>;
 
   const resources = getResourcesFromBundle<T>(data);
-
-  const mappedResources = resources.reduce((acc: MappedResources<T>, it) => {
-    const mappedResource: MappedResource<T> = {};
-    // biome-ignore lint/complexity/noForEach: <explanation>
-    Object.entries(it).forEach(([k, v]) => {
-      if (!(k in cardRows)) return;
-      const key = k as keyof T;
-
-      mappedResource[key] = cardRows[key]?.display?.(v) ?? "";
-    });
-    if (Object.keys(mappedResource).length) {
-      acc.push(mappedResource);
-    }
-    return acc;
-  }, []);
+  const mappedResources = getMappedResources<T>(resources, cardRows);
 
   if (resources.length) {
     return (

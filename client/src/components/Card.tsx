@@ -1,11 +1,10 @@
 import type React from "react";
-import type { BGColor } from "../config/fhirResources";
 import { cn } from "../lib/utils";
 
 export function Card({
   headerText,
   content,
-}: { headerText?: string; bgColor?: BGColor; content: React.JSX.Element }) {
+}: { headerText?: string; content: React.JSX.Element }) {
   return (
     <section
       className={cn(

@@ -9,6 +9,7 @@ import type {
 } from "../../interfaces/MappedResource";
 import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
 import { getFilterKeys } from "../../lib/filter";
+import { getSearchProperties } from "../../lib/search";
 import { getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { SearchSortFilter } from "./SearchSortFilter";
@@ -44,18 +45,6 @@ export function CardsRenderer<T extends Resource>(props: {
     return acc;
   }, []);
 
-  function getSearchProperties() {
-    return Object.entries(cardRows).reduce(
-      (acc, [k, v]) => {
-        if (v.search) {
-          acc.push(k as keyof T);
-        }
-        return acc;
-      },
-      [] as (keyof T)[],
-    );
-  }
-
   function getInitialSortProperty() {
     const property = Object.entries(cardRows).find(
       ([_, v]) => v.sorter === "asc" || v.sorter === "desc",
@@ -75,7 +64,7 @@ export function CardsRenderer<T extends Resource>(props: {
     return (
       <SearchSortFilter<MappedResource<T>>
         dataSource={mappedResources}
-        searchProperties={getSearchProperties()}
+        searchProperties={getSearchProperties<T>(cardRows)}
         filterKeys={getFilterKeys<T>(cardRows, mappedResources)}
         sortKeys={getSortKeys<T>(cardRows)}
         initialSortProperty={getInitialSortProperty()}

@@ -1,3 +1,6 @@
+import type { CardRows } from "../config/fhirResources";
+import { typedEntries } from "./utils";
+
 export function genericSearch<T>(
   object: T,
   properties: Array<keyof T>,
@@ -20,4 +23,16 @@ export function genericSearch<T>(
     }
     return false;
   });
+}
+
+export function getSearchProperties<T>(cardRows: CardRows<T>) {
+  return typedEntries(cardRows).reduce(
+    (acc, [k, v]) => {
+      if (v?.search) {
+        acc.push(k);
+      }
+      return acc;
+    },
+    [] as (keyof T)[],
+  );
 }

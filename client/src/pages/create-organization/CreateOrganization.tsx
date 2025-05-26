@@ -1,6 +1,5 @@
 import type React from "react";
 import { useRef, useState } from "react";
-import { Card } from "../../ui/Card";
 import InputField, { type Api } from "../../ui/InputField";
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -63,50 +62,47 @@ export function CreateOrganization() {
   return (
     <div className="w-[350px] sm:w-[900px] mx-auto">
       {organization ? (
-        <Card
-          headerText={`You've created ${organization}`}
-          content={
-            <section className="flex flex-col items-center justify-center gap-4 p-4">
+        <section className="flex flex-col items-center justify-center gap-4 py-10">
+          <h2 className="uppercase text-xl text-center">
+            You've created {organization}
+          </h2>
+
+          <section className="flex flex-col items-center justify-center gap-4 p-4">
+            <button
+              className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-pink-500 hover:bg-pink-600"
+              type="button"
+              onClick={goToForm}
+            >
+              CREATE NEW
+            </button>
+          </section>
+        </section>
+      ) : (
+        <section className="flex flex-col items-center justify-center gap-4 py-10">
+          <h2 className="uppercase text-xl text-center">Create Organization</h2>
+          <form
+            id="loginForm"
+            className="flex flex-col items-center justify-center gap-4"
+            onSubmit={handleSubmit}
+          >
+            <InputField id="name" label="NAME" type="text" apiRef={nameRef} />
+            <InputField
+              id="description"
+              label="DESCRIPTION"
+              type="description"
+              apiRef={descriptionRef}
+            />
+
+            <section>
               <button
                 className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-pink-500 hover:bg-pink-600"
-                type="button"
-                onClick={goToForm}
+                type="submit"
               >
-                CREATE NEW
+                SUBMIT
               </button>
             </section>
-          }
-          className="w-[350px] sm:w-[600px] lg:w-[900px] 2xl:w-[900px] mx-auto"
-        />
-      ) : (
-        <Card
-          headerText="Create new organization"
-          content={
-            <form
-              id="loginForm"
-              className="flex flex-col items-center justify-center gap-4 p-4"
-              onSubmit={handleSubmit}
-            >
-              <InputField id="name" label="NAME" type="text" apiRef={nameRef} />
-              <InputField
-                id="description"
-                label="DESCRIPTION"
-                type="description"
-                apiRef={descriptionRef}
-              />
-
-              <section>
-                <button
-                  className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-pink-500 hover:bg-pink-600"
-                  type="submit"
-                >
-                  SUBMIT
-                </button>
-              </section>
-            </form>
-          }
-          className="w-[350px] sm:w-[600px] lg:w-[900px] 2xl:w-[900px] mx-auto"
-        />
+          </form>
+        </section>
       )}
     </div>
   );

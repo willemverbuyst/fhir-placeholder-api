@@ -32,37 +32,17 @@ function InputField(props: {
   );
 
   return (
-    <section
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        paddingBottom: "3rem",
-      }}
-    >
-      <label
-        htmlFor={props.id}
-        style={{
-          padding: "0.5rem",
-        }}
-      >
+    <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px] lg:w-[900px] p-4">
+      <label htmlFor={props.id} className="text-xl">
         {props.label}
       </label>
       <input
         ref={inputRef}
         id={props.id}
         type={props.type}
-        className="border-2 border-black py-2 px-4 rounded-md"
+        className="rounded-md border-2 border-pink-500 bg-white backdrop-blur-md p-2 font-bold text-sky-900 w-full h-[40px] outline-pink-500 focus:outline caret-pink-500"
       />
-      <p
-        style={{
-          color: "red",
-          fontSize: "80%",
-          margin: 0,
-          textAlign: "left",
-        }}
-      >
-        {errorMessage}
-      </p>
+      <p className="text-pink-500 font-bold">{errorMessage}</p>
     </section>
   );
 }

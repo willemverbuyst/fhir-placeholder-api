@@ -1,6 +1,6 @@
 import type React from "react";
-import type { ConfigItems } from "../../config/fhirResources";
-import { cn } from "../../lib/utils";
+import type { ConfigItems } from "../config/fhirResources";
+import { cn } from "../lib/utils";
 
 export function SelectResourceButton(props: {
   caption: keyof ConfigItems;

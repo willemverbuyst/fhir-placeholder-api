@@ -10,13 +10,13 @@ import type {
   PractitionerRole,
 } from "fhir/r5";
 import { useState } from "react";
+import { SelectResourceButton } from "../../components/SelectResourceButton.tsx";
 import {
   APP_RESOURCE_TYPES,
   type AppResourceType,
   FHIR_RESOURCES,
 } from "../../config/fhirResources.ts";
 import { CardsRenderer } from "./CardsRenderer.tsx";
-import { SelectResourceButton } from "./SelectResourceButton.tsx";
 
 const ItemMap = {
   Appointment: <CardsRenderer<Appointment> item={FHIR_RESOURCES.Appointment} />,

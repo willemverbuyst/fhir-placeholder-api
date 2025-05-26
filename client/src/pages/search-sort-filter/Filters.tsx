@@ -1,14 +1,18 @@
+import type { Resource } from "fhir/r5";
 import type React from "react";
 import type { Filter } from "../../interfaces/Filter";
+import type { MappedResource } from "../../interfaces/MappedResource";
 import { Checkbox } from "../../ui/Checkbox";
 
-interface Props<T> {
-  filterKeys: Record<keyof T, Set<string | boolean>>;
+interface Props<T extends MappedResource<Resource>> {
+  filterKeys: Record<keyof T, Set<string>>;
   filterProperties: Array<Filter<T>>;
   setFilterProperties(filterProperties: Array<Filter<T>>): void;
 }
 
-export function Filters<T>(props: Props<T>): React.JSX.Element {
+export function Filters<T extends MappedResource<Resource>>(
+  props: Props<T>,
+): React.JSX.Element {
   const { filterKeys, filterProperties, setFilterProperties } = props;
 
   function onChangeFilter(property: Filter<T>): void {
@@ -44,12 +48,13 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
 
   return (
     <section className="grid sm:grid-cols-2 gap-6 items-start w-[350px] sm:w-[600px] lg:w-[900px]">
-      {(Object.entries(filterKeys) as [string, Set<string | boolean>][]).map(
-        ([key, v]) => (
-          <div key={key} className="flex flex-col gap-2 items-start w-full">
-            <h3 className="text-xl">{key}</h3>
-            <section>
-              {(Array.from(v) as string[]).sort().map((filter) => (
+      {Object.entries(filterKeys).map(([key, v]) => (
+        <div key={key} className="flex flex-col gap-2 items-start w-full">
+          <h3 className="text-xl">{key}</h3>
+          <section>
+            {Array.from(v)
+              .sort()
+              .map((filter) => (
                 <Checkbox
                   key={filter}
                   id={filter}
@@ -66,10 +71,9 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
                   }}
                 />
               ))}
-            </section>
-          </div>
-        ),
-      )}
+          </section>
+        </div>
+      ))}
     </section>
   );
 }

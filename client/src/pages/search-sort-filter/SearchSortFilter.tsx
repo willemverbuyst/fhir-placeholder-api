@@ -1,6 +1,8 @@
+import type { Resource } from "fhir/r5";
 import type React from "react";
 import { useCallback, useState } from "react";
 import type { Filter } from "../../interfaces/Filter";
+import type { MappedResource } from "../../interfaces/MappedResource";
 import type { PropsWithChildrenFunction } from "../../interfaces/PropsWithChildrenFunction";
 import type { Sorter } from "../../interfaces/Sorter";
 import { genericFilter } from "../../lib/filter";
@@ -10,9 +12,9 @@ import { Filters } from "./Filters";
 import { SearchInput } from "./SearchInput";
 import { Sorters } from "./Sorters";
 
-interface Props<T> {
+interface Props<T extends MappedResource<Resource>> {
   dataSource: Array<T>;
-  filterKeys: Record<keyof T, Set<string | boolean>>;
+  filterKeys: Record<keyof T, Set<string>>;
   sortKeys: Array<keyof T>;
   searchProperties: Array<keyof T>;
   initialSortProperty: Sorter<T>;
@@ -24,7 +26,7 @@ interface SearchSortAndFilterState<T> {
   filterProperties: Array<Filter<T>>;
 }
 
-export function SearchSortFilter<T>(
+export function SearchSortFilter<T extends MappedResource<Resource>>(
   props: PropsWithChildrenFunction<Props<T>, T>,
 ): React.JSX.Element {
   const {
@@ -68,7 +70,7 @@ export function SearchSortFilter<T>(
             });
           }}
         />
-        <Filters
+        <Filters<T>
           filterKeys={filterKeys}
           filterProperties={filterProperties}
           setFilterProperties={(filterProperties): void => {

@@ -1,7 +1,6 @@
 import type React from "react";
 import { useRef, useState } from "react";
-import InputField, { type Api } from "../../components/InputField";
-import { FHIR_RESOURCES } from "../../config/fhirResources";
+import InputField, { type Api } from "../../ui/InputField";
 
 interface FormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;
@@ -62,7 +61,9 @@ export function CreateOrganization() {
 
   return organization ? (
     <section
-      className={`flex flex-col items-center w-[400px] m-auto ${FHIR_RESOURCES.Organization.bgColor} text-white p-10 rounded-md`}
+      className={
+        "flex flex-col items-center w-[400px] m-auto text-white p-10 rounded-md"
+      }
     >
       <h1>You've created {organization}</h1>
       <button
@@ -75,7 +76,9 @@ export function CreateOrganization() {
     </section>
   ) : (
     <section
-      className={`flex flex-col items-center w-[400px] m-auto ${FHIR_RESOURCES.Organization.bgColor} text-white p-10 rounded-md`}
+      className={
+        "flex flex-col items-center w-[400px] m-auto text-white p-10 rounded-md"
+      }
     >
       <h1>Create a new organization</h1>
       <form

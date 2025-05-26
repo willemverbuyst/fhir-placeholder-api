@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
-import { Card } from "../../components/Card";
 import type { ConfigItem } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
@@ -10,6 +9,7 @@ import { getMappedResources } from "../../lib/mappedResources";
 import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
+import { Card } from "../../ui/Card";
 import { SearchSortFilter } from "./SearchSortFilter";
 
 export function CardsRenderer<T extends Resource>(props: {

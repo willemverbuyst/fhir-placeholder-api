@@ -27,7 +27,7 @@ function MobileMenuItem({ text, path }: { text: string; path: string }) {
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
-    <header className="w-full sticky flex items-center top-0 bg-gradient-to-r from-gray-900 to-gray-700 text-zinc-200 px-4">
+    <header className="w-full z-10 sticky flex items-center top-0 bg-gradient-to-r from-gray-900 to-gray-700 text-zinc-200 px-4">
       <h1 className="text-3xl p-2">Fhir Placeholder Api</h1>
       <div className="block md:hidden ml-auto my-auto cursor-pointer">
         <button

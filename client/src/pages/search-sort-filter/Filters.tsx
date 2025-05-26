@@ -1,5 +1,6 @@
 import type React from "react";
 import type { Filter } from "../../interfaces/Filter";
+import { Checkbox } from "../../ui/Checkbox";
 
 interface Props<T> {
   filterKeys: Record<keyof T, Set<string | boolean>>;
@@ -49,24 +50,21 @@ export function Filters<T>(props: Props<T>): React.JSX.Element {
             <h3 className="text-xl">{key}</h3>
             <section>
               {(Array.from(v) as string[]).sort().map((filter) => (
-                <div key={filter} className="flex items-center space-x-2">
-                  <input
-                    id={filter}
-                    checked={filterProperties.some(
-                      ({ property, value }) =>
-                        property === key && filter === value,
-                    )}
-                    type="checkbox"
-                    onChange={() => {
-                      onChangeFilter({
-                        property: key as keyof T,
-                        value: filter,
-                      });
-                    }}
-                    className="bg-white"
-                  />
-                  <label htmlFor={filter}>{filter}</label>
-                </div>
+                <Checkbox
+                  key={filter}
+                  id={filter}
+                  label={filter}
+                  checked={filterProperties.some(
+                    ({ property, value }) =>
+                      property === key && filter === value,
+                  )}
+                  onChange={() => {
+                    onChangeFilter({
+                      property: key as keyof T,
+                      value: filter,
+                    });
+                  }}
+                />
               ))}
             </section>
           </div>

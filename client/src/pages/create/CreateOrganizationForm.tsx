@@ -3,12 +3,12 @@ import { useForm } from "@tanstack/react-form";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
-    <>
+    <section className="flex flex-col gap-1">
       {field.state.meta.isTouched && !field.state.meta.isValid ? (
-        <em>{field.state.meta.errors.join(",")}</em>
+        <em className="text-pink-500">{field.state.meta.errors.join(",")}</em>
       ) : null}
       {field.state.meta.isValidating ? "Validating..." : null}
-    </>
+    </section>
   );
 }
 

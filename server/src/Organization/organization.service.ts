@@ -14,10 +14,10 @@ export class OrganizationService {
     createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization & Id> {
     const newOrganization: Organization & Id = {
-      id: String(this.repo.organizations.length),
+      id: `organization-${String(this.repo.organizations.length + 1)}`,
       resourceType: "Organization",
-      active: true,
       ...createOrganizationDto,
+      active: true,
     };
 
     this.repo.organizations.push(newOrganization);

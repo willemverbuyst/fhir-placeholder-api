@@ -1,5 +1,7 @@
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
+import { useMutation } from "@tanstack/react-query";
+import { postData } from "../../query/resources.post";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -13,12 +15,22 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 }
 
 export default function CreateOrganizationForm() {
+  const mutation = useMutation({
+    mutationFn: postData,
+    onSuccess: (data) => {
+      console.log("Success:", data);
+    },
+    onError: (error) => {
+      console.error("Error:", error.message);
+    },
+  });
+
   const form = useForm({
     defaultValues: {
       name: "",
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
+      mutation.mutate(value);
     },
   });
 

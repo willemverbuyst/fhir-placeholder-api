@@ -22,7 +22,7 @@ export function SearchInput(props: Props): React.JSX.Element {
         search
       </label>
       <input
-        className="bg-white border-2 rounded-md p-2 text-black h-[40px] w-full"
+        className="rounded-md border-2 border-pink-500 bg-white backdrop-blur-md p-2 font-bold text-sky-900 w-full h-[40px] outline-pink-500 focus:outline caret-pink-500"
         value={query}
         id="search"
         placeholder="Search..."

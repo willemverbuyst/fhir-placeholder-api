@@ -1,7 +1,6 @@
 import type React from "react";
 import { useRef, useState } from "react";
-import InputField, { type Api } from "../../components/InputField";
-import { FHIR_RESOURCES } from "../../config/fhirResources";
+import InputField, { type Api } from "../../ui/InputField";
 
 interface FormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;
@@ -60,51 +59,51 @@ export function CreateOrganization() {
     setOrganization("");
   }
 
-  return organization ? (
-    <section
-      className={`flex flex-col items-center w-[400px] m-auto ${FHIR_RESOURCES.Organization.bgColor} text-white p-10 rounded-md`}
-    >
-      <h1>You've created {organization}</h1>
-      <button
-        className="border-2 border-black py-2 px-4 rounded-md"
-        type="button"
-        onClick={goToForm}
-      >
-        CREATE NEW
-      </button>
-    </section>
-  ) : (
-    <section
-      className={`flex flex-col items-center w-[400px] m-auto ${FHIR_RESOURCES.Organization.bgColor} text-white p-10 rounded-md`}
-    >
-      <h1>Create a new organization</h1>
-      <form
-        id="loginForm"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          width: "100%",
-        }}
-        onSubmit={handleSubmit}
-      >
-        <InputField id="name" label="NAME" type="text" apiRef={nameRef} />
-        <InputField
-          id="description"
-          label="DESCRIPTION"
-          type="description"
-          apiRef={descriptionRef}
-        />
+  return (
+    <div className="w-[350px] sm:w-[900px] mx-auto">
+      {organization ? (
+        <section className="flex flex-col items-center justify-center gap-4 py-10">
+          <h2 className="uppercase text-xl text-center">
+            You've created {organization}
+          </h2>
 
-        <section>
-          <button
-            className="border-2 border-black py-2 px-4 rounded-md"
-            type="submit"
-          >
-            SUBMIT
-          </button>
+          <section className="flex flex-col items-center justify-center gap-4 p-4">
+            <button
+              className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-pink-500 hover:bg-pink-600"
+              type="button"
+              onClick={goToForm}
+            >
+              CREATE NEW
+            </button>
+          </section>
         </section>
-      </form>
-    </section>
+      ) : (
+        <section className="flex flex-col items-center justify-center gap-4 py-10">
+          <h2 className="uppercase text-xl text-center">Create Organization</h2>
+          <form
+            id="loginForm"
+            className="flex flex-col items-center justify-center gap-4"
+            onSubmit={handleSubmit}
+          >
+            <InputField id="name" label="NAME" type="text" apiRef={nameRef} />
+            <InputField
+              id="description"
+              label="DESCRIPTION"
+              type="description"
+              apiRef={descriptionRef}
+            />
+
+            <section>
+              <button
+                className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-pink-500 hover:bg-pink-600"
+                type="submit"
+              >
+                SUBMIT
+              </button>
+            </section>
+          </form>
+        </section>
+      )}
+    </div>
   );
 }

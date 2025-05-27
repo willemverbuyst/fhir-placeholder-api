@@ -12,8 +12,6 @@ import type {
 } from "fhir/r5";
 import { getIdFromReference } from "../lib/fhir";
 
-export type BGColor = `bg-${string}-${number}${number}${number}`;
-
 export type CardRows<T> = {
   [K in keyof T]?: {
     // biome-ignore lint/suspicious/noExplicitAny: this can be any type
@@ -26,7 +24,6 @@ export type CardRows<T> = {
 
 export type ConfigItem<T extends Resource> = {
   resourceType: T["resourceType"];
-  bgColor: BGColor;
   cardRows: CardRows<T>;
 };
 
@@ -64,7 +61,6 @@ export type ConfigItems = {
 export const FHIR_RESOURCES: ConfigItems = {
   Appointment: {
     resourceType: "Appointment",
-    bgColor: "bg-teal-600",
     cardRows: {
       id: {
         display: (v: Appointment["id"]) => v,
@@ -92,7 +88,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Condition: {
     resourceType: "Condition",
-    bgColor: "bg-violet-500",
     cardRows: {
       id: {
         display: (v: Condition["id"]) => v,
@@ -117,7 +112,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Encounter: {
     resourceType: "Encounter",
-    bgColor: "bg-green-600",
     cardRows: {
       id: {
         display: (v: Encounter["id"]) => v,
@@ -142,7 +136,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   EpisodeOfCare: {
     resourceType: "EpisodeOfCare",
-    bgColor: "bg-blue-900",
     cardRows: {
       id: {
         display: (v: EpisodeOfCare["id"]) => v,
@@ -182,7 +175,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Observation: {
     resourceType: "Observation",
-    bgColor: "bg-pink-600",
     cardRows: {
       id: {
         display: (v: Observation["id"]) => v,
@@ -216,7 +208,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Organization: {
     resourceType: "Organization",
-    bgColor: "bg-amber-950",
     cardRows: {
       id: {
         display: (v: Organization["id"]) => v,
@@ -237,7 +228,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Patient: {
     resourceType: "Patient",
-    bgColor: "bg-amber-400",
     cardRows: {
       id: {
         display: (v: Patient["id"]) => v ?? "",
@@ -297,7 +287,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   Practitioner: {
     resourceType: "Practitioner",
-    bgColor: "bg-amber-600",
     cardRows: {
       id: {
         display: (v: Practitioner["id"]) => v ?? "missing id",
@@ -341,7 +330,6 @@ export const FHIR_RESOURCES: ConfigItems = {
   },
   PractitionerRole: {
     resourceType: "PractitionerRole",
-    bgColor: "bg-amber-800",
     cardRows: {
       id: {
         display: (v: PractitionerRole["id"]) => v ?? "missing id",

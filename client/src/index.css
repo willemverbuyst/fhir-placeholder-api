@@ -10,3 +10,15 @@
     font-family: var(--font-quicksand);
   }
 }
+
+@custom-variant group-open {
+  &:is(:where(.group):is(.open, [open], :popover-open, :open) *) {
+    @slot;
+  }
+}
+
+@custom-variant peer-open {
+  &:is(:where(.peer):is(.open, [open], :popover-open, :open) ~ *) {
+    @slot;
+  }
+}

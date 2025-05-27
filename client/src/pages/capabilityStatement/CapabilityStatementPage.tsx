@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import type { CapabilityStatement } from "fhir/r5";
-import { Card } from "../../components/Card";
 import { type ConfigItems, FHIR_RESOURCES } from "../../config/fhirResources";
 import { isResource } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
+import { Card } from "../../ui/Card";
 
 export function CapabilityStatementPage() {
   const { isPending, error, data } = useQuery(

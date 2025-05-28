@@ -7,10 +7,12 @@ export const postData = async (newData: unknown) => {
     body: JSON.stringify(newData),
   });
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Something went wrong!");
-  }
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      // Simulate a delay for the loading spinner
+      resolve(true);
+    }, 1000);
+  });
 
-  return response.json();
+  return await response.json();
 };

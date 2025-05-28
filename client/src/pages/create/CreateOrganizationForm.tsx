@@ -2,6 +2,7 @@ import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { postData } from "../../query/resources.post";
+import { LoadingSpinner } from "../../ui/LoadingSpinner";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -31,10 +32,11 @@ export default function CreateOrganizationForm() {
     },
     onSubmit: async ({ value }) => {
       mutate(value);
+      form.reset();
     },
   });
 
-  if (isPending) return <p>...loading</p>;
+  if (isPending) return <LoadingSpinner />;
   if (error) return <p>...error</p>;
 
   return (

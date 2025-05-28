@@ -10,6 +10,7 @@ import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { Card } from "../../ui/Card";
+import { LoadingSpinner } from "../../ui/LoadingSpinner";
 import { SearchSortFilter } from "./SearchSortFilter";
 
 export function CardsRenderer<T extends Resource>(props: {
@@ -20,7 +21,7 @@ export function CardsRenderer<T extends Resource>(props: {
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
 
-  if (isPending) return <p>...loading</p>;
+  if (isPending) return <LoadingSpinner />;
   if (error) return <p>...error</p>;
   if (!isBundle(data)) return <p>...no data</p>;
 

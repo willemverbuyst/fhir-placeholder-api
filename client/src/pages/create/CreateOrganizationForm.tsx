@@ -15,7 +15,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 }
 
 export default function CreateOrganizationForm() {
-  const mutation = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: postData,
     onSuccess: (data) => {
       console.log("Success:", data);
@@ -30,9 +30,12 @@ export default function CreateOrganizationForm() {
       name: "",
     },
     onSubmit: async ({ value }) => {
-      mutation.mutate(value);
+      mutate(value);
     },
   });
+
+  if (isPending) return <p>...loading</p>;
+  if (error) return <p>...error</p>;
 
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-10">

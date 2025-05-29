@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { SelectResourceButton } from "../../components/SelectResourceButton";
 import { APP_RESOURCE_TYPES } from "../../config/fhirResources";
+import { hasKey } from "../../lib/utils";
 import { CreateOrganization } from "./CreateOrganization";
 
 const ItemMap = {
@@ -18,13 +19,13 @@ const ItemMap = {
 
 export function CreatePage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const display = searchParams.get("resource");
+  const resource = searchParams.get("resource");
 
   useEffect(() => {
-    if (!display) {
+    if (!resource) {
       setSearchParams({ resource: "Organization" });
     }
-  }, [display, setSearchParams]);
+  }, [resource, setSearchParams]);
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
@@ -34,7 +35,7 @@ export function CreatePage() {
         ))}
       </div>
 
-      <div>{ItemMap[display as keyof typeof ItemMap]}</div>
+      {resource && hasKey(ItemMap, resource) && <div>{ItemMap[resource]}</div>}
     </div>
   );
 }

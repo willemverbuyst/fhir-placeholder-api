@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { SelectResourceButton } from "../../components/SelectResourceButton";
 import { APP_RESOURCE_TYPES, FHIR_RESOURCES } from "../../config/fhirResources";
+import { hasKey } from "../../lib/utils";
 import { CardsRenderer } from "./CardsRenderer";
 
 const ItemMap = {
@@ -37,13 +38,13 @@ const ItemMap = {
 
 export function SearchSortFilterPage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const display = searchParams.get("resource");
+  const resource = searchParams.get("resource");
 
   useEffect(() => {
-    if (!display) {
+    if (!resource) {
       setSearchParams({ resource: "Patient" });
     }
-  }, [display, setSearchParams]);
+  }, [resource, setSearchParams]);
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
@@ -53,7 +54,7 @@ export function SearchSortFilterPage() {
         ))}
       </div>
 
-      <div>{ItemMap[display as keyof typeof ItemMap]}</div>
+      {resource && hasKey(ItemMap, resource) && <div>{ItemMap[resource]}</div>}
     </div>
   );
 }

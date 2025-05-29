@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
+import { getResourcesFromBundle, isBundle } from "../lib/fhir";
 
 export function createResourcesQueryOptions<T extends Resource>({
   url,
@@ -8,7 +9,8 @@ export function createResourcesQueryOptions<T extends Resource>({
 }) {
   return queryOptions({
     queryKey: [url],
-    queryFn: () => fetchResources<T>(url),
+    queryFn: () => getResources<T>(url),
+    staleTime: 1000 * 60, // 1 minute
   });
 }
 
@@ -25,4 +27,16 @@ export async function fetchResources<T extends Resource>(
   });
 
   return await response.json();
+}
+
+export async function getResources<T extends Resource>(
+  url: string,
+): Promise<T | T[]> {
+  const rawData = await fetchResources<T>(url);
+
+  if (isBundle(rawData)) {
+    return getResourcesFromBundle<T>(rawData);
+  }
+
+  return rawData;
 }

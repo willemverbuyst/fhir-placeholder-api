@@ -211,7 +211,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     cardRows: {
       id: {
         display: (v: Organization["id"]) => v,
-        sorter: true,
+        sorter: "asc",
       },
       active: {
         display: (v: Organization["active"]) =>

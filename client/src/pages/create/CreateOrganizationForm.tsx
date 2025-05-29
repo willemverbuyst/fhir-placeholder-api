@@ -1,6 +1,6 @@
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postData } from "../../query/resources.post";
 import { LoadingSpinner } from "../../ui/LoadingSpinner";
 
@@ -16,10 +16,17 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 }
 
 export default function CreateOrganizationForm() {
+  const queryClient = useQueryClient();
   const { mutate, isPending, error } = useMutation({
     mutationFn: postData,
     onSuccess: (data) => {
-      console.log("Success:", data);
+      queryClient.setQueryData(["Organization"], (oldData) => {
+        if (!oldData) return [data];
+        if (Array.isArray(oldData)) {
+          return [...oldData, data];
+        }
+        return oldData;
+      });
     },
     onError: (error) => {
       console.error("Error:", error.message);

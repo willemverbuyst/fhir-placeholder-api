@@ -9,14 +9,12 @@ import type {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import { useState } from "react";
-import { SelectResourceButton } from "../../components/SelectResourceButton.tsx";
-import {
-  APP_RESOURCE_TYPES,
-  type AppResourceType,
-  FHIR_RESOURCES,
-} from "../../config/fhirResources.ts";
-import { CardsRenderer } from "./CardsRenderer.tsx";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router";
+import { SelectResourceButton } from "../../components/SelectResourceButton";
+import { APP_RESOURCE_TYPES, FHIR_RESOURCES } from "../../config/fhirResources";
+import { hasKey } from "../../lib/utils";
+import { CardsRenderer } from "./CardsRenderer";
 
 const ItemMap = {
   Appointment: <CardsRenderer<Appointment> item={FHIR_RESOURCES.Appointment} />,
@@ -39,22 +37,24 @@ const ItemMap = {
 };
 
 export function SearchSortFilterPage() {
-  const [display, setDisplay] = useState<AppResourceType>("Patient");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const resource = searchParams.get("resource");
+
+  useEffect(() => {
+    if (!resource) {
+      setSearchParams({ resource: "Patient" });
+    }
+  }, [resource, setSearchParams]);
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {APP_RESOURCE_TYPES.map((k) => (
-          <SelectResourceButton
-            key={k}
-            setDisplay={setDisplay}
-            caption={k}
-            isSelected={display === k}
-          />
+          <SelectResourceButton key={k} caption={k} />
         ))}
       </div>
 
-      <div>{ItemMap[display]}</div>
+      {resource && hasKey(ItemMap, resource) && <div>{ItemMap[resource]}</div>}
     </div>
   );
 }

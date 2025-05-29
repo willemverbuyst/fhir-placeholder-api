@@ -1,13 +1,16 @@
 import type React from "react";
+import { useSearchParams } from "react-router";
 import type { ConfigItems } from "../config/fhirResources";
 import { cn } from "../lib/utils";
 
-export function SelectResourceButton(props: {
+export function SelectResourceButton({
+  caption,
+}: {
   caption: keyof ConfigItems;
-  isSelected?: boolean;
-  setDisplay: (item: keyof ConfigItems) => void;
 }): React.JSX.Element {
-  const { caption, setDisplay, isSelected } = props;
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isSelected = searchParams.get("resource") === caption;
+
   return (
     <button
       type="button"
@@ -16,7 +19,9 @@ export function SelectResourceButton(props: {
         isSelected ? "bg-pink-500" : "bg-sky-900",
         !isSelected && "hover:bg-sky-700",
       )}
-      onClick={() => setDisplay(caption)}
+      onClick={() => {
+        setSearchParams({ resource: caption });
+      }}
     >
       {caption}
     </button>

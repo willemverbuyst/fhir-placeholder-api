@@ -22,7 +22,7 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (isPending) return <LoadingSpinner />;
   if (error) return <p>...error</p>;
-  if (!Array.isArray(data)) return <p>...no data</p>;
+  if (!data) return <p>...no data</p>;
 
   const mappedResources = getMappedResources<T>(data, cardRows);
 

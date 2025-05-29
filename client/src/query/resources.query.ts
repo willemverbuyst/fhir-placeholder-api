@@ -31,12 +31,12 @@ export async function fetchResources<T extends Resource>(
 
 export async function getResources<T extends Resource>(
   url: string,
-): Promise<T | T[]> {
+): Promise<T[]> {
   const rawData = await fetchResources<T>(url);
 
   if (isBundle(rawData)) {
     return getResourcesFromBundle<T>(rawData);
   }
 
-  return rawData;
+  return [rawData];
 }

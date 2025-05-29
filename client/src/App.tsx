@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import { Header } from "./components/Header";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
-import { CreatePage } from "./pages/create-organization/CreatePage";
+import { CreatePage } from "./pages/create/CreatePage";
 import { Graph } from "./pages/graph/Graph";
 import { SearchSortFilterPage } from "./pages/search-sort-filter/SearchSortFilterPage";
 

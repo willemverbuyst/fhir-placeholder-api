@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type { JSX } from "react";
-import { isBundle, isResource } from "../../lib/fhir";
+import { isResource } from "../../lib/fhir";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { ErrorMessage } from "../../ui/ErrorMessage";
 import { LoadingSpinner } from "../../ui/LoadingSpinner";
@@ -20,16 +20,15 @@ export function ResourcesRenderer<T extends Resource>({
   );
 
   if (isPending) return <LoadingSpinner />;
-
   if (error) return <ErrorMessage error={error} />;
 
-  if (isBundle(data) && data.entry) {
+  if (Array.isArray(data)) {
     return (
       <List>
-        {data.entry?.map((e) =>
-          e.resource?.id ? (
-            <ListItem key={e.resource.id} id={e.resource.id}>
-              {renderItem?.(e.resource)}
+        {data.map((e) =>
+          e.id ? (
+            <ListItem key={e.id} id={e.id}>
+              {renderItem?.(e)}
             </ListItem>
           ) : null,
         )}
@@ -37,10 +36,10 @@ export function ResourcesRenderer<T extends Resource>({
     );
   }
 
-  if (isResource(data) && data.id) {
+  if (data.id && isResource(data)) {
     return (
       <ListItem key={data.id} id={data.id}>
-        {renderItem?.(data)}
+        {renderItem?.(data as T)}
       </ListItem>
     );
   }

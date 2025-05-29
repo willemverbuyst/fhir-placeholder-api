@@ -3,13 +3,13 @@ import type { Resource } from "fhir/r5";
 import type React from "react";
 import type { ConfigItem } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
-import { getResourcesFromBundle, isBundle } from "../../lib/fhir";
 import { getFilterKeys } from "../../lib/filter";
 import { getMappedResources } from "../../lib/mappedResources";
 import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { Card } from "../../ui/Card";
+import { LoadingSpinner } from "../../ui/LoadingSpinner";
 import { SearchSortFilter } from "./SearchSortFilter";
 
 export function CardsRenderer<T extends Resource>(props: {
@@ -20,14 +20,13 @@ export function CardsRenderer<T extends Resource>(props: {
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
 
-  if (isPending) return <p>...loading</p>;
+  if (isPending) return <LoadingSpinner />;
   if (error) return <p>...error</p>;
-  if (!isBundle(data)) return <p>...no data</p>;
+  if (!Array.isArray(data)) return <p>...no data</p>;
 
-  const resources = getResourcesFromBundle<T>(data);
-  const mappedResources = getMappedResources<T>(resources, cardRows);
+  const mappedResources = getMappedResources<T>(data, cardRows);
 
-  if (resources.length) {
+  if (data.length) {
     return (
       <SearchSortFilter<MappedResource<T>>
         dataSource={mappedResources}

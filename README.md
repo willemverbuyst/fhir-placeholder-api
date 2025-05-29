@@ -123,8 +123,8 @@ curl http://localhost:8080/api/v2/r5/Patient/patient-3
 }
 ```
 
-## Tools to inspect the resources
+## Tools (client)
 
-### Resource Graph
-
-![screenshot](./clients/resource-graph/Screenshot.png)
+![graph](./client/screenshots/graph.png)
+![search-sort-filter](./client/screenshots/search-sort-filter.png)
+![create](./client/screenshots/create.png)

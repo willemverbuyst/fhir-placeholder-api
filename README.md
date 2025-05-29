@@ -45,7 +45,7 @@ Inspired by [{JSON} Placeholder](https://jsonplaceholder.typicode.com/)
 - `PATCH /Organization/:id`
 
 ```typescript
-fetch("http://localhost:8080/api/v2/r5/Patient/1")
+fetch("http://localhost:8080/api/v2/r5/Patient/patient-3")
   .then((response) => response.json())
   .then((json) => console.log(json));
 ```
@@ -53,52 +53,71 @@ fetch("http://localhost:8080/api/v2/r5/Patient/1")
 or
 
 ```sh
-curl http://localhost:8080/api/v2/r5/Patient/1
+curl http://localhost:8080/api/v2/r5/Patient/patient-3
 ```
 
 👇 _Output_
 
 ```json
 {
-  "id": "1",
+  "id": "patient-3",
   "name": [
     {
-      "family": "Doe",
-      "given": ["John"]
+      "family": "Anderson",
+      "given": [
+        "Leonel"
+      ]
     }
   ],
   "resourceType": "Patient",
-  "birthDate": "1969-12-05",
+  "birthDate": "2010-12-11",
   "gender": "other",
+  "active": false,
   "telecom": [
     {
-      "use": "old",
+      "use": "temp",
       "system": "email",
-      "value": "John_Doe27@fhir-placeholder.api"
+      "value": "Leonel.Anderson12@fhir-placeholder.api"
     },
     {
-      "use": "temp",
+      "use": "work",
       "system": "phone",
-      "value": "(239) 778-3678"
+      "value": "(935) 366-4757"
     }
   ],
   "address": [
     {
       "use": "old",
-      "type": "physical",
-      "line": ["96298 Long Lane"],
-      "city": "Gibson",
-      "state": "Washington",
-      "postalCode": "09207",
-      "country": "Brunei Darussalam"
+      "type": "both",
+      "line": [
+        "9901 Main Street E"
+      ],
+      "city": "Oak Park",
+      "state": "Pennsylvania",
+      "postalCode": "46259",
+      "country": "Guadeloupe"
     }
   ],
   "managingOrganization": {
-    "reference": "Organization/1"
+    "reference": "Organization/organization-1"
   },
   "generalPractitioner": [
     {
-      "reference": "Practitioner/2"
+      "reference": "Practitioner/practitioner-1"
+    }
+  ],
+  "communication": [
+    {
+      "language": {
+        "coding": [
+          {
+            "code": "en-US",
+            "system": "urn:ietf:bcp:47",
+            "display": "English (United States)"
+          }
+        ]
+      },
+      "preferred": true
     }
   ]
 }

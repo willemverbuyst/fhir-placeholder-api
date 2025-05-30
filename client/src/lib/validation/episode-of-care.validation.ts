@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const episodeOfCareResource = z.object({
+export const episodeOfCareResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("EpisodeOfCare"),
   status: z.enum([
@@ -33,16 +33,4 @@ const episodeOfCareResource = z.object({
       ),
     }),
   ),
-});
-
-const episodeOfCareBundleEntry = z.object({
-  fullUrl: z.string(),
-  resource: episodeOfCareResource,
-});
-
-export const episodeOfCareBundle = z.object({
-  resourceType: z.literal("Bundle"),
-  type: z.literal("searchset"),
-  total: z.number(),
-  entry: z.array(episodeOfCareBundleEntry),
 });

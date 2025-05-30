@@ -1,15 +1,16 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
 import { getResourcesFromBundle, isBundle } from "../lib/fhir";
-import { appointmentBundle } from "../lib/validation/appointment.validation";
-import { conditionBundle } from "../lib/validation/condition.validation";
-import { encounterBundle } from "../lib/validation/encounter.validation";
-import { episodeOfCareBundle } from "../lib/validation/episode-of-care.validation";
-import { observationBundle } from "../lib/validation/observation.validation";
-import { organizationBundle } from "../lib/validation/organization.validation";
-import { patientBundle } from "../lib/validation/patient.validation";
-import { practitionerRoleBundle } from "../lib/validation/practitioner-role.validation";
-import { practitionerBundle } from "../lib/validation/practitioner.validation";
+import { appointmentResourceSchema } from "../lib/validation/appointment.validation";
+import { getBundleSchema } from "../lib/validation/bundle.validation";
+import { conditionResourceSchema } from "../lib/validation/condition.validation";
+import { encounterResourceSchema } from "../lib/validation/encounter.validation";
+import { episodeOfCareResourceSchema } from "../lib/validation/episode-of-care.validation";
+import { observationResourceSchema } from "../lib/validation/observation.validation";
+import { organizationResourceSchema } from "../lib/validation/organization.validation";
+import { patientResourceSchema } from "../lib/validation/patient.validation";
+import { practitionerRoleResourceSchema } from "../lib/validation/practitioner-role.validation";
+import { practitionerResourceSchema } from "../lib/validation/practitioner.validation";
 import { validateBundle } from "../lib/validation/validateBundle";
 
 export function createResourcesQueryOptions<T extends Resource>({
@@ -39,7 +40,7 @@ export async function getResources<T extends Resource>(url: string) {
     switch (url) {
       case "Appointment": {
         validateBundle({
-          schema: appointmentBundle,
+          schema: getBundleSchema(appointmentResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -48,7 +49,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "Condition": {
         validateBundle({
-          schema: conditionBundle,
+          schema: getBundleSchema(conditionResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -57,7 +58,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "Encounter": {
         validateBundle({
-          schema: encounterBundle,
+          schema: getBundleSchema(encounterResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -66,7 +67,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "EpisodeOfCare": {
         validateBundle({
-          schema: episodeOfCareBundle,
+          schema: getBundleSchema(episodeOfCareResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -75,7 +76,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "Observation": {
         validateBundle({
-          schema: observationBundle,
+          schema: getBundleSchema(observationResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -84,7 +85,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "Organization": {
         validateBundle({
-          schema: organizationBundle,
+          schema: getBundleSchema(organizationResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -93,7 +94,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "Patient": {
         validateBundle({
-          schema: patientBundle,
+          schema: getBundleSchema(patientResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -102,7 +103,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "Practitioner": {
         validateBundle({
-          schema: practitionerBundle,
+          schema: getBundleSchema(practitionerResourceSchema),
           resources: rawData,
           resourceType: url,
         });
@@ -111,7 +112,7 @@ export async function getResources<T extends Resource>(url: string) {
 
       case "PractitionerRole": {
         validateBundle({
-          schema: practitionerRoleBundle,
+          schema: getBundleSchema(practitionerRoleResourceSchema),
           resources: rawData,
           resourceType: url,
         });

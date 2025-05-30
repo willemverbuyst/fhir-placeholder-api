@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const patientResource = z.object({
+export const patientResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("Patient"),
   name: z.array(z.object({ family: z.string(), given: z.array(z.string()) })),
@@ -37,16 +37,4 @@ const patientResource = z.object({
       preferred: z.boolean(),
     }),
   ),
-});
-
-const patientBundleEntry = z.object({
-  fullUrl: z.string(),
-  resource: patientResource,
-});
-
-export const patientBundle = z.object({
-  resourceType: z.literal("Bundle"),
-  type: z.literal("searchset"),
-  total: z.number(),
-  entry: z.array(patientBundleEntry),
 });

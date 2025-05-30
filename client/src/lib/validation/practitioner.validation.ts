@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const practitionerResource = z.object({
+export const practitionerResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("Practitioner"),
   name: z.array(z.object({ family: z.string(), given: z.array(z.string()) })),
@@ -21,16 +21,4 @@ const practitionerResource = z.object({
       country: z.string(),
     }),
   ),
-});
-
-const practitionerBundleEntry = z.object({
-  fullUrl: z.string(),
-  resource: practitionerResource,
-});
-
-export const practitionerBundle = z.object({
-  resourceType: z.literal("Bundle"),
-  type: z.literal("searchset"),
-  total: z.number(),
-  entry: z.array(practitionerBundleEntry),
 });

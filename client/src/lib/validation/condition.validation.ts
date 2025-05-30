@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const conditionResource = z.object({
+export const conditionResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("Condition"),
   note: z.array(z.object({ text: z.string() })),
@@ -23,16 +23,4 @@ const conditionResource = z.object({
       }),
     ),
   }),
-});
-
-const conditionBundleEntry = z.object({
-  fullUrl: z.string(),
-  resource: conditionResource,
-});
-
-export const conditionBundle = z.object({
-  resourceType: z.literal("Bundle"),
-  type: z.literal("searchset"),
-  total: z.number(),
-  entry: z.array(conditionBundleEntry),
 });

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const observationResource = z.object({
+export const observationResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("Observation"),
   status: z.enum([
@@ -25,16 +25,4 @@ const observationResource = z.object({
   encounter: z.object({ reference: z.string() }),
   subject: z.object({ reference: z.string() }),
   note: z.array(z.object({ text: z.string() })),
-});
-
-const observationBundleEntry = z.object({
-  fullUrl: z.string(),
-  resource: observationResource,
-});
-
-export const observationBundle = z.object({
-  resourceType: z.literal("Bundle"),
-  type: z.literal("searchset"),
-  total: z.number(),
-  entry: z.array(observationBundleEntry),
 });

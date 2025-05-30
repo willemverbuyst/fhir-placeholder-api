@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const appointmentResource = z.object({
+export const appointmentResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("Appointment"),
   status: z.enum([
@@ -22,16 +22,4 @@ const appointmentResource = z.object({
       status: z.enum(["accepted", "declined", "tentative", "needs-action"]),
     }),
   ),
-});
-
-const appointmentBundleEntry = z.object({
-  fullUrl: z.string(),
-  resource: appointmentResource,
-});
-
-export const appointmentBundle = z.object({
-  resourceType: z.literal("Bundle"),
-  type: z.literal("searchset"),
-  total: z.number(),
-  entry: z.array(appointmentBundleEntry),
 });

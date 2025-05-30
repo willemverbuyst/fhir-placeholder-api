@@ -44,13 +44,9 @@ const patientBundleEntry = z.object({
   resource: patientResource,
 });
 
-const patientBundle = z.object({
+export const patientBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(patientBundleEntry),
 });
-
-export function validatePatientBundle(resources: unknown) {
-  return patientBundle.parse(resources);
-}

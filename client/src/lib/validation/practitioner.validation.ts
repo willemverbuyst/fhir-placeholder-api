@@ -28,13 +28,9 @@ const practitionerBundleEntry = z.object({
   resource: practitionerResource,
 });
 
-const practitionerBundle = z.object({
+export const practitionerBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(practitionerBundleEntry),
 });
-
-export function validatePractitionerBundle(resources: unknown) {
-  return practitionerBundle.parse(resources);
-}

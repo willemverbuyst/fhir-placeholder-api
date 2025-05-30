@@ -29,13 +29,9 @@ const appointmentBundleEntry = z.object({
   resource: appointmentResource,
 });
 
-const appointmentBundle = z.object({
+export const appointmentBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(appointmentBundleEntry),
 });
-
-export function validateAppointmentBundle(resources: unknown) {
-  return appointmentBundle.parse(resources);
-}

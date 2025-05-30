@@ -23,13 +23,9 @@ const encounterBundleEntry = z.object({
   resource: encounterResource,
 });
 
-const encounterBundle = z.object({
+export const encounterBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(encounterBundleEntry),
 });
-
-export function validateEncounterBundle(resources: unknown) {
-  return encounterBundle.parse(resources);
-}

@@ -30,13 +30,9 @@ const conditionBundleEntry = z.object({
   resource: conditionResource,
 });
 
-const conditionBundle = z.object({
+export const conditionBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(conditionBundleEntry),
 });
-
-export function validateConditionBundle(resources: unknown) {
-  return conditionBundle.parse(resources);
-}

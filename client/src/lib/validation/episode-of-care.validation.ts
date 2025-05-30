@@ -40,13 +40,9 @@ const episodeOfCareBundleEntry = z.object({
   resource: episodeOfCareResource,
 });
 
-const episodeOfCareBundle = z.object({
+export const episodeOfCareBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(episodeOfCareBundleEntry),
 });
-
-export function validateEpisodeOfCareBundle(resources: unknown) {
-  return episodeOfCareBundle.parse(resources);
-}

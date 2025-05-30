@@ -32,13 +32,9 @@ const observationBundleEntry = z.object({
   resource: observationResource,
 });
 
-const observationBundle = z.object({
+export const observationBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(observationBundleEntry),
 });
-
-export function validateObservationBundle(resources: unknown) {
-  return observationBundle.parse(resources);
-}

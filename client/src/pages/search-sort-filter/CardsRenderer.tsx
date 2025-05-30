@@ -16,12 +16,12 @@ export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
   const { resourceType, cardRows } = props.item;
-  const { isPending, error, data } = useQuery(
+  const { isPending, isError, error, data } = useQuery(
     createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
   );
 
   if (isPending) return <LoadingSpinner />;
-  if (error) return <p>...error</p>;
+  if (isError) return <p>{error?.message}</p>;
   if (!data) return <p>...no data</p>;
 
   const mappedResources = getMappedResources<T>(data, cardRows);

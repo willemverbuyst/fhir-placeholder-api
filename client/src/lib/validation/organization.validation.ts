@@ -12,13 +12,9 @@ const organizationBundleEntry = z.object({
   resource: organizationResource,
 });
 
-const organizationBundle = z.object({
+export const organizationBundle = z.object({
   resourceType: z.literal("Bundle"),
   type: z.literal("searchset"),
   total: z.number(),
   entry: z.array(organizationBundleEntry),
 });
-
-export function validateOrganizationBundle(resources: unknown) {
-  return organizationBundle.parse(resources);
-}

@@ -5,7 +5,7 @@ import { PractitionerRoles } from "./practitioner-role.resource";
 export function Organizations() {
   return (
     <ResourcesRenderer<Organization>
-      url={"Organization"}
+      resourceType="Organization"
       renderItem={(resource) => (
         <PractitionerRoles organizationId={resource.id} />
       )}

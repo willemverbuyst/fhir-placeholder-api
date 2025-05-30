@@ -1,6 +1,8 @@
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
-import { getResourcesFromBundle, isBundle } from "../lib/fhir";
+import { FHIR_RESOURCES } from "../config/fhirResources";
+import { getResourcesFromBundle, isBundle, isResource } from "../lib/fhir";
+import { getMappedResources } from "../lib/mappedResources";
 import { appointmentResourceSchema } from "../lib/validation/appointment.validation";
 import { getBundleSchema } from "../lib/validation/bundle.validation";
 import { conditionResourceSchema } from "../lib/validation/condition.validation";
@@ -12,15 +14,19 @@ import { patientResourceSchema } from "../lib/validation/patient.validation";
 import { practitionerRoleResourceSchema } from "../lib/validation/practitioner-role.validation";
 import { practitionerResourceSchema } from "../lib/validation/practitioner.validation";
 import { validateBundle } from "../lib/validation/validateBundle";
+import { validateResource } from "../lib/validation/validateResource";
 
 export function createResourcesQueryOptions<T extends Resource>({
-  url,
+  resourceType,
+  searchParams,
 }: {
-  url: string;
+  resourceType: string;
+  searchParams?: string;
 }) {
+  const url = searchParams ? resourceType + searchParams : resourceType;
   return queryOptions({
     queryKey: [url],
-    queryFn: () => getResources<T>(url),
+    queryFn: () => getResources<T>(url, resourceType),
     staleTime: 1000 * 60, // 1 minute
   });
 }
@@ -33,18 +39,25 @@ export async function fetchResources<T extends Resource>(
   return await response.json();
 }
 
-export async function getResources<T extends Resource>(url: string) {
+export async function getResources<T extends Resource>(
+  url: string,
+  resourceType: string,
+) {
   const rawData = await fetchResources<T>(url);
 
   if (isBundle(rawData)) {
-    switch (url) {
+    switch (resourceType) {
       case "Appointment": {
         validateBundle({
           schema: getBundleSchema(appointmentResourceSchema),
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Appointment.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "Condition": {
@@ -53,7 +66,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Condition.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "Encounter": {
@@ -62,7 +79,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Encounter.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "EpisodeOfCare": {
@@ -71,7 +92,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.EpisodeOfCare.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "Observation": {
@@ -80,7 +105,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Observation.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "Organization": {
@@ -89,7 +118,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Organization.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "Patient": {
@@ -98,7 +131,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Patient.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "Practitioner": {
@@ -107,7 +144,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.Practitioner.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       case "PractitionerRole": {
@@ -116,7 +157,11 @@ export async function getResources<T extends Resource>(url: string) {
           resources: rawData,
           resourceType: url,
         });
-        return getResourcesFromBundle(rawData);
+        const resources = getResourcesFromBundle(rawData);
+        const cardRows = FHIR_RESOURCES.PractitionerRole.cardRows;
+        const mappedResources = getMappedResources<T>(resources, cardRows);
+
+        return mappedResources;
       }
 
       default:
@@ -124,5 +169,18 @@ export async function getResources<T extends Resource>(url: string) {
     }
   }
 
-  return [rawData];
+  if (isResource(rawData)) {
+    // handle CapabilityStatement
+    validateResource({
+      schema: practitionerResourceSchema,
+      resource: rawData,
+      resourceType: "Practitioner",
+    });
+
+    const cardRows = FHIR_RESOURCES.Practitioner.cardRows;
+    const mappedResources = getMappedResources<T>([rawData], cardRows);
+    return mappedResources;
+  }
+
+  throw new Error("Failed to process request");
 }

@@ -7,7 +7,8 @@ export function Conditions({ patientId }: { patientId: string | undefined }) {
 
   return (
     <ResourcesRenderer<Condition>
-      url={`Condition?patient=${patientId}`}
+      resourceType="Condition"
+      searchParams={`?patient=${patientId}`}
       renderItem={(resource) => <Episodes conditionId={resource.id} />}
     />
   );

@@ -1,20 +1,20 @@
 import { type ZodSchema, z } from "zod";
 
-export function validateBundle({
+export function validateResource({
   schema,
-  resources,
+  resource,
   resourceType,
 }: {
   schema: ZodSchema;
-  resources: unknown;
+  resource: unknown;
   resourceType: string;
 }) {
   try {
-    return schema.parse(resources);
+    return schema.parse(resource);
   } catch (err) {
     if (err instanceof z.ZodError) {
       console.error("Validation details:", err.flatten());
-      throw new Error(`Validation failed for ${resourceType} Bundle`);
+      throw new Error(`Validation failed for ${resourceType}`);
     }
   }
 }

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type { JSX } from "react";
+import type { MappedResource } from "../../interfaces/MappedResource";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { ErrorMessage } from "../../ui/ErrorMessage";
 import { LoadingSpinner } from "../../ui/LoadingSpinner";
@@ -8,18 +9,21 @@ import { List } from "./List";
 import { ListItem } from "./ListItem";
 
 export function ResourcesRenderer<T extends Resource>({
-  url,
+  resourceType,
+  searchParams,
   renderItem,
 }: {
-  url: string;
-  renderItem?: (resource: T) => JSX.Element | undefined;
+  resourceType: string;
+  searchParams?: string;
+  renderItem?: (resource: MappedResource<T>) => JSX.Element | undefined;
 }) {
   const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<T>({ url }),
+    createResourcesQueryOptions<T>({ resourceType, searchParams }),
   );
 
   if (isPending) return <LoadingSpinner />;
   if (error) return <ErrorMessage error={error} />;
+  if (!data) return <p>...no data</p>;
 
   return (
     <List>

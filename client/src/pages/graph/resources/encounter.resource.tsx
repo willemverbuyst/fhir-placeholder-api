@@ -7,7 +7,8 @@ export function Encounters({ episodeId }: { episodeId: string | undefined }) {
 
   return (
     <ResourcesRenderer<Encounter>
-      url={`Encounter?episode-of-care=${episodeId}`}
+      resourceType="Encounter"
+      searchParams={`?episode-of-care=${episodeId}`}
       renderItem={(resource) => <Observations encounterId={resource.id} />}
     />
   );

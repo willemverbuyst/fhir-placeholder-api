@@ -5,6 +5,9 @@ export function Appointments({ patientId }: { patientId: string | undefined }) {
   if (!patientId) return null;
 
   return (
-    <ResourcesRenderer<Appointment> url={`Appointment?patient=${patientId}`} />
+    <ResourcesRenderer<Appointment>
+      resourceType="Appointment"
+      searchParams={`?patient=${patientId}`}
+    />
   );
 }

@@ -11,7 +11,8 @@ export function PractitionerResource({
 
   return (
     <ResourcesRenderer<Practitioner>
-      url={`Practitioner/${practitionerId}`}
+      resourceType="Practitioner"
+      searchParams={`/${practitionerId}`}
       renderItem={(resource) => <Patients practitionerId={resource.id} />}
     />
   );

@@ -11,11 +11,10 @@ export function PractitionerRoles({
 
   return (
     <ResourcesRenderer<PractitionerRole>
-      url={`PractitionerRole?organization=${organizationId}`}
+      resourceType="PractitionerRole"
+      searchParams={`?organization=${organizationId}`}
       renderItem={(resource) => (
-        <PractitionerResource
-          practitionerId={resource.practitioner?.reference?.split("/")[1]}
-        />
+        <PractitionerResource practitionerId={resource.practitioner} />
       )}
     />
   );

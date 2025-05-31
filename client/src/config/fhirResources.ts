@@ -22,11 +22,6 @@ export type CardRows<T> = {
   };
 };
 
-export type ConfigItem<T extends Resource> = {
-  resourceType: T["resourceType"];
-  cardRows: CardRows<T>;
-};
-
 type AppFhirResource =
   | Appointment
   | Condition
@@ -51,6 +46,11 @@ export const APP_RESOURCE_TYPES: AppFhirResource["resourceType"][] = [
 ] as const;
 
 export type AppResourceType = (typeof APP_RESOURCE_TYPES)[number];
+
+export type ConfigItem<T extends Resource> = {
+  resourceType: AppResourceType;
+  cardRows: CardRows<T>;
+};
 
 export type ConfigItems = {
   [K in AppResourceType]: ConfigItem<

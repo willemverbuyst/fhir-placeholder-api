@@ -47,6 +47,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.6
         version: 4.1.8
+      zod:
+        specifier: ^3.25.36
+        version: 3.25.36
     devDependencies:
       '@testing-library/jest-dom':
         specifier: ^6.6.3
@@ -4003,6 +4006,9 @@ packages:
 
   zod@3.24.4:
     resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
+
+  zod@3.25.36:
+    resolution: {integrity: sha512-eRFS3i8T0IrpGdL8HQyqFAugGOn7jOjyGgGdtv5NY4Wkhi7lJDk732bNZ609YMIGFbLoaj6J69O1Mura23gfIw==}
 
 snapshots:
 
@@ -8046,3 +8052,5 @@ snapshots:
       zod: 3.24.4
 
   zod@3.24.4: {}
+
+  zod@3.25.36: {}

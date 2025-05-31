@@ -12,7 +12,8 @@ export function Patients({
 
   return (
     <ResourcesRenderer<Patient>
-      url={`Patient?general-practitioner=${practitionerId}`}
+      resourceType="Patient"
+      searchParams={`?general-practitioner=${practitionerId}`}
       renderItem={(resource) => (
         <section className="flex flex-col gap-3">
           <Conditions patientId={resource.id} />

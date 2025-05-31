@@ -4,7 +4,6 @@ import type React from "react";
 import type { ConfigItem } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { getFilterKeys } from "../../lib/filter";
-import { getMappedResources } from "../../lib/mappedResources";
 import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
@@ -16,22 +15,20 @@ export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
 }): React.JSX.Element | null {
   const { resourceType, cardRows } = props.item;
-  const { isPending, error, data } = useQuery(
-    createResourcesQueryOptions<T & { id: string }>({ url: resourceType }),
+  const { isPending, isError, error, data } = useQuery(
+    createResourcesQueryOptions<T & { id: string }>({ resourceType }),
   );
 
   if (isPending) return <LoadingSpinner />;
-  if (error) return <p>...error</p>;
-  if (!Array.isArray(data)) return <p>...no data</p>;
-
-  const mappedResources = getMappedResources<T>(data, cardRows);
+  if (isError) return <p>{error?.message}</p>;
+  if (!data) return <p>...no data</p>;
 
   if (data.length) {
     return (
       <SearchSortFilter<MappedResource<T>>
-        dataSource={mappedResources}
+        dataSource={data}
         searchProperties={getSearchProperties<T>(cardRows)}
-        filterKeys={getFilterKeys<T>(cardRows, mappedResources)}
+        filterKeys={getFilterKeys<T>(cardRows, data)}
         sortKeys={getSortKeys<T>(cardRows)}
         initialSortProperty={getInitialSortProperty<T>(cardRows)}
       >

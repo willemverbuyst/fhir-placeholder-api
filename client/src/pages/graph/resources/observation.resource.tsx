@@ -10,7 +10,8 @@ export function Observations({
 
   return (
     <ResourcesRenderer<Observation>
-      url={`Observation?encounter=${encounterId}`}
+      resourceType="Observation"
+      searchParams={`?encounter=${encounterId}`}
     />
   );
 }

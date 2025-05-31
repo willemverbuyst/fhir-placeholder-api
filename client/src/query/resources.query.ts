@@ -170,16 +170,22 @@ export async function getResources<T extends Resource>(
   }
 
   if (isResource(rawData)) {
-    // handle CapabilityStatement
-    validateResource({
-      schema: practitionerResourceSchema,
-      resource: rawData,
-      resourceType: "Practitioner",
-    });
+    switch (resourceType) {
+      case "Practitioner": {
+        validateResource({
+          schema: practitionerResourceSchema,
+          resource: rawData,
+          resourceType: "Practitioner",
+        });
 
-    const cardRows = FHIR_RESOURCES.Practitioner.cardRows;
-    const mappedResources = getMappedResources<T>([rawData], cardRows);
-    return mappedResources;
+        const cardRows = FHIR_RESOURCES.Practitioner.cardRows;
+        const mappedResources = getMappedResources<T>([rawData], cardRows);
+        return mappedResources;
+      }
+
+      default:
+        break;
+    }
   }
 
   throw new Error("Failed to process request");

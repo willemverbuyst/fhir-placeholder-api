@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type { JSX } from "react";
+import type { AppResourceType } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { createResourcesQueryOptions } from "../../query/resources.query";
 import { ErrorMessage } from "../../ui/ErrorMessage";
@@ -13,7 +14,7 @@ export function ResourcesRenderer<T extends Resource>({
   searchParams,
   renderItem,
 }: {
-  resourceType: string;
+  resourceType: AppResourceType;
   searchParams?: string;
   renderItem?: (resource: MappedResource<T>) => JSX.Element | undefined;
 }) {

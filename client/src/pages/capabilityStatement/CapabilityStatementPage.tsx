@@ -1,12 +1,15 @@
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { createMetadataQueryOptions } from "../../query/metadata.query";
 
 export function CapabilityStatementPage() {
-  const { isPending, error, data } = useQuery(createMetadataQueryOptions());
+  const { isPending, isError, error, data } = useQuery(
+    createMetadataQueryOptions(),
+  );
 
   if (isPending) return <p>...loading</p>;
-  if (error) return <p>...error</p>;
+  if (isError) return <ErrorMessage error={error} />;
   if (!data) return <p>...no data</p>;
 
   return (

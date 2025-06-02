@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
@@ -20,7 +21,7 @@ export function CardsRenderer<T extends Resource>(props: {
   );
 
   if (isPending) return <LoadingSpinner />;
-  if (isError) return <p>{error?.message}</p>;
+  if (isError) return <ErrorMessage error={error} />;
   if (!data) return <p>...no data</p>;
 
   if (data.length) {

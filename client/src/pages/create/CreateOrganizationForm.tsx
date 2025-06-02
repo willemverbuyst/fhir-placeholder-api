@@ -5,8 +5,8 @@ import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
-import { LoadingSpinner } from "../../ui/LoadingSpinner";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (

@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type { JSX } from "react";
 import { ErrorMessage } from "../../components/ErrorMessage";
+import { LoadingSpinner } from "../../components/LoadingSpinner";
 import type { AppResourceType } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { createResourcesQueryOptions } from "../../query/resources.query";
-import { LoadingSpinner } from "../../ui/LoadingSpinner";
 import { List } from "./List";
 import { ListItem } from "./ListItem";
 

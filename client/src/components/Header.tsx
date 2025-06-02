@@ -76,7 +76,7 @@ export function Header() {
             </NavigationMenuItem>
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <NavLink to="/crate">Create</NavLink>
+                <NavLink to="/create">Create</NavLink>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>

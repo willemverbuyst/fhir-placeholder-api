@@ -62,7 +62,7 @@ export default function CreateOrganizationForm() {
             e.stopPropagation();
             form.handleSubmit();
           }}
-          className="flex flex-col gap-4 w-full max-w-md"
+          className="flex flex-col gap-4"
         >
           <form.Field
             name="name"

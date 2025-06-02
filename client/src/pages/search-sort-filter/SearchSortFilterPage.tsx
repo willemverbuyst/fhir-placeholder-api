@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import type {
   Appointment,
   Condition,
@@ -11,7 +12,6 @@ import type {
 } from "fhir/r5";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
-import { SelectResourceButton } from "../../components/SelectResourceButton";
 import { APP_RESOURCE_TYPES, FHIR_RESOURCES } from "../../config/fhirResources";
 import { hasKey } from "../../lib/utils";
 import { CardsRenderer } from "./CardsRenderer";
@@ -50,7 +50,16 @@ export function SearchSortFilterPage() {
     <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         {APP_RESOURCE_TYPES.map((k) => (
-          <SelectResourceButton key={k} caption={k} />
+          <Button
+            key={k}
+            type="button"
+            onClick={() => {
+              setSearchParams({ resource: k });
+            }}
+            variant="ghost"
+          >
+            {k}
+          </Button>
         ))}
       </div>
 

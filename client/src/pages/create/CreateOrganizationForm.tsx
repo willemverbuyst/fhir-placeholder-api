@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -10,7 +12,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
     <section className="flex flex-col gap-1">
       {field.state.meta.isTouched && !field.state.meta.isValid ? (
-        <em className="text-pink-500">{field.state.meta.errors.join(",")}</em>
+        <em className="text-red-500">{field.state.meta.errors.join(",")}</em>
       ) : null}
       {field.state.meta.isValidating ? "Validating..." : null}
     </section>
@@ -49,71 +51,73 @@ export default function CreateOrganizationForm() {
   if (error) return <p>...error</p>;
 
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-10">
-      <h2 className="uppercase text-xl text-center">Create New Organization</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          form.handleSubmit();
-        }}
-        className="flex flex-col gap-4 w-full max-w-md"
-      >
-        <form.Field
-          name="name"
-          validators={{
-            onChange: ({ value }) =>
-              !value
-                ? "An organization name is required"
-                : value.length < 3
-                  ? "Name must be at least 3 characters"
-                  : undefined,
-            onChangeAsyncDebounceMs: 500,
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Create New Organization</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            form.handleSubmit();
           }}
-          // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
-          children={(field) => {
-            return (
-              <section className="flex flex-col gap-2">
-                <label htmlFor={field.name} className="text-xl">
-                  Organization Name:
-                </label>
-                <input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  className="rounded-md border-2 border-pink-500 bg-white backdrop-blur-md p-2 font-bold text-sky-900 w-full h-[40px] outline-pink-500 focus:outline caret-pink-500"
-                />
-                <FieldInfo field={field} />
-              </section>
-            );
-          }}
-        />
+          className="flex flex-col gap-4 w-full max-w-md"
+        >
+          <form.Field
+            name="name"
+            validators={{
+              onChange: ({ value }) =>
+                !value
+                  ? "An organization name is required"
+                  : value.length < 3
+                    ? "Name must be at least 3 characters"
+                    : undefined,
+              onChangeAsyncDebounceMs: 500,
+            }}
+            // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
+            children={(field) => {
+              return (
+                <section className="flex flex-col gap-2">
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    type="text"
+                    placeholder="name"
+                  />
+                  <FieldInfo field={field} />
+                </section>
+              );
+            }}
+          />
 
-        <form.Subscribe
-          selector={(state) => [state.canSubmit, state.isSubmitting]}
-          // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
-          children={([canSubmit, isSubmitting]) => (
-            <section className="flex gap-4 justify-end">
-              <Button
-                type="reset"
-                onClick={() => form.reset()}
-                variant="outline"
-              >
-                Reset
-              </Button>
-              <Button type="submit" disabled={!canSubmit}>
-                {isSubmitting ? (
-                  <Loader2Icon className="animate-spin" />
-                ) : (
-                  "Submit"
-                )}
-              </Button>
-            </section>
-          )}
-        />
-      </form>
-    </section>
+          <form.Subscribe
+            selector={(state) => [state.canSubmit, state.isSubmitting]}
+            // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
+            children={([canSubmit, isSubmitting]) => (
+              <section className="flex gap-4 justify-end">
+                <Button
+                  type="reset"
+                  onClick={() => form.reset()}
+                  variant="outline"
+                >
+                  Reset
+                </Button>
+                <Button type="submit" disabled={!canSubmit}>
+                  {isSubmitting ? (
+                    <Loader2Icon className="animate-spin" />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              </section>
+            )}
+          />
+        </form>
+      </CardContent>
+    </Card>
   );
 }

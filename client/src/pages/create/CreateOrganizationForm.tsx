@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader2Icon } from "lucide-react";
 import { postData } from "../../query/resources.post";
 import { LoadingSpinner } from "../../ui/LoadingSpinner";
 
@@ -93,21 +95,21 @@ export default function CreateOrganizationForm() {
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
           children={([canSubmit, isSubmitting]) => (
-            <section className="flex gap-4">
-              <button
+            <section className="flex gap-4 justify-end">
+              <Button
                 type="reset"
                 onClick={() => form.reset()}
-                className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-sky-900 hover:bg-sky-700"
+                variant="outline"
               >
                 Reset
-              </button>
-              <button
-                type="submit"
-                disabled={!canSubmit}
-                className="py-2 px-4 rounded-md text-white w-[350px] sm:w-[300px] text-center cursor-pointer font-bold transition-colors bg-pink-500 hover:bg-pink-600"
-              >
-                {isSubmitting ? "..." : "Submit"}
-              </button>
+              </Button>
+              <Button type="submit" disabled={!canSubmit}>
+                {isSubmitting ? (
+                  <Loader2Icon className="animate-spin" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
             </section>
           )}
         />

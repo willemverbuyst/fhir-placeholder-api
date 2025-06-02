@@ -51,7 +51,7 @@ export default function CreateOrganizationForm() {
   if (error) return <p>...error</p>;
 
   return (
-    <Card className="w-[350px] sm:w-[600px] lg:w-[900px]">
+    <Card>
       <CardHeader>
         <CardTitle>Create New Organization</CardTitle>
       </CardHeader>

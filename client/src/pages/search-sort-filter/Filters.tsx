@@ -1,8 +1,9 @@
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import type { Resource } from "fhir/r5";
 import type React from "react";
 import type { Filter } from "../../interfaces/Filter";
 import type { MappedResource } from "../../interfaces/MappedResource";
-import { Checkbox } from "../../ui/Checkbox";
 
 interface Props<T extends MappedResource<Resource>> {
   filterKeys: Record<keyof T, Set<string>>;
@@ -49,27 +50,28 @@ export function Filters<T extends MappedResource<Resource>>(
   return (
     <section className="grid sm:grid-cols-2 gap-6 items-start w-[350px] sm:w-[600px] lg:w-[900px]">
       {Object.entries(filterKeys).map(([key, v]) => (
-        <div key={key} className="flex flex-col gap-2 items-start w-full">
-          <h3 className="text-xl">{key}</h3>
-          <section>
+        <div key={key} className="flex flex-col gap-4 items-start w-full">
+          <Label>{key}</Label>
+          <section className="flex flex-col gap-2">
             {Array.from(v)
               .sort()
               .map((filter) => (
-                <Checkbox
-                  key={filter}
-                  id={filter}
-                  label={filter}
-                  checked={filterProperties.some(
-                    ({ property, value }) =>
-                      property === key && filter === value,
-                  )}
-                  onChange={() => {
-                    onChangeFilter({
-                      property: key as keyof T,
-                      value: filter,
-                    });
-                  }}
-                />
+                <div key={filter} className="flex items-center gap-3">
+                  <Checkbox
+                    id={filter}
+                    checked={filterProperties.some(
+                      ({ property, value }) =>
+                        property === key && filter === value,
+                    )}
+                    onCheckedChange={() =>
+                      onChangeFilter({
+                        property: key as keyof T,
+                        value: filter,
+                      })
+                    }
+                  />
+                  <Label htmlFor={filter}>{filter}</Label>
+                </div>
               ))}
           </section>
         </div>

@@ -2,11 +2,12 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
 import type { Sorter } from "../../interfaces/Sorter";
 
 interface Props<T> {
@@ -39,10 +40,11 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
           {sortKeys
             .map((k) => String(k))
             .map((key) => (
-              <React.Fragment key={key}>
+              <SelectGroup key={key}>
+                <SelectLabel>{key}</SelectLabel>
                 <SelectItem value={`${key}-asc`}>{key} asc</SelectItem>
                 <SelectItem value={`${key}-desc`}>{key} desc</SelectItem>
-              </React.Fragment>
+              </SelectGroup>
             ))}
         </SelectContent>
       </Select>

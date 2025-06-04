@@ -18,7 +18,10 @@ export function CapabilityStatementPage() {
       {data?.rest?.map((i) => {
         if (i.mode === "server") {
           return (
-            <section key={i.mode} className="grid grid-cols-1 gap-2">
+            <section
+              key={i.mode}
+              className="grid grid-cols-1 2xl:grid-cols-2 gap-2"
+            >
               {i.resource?.map((r) => (
                 <Card key={r.type}>
                   <CardHeader>

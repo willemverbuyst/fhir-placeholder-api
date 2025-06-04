@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { APP_RESOURCE_TYPES } from "../../config/fhirResources";
-import { hasKey } from "../../lib/utils";
+import { cn, hasKey } from "../../lib/utils";
 import { CreateOrganization } from "./CreateOrganization";
 
 const ItemMap = {
@@ -28,8 +28,8 @@ export function CreatePage() {
   }, [resource, setSearchParams]);
 
   return (
-    <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
-      <div className="flex">
+    <div className="w-full min-h-[100vh] flex flex-col items-center gap-6">
+      <div className="flex gap-2">
         {APP_RESOURCE_TYPES.map((k) => (
           <Button
             key={k}
@@ -38,6 +38,9 @@ export function CreatePage() {
               setSearchParams({ resource: k });
             }}
             variant="ghost"
+            className={cn(
+              resource === k && " rounded-none border-b-2 border-primary",
+            )}
           >
             {k}
           </Button>

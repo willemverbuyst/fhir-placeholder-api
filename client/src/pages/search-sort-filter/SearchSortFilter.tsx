@@ -48,30 +48,28 @@ export function SearchSortFilter<T extends MappedResource<Resource>>(
     searchSortAndFilterState;
 
   return (
-    <section className="flex flex-col gap-6 items-center">
-      <section className="flex flex-col gap-6 items-center">
-        <section className="flex gap-2 w-[800px]">
-          <SearchInput
-            searchQuery={""}
-            setSearchQuery={useCallback(
-              (searchQuery) =>
-                setSearchSortAndFilterState((prev) => ({
-                  ...prev,
-                  searchQuery,
-                })),
-              [],
-            )}
-          />
-          <Sorters<T>
-            sortKeys={sortKeys}
-            setSortProperty={(sortProperty): void => {
-              setSearchSortAndFilterState({
-                ...searchSortAndFilterState,
-                sortProperty,
-              });
-            }}
-          />
-        </section>
+    <section className="flex flex-col gap-6 items-center pb-10">
+      <section className="flex gap-2 w-[800px]">
+        <SearchInput
+          searchQuery={""}
+          setSearchQuery={useCallback(
+            (searchQuery) =>
+              setSearchSortAndFilterState((prev) => ({
+                ...prev,
+                searchQuery,
+              })),
+            [],
+          )}
+        />
+        <Sorters<T>
+          sortKeys={sortKeys}
+          setSortProperty={(sortProperty): void => {
+            setSearchSortAndFilterState({
+              ...searchSortAndFilterState,
+              sortProperty,
+            });
+          }}
+        />
         <Filters<T>
           filterKeys={filterKeys}
           filterProperties={filterProperties}

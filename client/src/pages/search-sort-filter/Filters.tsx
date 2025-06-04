@@ -1,9 +1,18 @@
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import type { Resource } from "fhir/r5";
-import type React from "react";
+import React from "react";
 import type { Filter } from "../../interfaces/Filter";
 import type { MappedResource } from "../../interfaces/MappedResource";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Props<T extends MappedResource<Resource>> {
   filterKeys: Record<keyof T, Set<string>>;
@@ -48,17 +57,28 @@ export function Filters<T extends MappedResource<Resource>>(
   }
 
   return (
-    <section className="grid sm:grid-cols-2 gap-6 items-start w-[350px] sm:w-[600px] lg:w-[900px]">
-      {Object.entries(filterKeys).map(([key, v]) => (
-        <div key={key} className="flex flex-col gap-4 items-start w-full">
-          <Label>{key}</Label>
-          <section className="flex flex-col gap-2">
-            {Array.from(v)
-              .sort()
-              .map((filter) => (
-                <div key={filter} className="flex items-center gap-3">
-                  <Checkbox
-                    id={filter}
+    <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px] lg:w-[900px]">
+      <Label>Filter</Label>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="w-full flex justify-baseline">
+          <Button
+            variant="outline"
+            className="text-muted-foreground font-light"
+          >
+            filter by
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          {Object.entries(filterKeys).map(([key, v]) => (
+            <React.Fragment key={key}>
+              <DropdownMenuLabel>{key}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+
+              {Array.from(v)
+                .sort()
+                .map((filter) => (
+                  <DropdownMenuCheckboxItem
+                    key={filter}
                     checked={filterProperties.some(
                       ({ property, value }) =>
                         property === key && filter === value,
@@ -69,13 +89,15 @@ export function Filters<T extends MappedResource<Resource>>(
                         value: filter,
                       })
                     }
-                  />
-                  <Label htmlFor={filter}>{filter}</Label>
-                </div>
-              ))}
-          </section>
-        </div>
-      ))}
+                  >
+                    {filter}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              <DropdownMenuSeparator />
+            </React.Fragment>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </section>
   );
 }

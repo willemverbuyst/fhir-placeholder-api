@@ -13,7 +13,7 @@ import type {
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { APP_RESOURCE_TYPES, FHIR_RESOURCES } from "../../config/fhirResources";
-import { hasKey } from "../../lib/utils";
+import { cn, hasKey } from "../../lib/utils";
 import { CardsRenderer } from "./CardsRenderer";
 
 const ItemMap = {
@@ -47,8 +47,8 @@ export function SearchSortFilterPage() {
   }, [resource, setSearchParams]);
 
   return (
-    <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">
-      <div className="flex">
+    <div className="w-full min-h-[100vh] flex flex-col items-center gap-6">
+      <div className="flex gap-2">
         {APP_RESOURCE_TYPES.map((k) => (
           <Button
             key={k}
@@ -57,6 +57,9 @@ export function SearchSortFilterPage() {
               setSearchParams({ resource: k });
             }}
             variant="ghost"
+            className={cn(
+              resource === k && " rounded-none border-b-2 border-primary",
+            )}
           >
             {k}
           </Button>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
 import { cn } from "../lib/utils";
+import { LightDarkModeToggle } from "./LightDarkModeToggle";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -82,6 +83,7 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
       </section>
+      <LightDarkModeToggle />
     </header>
   );
 }

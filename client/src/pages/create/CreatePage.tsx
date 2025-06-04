@@ -1,3 +1,4 @@
+import { InfoMessage } from "@/components/message/InfoMessage";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router";
@@ -6,15 +7,15 @@ import { cn, hasKey } from "../../lib/utils";
 import { CreateOrganization } from "./CreateOrganization";
 
 const ItemMap = {
-  Appointment: <p>Not implemented yet</p>,
-  Condition: <p>Not implemented yet</p>,
-  EpisodeOfCare: <p>Not implemented yet</p>,
+  Appointment: <InfoMessage message="not implemented yet" />,
+  Condition: <InfoMessage message="not implemented yet" />,
+  EpisodeOfCare: <InfoMessage message="not implemented yet" />,
   Organization: <CreateOrganization />,
-  PractitionerRole: <p>Not implemented yet</p>,
-  Practitioner: <p>Not implemented yet</p>,
-  Patient: <p>Not implemented yet</p>,
-  Encounter: <p>Not implemented yet</p>,
-  Observation: <p>Not implemented yet</p>,
+  PractitionerRole: <InfoMessage message="not implemented yet" />,
+  Practitioner: <InfoMessage message="not implemented yet" />,
+  Patient: <InfoMessage message="not implemented yet" />,
+  Encounter: <InfoMessage message="not implemented yet" />,
+  Observation: <InfoMessage message="not implemented yet" />,
 };
 
 export function CreatePage() {

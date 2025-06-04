@@ -56,7 +56,7 @@ export function Navigation() {
           </NavigationMenu>
         </section>
       </div>
-      <section className="md:flex hidden items-center justify-end">
+      <section className="md:flex hidden items-center">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>

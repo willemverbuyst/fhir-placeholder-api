@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { Header } from "./components/Header";
+import { Header } from "./components/header/Header";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
 import { CreatePage } from "./pages/create/CreatePage";
 import { Graph } from "./pages/graph/Graph";
@@ -7,7 +7,7 @@ import { SearchSortFilterPage } from "./pages/search-sort-filter/SearchSortFilte
 
 function App() {
   return (
-    <div className="bg-slate-800 text-white w-full min-h-screen flex flex-col items-center gap-10">
+    <div className="w-full min-h-screen flex flex-col items-center gap-10">
       <Header />
       <main>
         <Routes>

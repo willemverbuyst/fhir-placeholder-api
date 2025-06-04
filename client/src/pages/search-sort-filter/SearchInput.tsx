@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
@@ -18,11 +20,8 @@ export function SearchInput(props: Props): React.JSX.Element {
 
   return (
     <section className="flex flex-col gap-2 items-start w-[350px] sm:w-[600px] lg:w-[900px]">
-      <label htmlFor="sorter" className="text-xl">
-        search
-      </label>
-      <input
-        className="rounded-md border-2 border-pink-500 bg-white backdrop-blur-md p-2 font-bold text-sky-900 w-full h-[40px] outline-pink-500 focus:outline caret-pink-500"
+      <Label htmlFor="search">search</Label>
+      <Input
         value={query}
         id="search"
         placeholder="Search..."

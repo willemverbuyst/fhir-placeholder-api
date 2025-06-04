@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../ui/tooltip";
 
 export function LightDarkModeToggle() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -14,6 +14,7 @@ export function LightDarkModeToggle() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger
+          className="ml-auto"
           onClick={() => {
             setIsDarkMode((prev) => !prev);
             document.body.classList.toggle("dark");

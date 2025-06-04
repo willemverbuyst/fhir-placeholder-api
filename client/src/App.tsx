@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { Header } from "./components/Header";
+import { Header } from "./components/header/Header";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
 import { CreatePage } from "./pages/create/CreatePage";
 import { Graph } from "./pages/graph/Graph";

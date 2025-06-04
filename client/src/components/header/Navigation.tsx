@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { NavLink } from "react-router";
-import { cn } from "../lib/utils";
-import { LightDarkModeToggle } from "./LightDarkModeToggle";
+import { cn } from "../../lib/utils";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "./ui/navigation-menu";
+} from "../ui/navigation-menu";
 
-export function Header() {
+export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <header className="w-full z-10 sticky flex items-center top-0 px-4">
-      <h1 className="text-3xl p-2">Fhir Placeholder Api</h1>
+    <>
       <div className="block md:hidden ml-auto my-auto cursor-pointer">
         <button
           type="button"
@@ -57,7 +56,7 @@ export function Header() {
           </NavigationMenu>
         </section>
       </div>
-      <section className="flex-1 md:flex hidden items-center justify-end">
+      <section className="md:flex hidden items-center justify-end">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -83,7 +82,6 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
       </section>
-      <LightDarkModeToggle />
-    </header>
+    </>
   );
 }

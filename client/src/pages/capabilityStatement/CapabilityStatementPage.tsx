@@ -20,7 +20,7 @@ export function CapabilityStatementPage() {
           return (
             <section
               key={i.mode}
-              className="grid grid-cols-1 2xl:grid-cols-2 gap-2"
+              className="grid grid-cols-1 2xl:grid-cols-2 gap-4"
             >
               {i.resource?.map((r) => (
                 <Card key={r.type}>

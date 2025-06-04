@@ -82,7 +82,7 @@ export function SearchSortFilter<T extends MappedResource<Resource>>(
         />
       </section>
 
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
         {children &&
           dataSource
             .filter((a) =>

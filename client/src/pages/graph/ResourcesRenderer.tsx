@@ -1,8 +1,9 @@
+import { InfoMessage } from "@/components/message/InfoMessage";
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type { JSX } from "react";
-import { ErrorMessage } from "../../components/ErrorMessage";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
+import { ErrorMessage } from "../../components/message/ErrorMessage";
 import type { AppResourceType } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { createResourcesQueryOptions } from "../../query/resources.query";
@@ -24,7 +25,7 @@ export function ResourcesRenderer<T extends Resource>({
 
   if (isPending) return <LoadingSpinner />;
   if (isError) return <ErrorMessage error={error} />;
-  if (!data) return <p>...no data</p>;
+  if (!data) return <InfoMessage message="no data" />;
 
   return (
     <List>

@@ -1,5 +1,5 @@
-import { ErrorMessage } from "@/components/ErrorMessage";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { createMetadataQueryOptions } from "../../query/metadata.query";
@@ -18,7 +18,10 @@ export function CapabilityStatementPage() {
       {data?.rest?.map((i) => {
         if (i.mode === "server") {
           return (
-            <section key={i.mode} className="grid grid-cols-1 gap-2">
+            <section
+              key={i.mode}
+              className="grid grid-cols-1 2xl:grid-cols-2 gap-4"
+            >
               {i.resource?.map((r) => (
                 <Card key={r.type}>
                   <CardHeader>

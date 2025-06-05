@@ -46,3 +46,7 @@ export function isEmptyObject(
 ): value is Record<string, unknown> {
   return isObject(value) && Object.keys(value).length === 0;
 }
+
+export function isString(v: unknown): v is string {
+  return typeof v === "string";
+}

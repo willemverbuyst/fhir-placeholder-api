@@ -35,7 +35,7 @@ export function CardsRenderer<T extends Resource>(props: {
         initialSortProperty={getInitialSortProperty<T>(cardRows)}
       >
         {(resource): React.JSX.Element => (
-          <Card key={resource.id}>
+          <Card key={String(resource.id)}>
             <CardHeader>
               <CardTitle className="uppercase">{resource.id}</CardTitle>
             </CardHeader>
@@ -48,7 +48,18 @@ export function CardsRenderer<T extends Resource>(props: {
                       className="flex flex-col lg:flex-row lg:justify-between"
                     >
                       <p className="font-semibold">{String(k)}</p>
-                      <p>{v}</p>
+                      {Array.isArray(v) ? (
+                        <ul>
+                          {v.map((i) => (
+                            <li key={i} className="text-right">
+                              {" "}
+                              {i}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p>{v}</p>
+                      )}
                     </div>
                   );
                 })}

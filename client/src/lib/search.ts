@@ -13,14 +13,24 @@ export function genericSearch<T>(
 
   return properties.some((property) => {
     const value = object[property];
+    let stringToSearch = "";
+
+    if (Array.isArray(value) && value.every((i) => typeof i === "string")) {
+      stringToSearch = value.join(", ");
+    }
 
     if (typeof value === "string" || typeof value === "number") {
+      stringToSearch = value.toString();
+    }
+
+    if (stringToSearch) {
       if (shouldBeCaseSensitive) {
-        return value.toString().includes(query);
+        return stringToSearch.includes(query);
       }
 
-      return value.toString().toLowerCase().includes(query.toLowerCase());
+      return stringToSearch.toLowerCase().includes(query.toLowerCase());
     }
+
     return false;
   });
 }

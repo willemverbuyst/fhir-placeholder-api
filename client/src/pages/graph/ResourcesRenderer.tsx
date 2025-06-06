@@ -7,8 +7,7 @@ import { ErrorMessage } from "../../components/message/ErrorMessage";
 import type { AppResourceType } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { createResourcesQueryOptions } from "../../query/resources.query";
-import { List } from "./List";
-import { ListItem } from "./ListItem";
+import { ResourceItem } from "./ResourceItem";
 
 export function ResourcesRenderer<T extends Resource>({
   resourceType,
@@ -28,14 +27,14 @@ export function ResourcesRenderer<T extends Resource>({
   if (!data) return <InfoMessage message="no data" />;
 
   return (
-    <List>
+    <section className="flex flex-col gap-3">
       {data?.map((e) =>
         e.id ? (
-          <ListItem key={String(e.id)} id={String(e.id)}>
+          <ResourceItem key={String(e.id)} id={String(e.id)}>
             {renderItem?.(e)}
-          </ListItem>
+          </ResourceItem>
         ) : null,
       )}
-    </List>
+    </section>
   );
 }

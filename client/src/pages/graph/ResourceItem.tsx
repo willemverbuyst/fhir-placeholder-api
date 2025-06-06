@@ -1,7 +1,7 @@
 import { type JSX, useState } from "react";
 import { cn } from "../../lib/utils";
 
-export function ListItem({
+export function ResourceItem({
   id,
   children,
 }: {

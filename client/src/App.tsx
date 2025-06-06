@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import { Header } from "./components/header/Header";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
 import { CreatePage } from "./pages/create/CreatePage";
-import { Graph } from "./pages/graph/Graph";
+import { GraphPage } from "./pages/graph/GraphPage";
 import { SearchSortFilterPage } from "./pages/search-sort-filter/SearchSortFilterPage";
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
       <main>
         <Routes>
           <Route index element={<CapabilityStatementPage />} />
-          <Route path="graph" element={<Graph />} />
+          <Route path="graph" element={<GraphPage />} />
           <Route path="search-sort-filter" element={<SearchSortFilterPage />} />
           <Route path="create" element={<CreatePage />} />
         </Routes>

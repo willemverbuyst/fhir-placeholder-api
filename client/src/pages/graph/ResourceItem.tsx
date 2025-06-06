@@ -1,7 +1,7 @@
 import { type JSX, useState } from "react";
 import { cn } from "../../lib/utils";
 
-export function ListItem({
+export function ResourceItem({
   id,
   children,
 }: {
@@ -17,8 +17,8 @@ export function ListItem({
         className={cn(
           "flex justify-center p-4 rounded-md text-white w-[200px] cursor-pointer",
           zoomIn
-            ? "bg-pink-500 font-bold hover:bg-pink-600"
-            : "bg-sky-900 hover:bg-sky-700",
+            ? "bg-secondary font-bold hover:bg-secondary/90"
+            : "bg-primary hover:bg-primary/90",
         )}
         onClick={() => {
           if (zoomIn) setZoomIn(undefined);

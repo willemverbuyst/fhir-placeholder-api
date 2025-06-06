@@ -31,7 +31,7 @@ export function ResourcesRenderer<T extends Resource>({
     <List>
       {data?.map((e) =>
         e.id ? (
-          <ListItem key={e.id} id={e.id}>
+          <ListItem key={String(e.id)} id={String(e.id)}>
             {renderItem?.(e)}
           </ListItem>
         ) : null,

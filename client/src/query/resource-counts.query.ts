@@ -4,7 +4,7 @@ import {
 } from "@/lib/validation/resource-counts.validation";
 import { queryOptions } from "@tanstack/react-query";
 
-export function createMetadataQueryOptions() {
+export function createResourceCountQueryOptions() {
   return queryOptions({
     queryKey: ["resource-counts"],
     queryFn: () => getResourceCounts(),

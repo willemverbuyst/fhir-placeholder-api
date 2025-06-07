@@ -8,6 +8,38 @@ import {
   NavigationMenuList,
 } from "../ui/navigation-menu";
 
+function NavigationItems() {
+  return (
+    <>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <NavLink to="/">CapabilityStatement</NavLink>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <NavLink to="/graph">Graph</NavLink>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <NavLink to="/search-sort-filter">Search Sort Filter</NavLink>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <NavLink to="/create">Create</NavLink>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+    </>
+  );
+}
+
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -32,26 +64,7 @@ export function Navigation() {
         <section className="absolute top-[48px] left-0 w-full peer-open:flex hidden bg-white justify-center">
           <NavigationMenu>
             <NavigationMenuList className="flex flex-col bg-white w-full items-center">
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <NavLink to="/">CapabilityStatement</NavLink>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <NavLink to="/graph">Graph</NavLink>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <NavLink to="/search-sort-filter">Search Sort Filter</NavLink>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink asChild>
-                  <NavLink to="/crate">Create</NavLink>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
+              <NavigationItems />
             </NavigationMenuList>
           </NavigationMenu>
         </section>
@@ -59,26 +72,7 @@ export function Navigation() {
       <section className="md:flex hidden items-center">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <NavLink to="/">CapabilityStatement</NavLink>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <NavLink to="/graph">Graph</NavLink>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <NavLink to="/search-sort-filter">Search Sort Filter</NavLink>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <NavLink to="/create">Create</NavLink>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+            <NavigationItems />
           </NavigationMenuList>
         </NavigationMenu>
       </section>

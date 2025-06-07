@@ -1,3 +1,7 @@
+import {
+  type ResourceCountsSchema,
+  resourceCountsSchema,
+} from "@/lib/validation/resource-counts.validation";
 import { queryOptions } from "@tanstack/react-query";
 
 export function createMetadataQueryOptions() {
@@ -8,7 +12,7 @@ export function createMetadataQueryOptions() {
   });
 }
 
-export async function fetchResourceCounts(): Promise<Record<string, number>> {
+export async function fetchResourceCounts(): Promise<ResourceCountsSchema> {
   const response = await fetch(
     "http://localhost:8080/api/v2/r5/$resource-counts",
   );
@@ -16,8 +20,10 @@ export async function fetchResourceCounts(): Promise<Record<string, number>> {
   return await response.json();
 }
 
-export async function getResourceCounts() {
+export async function getResourceCounts(): Promise<ResourceCountsSchema> {
   const rawData = await fetchResourceCounts();
+
+  resourceCountsSchema.parse(rawData);
 
   return rawData;
 }

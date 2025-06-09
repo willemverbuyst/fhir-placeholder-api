@@ -3,6 +3,14 @@ import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
@@ -46,6 +54,19 @@ export default function CreateAppointmentForm() {
   if (isPending) return <LoadingSpinner />;
   if (isError)
     return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
+
+  const appointmentStatus = [
+    "proposed",
+    "pending",
+    "booked",
+    "arrived",
+    "fulfilled",
+    "cancelled",
+    "noshow",
+    "entered-in-error",
+    "checked-in",
+    "waitlist",
+  ] as const;
 
   return (
     <Card>
@@ -92,21 +113,23 @@ export default function CreateAppointmentForm() {
             validators={{
               onChange: ({ value }) =>
                 !value ? "Status is required" : undefined,
-              onChangeAsyncDebounceMs: 500,
             }}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
             children={(field) => {
               return (
                 <section className="flex flex-col gap-2">
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    type="text"
-                    placeholder="status"
-                  />
+                  <Select onValueChange={(e) => field.handleChange(e)}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="appointment status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {appointmentStatus.map((status) => (
+                        <SelectGroup key={status}>
+                          <SelectItem value={status}>{status}</SelectItem>
+                        </SelectGroup>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FieldInfo field={field} />
                 </section>
               );

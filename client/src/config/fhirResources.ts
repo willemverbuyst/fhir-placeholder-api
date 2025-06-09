@@ -80,6 +80,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v: Appointment["subject"]) => v && getIdFromReference(v),
         sorter: true,
         search: true,
+        filter: true,
       },
       participant: {
         display: (v: Appointment["participant"]) =>

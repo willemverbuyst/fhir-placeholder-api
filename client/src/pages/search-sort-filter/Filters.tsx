@@ -69,10 +69,10 @@ export function Filters<T extends MappedResource<Resource>>(
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          {Object.entries(filterKeys).map(([key, v]) => (
+          {Object.entries(filterKeys).map(([key, v], i) => (
             <React.Fragment key={key}>
               <DropdownMenuLabel>{key}</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              {/* <DropdownMenuSeparator /> */}
 
               {Array.from(v)
                 .sort()
@@ -93,7 +93,9 @@ export function Filters<T extends MappedResource<Resource>>(
                     {filter}
                   </DropdownMenuCheckboxItem>
                 ))}
-              <DropdownMenuSeparator />
+              {i + 1 < Object.keys(filterKeys).length && (
+                <DropdownMenuSeparator />
+              )}
             </React.Fragment>
           ))}
         </DropdownMenuContent>

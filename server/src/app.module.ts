@@ -9,6 +9,7 @@ import { OrganizationModule } from "./Organization/organization.module";
 import { PatientModule } from "./Patient/patient.module";
 import { PractitionerModule } from "./Practitioner/practitioner.module";
 import { PractitionerRoleModule } from "./PractitionerRole/practitioner-role.module";
+import { ResourceCountsModule } from "./ResourceCounts/resource-counts.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import configuration from "./config/configuration";
@@ -35,6 +36,7 @@ import { LoggerMiddleware } from "./middlewares/logger.middlewares";
     ObservationModule,
     PractitionerRoleModule,
     AppointmentModule,
+    ResourceCountsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

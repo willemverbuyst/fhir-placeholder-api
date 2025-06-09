@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -25,7 +27,8 @@ export default function CreateOrganizationForm() {
     mutationFn: postData,
     onSuccess: (data) => {
       queryClient.setQueryData(["Organization"], (oldData) => {
-        if (!oldData) return [data];
+        if (!oldData)
+          queryClient.invalidateQueries({ queryKey: ["Organization"] });
         if (Array.isArray(oldData)) {
           return [...oldData, data];
         }
@@ -40,6 +43,7 @@ export default function CreateOrganizationForm() {
   const form = useForm({
     defaultValues: {
       name: "",
+      active: true,
     },
     onSubmit: async ({ value }) => {
       mutate(value);
@@ -88,6 +92,25 @@ export default function CreateOrganizationForm() {
                     type="text"
                     placeholder="name"
                   />
+                  <FieldInfo field={field} />
+                </section>
+              );
+            }}
+          />
+          <form.Field
+            name="active"
+            // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
+            children={(field) => {
+              return (
+                <section className="flex gap-2">
+                  <Checkbox
+                    id={field.name}
+                    checked={field.state.value}
+                    onCheckedChange={() =>
+                      field.handleChange(!field.state.value)
+                    }
+                  />
+                  <Label htmlFor={field.name}>active</Label>
                   <FieldInfo field={field} />
                 </section>
               );

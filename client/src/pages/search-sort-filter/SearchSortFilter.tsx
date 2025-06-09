@@ -8,9 +8,12 @@ import type { Sorter } from "../../interfaces/Sorter";
 import { genericFilter } from "../../lib/filter";
 import { genericSearch } from "../../lib/search";
 import { genericSort } from "../../lib/sort";
+import { AddResourceButton } from "./AddResourceButton";
 import { Filters } from "./Filters";
+import { FormMap } from "./FormMap";
 import { SearchInput } from "./SearchInput";
 import { Sorters } from "./Sorters";
+import { useFormStore } from "./useFormStore";
 
 interface Props<T extends MappedResource<Resource>> {
   dataSource: Array<T>;
@@ -37,6 +40,7 @@ export function SearchSortFilter<T extends MappedResource<Resource>>(
     searchProperties,
     children,
   } = props;
+  const { resourceForm } = useFormStore();
   const [searchSortAndFilterState, setSearchSortAndFilterState] = useState<
     SearchSortAndFilterState<T>
   >({
@@ -49,7 +53,7 @@ export function SearchSortFilter<T extends MappedResource<Resource>>(
 
   return (
     <section className="flex flex-col gap-6 items-center pb-10">
-      <section className="flex gap-2 w-[800px]">
+      <section className="flex gap-2 w-[800px] items-end">
         <SearchInput
           searchQuery={""}
           setSearchQuery={useCallback(
@@ -80,7 +84,9 @@ export function SearchSortFilter<T extends MappedResource<Resource>>(
             });
           }}
         />
+        <AddResourceButton />
       </section>
+      {resourceForm && FormMap[resourceForm]}
 
       <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
         {children &&

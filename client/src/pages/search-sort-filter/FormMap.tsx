@@ -1,6 +1,6 @@
 import { InfoMessage } from "@/components/message/InfoMessage";
-import CreateAppointmentForm from "../create/CreateAppointmentForm";
-import CreateOrganizationForm from "../create/CreateOrganizationForm";
+import CreateAppointmentForm from "./CreateAppointmentForm";
+import CreateOrganizationForm from "./CreateOrganizationForm";
 
 export const FormMap = {
   Appointment: <CreateAppointmentForm />,

@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router";
 import { Header } from "./components/header/Header";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
-import { CreatePage } from "./pages/create/CreatePage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
 import { GraphPage } from "./pages/graph/GraphPage";
 import { SearchSortFilterPage } from "./pages/search-sort-filter/SearchSortFilterPage";
@@ -15,7 +14,6 @@ function App() {
           <Route index element={<CapabilityStatementPage />} />
           <Route path="graph" element={<GraphPage />} />
           <Route path="search-sort-filter" element={<SearchSortFilterPage />} />
-          <Route path="create" element={<CreatePage />} />
           <Route path="dashboard" element={<DashboardPage />} />
         </Routes>
       </main>

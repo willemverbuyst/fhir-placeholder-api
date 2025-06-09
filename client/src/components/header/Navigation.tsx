@@ -28,11 +28,6 @@ function NavigationItems() {
       </NavigationMenuItem>
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <NavLink to="/create">Create</NavLink>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
           <NavLink to="/dashboard">Dashboard</NavLink>
         </NavigationMenuLink>
       </NavigationMenuItem>

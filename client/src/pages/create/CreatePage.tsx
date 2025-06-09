@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import { APP_RESOURCE_TYPES } from "../../config/fhirResources";
 import { cn, hasKey } from "../../lib/utils";
-import { CreateOrganization } from "./CreateOrganization";
+import CreateOrganizationForm from "./CreateOrganizationForm";
 
 const ItemMap = {
   Appointment: <InfoMessage message="not implemented yet" />,
   Condition: <InfoMessage message="not implemented yet" />,
   EpisodeOfCare: <InfoMessage message="not implemented yet" />,
-  Organization: <CreateOrganization />,
+  Organization: <CreateOrganizationForm />,
   PractitionerRole: <InfoMessage message="not implemented yet" />,
   Practitioner: <InfoMessage message="not implemented yet" />,
   Patient: <InfoMessage message="not implemented yet" />,

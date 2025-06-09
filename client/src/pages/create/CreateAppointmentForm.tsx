@@ -1,10 +1,10 @@
+import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { isAxiosError } from "axios";
 import { Loader2Icon } from "lucide-react";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
@@ -22,7 +22,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 
 export default function CreateAppointmentForm() {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error, isError, data } = useMutation({
+  const { mutate, isPending, error, isError, reset } = useMutation({
     mutationFn: ({
       resourceType,
       body,
@@ -43,8 +43,6 @@ export default function CreateAppointmentForm() {
     },
   });
 
-  console.log("d", data);
-
   const form = useForm({
     defaultValues: {
       subject: "",
@@ -58,11 +56,7 @@ export default function CreateAppointmentForm() {
 
   if (isPending) return <LoadingSpinner />;
   if (isError)
-    return (
-      <p>
-        {isAxiosError(error) ? error.response?.data.message : error.message}
-      </p>
-    );
+    return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
 
   return (
     <Card>

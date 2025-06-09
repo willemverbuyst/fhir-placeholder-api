@@ -1,3 +1,4 @@
+import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,7 +24,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
 
 export default function CreateOrganizationForm() {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending, error, reset } = useMutation({
     mutationFn: ({
       resourceType,
       body,
@@ -56,7 +57,8 @@ export default function CreateOrganizationForm() {
   });
 
   if (isPending) return <LoadingSpinner />;
-  if (error) return <p>...error</p>;
+  if (error)
+    return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
 
   return (
     <Card>

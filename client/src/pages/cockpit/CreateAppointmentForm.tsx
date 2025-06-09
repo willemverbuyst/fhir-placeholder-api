@@ -16,8 +16,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
+import { useFormStore } from "./useFormStore";
 
 export default function CreateAppointmentForm() {
+  const { setResourceForm } = useFormStore();
   const queryClient = useQueryClient();
   const { mutate, isPending, error, isError, reset } = useMutation({
     mutationFn: ({
@@ -140,21 +142,32 @@ export default function CreateAppointmentForm() {
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
             children={([canSubmit, isSubmitting]) => (
-              <section className="flex gap-4 justify-end">
+              <section className="flex justify-between">
                 <Button
-                  type="reset"
-                  onClick={() => form.reset()}
-                  variant="outline"
+                  variant="secondary"
+                  onClick={() => {
+                    form.reset();
+                    setResourceForm(null);
+                  }}
                 >
-                  Reset
+                  Cancel
                 </Button>
-                <Button type="submit" disabled={!canSubmit}>
-                  {isSubmitting ? (
-                    <Loader2Icon className="animate-spin" />
-                  ) : (
-                    "Submit"
-                  )}
-                </Button>
+                <section className="flex gap-4 justify-end">
+                  <Button
+                    type="reset"
+                    onClick={() => form.reset()}
+                    variant="outline"
+                  >
+                    Reset
+                  </Button>
+                  <Button type="submit" disabled={!canSubmit}>
+                    {isSubmitting ? (
+                      <Loader2Icon className="animate-spin" />
+                    ) : (
+                      "Submit"
+                    )}
+                  </Button>
+                </section>
               </section>
             )}
           />

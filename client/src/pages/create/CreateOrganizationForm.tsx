@@ -1,26 +1,15 @@
+import { FieldInfo } from "@/components/form/FieldInfo";
 import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
-
-function FieldInfo({ field }: { field: AnyFieldApi }) {
-  return (
-    <section className="flex flex-col gap-1">
-      {field.state.meta.isTouched && !field.state.meta.isValid ? (
-        <em className="text-red-500">{field.state.meta.errors.join(",")}</em>
-      ) : null}
-      {field.state.meta.isValidating ? "Validating..." : null}
-    </section>
-  );
-}
 
 export default function CreateOrganizationForm() {
   const queryClient = useQueryClient();

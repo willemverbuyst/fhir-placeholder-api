@@ -29,7 +29,7 @@ interface SearchSortAndFilterState<T> {
   filterProperties: Array<Filter<T>>;
 }
 
-export function SearchSortFilter<T extends MappedResource<Resource>>(
+export function Cockpit<T extends MappedResource<Resource>>(
   props: PropsWithChildrenFunction<Props<T>, T>,
 ): React.JSX.Element {
   const {

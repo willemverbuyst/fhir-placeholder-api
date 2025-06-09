@@ -11,7 +11,7 @@ import { getFilterKeys } from "../../lib/filter";
 import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
-import { SearchSortFilter } from "./SearchSortFilter";
+import { Cockpit } from "./Cockpit";
 
 export function CardsRenderer<T extends Resource>(props: {
   item: ConfigItem<T>;
@@ -27,7 +27,7 @@ export function CardsRenderer<T extends Resource>(props: {
 
   if (data.length) {
     return (
-      <SearchSortFilter<MappedResource<T>>
+      <Cockpit<MappedResource<T>>
         dataSource={data}
         searchProperties={getSearchProperties<T>(cardRows)}
         filterKeys={getFilterKeys<T>(cardRows, data)}
@@ -67,7 +67,7 @@ export function CardsRenderer<T extends Resource>(props: {
             </CardContent>
           </Card>
         )}
-      </SearchSortFilter>
+      </Cockpit>
     );
   }
   return null;

@@ -36,7 +36,7 @@ const ItemMap = {
   Observation: <CardsRenderer<Observation> item={FHIR_RESOURCES.Observation} />,
 };
 
-export function SearchSortFilterPage() {
+export function CockpitPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const resource = searchParams.get("resource");
 

@@ -44,7 +44,10 @@ export class OrganizationController {
       allowedTags: [],
       allowedAttributes: {},
     });
-    return this.organizationsService.create({ name });
+    return this.organizationsService.create({
+      name,
+      active: createOrganizationDto.active,
+    });
   }
 
   @ApiOkResponse({

@@ -5,6 +5,7 @@ import { DataStoreService } from "../db/dataStore.service";
 import type { Id } from "../types";
 import { wrapInBundle } from "../utils/bundle";
 import type { CreateOrganizationDto } from "./dto/create-organization.dto";
+import type { UpdateOrganizationDto } from "./dto/update-organization.dto";
 
 @Injectable()
 export class OrganizationService {
@@ -17,7 +18,6 @@ export class OrganizationService {
       id: `organization-${String(this.repo.organizations.length + 1)}`,
       resourceType: "Organization",
       ...createOrganizationDto,
-      active: true,
     };
 
     this.repo.organizations.push(newOrganization);
@@ -37,7 +37,7 @@ export class OrganizationService {
 
   async update(
     id: string,
-    updateOrganizationDto: CreateOrganizationDto,
+    updateOrganizationDto: UpdateOrganizationDto,
   ): Promise<(Organization & Id) | undefined> {
     const organization = await this.findOne(id);
 

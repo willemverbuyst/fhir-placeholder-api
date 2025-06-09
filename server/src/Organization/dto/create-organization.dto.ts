@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Escape, Trim } from "class-sanitizer";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateOrganizationDto {
   @ApiProperty({
@@ -13,4 +13,13 @@ export class CreateOrganizationDto {
   @Trim()
   @Escape()
   name: string;
+
+  @ApiProperty({
+    type: Boolean,
+    description: "The active status of the organization",
+    example: true,
+  })
+  @IsBoolean()
+  @IsNotEmpty()
+  active: boolean;
 }

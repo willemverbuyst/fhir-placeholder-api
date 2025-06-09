@@ -1,8 +1,7 @@
+import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -21,18 +20,18 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
   );
 }
 
-export default function CreateOrganizationForm() {
+export default function CreateAppointmentForm() {
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending, error, isError } = useMutation({
     mutationFn: ({
       resourceType,
       body,
-    }: { resourceType: string; body: { name: string; active: boolean } }) =>
+    }: { resourceType: string; body: { subject: string; status: string } }) =>
       postData(body, resourceType),
     onSuccess: (data) => {
-      queryClient.setQueryData(["Organization"], (oldData) => {
+      queryClient.setQueryData(["Appointment"], (oldData) => {
         if (!oldData)
-          queryClient.invalidateQueries({ queryKey: ["Organization"] });
+          queryClient.invalidateQueries({ queryKey: ["Appointment"] });
         if (Array.isArray(oldData)) {
           return [...oldData, data];
         }
@@ -46,22 +45,22 @@ export default function CreateOrganizationForm() {
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      active: true,
+      subject: "",
+      status: "",
     },
     onSubmit: async ({ value }) => {
-      mutate({ body: value, resourceType: "Organization" });
+      mutate({ body: value, resourceType: "Appointment" });
       form.reset();
     },
   });
 
   if (isPending) return <LoadingSpinner />;
-  if (error) return <p>...error</p>;
+  if (isError) return <ErrorMessage error={error} />;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create New Organization</CardTitle>
+        <CardTitle>Create New Appointment</CardTitle>
       </CardHeader>
       <CardContent>
         <form
@@ -73,14 +72,10 @@ export default function CreateOrganizationForm() {
           className="flex flex-col gap-4"
         >
           <form.Field
-            name="name"
+            name="subject"
             validators={{
               onChange: ({ value }) =>
-                !value
-                  ? "An organization name is required"
-                  : value.length < 3
-                    ? "Name must be at least 3 characters"
-                    : undefined,
+                !value ? "Patient id is required" : undefined,
               onChangeAsyncDebounceMs: 500,
             }}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
@@ -94,27 +89,34 @@ export default function CreateOrganizationForm() {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     type="text"
-                    placeholder="name"
+                    placeholder="patient id"
                   />
                   <FieldInfo field={field} />
                 </section>
               );
             }}
           />
+
           <form.Field
-            name="active"
+            name="status"
+            validators={{
+              onChange: ({ value }) =>
+                !value ? "Status is required" : undefined,
+              onChangeAsyncDebounceMs: 500,
+            }}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
             children={(field) => {
               return (
-                <section className="flex gap-2">
-                  <Checkbox
+                <section className="flex flex-col gap-2">
+                  <Input
                     id={field.name}
-                    checked={field.state.value}
-                    onCheckedChange={() =>
-                      field.handleChange(!field.state.value)
-                    }
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    type="text"
+                    placeholder="status"
                   />
-                  <Label htmlFor={field.name}>active</Label>
                   <FieldInfo field={field} />
                 </section>
               );

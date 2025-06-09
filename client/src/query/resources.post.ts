@@ -1,18 +1,23 @@
-export const postData = async (newData: unknown) => {
-  const response = await fetch("http://localhost:8080/api/v2/r5/Organization", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+export const postData = async (newData: unknown, resourceType: string) => {
+  const response = await fetch(
+    `http://localhost:8080/api/v2/r5/${resourceType}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
     },
-    body: JSON.stringify(newData),
-  });
+  );
+  console.log(await response.json());
 
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      // Simulate a delay for the loading spinner
-      resolve(true);
-    }, 1000);
-  });
+  const result = await response.json();
 
-  return await response.json();
+  if (!response.ok) {
+    throw new Error(result.message.join(" "));
+  }
+
+  console.log("response", response);
+
+  return result;
 };

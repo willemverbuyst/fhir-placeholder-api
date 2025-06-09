@@ -19,8 +19,10 @@ export function DashboardPage() {
     value,
   }));
 
+  console.log(chartData);
+
   return (
-    <section className="h-[50vh]">
+    <section className="h-[50vh] w-[50vw]">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart width={150} height={40} data={chartData}>
           <Bar dataKey="value" fill="var(--color-chart-2)">

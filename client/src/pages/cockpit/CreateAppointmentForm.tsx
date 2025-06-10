@@ -1,8 +1,8 @@
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { ErrorMessage } from "@/components/message/ErrorMessage";
+import { InfoMessage } from "@/components/message/InfoMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -11,8 +11,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { createResourcesQueryOptions } from "@/query/resources.query";
 import { useForm } from "@tanstack/react-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { Patient } from "fhir/r5";
 import { Loader2Icon } from "lucide-react";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
@@ -41,6 +43,11 @@ export default function CreateAppointmentForm() {
       console.error("Error:", error.message);
     },
   });
+  const { data } = useQuery(
+    createResourcesQueryOptions<Patient & { id: string }>({
+      resourceType: "Patient",
+    }),
+  );
 
   const form = useForm({
     defaultValues: {
@@ -56,6 +63,7 @@ export default function CreateAppointmentForm() {
   if (isPending) return <LoadingSpinner />;
   if (isError)
     return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
+  if (!data) return <InfoMessage message="no data" />;
 
   const appointmentStatus = [
     "proposed",
@@ -89,21 +97,28 @@ export default function CreateAppointmentForm() {
             validators={{
               onChange: ({ value }) =>
                 !value ? "Patient id is required" : undefined,
-              onChangeAsyncDebounceMs: 500,
             }}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
             children={(field) => {
               return (
                 <section className="flex flex-col gap-2">
-                  <Input
-                    id={field.name}
-                    name={field.name}
+                  <Select
+                    onValueChange={(e) => field.handleChange(e)}
                     value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    type="text"
-                    placeholder="patient id"
-                  />
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="patient id" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {data.map((p) => (
+                        <SelectGroup key={String(p.id)}>
+                          <SelectItem value={String(p.id)}>
+                            {String(p.id)}
+                          </SelectItem>
+                        </SelectGroup>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FieldInfo field={field} />
                 </section>
               );
@@ -120,7 +135,10 @@ export default function CreateAppointmentForm() {
             children={(field) => {
               return (
                 <section className="flex flex-col gap-2">
-                  <Select onValueChange={(e) => field.handleChange(e)}>
+                  <Select
+                    onValueChange={(e) => field.handleChange(e)}
+                    value={field.state.value}
+                  >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="appointment status" />
                     </SelectTrigger>

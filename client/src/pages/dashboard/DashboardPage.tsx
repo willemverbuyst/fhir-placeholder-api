@@ -19,8 +19,6 @@ export function DashboardPage() {
     value,
   }));
 
-  console.log(chartData);
-
   return (
     <section className="h-[50vh] w-[50vw]">
       <ResponsiveContainer width="100%" height="100%">

@@ -21,15 +21,8 @@ export default function CreateOrganizationForm() {
       body,
     }: { resourceType: string; body: { name: string; active: boolean } }) =>
       postData(body, resourceType),
-    onSuccess: (data) => {
-      queryClient.setQueryData(["Organization"], (oldData) => {
-        if (!oldData)
-          queryClient.invalidateQueries({ queryKey: ["Organization"] });
-        if (Array.isArray(oldData)) {
-          return [...oldData, data];
-        }
-        return oldData;
-      });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["Organization"] });
     },
     onError: (error) => {
       console.error("Error:", error.message);

@@ -27,15 +27,8 @@ export default function CreateAppointmentForm() {
       body,
     }: { resourceType: string; body: { subject: string; status: string } }) =>
       postData(body, resourceType),
-    onSuccess: (data) => {
-      queryClient.setQueryData(["Appointment"], (oldData) => {
-        if (!oldData)
-          queryClient.invalidateQueries({ queryKey: ["Appointment"] });
-        if (Array.isArray(oldData)) {
-          return [...oldData, data];
-        }
-        return oldData;
-      });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["Appointment"] });
     },
     onError: (error) => {
       console.error("Error:", error.message);

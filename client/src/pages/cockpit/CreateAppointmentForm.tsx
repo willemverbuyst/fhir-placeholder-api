@@ -1,6 +1,5 @@
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { ErrorMessage } from "@/components/message/ErrorMessage";
-import { InfoMessage } from "@/components/message/InfoMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -11,13 +10,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createResourcesQueryOptions } from "@/query/resources.query";
 import { useForm } from "@tanstack/react-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { Patient } from "fhir/r5";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
+import { PatientSelect } from "./form/PatientSelect";
 import { useFormStore } from "./useFormStore";
 
 export default function CreateAppointmentForm() {
@@ -43,11 +41,6 @@ export default function CreateAppointmentForm() {
       console.error("Error:", error.message);
     },
   });
-  const { data } = useQuery(
-    createResourcesQueryOptions<Patient & { id: string }>({
-      resourceType: "Patient",
-    }),
-  );
 
   const form = useForm({
     defaultValues: {
@@ -63,7 +56,6 @@ export default function CreateAppointmentForm() {
   if (isPending) return <LoadingSpinner />;
   if (isError)
     return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
-  if (!data) return <InfoMessage message="no data" />;
 
   const appointmentStatus = [
     "proposed",
@@ -102,23 +94,11 @@ export default function CreateAppointmentForm() {
             children={(field) => {
               return (
                 <section className="flex flex-col gap-2">
-                  <Select
-                    onValueChange={(e) => field.handleChange(e)}
+                  <PatientSelect
+                    reset={reset}
                     value={field.state.value}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="patient id" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {data.map((p) => (
-                        <SelectGroup key={String(p.id)}>
-                          <SelectItem value={String(p.id)}>
-                            {String(p.id)}
-                          </SelectItem>
-                        </SelectGroup>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    onChange={field.handleChange}
+                  />
                   <FieldInfo field={field} />
                 </section>
               );

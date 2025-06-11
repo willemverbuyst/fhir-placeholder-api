@@ -1,6 +1,6 @@
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { ErrorMessage } from "@/components/message/ErrorMessage";
-import { InfoMessage } from "@/components/message/InfoMessage";
+import { ErrorAlert } from "@/components/alert/ErrorAlert";
+import { InfoAlert } from "@/components/alert/InfoAlert";
 import {
   Select,
   SelectContent,
@@ -30,8 +30,8 @@ export function PatientSelect({
 
   if (isPending) return <LoadingSpinner />;
   if (isError)
-    return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
-  if (!data) return <InfoMessage message="no patient data to select" />;
+    return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
+  if (!data) return <InfoAlert title="no patient data to select" />;
 
   return (
     <Select onValueChange={(e) => onChange(e)} value={value}>

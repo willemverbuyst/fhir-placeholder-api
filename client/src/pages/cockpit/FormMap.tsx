@@ -1,15 +1,15 @@
-import { InfoMessage } from "@/components/message/InfoMessage";
+import { InfoAlert } from "@/components/alert/InfoAlert";
 import CreateAppointmentForm from "./CreateAppointmentForm";
 import CreateOrganizationForm from "./CreateOrganizationForm";
 
 export const FormMap = {
   Appointment: <CreateAppointmentForm />,
-  Condition: <InfoMessage message="form not implemented yet" />,
-  EpisodeOfCare: <InfoMessage message="form not implemented yet" />,
+  Condition: <InfoAlert title="form not implemented yet" />,
+  EpisodeOfCare: <InfoAlert title="form not implemented yet" />,
   Organization: <CreateOrganizationForm />,
-  PractitionerRole: <InfoMessage message="form not implemented yet" />,
-  Practitioner: <InfoMessage message="form not implemented yet" />,
-  Patient: <InfoMessage message="form not implemented yet" />,
-  Encounter: <InfoMessage message="form not implemented yet" />,
-  Observation: <InfoMessage message="form not implemented yet" />,
+  PractitionerRole: <InfoAlert title="form not implemented yet" />,
+  Practitioner: <InfoAlert title="form not implemented yet" />,
+  Patient: <InfoAlert title="form not implemented yet" />,
+  Encounter: <InfoAlert title="form not implemented yet" />,
+  Observation: <InfoAlert title="form not implemented yet" />,
 };

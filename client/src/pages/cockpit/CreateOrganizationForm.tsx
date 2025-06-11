@@ -1,5 +1,5 @@
+import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { FieldInfo } from "@/components/form/FieldInfo";
-import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -52,7 +52,7 @@ export default function CreateOrganizationForm() {
 
   if (isPending) return <LoadingSpinner />;
   if (error)
-    return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
+    return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
 
   return (
     <Card>

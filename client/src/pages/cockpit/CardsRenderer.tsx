@@ -1,5 +1,5 @@
-import { ErrorMessage } from "@/components/message/ErrorMessage";
-import { InfoMessage } from "@/components/message/InfoMessage";
+import { ErrorAlert } from "@/components/alert/ErrorAlert";
+import { InfoAlert } from "@/components/alert/InfoAlert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
@@ -22,8 +22,8 @@ export function CardsRenderer<T extends Resource>(props: {
   );
 
   if (isPending) return <LoadingSpinner />;
-  if (isError) return <ErrorMessage error={error} />;
-  if (!data) return <InfoMessage message="no data" />;
+  if (isError) return <ErrorAlert error={error} />;
+  if (!data) return <InfoAlert title="no data" />;
 
   if (data.length) {
     return (

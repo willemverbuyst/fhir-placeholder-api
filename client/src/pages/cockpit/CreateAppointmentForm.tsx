@@ -1,5 +1,5 @@
+import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { FieldInfo } from "@/components/form/FieldInfo";
-import { ErrorMessage } from "@/components/message/ErrorMessage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -61,7 +61,7 @@ export default function CreateAppointmentForm() {
 
   if (isPending) return <LoadingSpinner />;
   if (isError)
-    return <ErrorMessage error={error} action={reset} actionCaption="reset" />;
+    return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
 
   const appointmentStatus = [
     "proposed",

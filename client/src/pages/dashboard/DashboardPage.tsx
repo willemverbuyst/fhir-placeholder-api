@@ -1,6 +1,6 @@
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { ErrorMessage } from "@/components/message/ErrorMessage";
-import { InfoMessage } from "@/components/message/InfoMessage";
+import { ErrorAlert } from "@/components/alert/ErrorAlert";
+import { InfoAlert } from "@/components/alert/InfoAlert";
 import { createResourceCountQueryOptions } from "@/query/resource-counts.query";
 import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis } from "recharts";
@@ -11,15 +11,13 @@ export function DashboardPage() {
   );
 
   if (isPending) return <LoadingSpinner />;
-  if (isError) return <ErrorMessage error={error} />;
-  if (!data) return <InfoMessage message="...no data" />;
+  if (isError) return <ErrorAlert error={error} />;
+  if (!data) return <InfoAlert title="...no data" />;
 
   const chartData = Object.entries(data).map(([key, value]) => ({
     resourceType: key,
     value,
   }));
-
-  console.log(chartData);
 
   return (
     <section className="h-[50vh] w-[50vw]">

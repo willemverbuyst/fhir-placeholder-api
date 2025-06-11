@@ -23,16 +23,17 @@ export function getFilterKeys<T extends Resource>(
     (acc, it) => {
       const [k, v] = it;
 
-      if (v?.filter) {
-        const filterKeys = new Set<string>();
-        for (const r of mappedResources) {
-          if (hasKeyWithValue(r, k)) {
-            filterKeys.add(r[k]);
-          }
-        }
+      if (!v?.filter) return acc;
 
-        acc[k] = filterKeys;
+      const filterKeys = new Set<string>();
+      for (const r of mappedResources) {
+        if (hasKeyWithValue(r, k)) {
+          filterKeys.add(String(r[k]));
+        }
       }
+
+      acc[k] = filterKeys;
+
       return acc;
     },
     {} as Record<keyof T, Set<string>>,

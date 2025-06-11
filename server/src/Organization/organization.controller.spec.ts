@@ -66,7 +66,7 @@ describe("OrganizationController", () => {
 
   describe("create", () => {
     it("should call create with organization dto", async () => {
-      const dto = { name: "test organization" };
+      const dto = { name: "test organization", active: true };
       await controller.create(dto);
       expect(service.create).toHaveBeenCalledWith(dto);
     });

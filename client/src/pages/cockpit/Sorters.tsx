@@ -4,10 +4,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ArrowUpAZIcon, ArrowUpZAIcon } from "lucide-react";
 import type { Sorter } from "../../interfaces/Sorter";
 
 interface Props<T> {
@@ -41,9 +41,14 @@ export function Sorters<T>(props: Props<T>): React.JSX.Element {
             .map((k) => String(k))
             .map((key) => (
               <SelectGroup key={key}>
-                <SelectLabel>{key}</SelectLabel>
-                <SelectItem value={`${key}-asc`}>{key} asc</SelectItem>
-                <SelectItem value={`${key}-desc`}>{key} desc</SelectItem>
+                <SelectItem value={`${key}-asc`}>
+                  {key}&nbsp;
+                  <ArrowUpAZIcon />
+                </SelectItem>
+                <SelectItem value={`${key}-desc`}>
+                  {key}&nbsp;
+                  <ArrowUpZAIcon />
+                </SelectItem>
               </SelectGroup>
             ))}
         </SelectContent>

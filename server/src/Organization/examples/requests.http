@@ -9,7 +9,8 @@ POST http://localhost:8080/api/v2/r5/Organization
 Content-Type:  application/json
 
 {
-  "name": "My Organization"
+  "name": "My Organization",
+  "active": false
 }
 
 ###

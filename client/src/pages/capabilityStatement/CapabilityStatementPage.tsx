@@ -1,5 +1,5 @@
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { ErrorMessage } from "@/components/message/ErrorMessage";
+import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { createMetadataQueryOptions } from "../../query/metadata.query";
@@ -10,7 +10,7 @@ export function CapabilityStatementPage() {
   );
 
   if (isPending) return <LoadingSpinner />;
-  if (isError) return <ErrorMessage error={error} />;
+  if (isError) return <ErrorAlert error={error} />;
   if (!data) return <p>...no data</p>;
 
   return (

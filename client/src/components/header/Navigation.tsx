@@ -23,12 +23,7 @@ function NavigationItems() {
       </NavigationMenuItem>
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <NavLink to="/search-sort-filter">Search Sort Filter</NavLink>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <NavLink to="/create">Create</NavLink>
+          <NavLink to="/cockpit">Cockpit</NavLink>
         </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem>

@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
 import { Header } from "./components/header/Header";
+import { Toaster } from "./components/ui/sonner";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
-import { CreatePage } from "./pages/create/CreatePage";
+import { CockpitPage } from "./pages/cockpit/CockpitPage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
 import { GraphPage } from "./pages/graph/GraphPage";
-import { SearchSortFilterPage } from "./pages/search-sort-filter/SearchSortFilterPage";
 
 function App() {
   return (
@@ -14,11 +14,11 @@ function App() {
         <Routes>
           <Route index element={<CapabilityStatementPage />} />
           <Route path="graph" element={<GraphPage />} />
-          <Route path="search-sort-filter" element={<SearchSortFilterPage />} />
-          <Route path="create" element={<CreatePage />} />
+          <Route path="cockpit" element={<CockpitPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
         </Routes>
       </main>
+      <Toaster />
     </div>
   );
 }

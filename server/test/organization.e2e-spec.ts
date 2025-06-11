@@ -92,6 +92,7 @@ describe("OrganizationController (e2e)", () => {
       .set("Accept", "application/json")
       .send({
         name: "New Organization Name",
+        active: true,
       })
       .expect(201)
       .then((res) => {
@@ -99,6 +100,7 @@ describe("OrganizationController (e2e)", () => {
         expect(organization).toBeDefined();
         expect(organization).toHaveProperty("resourceType", "Organization");
         expect(organization).toHaveProperty("name", "New Organization Name");
+        expect(organization).toHaveProperty("active", true);
       });
   });
 });

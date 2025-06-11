@@ -6,7 +6,8 @@
     "codeable",
     "searchset",
     "knip",
-    "noshow"
+    "noshow",
+    "sonner"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.defaultFormatter": "biomejs.biome",

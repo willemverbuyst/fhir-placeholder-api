@@ -15,6 +15,7 @@ import { useSearchParams } from "react-router";
 import { APP_RESOURCE_TYPES, FHIR_RESOURCES } from "../../config/fhirResources";
 import { cn, hasKey } from "../../lib/utils";
 import { CardsRenderer } from "./CardsRenderer";
+import { useFormStore } from "./useFormStore";
 
 const ItemMap = {
   Appointment: <CardsRenderer<Appointment> item={FHIR_RESOURCES.Appointment} />,
@@ -39,6 +40,7 @@ const ItemMap = {
 export function CockpitPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const resource = searchParams.get("resource");
+  const { setResourceForm } = useFormStore();
 
   useEffect(() => {
     if (!resource) {
@@ -55,6 +57,7 @@ export function CockpitPage() {
             type="button"
             onClick={() => {
               setSearchParams({ resource: k });
+              setResourceForm(null);
             }}
             variant="ghost"
             className={cn(

@@ -7,9 +7,20 @@ updates:
     versioning-strategy: increase
     allow:
       - dependency-type: "direct"
-      
+    commit-message:
+      prefix: "[Deps]"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "[Deps]"
+      
+  - package-ecosystem: "pip"
+    directory: "/spreadsheet"  
+    schedule:
+      interval: "weekly" 
+    commit-message:
+      prefix: "[Deps]"
 

@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
+import { toast } from "sonner";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
 import { useFormStore } from "./useFormStore";
@@ -21,11 +22,20 @@ export default function CreateOrganizationForm() {
       body,
     }: { resourceType: string; body: { name: string; active: boolean } }) =>
       postData(body, resourceType),
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
+      toast.success(`Organization ${data.name} has been created`, {
+        richColors: true,
+        position: "top-right",
+      });
     },
     onError: (error) => {
       console.error("Error:", error.message);
+      toast.error("Something went wrong", {
+        description: "Organization was not created",
+        richColors: true,
+        position: "top-right",
+      });
     },
   });
 

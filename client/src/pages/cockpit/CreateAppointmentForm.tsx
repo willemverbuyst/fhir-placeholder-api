@@ -13,6 +13,7 @@ import {
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
+import { toast } from "sonner";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { postData } from "../../query/resources.post";
 import { PatientSelect } from "./form/PatientSelect";
@@ -27,11 +28,23 @@ export default function CreateAppointmentForm() {
       body,
     }: { resourceType: string; body: { subject: string; status: string } }) =>
       postData(body, resourceType),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["Appointment"] });
+    onSuccess: ({ data }) => {
+      queryClient.invalidateQueries({ queryKey: ["Organization"] });
+      toast.success(
+        `Appointment for ${data.subject.reference.split("/")[1]} has been created`,
+        {
+          richColors: true,
+          position: "top-right",
+        },
+      );
     },
     onError: (error) => {
       console.error("Error:", error.message);
+      toast.error("Something went wrong", {
+        description: "Appointment was not created",
+        richColors: true,
+        position: "top-right",
+      });
     },
   });
 

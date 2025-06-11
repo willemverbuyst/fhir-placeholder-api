@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 import { Header } from "./components/header/Header";
+import { Toaster } from "./components/ui/sonner";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
 import { CockpitPage } from "./pages/cockpit/CockpitPage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
@@ -17,6 +18,7 @@ function App() {
           <Route path="dashboard" element={<DashboardPage />} />
         </Routes>
       </main>
+      <Toaster />
     </div>
   );
 }

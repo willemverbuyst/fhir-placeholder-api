@@ -2,37 +2,46 @@ import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { FieldInfo } from "@/components/form/FieldInfo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
-import { LoadingSpinner } from "../../components/LoadingSpinner";
-import { postData } from "../../query/resources.post";
+import { LoadingSpinner } from "../../../components/LoadingSpinner";
+import { postData } from "../../../query/resources.post";
+import { PatientSelect } from "./PatientSelect";
 import { useFormStore } from "./useFormStore";
 
-export default function CreateOrganizationForm() {
+export function AppointmentForm() {
   const { setResourceForm } = useFormStore();
   const queryClient = useQueryClient();
-  const { mutate, isPending, error, reset } = useMutation({
+  const { mutate, isPending, error, isError, reset } = useMutation({
     mutationFn: ({
       resourceType,
       body,
-    }: { resourceType: string; body: { name: string; active: boolean } }) =>
+    }: { resourceType: string; body: { subject: string; status: string } }) =>
       postData(body, resourceType),
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
-      toast.success(`Organization ${data.name} has been created`, {
-        richColors: true,
-        position: "top-right",
-      });
+      toast.success(
+        `Appointment for ${data.subject.reference.split("/")[1]} has been created`,
+        {
+          richColors: true,
+          position: "top-right",
+        },
+      );
     },
     onError: (error) => {
       console.error("Error:", error.message);
       toast.error("Something went wrong", {
-        description: "Organization was not created",
+        description: "Appointment was not created",
         richColors: true,
         position: "top-right",
       });
@@ -41,23 +50,36 @@ export default function CreateOrganizationForm() {
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      active: true,
+      subject: "",
+      status: "",
     },
     onSubmit: async ({ value }) => {
-      mutate({ body: value, resourceType: "Organization" });
+      mutate({ body: value, resourceType: "Appointment" });
       form.reset();
     },
   });
 
   if (isPending) return <LoadingSpinner />;
-  if (error)
+  if (isError)
     return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
+
+  const appointmentStatus = [
+    "proposed",
+    "pending",
+    "booked",
+    "arrived",
+    "fulfilled",
+    "cancelled",
+    "noshow",
+    "entered-in-error",
+    "checked-in",
+    "waitlist",
+  ] as const;
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create New Organization</CardTitle>
+        <CardTitle>Create New Appointment</CardTitle>
       </CardHeader>
       <CardContent>
         <form
@@ -69,48 +91,51 @@ export default function CreateOrganizationForm() {
           className="flex flex-col gap-4"
         >
           <form.Field
-            name="name"
+            name="subject"
             validators={{
               onChange: ({ value }) =>
-                !value
-                  ? "An organization name is required"
-                  : value.length < 3
-                    ? "Name must be at least 3 characters"
-                    : undefined,
-              onChangeAsyncDebounceMs: 500,
+                !value ? "Patient id is required" : undefined,
             }}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
             children={(field) => {
               return (
                 <section className="flex flex-col gap-2">
-                  <Input
-                    id={field.name}
-                    name={field.name}
+                  <PatientSelect
+                    reset={reset}
                     value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    type="text"
-                    placeholder="name"
+                    onChange={field.handleChange}
                   />
                   <FieldInfo field={field} />
                 </section>
               );
             }}
           />
+
           <form.Field
-            name="active"
+            name="status"
+            validators={{
+              onChange: ({ value }) =>
+                !value ? "Status is required" : undefined,
+            }}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
             children={(field) => {
               return (
-                <section className="flex gap-2">
-                  <Checkbox
-                    id={field.name}
-                    checked={field.state.value}
-                    onCheckedChange={() =>
-                      field.handleChange(!field.state.value)
-                    }
-                  />
-                  <Label htmlFor={field.name}>active</Label>
+                <section className="flex flex-col gap-2">
+                  <Select
+                    onValueChange={(e) => field.handleChange(e)}
+                    value={field.state.value}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="appointment status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {appointmentStatus.map((status) => (
+                        <SelectGroup key={status}>
+                          <SelectItem value={status}>{status}</SelectItem>
+                        </SelectGroup>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FieldInfo field={field} />
                 </section>
               );

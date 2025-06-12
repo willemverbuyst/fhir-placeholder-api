@@ -8,19 +8,39 @@ updates:
     allow:
       - dependency-type: "direct"
     commit-message:
-      prefix: "[Deps]"
+      prefix: "[Monorepo]"
+
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "[Client]"
+
+  - package-ecosystem: "npm"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "[Server]"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     commit-message:
-      prefix: "[Deps]"
+      prefix: "[Actions]"
       
   - package-ecosystem: "pip"
     directory: "/spreadsheet"  
     schedule:
       interval: "weekly" 
     commit-message:
-      prefix: "[Deps]"
+      prefix: "[Workbook]"
 

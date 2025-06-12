@@ -10,6 +10,26 @@ updates:
     commit-message:
       prefix: "[Deps]"
 
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "[Deps]"
+
+  - package-ecosystem: "npm"
+    directory: "/server"
+    schedule:
+      interval: "weekly"
+    versioning-strategy: increase
+    allow:
+      - dependency-type: "direct"
+    commit-message:
+      prefix: "[Deps]"
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

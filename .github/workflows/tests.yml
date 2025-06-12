@@ -9,9 +9,37 @@ permissions:
   pull-requests: write
 
 jobs:
-  tests:
+  tests-client:
     name: Run tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./client"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./.nvmrc"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Client - run unit Tests
+        run: pnpm run test:unit
+
+  tests-server:
+    name: Run tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./server"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -29,10 +57,8 @@ jobs:
         run: pnpm install
 
       - name: Server - run unit Tests
-        run: pnpm --filter ./server... run test:unit
+        run: pnpm run test:unit
 
       - name: Server - run E2E tests
-        run: pnpm --filter ./server... run test:e2e
-      
-      - name: Client - run unit Tests
-        run: pnpm --filter ./client... run test:unit
+        run: pnpm run test:e2e
+

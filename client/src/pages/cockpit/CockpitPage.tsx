@@ -15,7 +15,7 @@ import { useSearchParams } from "react-router";
 import { APP_RESOURCE_TYPES, FHIR_RESOURCES } from "../../config/fhirResources";
 import { cn, hasKey } from "../../lib/utils";
 import { CardsRenderer } from "./CardsRenderer";
-import { useFormStore } from "./useFormStore";
+import { useFormStore } from "./form/useFormStore";
 
 const ItemMap = {
   Appointment: <CardsRenderer<Appointment> item={FHIR_RESOURCES.Appointment} />,

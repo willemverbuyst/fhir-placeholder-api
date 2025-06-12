@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { hasKey } from "@/lib/utils";
 import { Plus } from "lucide-react";
 import { useSearchParams } from "react-router";
-import { FormMap } from "./FormMap";
-import { useFormStore } from "./useFormStore";
+import { FormMap } from "./form/FormMap";
+import { useFormStore } from "./form/useFormStore";
 
 export function AddResourceButton() {
   const [searchParams] = useSearchParams();

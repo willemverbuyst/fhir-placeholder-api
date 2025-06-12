@@ -1,5 +1,6 @@
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorAlert } from "@/components/alert/ErrorAlert";
+import { InfoAlert } from "@/components/alert/InfoAlert";
+import { CardsSkeleton } from "@/components/skeleton/CardSkeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { createMetadataQueryOptions } from "../../query/metadata.query";
@@ -9,9 +10,16 @@ export function CapabilityStatementPage() {
     createMetadataQueryOptions(),
   );
 
-  if (isPending) return <LoadingSpinner />;
+  if (isPending)
+    return (
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+        {[1, 2, 3, 4].map((i) => (
+          <CardsSkeleton key={i} />
+        ))}
+      </div>
+    );
   if (isError) return <ErrorAlert error={error} />;
-  if (!data) return <p>...no data</p>;
+  if (!data) return <InfoAlert title="no data" />;
 
   return (
     <div className="w-full min-h-[100vh] flex flex-col items-center gap-4">

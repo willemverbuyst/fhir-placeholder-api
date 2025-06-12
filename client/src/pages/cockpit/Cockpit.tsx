@@ -10,10 +10,10 @@ import { genericSearch } from "../../lib/search";
 import { genericSort } from "../../lib/sort";
 import { AddResourceButton } from "./AddResourceButton";
 import { Filters } from "./Filters";
-import { FormMap } from "./FormMap";
 import { SearchInput } from "./SearchInput";
 import { Sorters } from "./Sorters";
-import { useFormStore } from "./useFormStore";
+import { FormMap } from "./form/FormMap";
+import { useFormStore } from "./form/useFormStore";
 
 interface Props<T extends MappedResource<Resource>> {
   dataSource: Array<T>;

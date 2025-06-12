@@ -9,11 +9,10 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
-import { LoadingSpinner } from "../../components/LoadingSpinner";
-import { postData } from "../../query/resources.post";
+import { postData } from "../../../query/resources.post";
 import { useFormStore } from "./useFormStore";
 
-export default function CreateOrganizationForm() {
+export function OrganizationForm() {
   const { setResourceForm } = useFormStore();
   const queryClient = useQueryClient();
   const { mutate, isPending, error, reset } = useMutation({
@@ -24,6 +23,7 @@ export default function CreateOrganizationForm() {
       postData(body, resourceType),
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
+      setResourceForm(null);
       toast.success(`Organization ${data.name} has been created`, {
         richColors: true,
         position: "top-right",
@@ -50,7 +50,6 @@ export default function CreateOrganizationForm() {
     },
   });
 
-  if (isPending) return <LoadingSpinner />;
   if (error)
     return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
 
@@ -91,6 +90,7 @@ export default function CreateOrganizationForm() {
                     onChange={(e) => field.handleChange(e.target.value)}
                     type="text"
                     placeholder="name"
+                    disabled={isPending}
                   />
                   <FieldInfo field={field} />
                 </section>
@@ -109,6 +109,7 @@ export default function CreateOrganizationForm() {
                     onCheckedChange={() =>
                       field.handleChange(!field.state.value)
                     }
+                    disabled={isPending}
                   />
                   <Label htmlFor={field.name}>active</Label>
                   <FieldInfo field={field} />
@@ -120,7 +121,7 @@ export default function CreateOrganizationForm() {
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
-            children={([canSubmit, isSubmitting]) => (
+            children={([canSubmit]) => (
               <section className="flex justify-between">
                 <Button
                   variant="secondary"
@@ -128,6 +129,7 @@ export default function CreateOrganizationForm() {
                     form.reset();
                     setResourceForm(null);
                   }}
+                  disabled={isPending}
                 >
                   Cancel
                 </Button>
@@ -136,11 +138,12 @@ export default function CreateOrganizationForm() {
                     type="reset"
                     onClick={() => form.reset()}
                     variant="outline"
+                    disabled={isPending}
                   >
                     Reset
                   </Button>
                   <Button type="submit" disabled={!canSubmit}>
-                    {isSubmitting ? (
+                    {isPending ? (
                       <Loader2Icon className="animate-spin" />
                     ) : (
                       "Submit"

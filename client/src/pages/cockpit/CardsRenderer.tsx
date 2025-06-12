@@ -4,13 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type React from "react";
-import { LoadingSpinner } from "../../components/LoadingSpinner";
 import type { ConfigItem } from "../../config/fhirResources";
 import type { MappedResource } from "../../interfaces/MappedResource";
 import { getFilterKeys } from "../../lib/filter";
 import { getSearchProperties } from "../../lib/search";
 import { getInitialSortProperty, getSortKeys } from "../../lib/sort";
 import { createResourcesQueryOptions } from "../../query/resources.query";
+import { CardsRendererSkeleton } from "./CardsRendererSkeleton";
 import { Cockpit } from "./Cockpit";
 
 export function CardsRenderer<T extends Resource>(props: {
@@ -21,7 +21,7 @@ export function CardsRenderer<T extends Resource>(props: {
     createResourcesQueryOptions<T & { id: string }>({ resourceType }),
   );
 
-  if (isPending) return <LoadingSpinner />;
+  if (isPending) return <CardsRendererSkeleton />;
   if (isError) return <ErrorAlert error={error} />;
   if (!data) return <InfoAlert title="no data" />;
 

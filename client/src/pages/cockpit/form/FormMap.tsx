@@ -1,12 +1,12 @@
 import { InfoAlert } from "@/components/alert/InfoAlert";
-import CreateAppointmentForm from "./CreateAppointmentForm";
-import CreateOrganizationForm from "./CreateOrganizationForm";
+import { AppointmentForm } from "./AppointmentForm";
+import { OrganizationForm } from "./OrganizationForm";
 
 export const FormMap = {
-  Appointment: <CreateAppointmentForm />,
+  Appointment: <AppointmentForm />,
   Condition: <InfoAlert title="form not implemented yet" />,
   EpisodeOfCare: <InfoAlert title="form not implemented yet" />,
-  Organization: <CreateOrganizationForm />,
+  Organization: <OrganizationForm />,
   PractitionerRole: <InfoAlert title="form not implemented yet" />,
   Practitioner: <InfoAlert title="form not implemented yet" />,
   Patient: <InfoAlert title="form not implemented yet" />,

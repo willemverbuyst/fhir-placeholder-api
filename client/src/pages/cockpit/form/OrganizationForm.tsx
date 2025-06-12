@@ -9,7 +9,6 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
-import { LoadingSpinner } from "../../../components/LoadingSpinner";
 import { postData } from "../../../query/resources.post";
 import { useFormStore } from "./useFormStore";
 
@@ -24,6 +23,7 @@ export function OrganizationForm() {
       postData(body, resourceType),
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
+      setResourceForm(null);
       toast.success(`Organization ${data.name} has been created`, {
         richColors: true,
         position: "top-right",
@@ -50,7 +50,6 @@ export function OrganizationForm() {
     },
   });
 
-  if (isPending) return <LoadingSpinner />;
   if (error)
     return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
 
@@ -91,6 +90,7 @@ export function OrganizationForm() {
                     onChange={(e) => field.handleChange(e.target.value)}
                     type="text"
                     placeholder="name"
+                    disabled={isPending}
                   />
                   <FieldInfo field={field} />
                 </section>
@@ -109,6 +109,7 @@ export function OrganizationForm() {
                     onCheckedChange={() =>
                       field.handleChange(!field.state.value)
                     }
+                    disabled={isPending}
                   />
                   <Label htmlFor={field.name}>active</Label>
                   <FieldInfo field={field} />
@@ -120,7 +121,7 @@ export function OrganizationForm() {
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
-            children={([canSubmit, isSubmitting]) => (
+            children={([canSubmit]) => (
               <section className="flex justify-between">
                 <Button
                   variant="secondary"
@@ -128,6 +129,7 @@ export function OrganizationForm() {
                     form.reset();
                     setResourceForm(null);
                   }}
+                  disabled={isPending}
                 >
                   Cancel
                 </Button>
@@ -136,11 +138,12 @@ export function OrganizationForm() {
                     type="reset"
                     onClick={() => form.reset()}
                     variant="outline"
+                    disabled={isPending}
                   >
                     Reset
                   </Button>
                   <Button type="submit" disabled={!canSubmit}>
-                    {isSubmitting ? (
+                    {isPending ? (
                       <Loader2Icon className="animate-spin" />
                     ) : (
                       "Submit"

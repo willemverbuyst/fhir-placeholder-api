@@ -1,6 +1,4 @@
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorAlert } from "@/components/alert/ErrorAlert";
-import { InfoAlert } from "@/components/alert/InfoAlert";
 import {
   Select,
   SelectContent,
@@ -17,10 +15,12 @@ export function PatientSelect({
   value,
   onChange,
   reset,
+  disabled = false,
 }: {
   value: string;
   onChange: (v: string) => void;
   reset: () => void;
+  disabled: boolean;
 }) {
   const { isPending, isError, data, error } = useQuery(
     createResourcesQueryOptions<Patient & { id: string }>({
@@ -28,18 +28,20 @@ export function PatientSelect({
     }),
   );
 
-  if (isPending) return <LoadingSpinner />;
   if (isError)
     return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
-  if (!data) return <InfoAlert title="no patient data to select" />;
 
   return (
-    <Select onValueChange={(e) => onChange(e)} value={value}>
+    <Select
+      onValueChange={(e) => onChange(e)}
+      value={value}
+      disabled={isPending || disabled}
+    >
       <SelectTrigger className="w-full">
         <SelectValue placeholder="patient id" />
       </SelectTrigger>
       <SelectContent>
-        {data.map((p) => (
+        {data?.map((p) => (
           <SelectGroup key={String(p.id)}>
             <SelectItem value={String(p.id)}>{String(p.id)}</SelectItem>
           </SelectGroup>

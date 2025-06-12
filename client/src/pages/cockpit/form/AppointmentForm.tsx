@@ -14,7 +14,6 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2Icon } from "lucide-react";
 import { toast } from "sonner";
-import { LoadingSpinner } from "../../../components/LoadingSpinner";
 import { postData } from "../../../query/resources.post";
 import { PatientSelect } from "./PatientSelect";
 import { useFormStore } from "./useFormStore";
@@ -30,6 +29,7 @@ export function AppointmentForm() {
       postData(body, resourceType),
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
+      setResourceForm(null);
       toast.success(
         `Appointment for ${data.subject.reference.split("/")[1]} has been created`,
         {
@@ -59,7 +59,6 @@ export function AppointmentForm() {
     },
   });
 
-  if (isPending) return <LoadingSpinner />;
   if (isError)
     return <ErrorAlert error={error} action={reset} actionCaption="reset" />;
 
@@ -104,6 +103,7 @@ export function AppointmentForm() {
                     reset={reset}
                     value={field.state.value}
                     onChange={field.handleChange}
+                    disabled={isPending}
                   />
                   <FieldInfo field={field} />
                 </section>
@@ -124,6 +124,7 @@ export function AppointmentForm() {
                   <Select
                     onValueChange={(e) => field.handleChange(e)}
                     value={field.state.value}
+                    disabled={isPending}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="appointment status" />
@@ -145,7 +146,7 @@ export function AppointmentForm() {
           <form.Subscribe
             selector={(state) => [state.canSubmit, state.isSubmitting]}
             // biome-ignore lint/correctness/noChildrenProp: Avoid hasty abstractions - TanStack Form
-            children={([canSubmit, isSubmitting]) => (
+            children={([canSubmit]) => (
               <section className="flex justify-between">
                 <Button
                   variant="secondary"
@@ -153,6 +154,7 @@ export function AppointmentForm() {
                     form.reset();
                     setResourceForm(null);
                   }}
+                  disabled={isPending}
                 >
                   Cancel
                 </Button>
@@ -161,11 +163,12 @@ export function AppointmentForm() {
                     type="reset"
                     onClick={() => form.reset()}
                     variant="outline"
+                    disabled={isPending}
                   >
                     Reset
                   </Button>
                   <Button type="submit" disabled={!canSubmit}>
-                    {isSubmitting ? (
+                    {isPending ? (
                       <Loader2Icon className="animate-spin" />
                     ) : (
                       "Submit"

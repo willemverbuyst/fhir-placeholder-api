@@ -1,7 +1,6 @@
 {
   "name": "fhir-placeholder-api",
   "version": "1.0.0",
-  "main": "index.js",
   "private": true,
   "scripts": {
     "format:check": "biome format",
@@ -13,7 +12,7 @@
   "author": "Willem Verbuyst",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
+  "dependencies": {
     "@biomejs/biome": "1.9.4"
   }
 }

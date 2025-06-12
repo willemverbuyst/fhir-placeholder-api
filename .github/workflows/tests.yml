@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   tests-client:
-    name: Run tests
+    name: Run Tests Client
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,7 +26,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: "./.nvmrc"
-          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
@@ -35,7 +34,7 @@ jobs:
         run: pnpm run test:unit
 
   tests-server:
-    name: Run tests
+    name: Run Tests Server
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -51,7 +50,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: "./.nvmrc"
-          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install

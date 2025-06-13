@@ -9,15 +9,44 @@ permissions:
   pull-requests: write
 
 jobs:
-  format-and-lint:
-    name: Format & Lint
+  format-and-lint-client:
+    name: Format & Lint Client
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "/"
+        working-directory: "./client"
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./client/.nvmrc"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Format Code
+        run: npm run format:check
+
+      - name: Lint Code
+        run: npm run lint:check
+
+  format-and-lint-server:
+    name: Format & Lint Server
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "./server"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./client/.nvmrc"
 
       - name: Install dependencies
         run: npm install

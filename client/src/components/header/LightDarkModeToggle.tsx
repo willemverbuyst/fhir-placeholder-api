@@ -1,5 +1,5 @@
+import { useTheme } from "@/providers/ThemeProvider";
 import { MoonIcon, SunIcon } from "lucide-react";
-import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -8,22 +8,19 @@ import {
 } from "../ui/tooltip";
 
 export function LightDarkModeToggle() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger
           className="ml-auto"
-          onClick={() => {
-            setIsDarkMode((prev) => !prev);
-            document.body.classList.toggle("dark");
-          }}
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
-          {isDarkMode ? <MoonIcon /> : <SunIcon />}
+          {theme === "dark" ? <MoonIcon /> : <SunIcon />}
         </TooltipTrigger>
         <TooltipContent>
-          {isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+          {theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

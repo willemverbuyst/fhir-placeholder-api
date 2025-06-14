@@ -1,8 +1,12 @@
+import {
+  getResourcesWithIdFromBundle,
+  isBundle,
+  isResourceWithId,
+} from "@repo/utils/fhir";
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
 import type { ZodSchema } from "zod";
 import { type AppResourceType, FHIR_RESOURCES } from "../config/fhirResources";
-import { getResourcesFromBundle, isBundle, isResource } from "../lib/fhir";
 import { getMappedResource, getMappedResources } from "../lib/mappedResources";
 import { appointmentResourceSchema } from "../lib/validation/appointment.validation";
 import { getBundleSchema } from "../lib/validation/bundle.validation";
@@ -94,14 +98,14 @@ export async function getResources<T extends Resource>(
       resources: rawData,
       resourceType,
     });
-    const resources = getResourcesFromBundle(rawData);
+    const resources = getResourcesWithIdFromBundle(rawData);
     const cardRows = FHIR_RESOURCES[resourceType].cardRows;
     const mappedResources = getMappedResources<T>(resources, cardRows);
 
     return mappedResources;
   }
 
-  if (isResource(rawData)) {
+  if (isResourceWithId(rawData)) {
     let schema: ZodSchema;
     switch (resourceType) {
       case "Practitioner": {

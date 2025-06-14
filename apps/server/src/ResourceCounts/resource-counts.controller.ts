@@ -1,5 +1,4 @@
 import { Controller, Get } from "@nestjs/common";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { ResourceCountsService } from "./resource-counts.service";
 
 @Controller("$resource-counts")

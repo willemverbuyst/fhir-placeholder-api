@@ -5,10 +5,8 @@ import {
 } from "@nestjs/common";
 import type { Appointment, Bundle } from "fhir/r5";
 import type { Id } from "src/types";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
 
 @Injectable()

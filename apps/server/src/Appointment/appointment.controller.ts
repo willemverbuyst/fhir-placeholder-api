@@ -10,11 +10,8 @@ import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Appointment, Bundle } from "fhir/r5";
 import * as sanitizeHtml from "sanitize-html";
 import type { Id } from "src/types";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { AppointmentService } from "./appointment.service";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { GetAppointmentDto } from "./dto/get-appointment.dto";
 import { appointmentBundleExample } from "./examples/appointment-bundle.example";
 

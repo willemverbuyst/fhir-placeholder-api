@@ -12,13 +12,10 @@ import { ApiNotFoundResponse, ApiOkResponse } from "@nestjs/swagger";
 import type { Bundle, Organization } from "fhir/r5";
 import * as sanitizeHtml from "sanitize-html";
 import type { Id } from "src/types";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { CreateOrganizationDto } from "./dto/create-organization.dto";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { UpdateOrganizationDto } from "./dto/update-organization.dto";
 import { organizationBundleExample } from "./examples/organization-bundle.example";
 import { organizationExample } from "./examples/organization.example";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { OrganizationService } from "./organization.service";
 
 @Controller("Organization")

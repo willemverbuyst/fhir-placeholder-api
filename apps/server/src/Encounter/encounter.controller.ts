@@ -2,9 +2,7 @@ import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Encounter } from "fhir/r5";
 import type { Id } from "src/types";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { GetEncounterDto } from "./dto/get-encounter.dto";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { EncounterService } from "./encounter.service";
 import { encounterBundleExample } from "./examples/encounter-bundle.example";
 

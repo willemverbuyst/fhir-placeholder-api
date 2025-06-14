@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { DataStoreService } from "../db/dataStore.service";
 
 @Injectable()

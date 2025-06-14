@@ -2,10 +2,8 @@ import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Observation } from "fhir/r5";
 import type { Id } from "../types";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { GetObservationDto } from "./dto/get-observation.dto";
 import { observationBundleExample } from "./examples/observation-bundle-example";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { ObservationService } from "./observation.service";
 
 @Controller("Observation")

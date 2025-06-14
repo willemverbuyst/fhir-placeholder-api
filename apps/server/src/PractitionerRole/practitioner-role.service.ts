@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import type { Bundle, PractitionerRole } from "fhir/r5";
-// biome-ignore lint/style/useImportType: nestjs quirk
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 

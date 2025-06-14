@@ -1,14 +1,12 @@
 {
   "name": "server",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "format:check": "biome format",
-    "format:write": "biome format --write .",
     "lint:check": "biome lint",
     "lint:write": "biome lint --write .",
     "dev": "nest start --watch",
@@ -21,7 +19,8 @@
     "test:unit:cov": "jest --coverage",
     "test:unit:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "knip": "knip"
+    "knip": "knip",
+    "type:check": "tsc"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.0",

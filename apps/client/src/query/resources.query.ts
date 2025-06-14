@@ -2,7 +2,7 @@ import {
   getResourcesWithIdFromBundle,
   isBundle,
   isResourceWithId,
-} from "@repo/utils/fhir";
+} from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
 import type { ZodSchema } from "zod";

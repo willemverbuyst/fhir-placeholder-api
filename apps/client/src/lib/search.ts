@@ -1,5 +1,5 @@
+import { typedEntries } from "@repo/utils";
 import type { CardRows } from "../config/fhirResources";
-import { typedEntries } from "./utils";
 
 export function genericSearch<T>(
   object: T,

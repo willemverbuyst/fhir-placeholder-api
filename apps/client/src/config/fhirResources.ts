@@ -1,5 +1,4 @@
-import { isString } from "@/lib/utils";
-import { getIdFromReference } from "@repo/utils/fhir";
+import { getIdFromReference, isString } from "@repo/utils";
 import type {
   Appointment,
   Condition,

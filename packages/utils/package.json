@@ -5,7 +5,7 @@
   "type": "module",
   "files": [],
   "exports": {
-    "./fhir": "./src/fhir/index.ts"
+    ".": "./src/index.ts"
   },
   "scripts": {
     "type:check": "tsc",

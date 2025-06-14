@@ -1,6 +1,6 @@
+import { hasKeyWithValue, isObject, typedEntries } from "@repo/utils";
 import type { CardRows } from "../config/fhirResources";
 import type { Sorter } from "../interfaces/Sorter";
-import { hasKeyWithValue, isObject, typedEntries } from "./utils";
 
 export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
   const { property, isDescending } = propertyType;

@@ -1,10 +1,10 @@
+import { hasKey, isEmptyObject } from "@repo/utils";
 import type { Resource } from "fhir/r5";
 import type { CardRows } from "../config/fhirResources";
 import type {
   MappedResource,
   MappedResources,
 } from "../interfaces/MappedResource";
-import { hasKey, isEmptyObject } from "./utils";
 
 export function getMappedResource<T extends Resource>(
   resource: T & { id: string },

@@ -39,3 +39,19 @@ export function createEpisode({
     type: [{ coding: [getRandomElement(episodeOfCareTypes)] }],
   };
 }
+
+export function createEpisodes({
+  numberOfEpisodes,
+  numberOfPatients,
+}: {
+  numberOfEpisodes: number;
+  numberOfPatients: number;
+}): (EpisodeOfCare & Id)[] {
+  return Array.from({ length: numberOfEpisodes }, (_, i) => {
+    return createEpisode({
+      patientId: `patient-${Math.floor(i / (numberOfEpisodes / numberOfPatients)) + 1}`,
+      conditionId: `condition-${i + 1}`,
+      id: `episode-of-care-${i + 1}`,
+    });
+  });
+}

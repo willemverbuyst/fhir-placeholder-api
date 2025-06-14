@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { AppointmentStatus } from "@repo/dummy-data";
 import { Escape, Trim } from "class-sanitizer";
 import { IsEnum, IsNotEmpty, IsString } from "class-validator";
-import { AppointmentStatus } from "../../db/resources/appointment";
 
 export class CreateAppointmentDto {
   @ApiProperty({

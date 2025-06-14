@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { START_DATE } from "../config";
-import { createPractitioner } from "./practitioner";
+import { createPractitioner, createPractitioners } from "./practitioner";
 
 describe("createPractitioner", () => {
   it("should create a Practitioner with a valid structure", () => {
@@ -78,5 +78,24 @@ describe("createPractitioner", () => {
     expect(address).toHaveProperty("state");
     expect(address).toHaveProperty("postalCode");
     expect(address).toHaveProperty("country");
+  });
+});
+
+describe("createPractitioners", () => {
+  it("should create the specified number of practitioners", () => {
+    const practitioners = createPractitioners({ numberOfPractitioners: 5 });
+
+    expect(practitioners).toHaveLength(5);
+
+    for (const practitioner of practitioners) {
+      expect(practitioner).toHaveProperty("id");
+      expect(practitioner.resourceType).toBe("Practitioner");
+    }
+  });
+
+  it("should return an empty array if numberOfPractitioners is 0", () => {
+    const practitioners = createPractitioners({ numberOfPractitioners: 0 });
+
+    expect(practitioners).toHaveLength(0);
   });
 });

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
-import { EpisodeOfCareStatus, createEpisode } from "./episode-of-care";
+import {
+  EpisodeOfCareStatus,
+  createEpisode,
+  createEpisodes,
+} from "./episode-of-care";
 
 describe("createEpisode", () => {
   it("should create an EpisodeOfCare with the correct structure", () => {
@@ -50,5 +54,50 @@ describe("createEpisode", () => {
     }
 
     expect(episodeOfCareTypes).toContainEqual(episode.type[0].coding[0]);
+  });
+});
+
+describe("createEpisodes", () => {
+  const episodes = createEpisodes({
+    numberOfEpisodes: 4,
+    numberOfPatients: 2,
+  });
+
+  it.each`
+    episodeId              | patientId
+    ${"episode-of-care-1"} | ${"patient-1"}
+    ${"episode-of-care-2"} | ${"patient-1"}
+    ${"episode-of-care-3"} | ${"patient-2"}
+    ${"episode-of-care-4"} | ${"patient-2"}
+  `(
+    "should assign correct patient to episode $episodeId",
+    ({ episodeId, patientId }) => {
+      const episode =
+        episodes[
+          Number.parseInt(episodeId.replace("episode-of-care-", ""), 10) - 1
+        ];
+
+      expect(episode).toHaveProperty("id", episodeId);
+      expect(episode.resourceType).toBe("EpisodeOfCare");
+      expect(episode.patient?.reference).toBe(`Patient/${patientId}`);
+    },
+  );
+
+  it("should create episodes for the given patient and conditions", () => {
+    const episodes = createEpisodes({
+      numberOfEpisodes: 4,
+      numberOfPatients: 2,
+    });
+
+    expect(episodes).toHaveLength(4);
+  });
+
+  it("should return an empty array if conditions are empty", () => {
+    const episodes = createEpisodes({
+      numberOfEpisodes: 0,
+      numberOfPatients: 2,
+    });
+
+    expect(episodes).toHaveLength(0);
   });
 });

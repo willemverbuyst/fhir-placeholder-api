@@ -5,7 +5,7 @@
   "type": "module",
   "files": [],
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/resources/index.ts"
   },
   "scripts": {
     "type:check": "tsc",

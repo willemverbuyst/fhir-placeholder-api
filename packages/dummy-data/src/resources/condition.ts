@@ -30,3 +30,18 @@ export function createCondition({
     },
   };
 }
+
+export function createConditions({
+  numberOfConditions,
+  numberOfPatients,
+}: {
+  numberOfConditions: number;
+  numberOfPatients: number;
+}): (Condition & Id)[] {
+  return Array.from({ length: numberOfConditions }, (_, i) => {
+    return createCondition({
+      patientId: `patient-${Math.floor(i / (numberOfConditions / numberOfPatients)) + 1}`,
+      id: `condition-${i + 1}`,
+    });
+  });
+}

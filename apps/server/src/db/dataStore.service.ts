@@ -1,4 +1,15 @@
 import { Injectable } from "@nestjs/common";
+import {
+  createAppointments,
+  createConditions,
+  createEncounters,
+  createEpisodes,
+  createObservations,
+  createOrganizations,
+  createPatients,
+  createPractitionerRoles,
+  createPractitioners,
+} from "@repo/dummy-data";
 import type {
   Appointment,
   Condition,
@@ -22,17 +33,6 @@ import {
   NUMBER_OF_PRACTITIONERS,
   NUMBER_OF_PRACTITIONER_ROLES,
 } from "../../config";
-import {
-  createAppointments,
-  createConditions,
-  createEncounters,
-  createEpisodes,
-  createObservations,
-  createOrganizations,
-  createPatients,
-  createPractitionerRoles,
-  createPractitioners,
-} from "./helpers/createResources";
 
 @Injectable()
 export class DataStoreService {

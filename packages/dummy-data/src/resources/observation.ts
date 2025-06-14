@@ -34,3 +34,25 @@ export function createObservation({
     note: [{ text: faker.lorem.sentence({ min: 5, max: 7 }) }],
   };
 }
+
+export function createObservations({
+  numberOfObservations,
+  numberOfPatients,
+  numberOfEncounters,
+}: {
+  numberOfObservations: number;
+  numberOfPatients: number;
+  numberOfEncounters: number;
+}): (Observation & Id)[] {
+  return Array.from({ length: numberOfObservations }, (_, i) => {
+    return createObservation({
+      patientId: `patient-${
+        Math.floor(i / (numberOfObservations / numberOfPatients)) + 1
+      }`,
+      encounterId: `encounter-${
+        Math.floor(i / (numberOfObservations / numberOfEncounters)) + 1
+      }`,
+      id: `observation-${i + 1}`,
+    });
+  });
+}

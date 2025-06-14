@@ -18,3 +18,21 @@ export function createPractitionerRole({
     active: true,
   };
 }
+
+export function createPractitionerRoles({
+  numberOfPractitionerRoles,
+  numberOfOrganizations,
+}: {
+  numberOfPractitionerRoles: number;
+  numberOfOrganizations: number;
+}): (PractitionerRole & Id)[] {
+  return Array.from({ length: numberOfPractitionerRoles }, (_, i) => {
+    return createPractitionerRole({
+      practitionerRoleId: `practitioner-role-${i + 1}`,
+      organizationId: `organization-${
+        Math.floor(i / (numberOfPractitionerRoles / numberOfOrganizations)) + 1
+      }`,
+      practitionerId: `practitioner-${i + 1}`,
+    });
+  });
+}

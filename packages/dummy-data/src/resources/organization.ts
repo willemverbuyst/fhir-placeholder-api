@@ -10,3 +10,13 @@ export function createOrganization({ id }: { id: string }): Organization & Id {
     active: true,
   };
 }
+
+export function createOrganizations({
+  numberOfOrganizations,
+}: {
+  numberOfOrganizations: number;
+}): (Organization & Id)[] {
+  return Array.from({ length: numberOfOrganizations }, (_, i) => {
+    return createOrganization({ id: `organization-${i + 1}` });
+  });
+}

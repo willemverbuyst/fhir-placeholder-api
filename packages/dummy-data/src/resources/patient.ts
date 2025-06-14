@@ -46,3 +46,30 @@ export function createPatient({
     ],
   };
 }
+
+export function createPatients({
+  numberOfPatients,
+  numberOfOrganizations,
+  numberOfPractitioners,
+}: {
+  numberOfPatients: number;
+  numberOfOrganizations: number;
+  numberOfPractitioners: number;
+}): (Patient & Id)[] {
+  return Array.from(
+    {
+      length: numberOfPatients,
+    },
+    (_, i) => {
+      return createPatient({
+        organizationId: `organization-${
+          Math.floor(i / (numberOfPatients / numberOfOrganizations)) + 1
+        }`,
+        practitionerId: `practitioner-${
+          Math.floor(i / (numberOfPatients / numberOfPractitioners)) + 1
+        }`,
+        id: `patient-${i + 1}`,
+      });
+    },
+  );
+}

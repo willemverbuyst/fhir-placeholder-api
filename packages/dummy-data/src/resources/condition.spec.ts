@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createCondition } from "./condition";
+import { createCondition, createConditions } from "./condition";
 
 describe("createCondition", () => {
   it("should create a Condition resource with the correct structure", () => {
@@ -61,5 +61,50 @@ describe("createCondition", () => {
     const condition = createCondition({ patientId, id: conditionId });
 
     expect(condition.subject.reference).toBe(`Patient/${patientId}`);
+  });
+});
+
+describe("createConditions", () => {
+  const conditions = createConditions({
+    numberOfConditions: 4,
+    numberOfPatients: 2,
+  });
+
+  it.each`
+    conditionId      | patientId
+    ${"condition-1"} | ${"patient-1"}
+    ${"condition-2"} | ${"patient-1"}
+    ${"condition-3"} | ${"patient-2"}
+    ${"condition-4"} | ${"patient-2"}
+  `(
+    "should assign correct patient to condition $conditionId",
+    ({ conditionId, patientId }) => {
+      const condition =
+        conditions[
+          Number.parseInt(conditionId.replace("condition-", ""), 10) - 1
+        ];
+
+      expect(condition).toHaveProperty("id", conditionId);
+      expect(condition.resourceType).toBe("Condition");
+      expect(condition.subject?.reference).toBe(`Patient/${patientId}`);
+    },
+  );
+
+  it("should create the specified number of conditions", () => {
+    const conditions = createConditions({
+      numberOfConditions: 4,
+      numberOfPatients: 2,
+    });
+
+    expect(conditions).toHaveLength(4);
+  });
+
+  it("should return an empty array if numberOfConditions is 0", () => {
+    const conditions = createConditions({
+      numberOfConditions: 0,
+      numberOfPatients: 2,
+    });
+
+    expect(conditions).toHaveLength(0);
   });
 });

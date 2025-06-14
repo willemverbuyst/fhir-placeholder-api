@@ -24,3 +24,13 @@ export function createPractitioner({ id }: { id: string }): Practitioner & Id {
     address: [createAddress()],
   };
 }
+
+export function createPractitioners({
+  numberOfPractitioners,
+}: {
+  numberOfPractitioners: number;
+}): (Practitioner & Id)[] {
+  return Array.from({ length: numberOfPractitioners }, (_, i) => {
+    return createPractitioner({ id: `practitioner-${i + 1}` });
+  });
+}

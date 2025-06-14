@@ -1,0 +1,17 @@
+{
+  "name": "@repo/utils",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [],
+  "exports": {
+    "./fhir": "./src/fhir/index.ts"
+  },
+  "scripts": {
+    "type:check": "tsc"
+  },
+  "devDependencies": {
+    "@types/fhir": "^0.0.41",
+    "typescript": "^5.8.3"
+  }
+}

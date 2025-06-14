@@ -1,4 +1,5 @@
 import { isString } from "@/lib/utils";
+import { getIdFromReference } from "@repo/utils/fhir";
 import type {
   Appointment,
   Condition,
@@ -11,7 +12,6 @@ import type {
   PractitionerRole,
   Resource,
 } from "fhir/r5";
-import { getIdFromReference } from "../lib/fhir";
 
 export type CardRows<T> = {
   [K in keyof T]?: {

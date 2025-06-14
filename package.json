@@ -13,7 +13,6 @@
     "lint:fix": "biome lint --write .",
     "test:unit": "turbo run test:unit",
     "test:e2e": "turbo run test:e2e",
-    "lint": "turbo run lint",
     "type:check": "turbo type:check"
   },
   "devDependencies": {

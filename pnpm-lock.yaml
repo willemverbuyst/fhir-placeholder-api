@@ -236,6 +236,22 @@ importers:
         specifier: ^5.8.3
         version: 5.8.3
 
+  packages/dummy-data:
+    dependencies:
+      '@faker-js/faker':
+        specifier: ^9.7.0
+        version: 9.8.0
+    devDependencies:
+      '@types/fhir':
+        specifier: ^0.0.41
+        version: 0.0.41
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+      vitest:
+        specifier: ^3.2.3
+        version: 3.2.3(@types/node@24.0.1)(jiti@2.4.2)(jsdom@26.1.0)(lightningcss@1.30.1)(terser@5.42.0)
+
   packages/utils:
     devDependencies:
       '@types/fhir':

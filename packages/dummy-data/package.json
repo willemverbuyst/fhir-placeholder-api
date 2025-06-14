@@ -1,0 +1,22 @@
+{
+  "name": "@repo/dummy-data",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "type:check": "tsc",
+    "test:unit": "vitest run"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.7.0"
+  },
+  "devDependencies": {
+    "@types/fhir": "^0.0.41",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.3"
+  }
+}

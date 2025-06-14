@@ -1,23 +1,22 @@
 {
-  "name": "fhir-placeholder-api",
-  "version": "0.0.0",
-  "private": true,
-  "description": "",
-  "author": "",
-  "license": "UNLICENSED",
-  "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "test:e2e": "turbo run test:e2e",
-    "lint": "turbo run lint"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "turbo": "^2.5.4"
-  },
-  "packageManager": "pnpm@8.15.5",
-  "engines": {
-    "node": ">=18"
-  }
+	"name": "fhir-placeholder-api",
+	"version": "0.0.0",
+	"private": true,
+	"description": "",
+	"author": "",
+	"license": "UNLICENSED",
+	"scripts": {
+		"dev": "turbo run dev",
+		"test:unit": "turbo run test",
+		"test:e2e": "turbo run test:e2e",
+		"lint": "turbo run lint"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"turbo": "^2.5.4"
+	},
+	"packageManager": "pnpm@10.10.0",
+	"engines": {
+		"node": ">=22"
+	}
 }

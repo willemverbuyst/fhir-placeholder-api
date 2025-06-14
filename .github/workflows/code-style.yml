@@ -9,53 +9,37 @@ permissions:
   pull-requests: write
 
 jobs:
-  format-and-lint-client:
-    name: Format & Lint Client
+  code-style:
+    name: Format, Lint, Type Check
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./client"
+
     steps:
-      - name: Checkout repo
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: 📦 Setup Node and PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: "./client/.nvmrc"
+          node-version-file: "./.nvmrc"
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: 📥 Install dependencies
+        run: pnpm install
 
-      - name: Format Code
-        run: npm run format:check
+      - name: 💅 Run formatter
+        run: pnpm format
 
-      - name: Lint Code
-        run: npm run lint:check
+      - name: 🧪 Run linter
+        run: pnpm lint
 
-  format-and-lint-server:
-    name: Format & Lint Server
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./server"
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: 🔍 Type check
+        run: pnpm type:check
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: "./client/.nvmrc"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Format Code
-        run: npm run format:check
-
-      - name: Lint Code
-        run: npm run lint:check
 
 
   # knip:

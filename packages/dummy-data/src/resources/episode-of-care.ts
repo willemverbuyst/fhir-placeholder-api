@@ -1,17 +1,8 @@
+import { EpisodeOfCareStatus } from "@repo/fhir-codes";
 import type { EpisodeOfCare } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
-
-export enum EpisodeOfCareStatus {
-  PLANNED = "planned",
-  WAITLIST = "waitlist",
-  ACTIVE = "active",
-  ONHOLD = "onhold",
-  FINISHED = "finished",
-  CANCELLED = "cancelled",
-  ENTERED_IN_ERROR = "entered-in-error",
-}
 
 export function createEpisode({
   patientId,
@@ -25,7 +16,7 @@ export function createEpisode({
   return {
     id,
     resourceType: "EpisodeOfCare",
-    status: getRandomElement(Object.values(EpisodeOfCareStatus)),
+    status: getRandomElement(EpisodeOfCareStatus),
     patient: { reference: `Patient/${patientId}` },
     diagnosis: [
       {

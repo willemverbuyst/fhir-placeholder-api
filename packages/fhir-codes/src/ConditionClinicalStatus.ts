@@ -6,4 +6,4 @@ export const ConditionClinicalStatus = [
   "remission",
   "resolved",
   "unknown",
-] as const;
+];

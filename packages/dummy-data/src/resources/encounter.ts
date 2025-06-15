@@ -1,4 +1,4 @@
-import { EncounterStatus } from "@repo/fhir-codes";
+import { encounterStatus } from "@repo/fhir-codes";
 import type { Encounter } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
@@ -15,7 +15,7 @@ export function createEncounter({
   return {
     id,
     resourceType: "Encounter",
-    status: getRandomElement(EncounterStatus),
+    status: getRandomElement(encounterStatus),
     subject: { reference: `Patient/${patientId}` },
     episodeOfCare: [{ reference: `EpisodeOfCare/${episodeId}` }],
   };

@@ -1,6 +1,6 @@
 import {
-  AppointmentParticipantStatus,
-  AppointmentStatus,
+  appointmentParticipantStatus,
+  appointmentStatus,
 } from "@repo/fhir-codes";
 import type { Appointment } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
@@ -15,20 +15,20 @@ export function createAppointment({
   return {
     id,
     resourceType: "Appointment",
-    status: getRandomElement(AppointmentStatus),
+    status: getRandomElement(appointmentStatus),
     subject: { reference: `Patient/${patientId}` },
     participant: [
       {
         actor: {
           reference: `Patient/${patientId}`,
         },
-        status: getRandomElement(AppointmentParticipantStatus),
+        status: getRandomElement(appointmentParticipantStatus),
       },
       {
         actor: {
           reference: `Practitioner/${practitionerId}`,
         },
-        status: getRandomElement(AppointmentParticipantStatus),
+        status: getRandomElement(appointmentParticipantStatus),
       },
     ],
   };

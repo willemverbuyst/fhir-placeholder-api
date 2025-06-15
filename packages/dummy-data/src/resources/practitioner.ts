@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Gender } from "@repo/fhir-codes";
+import { gender } from "@repo/fhir-codes";
 import type { Practitioner } from "fhir/r5";
 import { START_DATE } from "../config";
 import { getRandomElement } from "../helpers/getRandomElement";
@@ -20,7 +20,7 @@ export function createPractitioner({ id }: { id: string }): Practitioner & Id {
       .between({ from: START_DATE, to: Date.now() })
       .toISOString()
       .split("T")[0],
-    gender: getRandomElement(Gender),
+    gender: getRandomElement(gender),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],
   };

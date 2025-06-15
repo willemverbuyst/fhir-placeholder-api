@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest --silent",
+    "test:unit": "vitest --silent run",
     "test:coverage": "vitest --silent run --coverage",
     "type:check": "tsc",
     "cy:open": "cypress open",

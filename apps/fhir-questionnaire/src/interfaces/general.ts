@@ -30,7 +30,7 @@ export interface Identifier {
 }
 
 export interface ValueSet {
-  resourceType: typeof ResourceType["ValueSet"];
+  resourceType: (typeof ResourceType)["ValueSet"];
   id: string;
   status: "active";
   meta?: any;

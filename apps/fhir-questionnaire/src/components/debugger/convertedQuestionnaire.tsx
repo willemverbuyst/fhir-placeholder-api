@@ -19,7 +19,7 @@ export const ConvertedQuestionnaire = () => {
         {JSON.stringify(
           { units: questionnaire.units, meta: questionnaire.meta },
           null,
-          4
+          4,
         )}
       </pre>
     </Container>

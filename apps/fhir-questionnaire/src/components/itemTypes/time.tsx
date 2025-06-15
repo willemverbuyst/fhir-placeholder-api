@@ -12,7 +12,7 @@ export const TypeTime: React.FC<Props> = ({ unit }) => {
   const checkIfValid = (e: any): void => {
     if (
       e.target.value.match(
-        "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(.[0-9]+)?"
+        "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(.[0-9]+)?",
       ) != null
     ) {
       setIsValid(true);

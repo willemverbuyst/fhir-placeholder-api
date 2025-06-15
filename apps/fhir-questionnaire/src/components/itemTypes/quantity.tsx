@@ -10,7 +10,7 @@ interface Props {
 
 export const TypeQuantity: React.FC<Props> = ({ unit }) => {
   const options = getHardcodedValueSet(
-    "http://hl7.org/fhir/ValueSet/duration-units"
+    "http://hl7.org/fhir/ValueSet/duration-units",
   );
 
   return (

@@ -4,9 +4,10 @@ import { Coding, Identifier, Text } from "./general";
 import { ResourceType } from "./resourceType";
 import { Meta, Unit } from "./unit";
 
-export type Status = typeof Status[keyof typeof Status];
-export type EnableBehavior = typeof EnableBehavior[keyof typeof EnableBehavior];
-export type ItemType = typeof ItemType[keyof typeof ItemType];
+export type Status = (typeof Status)[keyof typeof Status];
+export type EnableBehavior =
+  (typeof EnableBehavior)[keyof typeof EnableBehavior];
+export type ItemType = (typeof ItemType)[keyof typeof ItemType];
 
 export type Answer =
   | { answerBoolean: boolean }
@@ -44,7 +45,7 @@ export type AnswerOption =
 
 export type EnableWhen = {
   question: string;
-  operator: typeof questionnairEnableOperator[number]["code"];
+  operator: (typeof questionnairEnableOperator)[number]["code"];
 } & Answer;
 
 export interface Item {
@@ -69,7 +70,7 @@ export interface Item {
 }
 
 interface QuestionnaireBase {
-  resourceType: typeof ResourceType["Questionnaire"];
+  resourceType: (typeof ResourceType)["Questionnaire"];
   id: string;
   meta?: any;
   identifier?: Identifier[];
@@ -108,7 +109,7 @@ export interface FlatQuestionnaire extends QuestionnaireBase {
 
 export function hasProp<T extends Record<PropertyKey, any>>(
   key: PropertyKey,
-  obj: T
+  obj: T,
 ): key is keyof T {
   return key in obj;
 }

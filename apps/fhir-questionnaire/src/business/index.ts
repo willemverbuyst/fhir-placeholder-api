@@ -14,7 +14,7 @@ import { ResourceType } from "../interfaces/resourceType";
 const flattenQuestionnaire = (
   item: Item,
   container: Item[],
-  groupLabel = ""
+  groupLabel = "",
 ): void => {
   Object.keys(item).forEach((prop) => {
     if (item.type === ItemType.Group && getLabel(item)) {
@@ -30,11 +30,11 @@ const flattenQuestionnaire = (
 
 const convertQuestionnaire = (
   questionnaire: Questionnaire,
-  bundle?: Bundle
+  bundle?: Bundle,
 ): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } => {
   let originalItems = questionnaire.item || [];
-  let item: Item[] = [];
-  let meta: Meta = { title: "", subTitle: "" };
+  const item: Item[] = [];
+  const meta: Meta = { title: "", subTitle: "" };
 
   meta.title = createMetaInfo(questionnaire);
 
@@ -60,13 +60,13 @@ const createMetaInfo = (questionnaire: Questionnaire): string =>
   questionnaire.title
     ? questionnaire.title
     : questionnaire.code && questionnaire.code[0]?.display
-    ? questionnaire.code[0].display
-    : "";
+      ? questionnaire.code[0].display
+      : "";
 
 const createInputUnit = (
   item: Item,
   questionnaire: Questionnaire,
-  bundle?: Bundle
+  bundle?: Bundle,
 ): { unit: Unit } => {
   if (!item.linkId) {
     throw new Error("linkId missing in one the items");
@@ -109,7 +109,7 @@ const handleBundle = (bundle: Bundle) => {
   const entries = bundle.entry || [];
   const resources = entries.map((entry) => entry.resource);
   const questionnaire = resources.find(
-    (resource) => resource.resourceType === ResourceType.Questionnaire
+    (resource) => resource.resourceType === ResourceType.Questionnaire,
   );
   if (questionnaire?.resourceType === ResourceType.Questionnaire) {
     return convertQuestionnaire(questionnaire, bundle);
@@ -117,7 +117,7 @@ const handleBundle = (bundle: Bundle) => {
 };
 
 const handleResource = (
-  resource: Questionnaire | Bundle
+  resource: Questionnaire | Bundle,
 ): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } | void => {
   if (resource.resourceType === ResourceType.Questionnaire) {
     return convertQuestionnaire(resource);
@@ -129,7 +129,7 @@ const handleResource = (
 };
 
 export const main = (
-  resource: Questionnaire | Bundle
+  resource: Questionnaire | Bundle,
 ): ConvertedQuestionnaire | null => {
   const convertedQuestionnaire = handleResource(resource);
   if (

@@ -12,7 +12,7 @@ export interface Entry {
 }
 
 export interface Bundle {
-  resourceType: typeof ResourceType["Bundle"];
+  resourceType: (typeof ResourceType)["Bundle"];
   id: string;
   type?: string;
   entry?: Entry[];

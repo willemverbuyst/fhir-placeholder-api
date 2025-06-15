@@ -6,7 +6,7 @@ import { ResourceType } from "../interfaces/resourceType";
 
 const getValueSetFromContained = (
   answerValueSet: string,
-  resource: Questionnaire
+  resource: Questionnaire,
 ): Coding[] => {
   const contained = resource.contained || [];
   const id = answerValueSet.replace("#", "");
@@ -17,7 +17,7 @@ const getValueSetFromContained = (
 };
 
 export const getHardcodedValueSet = (
-  url: keyof typeof hardcodedValueSet
+  url: keyof typeof hardcodedValueSet,
 ): Coding[] => {
   const valueSet = hardcodedValueSet[url];
   if (!valueSet) return [];
@@ -27,7 +27,7 @@ export const getHardcodedValueSet = (
 const getValueSetFromBundle = (url: string, bundle: Bundle): Coding[] => {
   const entries = bundle.entry ?? [];
   const valueSetResource = entries.find(
-    (entry) => entry.fullUrl === url
+    (entry) => entry.fullUrl === url,
   )?.resource;
   const valueSet =
     valueSetResource?.resourceType === ResourceType.ValueSet
@@ -39,7 +39,7 @@ const getValueSetFromBundle = (url: string, bundle: Bundle): Coding[] => {
 const getValueSet = (
   answerValueSetkey: string,
   questionnaire: Questionnaire,
-  bundle?: Bundle
+  bundle?: Bundle,
 ): Coding[] => {
   if (answerValueSetkey in hardcodedValueSet) {
     const key = answerValueSetkey as keyof typeof hardcodedValueSet;
@@ -68,13 +68,13 @@ const getAnswerOptions = (answerOption: AnswerOption[]): Coding[] =>
 export const getOptions = (
   item: Item,
   questionnaire: Questionnaire,
-  bundle?: Bundle
+  bundle?: Bundle,
 ): Coding[] => {
   const options = item.answerOption
     ? getAnswerOptions(item.answerOption)
     : item.answerValueSet
-    ? getValueSet(item.answerValueSet, questionnaire, bundle)
-    : [];
+      ? getValueSet(item.answerValueSet, questionnaire, bundle)
+      : [];
 
   return options;
 };

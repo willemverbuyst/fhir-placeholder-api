@@ -6,4 +6,4 @@ export const ResourceType = {
   ValueSet: "ValueSet",
 } as const;
 
-export type ResourceType = typeof ResourceType[keyof typeof ResourceType];
+export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];

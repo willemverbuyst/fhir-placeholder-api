@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import type { Address } from "fhir/r5";
-import { getRandomElement } from "./getRandomElement";
+import { getRandomElement } from "../helpers/getRandomElement";
 
 enum AddressUse {
   HOME = "home",

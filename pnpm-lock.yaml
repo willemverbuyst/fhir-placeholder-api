@@ -247,6 +247,9 @@ importers:
       '@faker-js/faker':
         specifier: ^9.7.0
         version: 9.8.0
+      '@repo/fhir-codes':
+        specifier: workspace:*
+        version: link:../fhir-codes
       bunchee:
         specifier: ^6.5.2
         version: 6.5.2(typescript@5.8.3)

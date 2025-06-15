@@ -1,12 +1,9 @@
-export const ConditionClinicalStatus = {
-  ACTIVE: "active",
-  RECURRENCE: "recurrence",
-  RELAPSE: "relapse",
-  INACTIVE: "inactive",
-  REMISSION: "remission",
-  RESOLVED: "resolved",
-  UNKNOWN: "unknown",
-} as const;
-
-export type ConditionClinicalStatus =
-  (typeof ConditionClinicalStatus)[keyof typeof ConditionClinicalStatus];
+export const ConditionClinicalStatus = [
+  "active",
+  "recurrence",
+  "relapse",
+  "inactive",
+  "remission",
+  "resolved",
+  "unknown",
+] as const;

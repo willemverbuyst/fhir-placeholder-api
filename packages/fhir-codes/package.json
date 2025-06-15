@@ -1,5 +1,5 @@
 {
-  "name": "@repo/dummy-data",
+  "name": "@repo/fhir-codes",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -21,12 +21,9 @@
   },
   "scripts": {
     "build": "bunchee",
-    "type:check": "tsc",
-    "test:unit": "vitest run"
+    "type:check": "tsc"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.7.0",
-    "@repo/fhir-codes": "workspace:*",
     "bunchee": "^6.5.2"
   },
   "devDependencies": {

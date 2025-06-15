@@ -1,16 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { AppointmentStatus } from "@repo/dummy-data";
+import { appointmentStatus } from "@repo/fhir-codes";
 import { Escape, Trim } from "class-sanitizer";
-import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { IsIn, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateAppointmentDto {
   @ApiProperty({
     type: String,
     description: "The status of the appointment",
-    example: AppointmentStatus.BOOKED,
+    example: "booked",
+    enum: appointmentStatus,
   })
-  @IsEnum(AppointmentStatus)
-  status: AppointmentStatus;
+  @IsIn(appointmentStatus)
+  status: (typeof appointmentStatus)[number];
 
   @ApiProperty({
     type: String,

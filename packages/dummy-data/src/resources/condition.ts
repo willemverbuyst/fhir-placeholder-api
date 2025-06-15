@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import { conditionClinicalStatus } from "@repo/fhir-codes";
 import type { Condition } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
@@ -15,15 +16,7 @@ export function createCondition({
     clinicalStatus: {
       coding: [
         {
-          code: getRandomElement([
-            "active",
-            "recurrence",
-            "relapse",
-            "inactive",
-            "remission",
-            "resolved",
-            "unknown",
-          ]),
+          code: getRandomElement(conditionClinicalStatus),
           system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
         },
       ],

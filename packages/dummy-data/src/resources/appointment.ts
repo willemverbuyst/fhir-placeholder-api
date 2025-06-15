@@ -1,26 +1,10 @@
+import {
+  appointmentParticipantStatus,
+  appointmentStatus,
+} from "@repo/fhir-codes";
 import type { Appointment } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
-
-export enum AppointmentStatus {
-  PROPOSED = "proposed",
-  PENDING = "pending",
-  BOOKED = "booked",
-  ARRIVED = "arrived",
-  FULFILLED = "fulfilled",
-  CANCELLED = "cancelled",
-  NOSHOW = "noshow",
-  ENTERED_IN_ERROR = "entered-in-error",
-  CHECKED_IN = "checked-in",
-  WAITLIST = "waitlist",
-}
-
-export enum AppointmentParticipantStatus {
-  ACCEPTED = "accepted",
-  DECLINED = "declined",
-  TENTATIVE = "tentative",
-  NEEDS_ACTION = "needs-action",
-}
 
 export function createAppointment({
   patientId,
@@ -31,20 +15,20 @@ export function createAppointment({
   return {
     id,
     resourceType: "Appointment",
-    status: getRandomElement(Object.values(AppointmentStatus)),
+    status: getRandomElement(appointmentStatus),
     subject: { reference: `Patient/${patientId}` },
     participant: [
       {
         actor: {
           reference: `Patient/${patientId}`,
         },
-        status: getRandomElement(Object.values(AppointmentParticipantStatus)),
+        status: getRandomElement(appointmentParticipantStatus),
       },
       {
         actor: {
           reference: `Practitioner/${practitionerId}`,
         },
-        status: getRandomElement(Object.values(AppointmentParticipantStatus)),
+        status: getRandomElement(appointmentParticipantStatus),
       },
     ],
   };

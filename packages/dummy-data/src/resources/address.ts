@@ -1,25 +1,12 @@
 import { faker } from "@faker-js/faker";
+import { addressType, addressUse } from "@repo/fhir-codes";
 import type { Address } from "fhir/r5";
-import { getRandomElement } from "./getRandomElement";
-
-enum AddressUse {
-  HOME = "home",
-  WORK = "work",
-  TEMP = "temp",
-  OLD = "old",
-  BILLING = "billing",
-}
-
-enum AddressType {
-  BOTH = "both",
-  PHYSICAL = "physical",
-  POSTAL = "postal",
-}
+import { getRandomElement } from "../helpers/getRandomElement";
 
 export function createAddress() {
   const address: Address = {
-    use: getRandomElement(Object.values(AddressUse)),
-    type: getRandomElement(Object.values(AddressType)),
+    use: getRandomElement(addressUse),
+    type: getRandomElement(addressType),
     line: [faker.location.streetAddress()],
     city: faker.location.city(),
     state: faker.location.state(),

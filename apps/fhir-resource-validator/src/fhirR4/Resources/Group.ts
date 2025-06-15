@@ -62,7 +62,7 @@ export const Group = DomainResource.extend({
   .strict()
   .superRefine((val, ctx) => {
     if (val.characteristic?.length) {
-      val.characteristic.forEach((c) => {
+      for (const c of val.characteristic) {
         if (!c.code) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -91,7 +91,7 @@ export const Group = DomainResource.extend({
             message: "Only one value option is allowed",
           });
         }
-      });
+      }
     }
   });
 

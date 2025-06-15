@@ -1,6 +1,6 @@
 import { Appointment } from "fhir/r5";
 
-export const AppointmentStatus: Array<Appointment["status"]> = [
+export const appointmentStatus: Array<Appointment["status"]> = [
   "proposed",
   "pending",
   "booked",
@@ -11,4 +11,4 @@ export const AppointmentStatus: Array<Appointment["status"]> = [
   "entered-in-error",
   "checked-in",
   "waitlist",
-] as const;
+];

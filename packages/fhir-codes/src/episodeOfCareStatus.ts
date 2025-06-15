@@ -1,6 +1,6 @@
 import { EpisodeOfCare } from "fhir/r5";
 
-export const EpisodeOfCareStatus: Array<EpisodeOfCare["status"]> = [
+export const episodeOfCareStatus: Array<EpisodeOfCare["status"]> = [
   "planned",
   "waitlist",
   "active",

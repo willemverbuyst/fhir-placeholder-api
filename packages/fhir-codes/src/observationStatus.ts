@@ -1,6 +1,6 @@
 import { Observation } from "fhir/r5";
 
-export const ObservationStatus: Array<Observation["status"]> = [
+export const observationStatus: Array<Observation["status"]> = [
   "registered",
   "preliminary",
   "final",
@@ -9,4 +9,4 @@ export const ObservationStatus: Array<Observation["status"]> = [
   "cancelled",
   "entered-in-error",
   "unknown",
-] as const;
+];

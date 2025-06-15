@@ -1,6 +1,6 @@
 import { ContactPoint } from "fhir/r5";
 
-export const ContactUse: Array<NonNullable<ContactPoint["use"]>> = [
+export const contactUse: Array<NonNullable<ContactPoint["use"]>> = [
   "home",
   "work",
   "temp",

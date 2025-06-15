@@ -1,6 +1,6 @@
 import { Encounter } from "fhir/r5";
 
-export const EncounterStatus: Array<Encounter["status"]> = [
+export const encounterStatus: Array<Encounter["status"]> = [
   "planned",
   "in-progress",
   "on-hold",

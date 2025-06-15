@@ -1,4 +1,4 @@
-export const ConditionClinicalStatus = [
+export const conditionClinicalStatus = [
   "active",
   "recurrence",
   "relapse",

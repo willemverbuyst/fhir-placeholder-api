@@ -9,49 +9,28 @@ permissions:
   pull-requests: write
 
 jobs:
-  tests-client:
-    name: Run Tests Client
+  tests:
+    name: Run Tests
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./client"
+
     steps:
-      - name: Checkout repo
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: 📦 Setup Node and PNPM
+        uses: pnpm/action-setup@v4
+
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: "./client/.nvmrc"
+          node-version-file: "./.nvmrc"
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Client - run unit Tests
-        run: npm run test:unit
+      - name: 📥 Install dependencies
+        run: pnpm install
 
-  tests-server:
-    name: Run Tests Server
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "./server"
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: 🧪 Run unit tests
+        run: pnpm test:unit
 
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: "./server/.nvmrc"
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Server - run unit Tests
-        run: npm run test:unit
-
-      - name: Server - run E2E tests
-        run: npm run test:e2e
-
+      - name: 🧪 Run e2e tests
+        run: pnpm test:e2e

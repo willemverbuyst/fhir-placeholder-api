@@ -1,4 +1,4 @@
-export const questionnairEnableOperator = [
+export const questionnaireEnableOperator = [
   { code: "exists", display: "Exists" },
   { code: "=", display: "Equals" },
   { code: "!=", display: "Not Equals" },

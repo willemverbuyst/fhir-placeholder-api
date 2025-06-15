@@ -1,7 +1,7 @@
 import { hardcodedValueSet } from "../constants/answerValueSet";
 import { Bundle } from "../interfaces/bundle";
 import { Coding } from "../interfaces/general";
-import { Questionnaire, AnswerOption, Item } from "../interfaces/questionnaire";
+import { AnswerOption, Item, Questionnaire } from "../interfaces/questionnaire";
 import { ResourceType } from "../interfaces/resourceType";
 
 const getValueSetFromContained = (
@@ -10,6 +10,7 @@ const getValueSetFromContained = (
 ): Coding[] => {
   const contained = resource.contained || [];
   const id = answerValueSet.replace("#", "");
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   const containedResource = contained.find((c: any) => c.id === id);
   const valueSet = containedResource?.compose?.include[0].concept;
 
@@ -37,17 +38,19 @@ const getValueSetFromBundle = (url: string, bundle: Bundle): Coding[] => {
 };
 
 const getValueSet = (
-  answerValueSetkey: string,
+  answerValueSetKey: string,
   questionnaire: Questionnaire,
   bundle?: Bundle,
 ): Coding[] => {
-  if (answerValueSetkey in hardcodedValueSet) {
-    const key = answerValueSetkey as keyof typeof hardcodedValueSet;
+  if (answerValueSetKey in hardcodedValueSet) {
+    const key = answerValueSetKey as keyof typeof hardcodedValueSet;
     return getHardcodedValueSet(key);
-  } else if (answerValueSetkey.startsWith("#")) {
-    return getValueSetFromContained(answerValueSetkey, questionnaire);
-  } else if (bundle) {
-    return getValueSetFromBundle(answerValueSetkey, bundle);
+  }
+  if (answerValueSetKey.startsWith("#")) {
+    return getValueSetFromContained(answerValueSetKey, questionnaire);
+  }
+  if (bundle) {
+    return getValueSetFromBundle(answerValueSetKey, bundle);
   }
   throw new Error("no ValueSet found");
 };

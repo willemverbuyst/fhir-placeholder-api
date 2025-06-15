@@ -15,6 +15,7 @@ export const HTML = () => {
     >
       <h3>HTML</h3>
       <div
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: todo
         dangerouslySetInnerHTML={{
           __html: questionnaire.questionnaire.text?.div,
         }}

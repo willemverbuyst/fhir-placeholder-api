@@ -9,6 +9,7 @@ interface Props {
 
 export const TypeTime: React.FC<Props> = ({ unit }) => {
   const [isValid, setIsValid] = useState<boolean>(false);
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   const checkIfValid = (e: any): void => {
     if (
       e.target.value.match(

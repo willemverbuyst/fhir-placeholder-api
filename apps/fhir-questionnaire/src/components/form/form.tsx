@@ -8,8 +8,9 @@ export const Form = () => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(0);
   const { state } = useContext(AppContext);
   const questionnaire = state.questionnaire;
-  const questionnaireItems = (questionnaire && questionnaire.units) ?? [];
+  const questionnaireItems = questionnaire?.units ?? [];
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: todo
   useEffect(() => {
     setCurrentQuestion(0);
   }, [questionnaire]);

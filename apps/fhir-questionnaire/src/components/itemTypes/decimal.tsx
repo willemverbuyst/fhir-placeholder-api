@@ -9,6 +9,7 @@ interface Props {
 
 export const TypeDecimal: React.FC<Props> = ({ unit }) => {
   const [isValid, setIsValid] = useState<boolean>(false);
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   const checkIfValid = (e: any): void => {
     if (
       e.target.value.match("-?(0|[1-9][0-9]*)(.[0-9]+)?([eE][+-]?[0-9]+)?") !=

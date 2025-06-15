@@ -1,4 +1,4 @@
-export const ItemType = {
+export const itemType = {
   Group: "group",
   Display: "display",
   Question: "question",
@@ -18,12 +18,12 @@ export const ItemType = {
   Quantity: "quantity",
 } as const;
 
-export const EnableBehavior = {
+export const enableBehavior = {
   All: "all",
   Any: "any",
 } as const;
 
-export const Status = {
+export const questionnaireStatus = {
   Draft: "draft",
   Active: "active",
   Retired: "retired",

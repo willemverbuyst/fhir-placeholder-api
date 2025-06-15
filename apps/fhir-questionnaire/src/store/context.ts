@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext } from "react";
 import { ConvertedQuestionnaire } from "../interfaces/questionnaire";
 
 export type InitialState = {
@@ -13,6 +13,7 @@ export const initialState: InitialState = {
 
 export const AppContext = createContext<{
   state: InitialState;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   dispatch: React.Dispatch<any>;
 }>({
   state: initialState,

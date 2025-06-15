@@ -1,13 +1,14 @@
-import { questionnairEnableOperator } from "../constants/questionnaireEnableValueSet";
-import { ItemType, EnableBehavior, Status } from "./constants";
+import { questionnaireEnableOperator } from "../constants/questionnaireEnableValueSet";
+import { enableBehavior, itemType, questionnaireStatus } from "./constants";
 import { Coding, Identifier, Text } from "./general";
 import { ResourceType } from "./resourceType";
 import { Meta, Unit } from "./unit";
 
-export type Status = (typeof Status)[keyof typeof Status];
+export type Status =
+  (typeof questionnaireStatus)[keyof typeof questionnaireStatus];
 export type EnableBehavior =
-  (typeof EnableBehavior)[keyof typeof EnableBehavior];
-export type ItemType = (typeof ItemType)[keyof typeof ItemType];
+  (typeof enableBehavior)[keyof typeof enableBehavior];
+export type ItemType = (typeof itemType)[keyof typeof itemType];
 
 export type Answer =
   | { answerBoolean: boolean }
@@ -18,7 +19,9 @@ export type Answer =
   | { answerTime: string }
   | { answerString: string }
   | { answerCoding: Coding }
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   | { answerQuantity: any }
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   | { answerReference: any };
 
 export type Initial =
@@ -31,8 +34,11 @@ export type Initial =
   | { valueString: string }
   | { valueCoding: Coding }
   | { valueUri: string }
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   | { valueAttachment: any }
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   | { valueQuantity: any }
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   | { valueReference: any };
 
 export type AnswerOption =
@@ -41,11 +47,12 @@ export type AnswerOption =
   | { valueTime: string }
   | { valueString: string }
   | { valueCoding: Coding }
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   | { valueReference: any };
 
 export type EnableWhen = {
   question: string;
-  operator: (typeof questionnairEnableOperator)[number]["code"];
+  operator: (typeof questionnaireEnableOperator)[number]["code"];
 } & Answer;
 
 export interface Item {
@@ -65,6 +72,7 @@ export interface Item {
   answerOption?: AnswerOption[];
   initial?: Initial[];
   item?: Item[];
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   extension?: any;
   groupLabel?: string;
 }
@@ -72,29 +80,40 @@ export interface Item {
 interface QuestionnaireBase {
   resourceType: (typeof ResourceType)["Questionnaire"];
   id: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   meta?: any;
   identifier?: Identifier[];
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   extension?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   contained?: any;
   text: Text;
   url?: string;
   version?: string;
   name?: string;
   title?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   derivedFrom?: any;
   status: Status;
   experimental?: boolean;
   subjectType: string[];
   date?: string;
   publisher?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   contact?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   description?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   useContext?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   jurisdiction?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   purpose?: any;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   copyright?: any;
   approvalDate?: string;
   lastReviewDate?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   effectivePeriod?: any;
   code?: Coding[];
 }
@@ -107,6 +126,7 @@ export interface FlatQuestionnaire extends QuestionnaireBase {
   item: { [key: string]: { meta: { groupId: string }; item: Item } };
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: todo
 export function hasProp<T extends Record<PropertyKey, any>>(
   key: PropertyKey,
   obj: T,

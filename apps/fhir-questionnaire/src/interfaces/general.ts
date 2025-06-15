@@ -22,9 +22,11 @@ export interface Reference<T> {
 
 export interface Identifier {
   use?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   type?: any;
   system?: string;
   value?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   period?: any;
   assigner?: Reference<"Organization">;
 }
@@ -33,6 +35,7 @@ export interface ValueSet {
   resourceType: (typeof ResourceType)["ValueSet"];
   id: string;
   status: "active";
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   meta?: any;
   text?: Text;
   url?: string;
@@ -41,6 +44,7 @@ export interface ValueSet {
   description?: string;
   immutable?: boolean;
   copyright?: string;
+  // biome-ignore lint/suspicious/noExplicitAny: todo
   compose?: any;
   request?: {
     method: string;

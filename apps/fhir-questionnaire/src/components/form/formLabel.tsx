@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
+// biome-ignore lint/suspicious/noExplicitAny: todo
 export const FormLabel: React.FC<{ unit: any }> = ({ unit }) => {
   return (
     <Form.Label className="m-2" htmlFor={unit.linkId}>

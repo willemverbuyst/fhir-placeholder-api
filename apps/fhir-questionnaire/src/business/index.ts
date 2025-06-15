@@ -1,23 +1,25 @@
 import { Bundle } from "../interfaces/bundle";
+import { itemType } from "../interfaces/constants";
+import { Coding } from "../interfaces/general";
 import {
   ConvertedQuestionnaire,
-  hasProp,
   Item,
   Questionnaire,
+  hasProp,
 } from "../interfaces/questionnaire";
+import { ResourceType } from "../interfaces/resourceType";
+import { Meta, Unit } from "../interfaces/unit";
 import { getOptions } from "./choice";
 import { getLabel } from "./label";
-import { Meta, Unit } from "../interfaces/unit";
-import { ItemType } from "../interfaces/constants";
-import { ResourceType } from "../interfaces/resourceType";
 
 const flattenQuestionnaire = (
   item: Item,
   container: Item[],
   groupLabel = "",
 ): void => {
-  Object.keys(item).forEach((prop) => {
-    if (item.type === ItemType.Group && getLabel(item)) {
+  for (const prop of Object.keys(item)) {
+    if (item.type === itemType.Group && getLabel(item)) {
+      // biome-ignore lint/style/noParameterAssign: todo
       groupLabel = getLabel(item);
     }
     if (hasProp(prop, item) && typeof item[prop] === "object") {
@@ -25,7 +27,7 @@ const flattenQuestionnaire = (
     } else if (prop === "linkId") {
       container.push({ ...item, groupLabel });
     }
-  });
+  }
 };
 
 const convertQuestionnaire = (
@@ -46,12 +48,13 @@ const convertQuestionnaire = (
     meta.subTitle = getLabel(originalItems[0]);
     originalItems = questionnaire.item[0].item || [];
   }
+  // biome-ignore lint/complexity/noForEach: todo
   originalItems.forEach((i) => flattenQuestionnaire(i, item));
 
   const units = item
     .map((i) => createInputUnit(i, questionnaire, bundle))
     .map((i) => i.unit)
-    .filter((i) => !(i.type === ItemType.Group));
+    .filter((i) => !(i.type === itemType.Group));
 
   return { units, meta, questionnaire };
 };
@@ -59,7 +62,7 @@ const convertQuestionnaire = (
 const createMetaInfo = (questionnaire: Questionnaire): string =>
   questionnaire.title
     ? questionnaire.title
-    : questionnaire.code && questionnaire.code[0]?.display
+    : questionnaire.code?.[0]?.display
       ? questionnaire.code[0].display
       : "";
 
@@ -86,8 +89,8 @@ const createInputUnit = (
   const required = item.required ?? false;
   const groupLabel = item.groupLabel;
 
-  let options;
-  if (item.type === ItemType.Choice) {
+  let options: Coding[] = [];
+  if (item.type === itemType.Choice) {
     options = getOptions(item, questionnaire, bundle);
   }
 
@@ -118,14 +121,14 @@ const handleBundle = (bundle: Bundle) => {
 
 const handleResource = (
   resource: Questionnaire | Bundle,
-): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } | void => {
+): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } | undefined => {
   if (resource.resourceType === ResourceType.Questionnaire) {
     return convertQuestionnaire(resource);
-  } else if (resource.resourceType === ResourceType.Bundle) {
-    return handleBundle(resource);
-  } else {
-    console.warn("Resource could not be processed");
   }
+  if (resource.resourceType === ResourceType.Bundle) {
+    return handleBundle(resource);
+  }
+  console.warn("Resource could not be processed");
 };
 
 export const main = (

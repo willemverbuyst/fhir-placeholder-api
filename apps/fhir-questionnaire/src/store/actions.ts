@@ -1,5 +1,6 @@
 import { ConvertedQuestionnaire } from "../interfaces/questionnaire";
 
+// biome-ignore lint/suspicious/noExplicitAny: todo
 type ActionMap<M extends { [key: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
     ? {

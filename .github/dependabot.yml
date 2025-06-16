@@ -1,37 +1,22 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "[Monorepo]"
+      interval: weekly
+      day: tuesday
+    versioning-strategy: increase
 
-  - package-ecosystem: "npm"
-    directory: "/client"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "[Client]"
-
-  - package-ecosystem: "npm"
-    directory: "/server"
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "[Server]"
-
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "[Actions]"
+      interval: weekly
+      day: tuesday
       
-  - package-ecosystem: "pip"
-    directory: "/spreadsheet"  
+  - package-ecosystem: pip
+    directory: /spreadsheet 
     schedule:
-      interval: "weekly" 
-    commit-message:
-      prefix: "[Workbook]"
+      interval: weekly
+      day: tuesday
+
 

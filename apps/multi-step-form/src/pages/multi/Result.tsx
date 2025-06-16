@@ -49,6 +49,7 @@ function Result() {
           <p>Files:</p>
           <ul>
             {Object.values(state.data.files || {}).map((f, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: todo
               <li key={i} className="text-end">
                 {f.name}
               </li>
@@ -65,6 +66,7 @@ function Result() {
             {Object.values(state.data.skills)
               .filter((i) => i.value)
               .map((skill, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: todo
                 <li key={i} className="text-end">
                   {skill.value}
                 </li>

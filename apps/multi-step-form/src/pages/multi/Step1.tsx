@@ -18,7 +18,7 @@ const stepOneFormValues = z.object({
     (val) => (val ? isValidBSN(val) : true),
     () => ({
       message: "this is not a valid bsn",
-    })
+    }),
   ),
   dateOfBirth: z.date().optional(),
 });

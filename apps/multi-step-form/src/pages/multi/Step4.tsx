@@ -41,7 +41,7 @@ function Step4() {
 
   const removeSkill = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    i: number
+    i: number,
   ) => {
     e.preventDefault();
     remove(i);
@@ -57,8 +57,9 @@ function Step4() {
           values={[...POSITION]}
         />
         <section className="flex flex-col py-1">
-          <label className="text-2xl">Skills</label>
+          <p className="text-2xl">Skills</p>
           {fields.map((_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: todo
             <section key={i} className="flex justify-between gap-1">
               <FormFieldSelect
                 formRegister={register(`skills.${i}.value`)}
@@ -66,6 +67,7 @@ function Step4() {
               />
               {i > 0 && (
                 <button
+                  type="button"
                   className="text-slate-300 px-2 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none"
                   onClick={(e) => removeSkill(e, i)}
                 >
@@ -73,6 +75,7 @@ function Step4() {
                 </button>
               )}
               <button
+                type="button"
                 onClick={appendSkill}
                 className="text-slate-300 px-2 rounded hover:bg-slate-700 focus-within:bg-slate-700 outline-none"
               >

@@ -21,7 +21,7 @@ const stepTwoFormValues = z.object({
   hasPhoneNumber: z.boolean(),
   phoneNumber: z.string().refine(
     (val) => (val ? isValidPhoneNumber(val) : true),
-    () => ({ message: "this is not a valid phone number" })
+    () => ({ message: "this is not a valid phone number" }),
   ),
 });
 

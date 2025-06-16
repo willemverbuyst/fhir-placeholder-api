@@ -35,14 +35,14 @@ function TransformAndParse() {
     <ControllerWithTransformer
       transform={{
         input: (value) => {
-          const v = isNaN(value) || value === 0 ? "" : value.toString();
+          const v = Number.isNaN(value) || value === 0 ? "" : value.toString();
           console.log("TYPE OF INPUT:", typeof v);
           return v;
         },
 
         output: (e) => {
-          const output = parseInt(e.target.value, 10);
-          const v = isNaN(output) ? 0 : output;
+          const output = Number.parseInt(e.target.value, 10);
+          const v = Number.isNaN(output) ? 0 : output;
           console.log("TYPE OF OUTPUT:", typeof v);
           return v;
         },

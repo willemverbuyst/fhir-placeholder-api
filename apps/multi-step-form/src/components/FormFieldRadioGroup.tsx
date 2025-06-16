@@ -21,8 +21,11 @@ function FormFieldRadioGroup<T extends string>({
             type="radio"
             value={value}
             className="bg-slate-100 rounded outline-none"
+            id={value}
           />
-          <label className="px-1">{value}</label>
+          <label className="px-1" htmlFor={value}>
+            {value}
+          </label>
         </section>
       ))}
     </fieldset>

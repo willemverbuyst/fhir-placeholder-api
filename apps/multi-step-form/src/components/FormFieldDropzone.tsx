@@ -40,7 +40,9 @@ function FormFieldDropzone<T extends FieldValues>({
           <Dropzone
             multiple={multiple}
             onChange={(e) =>
-              onChange(multiple ? e.target.files : e.target.files?.[0] ?? null)
+              onChange(
+                multiple ? e.target.files : (e.target.files?.[0] ?? null),
+              )
             }
             {...rest}
           />

@@ -38,6 +38,7 @@ function Step3() {
           {state.data.files && (
             <ul>
               {Object.values(state.data.files || {}).map((f, i) => (
+                // biome-ignore lint/suspicious/noArrayIndexKey: todo
                 <li key={i}>{f.name}</li>
               ))}
             </ul>

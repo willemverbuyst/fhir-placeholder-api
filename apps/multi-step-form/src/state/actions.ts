@@ -6,7 +6,7 @@ export function updateStepOne(
   payload: {
     firstName: string;
     lastName: string;
-  }
+  },
 ) {
   return {
     ...state,
@@ -23,7 +23,7 @@ export function updateStepTwo(
     email: string;
     hasPhoneNumber: boolean;
     phoneNumber: string;
-  }
+  },
 ) {
   return {
     ...state,
@@ -38,7 +38,7 @@ export function updateStepThree(
   state: GlobalState,
   payload: {
     files: FileList | undefined;
-  }
+  },
 ) {
   if (!payload.files) {
     return state;
@@ -57,7 +57,7 @@ export function updateStepFour(
   payload: {
     position: (typeof POSITION)[number];
     skills: { value: (typeof SKILLS)[number] | "" }[];
-  }
+  },
 ) {
   return {
     ...state,

@@ -9,7 +9,7 @@ function BreadCrumbs() {
     <section className="flex py-5 italic">
       <p
         className={clsx(
-          pathname === `/${ROUTES.MULTI}/${MULTI.START}` && "text-lime-300"
+          pathname === `/${ROUTES.MULTI}/${MULTI.START}` && "text-lime-300",
         )}
       >
         start
@@ -17,7 +17,7 @@ function BreadCrumbs() {
       <span>&nbsp;&gt;&nbsp;</span>
       <p
         className={clsx(
-          pathname === `/${ROUTES.MULTI}/${MULTI.STEP1}` && "text-lime-300"
+          pathname === `/${ROUTES.MULTI}/${MULTI.STEP1}` && "text-lime-300",
         )}
       >
         step1
@@ -25,7 +25,7 @@ function BreadCrumbs() {
       <span>&nbsp;&gt;&nbsp;</span>
       <p
         className={clsx(
-          pathname === `/${ROUTES.MULTI}/${MULTI.STEP2}` && "text-lime-300"
+          pathname === `/${ROUTES.MULTI}/${MULTI.STEP2}` && "text-lime-300",
         )}
       >
         step2
@@ -33,7 +33,7 @@ function BreadCrumbs() {
       <span>&nbsp;&gt;&nbsp;</span>
       <p
         className={clsx(
-          pathname === `/${ROUTES.MULTI}/${MULTI.STEP3}` && "text-lime-300"
+          pathname === `/${ROUTES.MULTI}/${MULTI.STEP3}` && "text-lime-300",
         )}
       >
         step3
@@ -41,7 +41,7 @@ function BreadCrumbs() {
       <span>&nbsp;&gt;&nbsp;</span>
       <p
         className={clsx(
-          pathname === `/${ROUTES.MULTI}/${MULTI.STEP4}` && "text-lime-300"
+          pathname === `/${ROUTES.MULTI}/${MULTI.STEP4}` && "text-lime-300",
         )}
       >
         step4
@@ -49,7 +49,7 @@ function BreadCrumbs() {
       <span>&nbsp;&gt;&nbsp;</span>
       <p
         className={clsx(
-          pathname === `/${ROUTES.MULTI}/${MULTI.RESULT}` && "text-lime-300"
+          pathname === `/${ROUTES.MULTI}/${MULTI.RESULT}` && "text-lime-300",
         )}
       >
         result

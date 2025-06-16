@@ -38,7 +38,7 @@ createStore(
   {
     middleWares: [log],
     persist: "none", // use "action" to persit data
-  }
+  },
 );
 
 function App() {

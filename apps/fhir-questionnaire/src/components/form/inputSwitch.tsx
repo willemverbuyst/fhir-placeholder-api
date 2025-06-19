@@ -1,4 +1,3 @@
-import { itemType } from "../../interfaces/constants";
 import { Unit } from "../../interfaces/unit";
 import {
   TypeBoolean,
@@ -21,25 +20,25 @@ export const InputSwitch: React.FC<Props> = ({ unit }) => {
   const { type } = unit;
 
   switch (type) {
-    case itemType.Boolean:
+    case "boolean":
       return <TypeBoolean unit={unit} />;
-    case itemType.Choice:
+    case "choice":
       return <TypeChoice unit={unit} />;
-    case itemType.Date:
+    case "date":
       return <TypeDate unit={unit} />;
-    case itemType.DateTime:
+    case "dateTime":
       return <TypeDateTime unit={unit} />;
-    case itemType.Decimal:
+    case "decimal":
       return <TypeDecimal unit={unit} />;
-    case itemType.Group:
+    case "group":
       return null;
-    case itemType.Integer:
+    case "integer":
       return <TypeInteger unit={unit} />;
-    case itemType.Quantity:
+    case "quantity":
       return <TypeQuantity unit={unit} />;
-    case itemType.String:
+    case "string":
       return <TypeString unit={unit} />;
-    case itemType.Time:
+    case "time":
       return <TypeTime unit={unit} />;
     default:
       return <Text text={unit.label} />;

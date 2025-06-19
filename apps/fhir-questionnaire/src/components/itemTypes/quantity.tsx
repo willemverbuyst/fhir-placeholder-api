@@ -19,9 +19,9 @@ export const TypeQuantity: React.FC<Props> = ({ unit }) => {
       <Stack direction="horizontal">
         <Form.Control className="m-2" id={unit.linkId} type="number" />
         <Form.Select className="m-2">
-          {options.map((option: string) => (
-            <option key={option} value={option}>
-              {option}
+          {options.map(({ code, display }) => (
+            <option key={code} value={code}>
+              {display}
             </option>
           ))}
         </Form.Select>

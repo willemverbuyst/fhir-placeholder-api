@@ -1,3 +1,4 @@
+import { Questionnaire } from "fhir/r4";
 import React, { useContext, useState } from "react";
 import {
   ButtonGroup,
@@ -8,7 +9,6 @@ import {
 } from "react-bootstrap";
 import { main } from "../business";
 import { examples } from "../examples";
-import { Questionnaire } from "../interfaces/questionnaire";
 import { ActionTypes } from "../store/actions";
 import { AppContext } from "../store/context";
 import { Form } from "./form/form";

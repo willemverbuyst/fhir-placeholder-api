@@ -1,8 +1,11 @@
+import {
+  Bundle,
+  Coding,
+  Questionnaire,
+  QuestionnaireItem,
+  QuestionnaireItemAnswerOption,
+} from "fhir/r4";
 import { hardcodedValueSet } from "../constants/answerValueSet";
-import { Bundle } from "../interfaces/bundle";
-import { Coding } from "../interfaces/general";
-import { AnswerOption, Item, Questionnaire } from "../interfaces/questionnaire";
-import { ResourceType } from "../interfaces/resourceType";
 
 const getValueSetFromContained = (
   answerValueSet: string,
@@ -10,9 +13,13 @@ const getValueSetFromContained = (
 ): Coding[] => {
   const contained = resource.contained || [];
   const id = answerValueSet.replace("#", "");
-  // biome-ignore lint/suspicious/noExplicitAny: todo
-  const containedResource = contained.find((c: any) => c.id === id);
-  const valueSet = containedResource?.compose?.include[0].concept;
+  const containedResource = contained.find((c) => c.id === id);
+
+  if (!containedResource || containedResource.resourceType !== "ValueSet") {
+    return [];
+  }
+
+  const valueSet = containedResource?.compose?.include[0].concept ?? [];
 
   return valueSet;
 };
@@ -31,8 +38,8 @@ const getValueSetFromBundle = (url: string, bundle: Bundle): Coding[] => {
     (entry) => entry.fullUrl === url,
   )?.resource;
   const valueSet =
-    valueSetResource?.resourceType === ResourceType.ValueSet
-      ? valueSetResource?.compose?.include[0].concept
+    valueSetResource?.resourceType === "ValueSet"
+      ? (valueSetResource?.compose?.include[0].concept ?? [])
       : [];
   return valueSet;
 };
@@ -55,11 +62,13 @@ const getValueSet = (
   throw new Error("no ValueSet found");
 };
 
-const getAnswerOptions = (answerOption: AnswerOption[]): Coding[] =>
+const getAnswerOptions = (
+  answerOption: QuestionnaireItemAnswerOption[],
+): Coding[] =>
   answerOption
     .map((option) => {
-      if ("valueCoding" in option) {
-        if (!option.valueCoding.display) {
+      if ("valueCoding" in option && option.valueCoding) {
+        if (!option.valueCoding?.display) {
           option.valueCoding.display =
             option.valueCoding.code?.toLocaleLowerCase();
         }
@@ -69,7 +78,7 @@ const getAnswerOptions = (answerOption: AnswerOption[]): Coding[] =>
     .filter((i): i is Coding => !!i);
 
 export const getOptions = (
-  item: Item,
+  item: QuestionnaireItem,
   questionnaire: Questionnaire,
   bundle?: Bundle,
 ): Coding[] => {

@@ -1,9 +1,8 @@
-import { Coding } from "./general";
-import { ItemType } from "./questionnaire";
+import { Coding, QuestionnaireItem } from "fhir/r4";
 
 export type Unit = {
   linkId: string;
-  type: ItemType;
+  type: QuestionnaireItem["type"];
   label: string;
   defaultValue?: unknown;
   required: boolean;

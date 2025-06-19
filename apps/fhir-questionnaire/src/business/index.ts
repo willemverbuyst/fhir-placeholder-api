@@ -1,31 +1,24 @@
-import { Bundle } from "../interfaces/bundle";
-import { itemType } from "../interfaces/constants";
-import { Coding } from "../interfaces/general";
-import {
-  ConvertedQuestionnaire,
-  Item,
-  Questionnaire,
-  hasProp,
-} from "../interfaces/questionnaire";
-import { ResourceType } from "../interfaces/resourceType";
+import { Bundle, Coding, Questionnaire, QuestionnaireItem } from "fhir/r4";
+import { ConvertedQuestionnaire, hasProp } from "../interfaces/questionnaire";
 import { Meta, Unit } from "../interfaces/unit";
 import { getOptions } from "./choice";
 import { getLabel } from "./label";
 
 const flattenQuestionnaire = (
-  item: Item,
-  container: Item[],
+  item: QuestionnaireItem,
+  container: (QuestionnaireItem & { groupLabel?: string })[],
   groupLabel = "",
 ): void => {
+  let label = groupLabel;
   for (const prop of Object.keys(item)) {
-    if (item.type === itemType.Group && getLabel(item)) {
-      // biome-ignore lint/style/noParameterAssign: todo
-      groupLabel = getLabel(item);
+    if (item.type === "group" && getLabel(item)) {
+      label = getLabel(item);
     }
     if (hasProp(prop, item) && typeof item[prop] === "object") {
+      // @ts-ignore
       flattenQuestionnaire(item[prop], container, groupLabel);
     } else if (prop === "linkId") {
-      container.push({ ...item, groupLabel });
+      container.push({ ...item, groupLabel: label });
     }
   }
 };
@@ -35,7 +28,7 @@ const convertQuestionnaire = (
   bundle?: Bundle,
 ): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } => {
   let originalItems = questionnaire.item || [];
-  const item: Item[] = [];
+  const item: QuestionnaireItem[] = [];
   const meta: Meta = { title: "", subTitle: "" };
 
   meta.title = createMetaInfo(questionnaire);
@@ -54,7 +47,7 @@ const convertQuestionnaire = (
   const units = item
     .map((i) => createInputUnit(i, questionnaire, bundle))
     .map((i) => i.unit)
-    .filter((i) => !(i.type === itemType.Group));
+    .filter((i) => !(i.type === "group"));
 
   return { units, meta, questionnaire };
 };
@@ -67,7 +60,7 @@ const createMetaInfo = (questionnaire: Questionnaire): string =>
       : "";
 
 const createInputUnit = (
-  item: Item,
+  item: QuestionnaireItem & { groupLabel?: string },
   questionnaire: Questionnaire,
   bundle?: Bundle,
 ): { unit: Unit } => {
@@ -90,7 +83,7 @@ const createInputUnit = (
   const groupLabel = item.groupLabel;
 
   let options: Coding[] = [];
-  if (item.type === itemType.Choice) {
+  if (item.type === "choice") {
     options = getOptions(item, questionnaire, bundle);
   }
 
@@ -112,9 +105,9 @@ const handleBundle = (bundle: Bundle) => {
   const entries = bundle.entry || [];
   const resources = entries.map((entry) => entry.resource);
   const questionnaire = resources.find(
-    (resource) => resource.resourceType === ResourceType.Questionnaire,
+    (resource) => resource?.resourceType === "Questionnaire",
   );
-  if (questionnaire?.resourceType === ResourceType.Questionnaire) {
+  if (questionnaire?.resourceType === "Questionnaire") {
     return convertQuestionnaire(questionnaire, bundle);
   }
 };
@@ -122,10 +115,10 @@ const handleBundle = (bundle: Bundle) => {
 const handleResource = (
   resource: Questionnaire | Bundle,
 ): { units: Unit[]; meta: Meta; questionnaire: Questionnaire } | undefined => {
-  if (resource.resourceType === ResourceType.Questionnaire) {
+  if (resource.resourceType === "Questionnaire") {
     return convertQuestionnaire(resource);
   }
-  if (resource.resourceType === ResourceType.Bundle) {
+  if (resource.resourceType === "Bundle") {
     return handleBundle(resource);
   }
   console.warn("Resource could not be processed");
@@ -133,14 +126,14 @@ const handleResource = (
 
 export const main = (
   resource: Questionnaire | Bundle,
-): ConvertedQuestionnaire | null => {
+): ConvertedQuestionnaire | undefined => {
   const convertedQuestionnaire = handleResource(resource);
   if (
     convertedQuestionnaire &&
-    (resource.resourceType === ResourceType.Bundle ||
-      resource.resourceType === ResourceType.Questionnaire)
+    (resource.resourceType === "Bundle" ||
+      resource.resourceType === "Questionnaire")
   ) {
     return convertedQuestionnaire;
   }
-  return null;
+  return undefined;
 };

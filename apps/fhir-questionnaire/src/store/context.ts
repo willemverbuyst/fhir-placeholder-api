@@ -1,5 +1,6 @@
 import React, { createContext } from "react";
 import type { ConvertedQuestionnaire } from "../interfaces/questionnaire";
+import type { Actions } from "./actions";
 
 export type InitialState = {
   showDebugger: boolean;
@@ -13,8 +14,7 @@ export const initialState: InitialState = {
 
 export const AppContext = createContext<{
   state: InitialState;
-  // biome-ignore lint/suspicious/noExplicitAny: todo
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<Actions>;
 }>({
   state: initialState,
   dispatch: () => null,

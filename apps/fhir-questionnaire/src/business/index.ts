@@ -44,8 +44,9 @@ const convertQuestionnaire = (
     meta.subTitle = getLabel(originalItems[0]);
     originalItems = questionnaire.item[0].item || [];
   }
-  // biome-ignore lint/complexity/noForEach: todo
-  originalItems.forEach((i) => flattenQuestionnaire(i, item));
+  for (const i of originalItems) {
+    flattenQuestionnaire(i, item);
+  }
 
   const units = item
     .map((i) => createInputUnit(i, questionnaire, bundle))

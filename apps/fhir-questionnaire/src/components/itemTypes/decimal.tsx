@@ -9,8 +9,7 @@ interface Props {
 
 export const TypeDecimal: React.FC<Props> = ({ unit }) => {
   const [isValid, setIsValid] = useState<boolean>(false);
-  // biome-ignore lint/suspicious/noExplicitAny: todo
-  const checkIfValid = (e: any): void => {
+  const checkIfValid = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (
       e.target.value.match("-?(0|[1-9][0-9]*)(.[0-9]+)?([eE][+-]?[0-9]+)?") !=
       null
@@ -28,7 +27,7 @@ export const TypeDecimal: React.FC<Props> = ({ unit }) => {
       <Form.Control
         className="m-2"
         id={unit.linkId}
-        onChange={(e) => checkIfValid(e)}
+        onChange={checkIfValid}
         type="string"
         isValid={isValid}
         isInvalid={!isValid}

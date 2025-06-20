@@ -9,8 +9,7 @@ interface Props {
 
 export const TypeTime: React.FC<Props> = ({ unit }) => {
   const [isValid, setIsValid] = useState<boolean>(false);
-  // biome-ignore lint/suspicious/noExplicitAny: todo
-  const checkIfValid = (e: any): void => {
+  const checkIfValid = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (
       e.target.value.match(
         "([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(.[0-9]+)?",
@@ -29,7 +28,7 @@ export const TypeTime: React.FC<Props> = ({ unit }) => {
       <Form.Control
         className="m-2"
         id={unit.linkId}
-        onChange={(e) => checkIfValid(e)}
+        onChange={checkIfValid}
         placeholder="hh:mm:ss"
         type="string"
         isValid={isValid}

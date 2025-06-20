@@ -1,6 +1,8 @@
 import React from "react";
+import type { ConvertedQuestionnaire } from "../interfaces/questionnaire";
 
-// biome-ignore lint/suspicious/noExplicitAny: todo
-export const Title: React.FC<{ questionnaire: any }> = ({ questionnaire }) => {
+export const Title: React.FC<{ questionnaire: ConvertedQuestionnaire }> = ({
+  questionnaire,
+}) => {
   return <h2>{questionnaire.meta.title}</h2>;
 };

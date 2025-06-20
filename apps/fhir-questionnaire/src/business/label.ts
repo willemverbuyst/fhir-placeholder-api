@@ -1,4 +1,4 @@
-import { QuestionnaireItem } from "fhir/r4";
+import type { QuestionnaireItem } from "fhir/r4";
 
 export const getLabel = (item: QuestionnaireItem) => {
   const prefix = item?.prefix;

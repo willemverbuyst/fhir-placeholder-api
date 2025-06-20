@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { ConvertedQuestionnaire } from "../interfaces/questionnaire";
+import type { ConvertedQuestionnaire } from "../interfaces/questionnaire";
 
 export type InitialState = {
   showDebugger: boolean;

@@ -1,4 +1,4 @@
-import { Coding, QuestionnaireItem } from "fhir/r4";
+import type { Coding, QuestionnaireItem } from "fhir/r4";
 
 export type Unit = {
   linkId: string;

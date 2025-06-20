@@ -1,4 +1,4 @@
-import { Unit } from "../../interfaces/unit";
+import type { Unit } from "../../interfaces/unit";
 import {
   TypeBoolean,
   TypeChoice,

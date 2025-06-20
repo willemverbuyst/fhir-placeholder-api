@@ -1,4 +1,4 @@
-import { Questionnaire } from "fhir/r4";
+import type { Questionnaire } from "fhir/r4";
 import React, { useContext, useState } from "react";
 import {
   ButtonGroup,

@@ -1,4 +1,4 @@
-import { ConvertedQuestionnaire } from "../interfaces/questionnaire";
+import type { ConvertedQuestionnaire } from "../interfaces/questionnaire";
 
 // biome-ignore lint/suspicious/noExplicitAny: todo
 type ActionMap<M extends { [key: string]: any }> = {

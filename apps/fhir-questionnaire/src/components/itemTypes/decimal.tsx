@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { Unit } from "../../interfaces/unit";
+import type { Unit } from "../../interfaces/unit";
 import { FormLabel } from "../form/formLabel";
 
 interface Props {

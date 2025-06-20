@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Button, Stack } from "react-bootstrap";
-import { Unit } from "../../interfaces/unit";
+import { Button, Card, Stack } from "react-bootstrap";
+import type { Unit } from "../../interfaces/unit";
 import { TypeGroup } from "../itemTypes";
 import { InputSwitch } from "./inputSwitch";
 

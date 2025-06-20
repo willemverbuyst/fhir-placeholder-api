@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Stack } from "react-bootstrap";
 import { getHardcodedValueSet } from "../../business/choice";
-import { Unit } from "../../interfaces/unit";
+import type { Unit } from "../../interfaces/unit";
 import { FormLabel } from "../form/formLabel";
 
 interface Props {

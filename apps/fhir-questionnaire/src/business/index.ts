@@ -1,6 +1,9 @@
-import { Bundle, Coding, Questionnaire, QuestionnaireItem } from "fhir/r4";
-import { ConvertedQuestionnaire, hasProp } from "../interfaces/questionnaire";
-import { Meta, Unit } from "../interfaces/unit";
+import type { Bundle, Coding, Questionnaire, QuestionnaireItem } from "fhir/r4";
+import {
+  type ConvertedQuestionnaire,
+  hasProp,
+} from "../interfaces/questionnaire";
+import type { Meta, Unit } from "../interfaces/unit";
 import { getOptions } from "./choice";
 import { getLabel } from "./label";
 

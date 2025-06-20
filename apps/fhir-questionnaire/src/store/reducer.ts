@@ -1,5 +1,5 @@
-import { InitialState } from "./context";
-import { Actions, ActionTypes } from "./actions";
+import { ActionTypes, type Actions } from "./actions";
+import type { InitialState } from "./context";
 
 export const stateReducer = (state: InitialState, action: Actions) => {
   switch (action.type) {

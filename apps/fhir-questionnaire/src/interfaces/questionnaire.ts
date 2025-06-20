@@ -1,5 +1,5 @@
-import { Questionnaire, QuestionnaireItem } from "fhir/r4";
-import { Meta, Unit } from "./unit";
+import type { Questionnaire, QuestionnaireItem } from "fhir/r4";
+import type { Meta, Unit } from "./unit";
 
 export function hasProp(
   key: PropertyKey,

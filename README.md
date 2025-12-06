@@ -125,6 +125,7 @@ curl http://localhost:8080/api/v2/r5/Patient/patient-3
 
 ## Tools (client)
 
-![graph](./client/screenshots/graph.png)
-![search-sort-filter](./client/screenshots/search-sort-filter.png)
-![create](./client/screenshots/create.png)
+![graph](./apps/client/screenshots/capability-statement.png)
+![graph](./apps/client/screenshots/graph.png)
+![search-sort-filter](./apps/client/screenshots/cockpit.png)
+![create](./apps/client/screenshots/dashboard.png)

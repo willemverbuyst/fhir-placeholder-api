@@ -1,9 +1,25 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { ResourcesService } from '../../core/services/resources.service';
+import { AppFhirResource } from '../../types';
 
 @Component({
-  selector: "app-dashboard",
+  selector: 'app-dashboard',
   imports: [],
-  templateUrl: "./dashboard.component.html",
-  styleUrl: "./dashboard.component.scss",
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  public resourcesCount: Record<
+    AppFhirResource['resourceType'],
+    number
+  > | null = null;
+
+  constructor(private resourcesService: ResourcesService) {}
+
+  ngOnInit(): void {
+    this.resourcesService.getResourcesCount().subscribe((data) => {
+      this.resourcesCount = data;
+      console.log('Resources Count: ', this.resourcesCount);
+    });
+  }
+}

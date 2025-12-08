@@ -3,16 +3,23 @@ import { Injectable } from '@angular/core';
 import { Bundle } from 'fhir/r5';
 import { Observable } from 'rxjs';
 import { AppFhirResource } from '../../types';
+import { SERVER_URL } from './config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ResourcesService {
-  private base = 'http://localhost:8080/api/v2/r5';
-
   constructor(private http: HttpClient) {}
 
   getResources(resource: AppFhirResource['resourceType']): Observable<Bundle> {
-    return this.http.get<Bundle>(`${this.base}/${resource}`);
+    return this.http.get<Bundle>(`${SERVER_URL}/${resource}`);
+  }
+
+  getResourcesCount(): Observable<
+    Record<AppFhirResource['resourceType'], number>
+  > {
+    return this.http.get<Record<AppFhirResource['resourceType'], number>>(
+      `${SERVER_URL}/$resource-counts`
+    );
   }
 }

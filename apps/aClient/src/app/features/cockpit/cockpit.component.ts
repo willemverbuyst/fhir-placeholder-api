@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
-import { ResourcesService } from '../../core/services/get-resources.service';
+import { ResourcesService } from '../../core/services/resources.service';
 import { AppFhirResource } from '../../types';
 
 @Component({

@@ -1,6 +1,4 @@
-h1 {
-  color: blue;
-}
+
 
 ol {
   padding: 0;
@@ -11,4 +9,15 @@ ol {
 li {
   display: inline;
   margin-right: 15px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-size: medium;
+}
+
+.active-link {
+  font-weight: bold;
+  text-decoration: underline;
 }

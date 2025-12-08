@@ -1,10 +1,36 @@
-<h1>Fhir Placeholder Api</h1>
-<nav >
-  <ol>
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/capability-statement">CapabilityStatement</a></li>
-    <li><a routerLink="/graph">Graph</a></li>
-    <li><a routerLink="/cockpit">Cockpit</a></li>
-    <li><a routerLink="/dashboard">Dashboard</a></li>
-  </ol>
-</nav>
+<mat-toolbar color="primary">
+  <div class="container">
+    <div class="toolbar-content">
+      <h1>Fhir Placeholder Api</h1>
+
+      <nav>
+        <ol>
+          <li>
+            <a
+              routerLink="/"
+              routerLinkActive="active-link"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a routerLink="/capability-statement" routerLinkActive="active-link"
+              >CapabilityStatement</a
+            >
+          </li>
+          <li>
+            <a routerLink="/graph" routerLinkActive="active-link">Graph</a>
+          </li>
+          <li>
+            <a routerLink="/cockpit" routerLinkActive="active-link">Cockpit</a>
+          </li>
+          <li>
+            <a routerLink="/dashboard" routerLinkActive="active-link"
+              >Dashboard</a
+            >
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</mat-toolbar>

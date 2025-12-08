@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ResourcesService } from '../../core/services/resources.service';
 import { AppFhirResource } from '../../types';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

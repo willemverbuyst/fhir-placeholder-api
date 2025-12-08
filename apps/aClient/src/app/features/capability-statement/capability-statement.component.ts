@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
-import { CapabilityStatement } from "fhir/r5";
+import { CapabilityStatementRestResource } from "fhir/r5";
 import { MetadataService } from "../../core/services/capability-statement.service";
 
 @Component({
@@ -10,12 +10,16 @@ import { MetadataService } from "../../core/services/capability-statement.servic
   styleUrl: "./capability-statement.component.scss",
 })
 export class CapabilityStatementComponent {
-  public capabilityStatement: CapabilityStatement | undefined;
-  constructor(private metadataDataService: MetadataService) {}
+  public capabilityStatementResources: CapabilityStatementRestResource[];
+  constructor(private metadataDataService: MetadataService) {
+    this.capabilityStatementResources = [];
+  }
 
   ngOnInit(): void {
     this.metadataDataService.getMetadata().subscribe((data) => {
-      this.capabilityStatement = data;
+      if (data.rest?.[0].mode === "server") {
+        this.capabilityStatementResources = data.rest?.[0].resource || [];
+      }
     });
   }
 }

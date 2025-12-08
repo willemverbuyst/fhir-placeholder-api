@@ -1,3 +1,36 @@
-  <div *ngIf="capabilityStatement">
-      <pre>{{ capabilityStatement | json }}</pre>
+<div>
+  @for (item of capabilityStatementResources; track item.type) {
+    <div>
+      <h2>{{ item.type }}</h2>
+      <div>
+        <section>
+          <h3>Interaction</h3>
+          @for (interaction of item.interaction; track interaction.code) {
+            <ul>
+              <li>{{ interaction.code }}</li>
+            </ul>
+          }
+        </section>
+        <section>
+          <h3>Search Params</h3>
+          @for (searchParam of item.searchParam; track searchParam.name) {
+            <ul>
+              <li>
+                <span>
+                {{ searchParam.name }}&nbsp;-&nbsp;
+                {{ searchParam.documentation?.toLocaleLowerCase() }}
+                </span>
+                <span >
+                  ({{ searchParam.definition }})
+                </span>
+                <span>
+                  [type: {{ searchParam.type }}]
+                </span>
+              </li>
+            </ul>
+          }
+        </section>
+      </div>
     </div>
+  }
+</div>

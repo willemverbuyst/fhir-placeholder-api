@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
+import { ResourcesService } from '../../core/services/get-resources.service';
+import { AppFhirResource } from '../../types';
 
 @Component({
   selector: 'app-cockpit',
@@ -8,7 +10,7 @@ import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
   styleUrl: './cockpit.component.scss',
 })
 export class CockpitComponent {
-  public tabLabels = [
+  public tabLabels: AppFhirResource['resourceType'][] = [
     'Appointment',
     'Condition',
     'Encounter',
@@ -20,7 +22,14 @@ export class CockpitComponent {
     'PractitionerRole',
   ];
 
+  constructor(private resourcesService: ResourcesService) {}
+
   public onTabChange(event: MatTabChangeEvent): void {
-    console.log('Selected tab label: ', event.tab.textLabel);
+    const resourceType = this.tabLabels[event.index];
+    console.log('Selected tab label: ', resourceType);
+
+    this.resourcesService.getResources(resourceType).subscribe((data) => {
+      console.log('Resources: ', data);
+    });
   }
 }

@@ -26,7 +26,6 @@ export class CockpitComponent {
 
   public onTabChange(event: MatTabChangeEvent): void {
     const resourceType = this.tabLabels[event.index];
-    console.log('Selected tab label: ', resourceType);
 
     this.resourcesService.getResources(resourceType).subscribe((data) => {
       console.log('Resources: ', data);

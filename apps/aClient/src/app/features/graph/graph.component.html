@@ -1,1 +1,45 @@
-<p>graph works!</p>
+<div class="graph">
+  <div class="list">
+    @for (organization of organizations; track organization.id) {
+    <div class="graph">
+      <button mat-button (click)="onOrganizationClick(organization.id)">
+        {{ organization.id }}
+      </button>
+
+      @if (organizationId === organization.id) {
+      <div class="list">
+        @for (practitionerRole of practitionerRoles; track practitionerRole.id)
+        {
+        <div class="graph">
+          <button
+            mat-button
+            (click)="onPractitionerRoleClick(practitionerRole.id)"
+          >
+            {{ practitionerRole.id }}
+          </button>
+
+          @if (practitionerRoleId === practitionerRole.id) {
+          <div class="list">
+            @for (practitioner of practitioners; track practitioner.id) {
+            <div class="graph">
+              <button mat-button (click)="onPractitionerClick(practitioner.id)">
+                {{ practitioner.id }}
+              </button>
+
+              @if (practitionerId === practitioner.id) {
+              <patient-resource [practitionerId]="practitionerId" />
+              }
+            </div>
+            }
+          </div>
+
+          }
+        </div>
+        }
+      </div>
+
+      }
+    </div>
+    }
+  </div>
+</div>

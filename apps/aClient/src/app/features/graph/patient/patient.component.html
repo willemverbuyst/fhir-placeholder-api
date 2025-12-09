@@ -1,0 +1,16 @@
+<div class="list">
+  @for (patient of patients; track patient.id) {
+  <div class="graph">
+    <button mat-button (click)="onPatientClick(patient.id)">
+      {{ patient.id }}
+    </button>
+
+    @if (patientId === patient.id) {
+    <div class="list">
+      <appointment-resource [patientId]="patientId" />
+      <condition-resource [patientId]="patientId" />
+    </div>
+    }
+  </div>
+  }
+</div>

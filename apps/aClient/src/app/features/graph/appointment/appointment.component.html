@@ -1,0 +1,9 @@
+<div class="list">
+  @for (appointment of appointments; track appointment.id) {
+  <div class="graph">
+    <button mat-button>
+      {{ appointment.id }}
+    </button>
+  </div>
+  }
+</div>

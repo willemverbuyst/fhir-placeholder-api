@@ -11,7 +11,9 @@ import { SERVER_URL } from './config';
 export class ResourcesService {
   constructor(private http: HttpClient) {}
 
-  getResources(resource: AppFhirResource['resourceType']): Observable<Bundle> {
+  getResources(
+    resource: AppFhirResource['resourceType'] | string
+  ): Observable<Bundle> {
     return this.http.get<Bundle>(`${SERVER_URL}/${resource}`);
   }
 

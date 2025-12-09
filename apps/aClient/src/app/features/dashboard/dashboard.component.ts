@@ -20,7 +20,6 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.resourcesService.getResourcesCount().subscribe((data) => {
       this.resourcesCount = data;
-      console.log('Resources Count: ', this.resourcesCount);
     });
   }
 }

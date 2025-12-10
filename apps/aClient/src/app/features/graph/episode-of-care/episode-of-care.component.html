@@ -1,0 +1,15 @@
+<div class="list">
+  @for (episode of episodeOfCares; track episode.id) {
+  <div class="graph">
+    <button mat-button (click)="onEpisodeOfCareClick(episode.id)">
+      {{ episode.id }}
+    </button>
+    @if (episodeOfCareId === episode.id) {
+    <div class="list">
+      <encounter-resource [episodeOfCareId]="episodeOfCareId" />
+    </div>
+    }
+
+    </div>
+  }
+</div>

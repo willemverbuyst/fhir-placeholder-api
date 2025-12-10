@@ -1,9 +1,15 @@
 <div class="list">
   @for (condition of conditions; track condition.id) {
   <div class="graph">
-    <button mat-button>
+    <button mat-button (click)="onConditionClick(condition.id)">
       {{ condition.id }}
     </button>
+
+    @if (conditionId === condition.id) {
+    <div class="list">
+      <episode-of-care-resource [conditionId]="conditionId" />
+    </div>
+    }
   </div>
   }
 </div>

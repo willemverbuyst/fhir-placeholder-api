@@ -1,16 +1,18 @@
-import { Component, input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { Condition } from 'fhir/r5';
-import { ResourcesService } from '../../../core/services/resources.service';
+import { Component, input } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { Condition } from "fhir/r5";
+import { ResourcesService } from "../../../core/services/resources.service";
+import { EpisodeOfCareComponent } from "../episode-of-care/episode-of-care.component";
 
 @Component({
-  selector: 'condition-resource',
-  imports: [MatButtonModule],
-  templateUrl: './condition.component.html',
-  styleUrl: './condition.component.scss',
+  selector: "condition-resource",
+  imports: [MatButtonModule, EpisodeOfCareComponent],
+  templateUrl: "./condition.component.html",
+  styleUrl: "./condition.component.scss",
 })
 export class ConditionComponent {
-  patientId = input('');
+  patientId = input("");
+  conditionId = "";
   conditions: { id: string }[] = [];
 
   constructor(private resourcesService: ResourcesService) {}
@@ -26,5 +28,13 @@ export class ConditionComponent {
           }
         }
       });
+  }
+
+  onConditionClick(conditionId: string): void {
+    if (conditionId === this.conditionId) {
+      this.conditionId = "";
+    } else {
+      this.conditionId = conditionId;
+    }
   }
 }

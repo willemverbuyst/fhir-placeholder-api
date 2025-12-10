@@ -1,0 +1,9 @@
+<div class="list">
+  @for (observation of observations; track observation.id) {
+  <div class="graph">
+    <button mat-button>
+      {{ observation.id }}
+    </button>
+  </div>
+  }
+</div>

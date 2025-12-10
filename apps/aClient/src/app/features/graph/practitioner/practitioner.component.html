@@ -1,0 +1,13 @@
+<div class="list">
+  @for (practitioner of practitioners; track practitioner.id) {
+  <div class="graph">
+    <button mat-button (click)="onPractitionerClick(practitioner.id)">
+      {{ practitioner.id }}
+    </button>
+
+    @if (practitionerIdForPatient === practitioner.id) {
+    <patient-resource [practitionerId]="practitionerIdForPatient" />
+    }
+  </div>
+  }
+</div>

@@ -1,0 +1,15 @@
+<div class="list">
+  @for (encounter of encounters; track encounter.id) {
+  <div class="graph">
+    <button mat-button (click)="onEncounterClick(encounter.id)">
+      {{ encounter.id }}
+    </button>
+
+    @if (encounterId === encounter.id) {
+    <div class="list">
+      <observation-resource [encounterId]="encounterId" />  
+    </div>
+    }
+  </div>
+  }
+</div>

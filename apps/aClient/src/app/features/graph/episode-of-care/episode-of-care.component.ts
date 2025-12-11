@@ -1,19 +1,18 @@
 import { Component, input } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
 import { EpisodeOfCare } from "fhir/r5";
 import { ResourcesService } from "../../../core/services/resources.service";
 import { EncounterComponent } from "../encounter/encounter.component";
+import { ResourceItemComponent } from "../resource-item/resource-item.component";
 
 @Component({
   selector: "episode-of-care-resource",
-  imports: [MatButtonModule, EncounterComponent],
+  imports: [ResourceItemComponent, EncounterComponent],
   templateUrl: "./episode-of-care.component.html",
   styleUrl: "./episode-of-care.component.scss",
 })
 export class EpisodeOfCareComponent {
   conditionId = input("");
   episodeOfCares: { id: string }[] = [];
-  episodeOfCareId = "";
 
   constructor(private resourcesService: ResourcesService) {}
 
@@ -28,13 +27,5 @@ export class EpisodeOfCareComponent {
           }
         }
       });
-  }
-
-  onEpisodeOfCareClick(episodeOfCareId: string): void {
-    if (episodeOfCareId === this.episodeOfCareId) {
-      this.episodeOfCareId = "";
-    } else {
-      this.episodeOfCareId = episodeOfCareId;
-    }
   }
 }

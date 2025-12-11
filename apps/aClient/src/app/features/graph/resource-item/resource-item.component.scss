@@ -1,0 +1,18 @@
+.resource-item {
+  width: 170px;
+  padding: 8px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  background-color: aqua;
+}
+
+.selected {
+  background-color: pink;
+}
+
+.graph {
+  display: flex;
+  gap: 12px;
+}

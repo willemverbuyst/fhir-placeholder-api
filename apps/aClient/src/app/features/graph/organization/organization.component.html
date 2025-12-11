@@ -1,15 +1,7 @@
 <div class="list">
   @for (organization of organizations; track organization.id) {
-  <div class="graph">
-    <button mat-button (click)="onOrganizationClick(organization.id)">
-      {{ organization.id }}
-    </button>
-
-    @if (organizationId === organization.id) {
-    <div class="list">
-      <practitioner-role-resource [organizationId]="organizationId" />
-    </div>
-    }
-  </div>
+  <graph-resource-item [id]="organization.id">
+    <practitioner-role-resource [organizationId]="organization.id" />
+  </graph-resource-item>
   }
 </div>

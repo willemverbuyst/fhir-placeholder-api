@@ -1,18 +1,17 @@
 import { Component, input } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
 import { ResourcesService } from "../../../core/services/resources.service";
 import { PatientComponent } from "../patient/patient.component";
+import { ResourceItemComponent } from "../resource-item/resource-item.component";
 
 @Component({
   selector: "practitioner-resource",
-  imports: [MatButtonModule, PatientComponent],
+  imports: [ResourceItemComponent, PatientComponent],
   templateUrl: "./practitioner.component.html",
   styleUrl: "./practitioner.component.scss",
 })
 export class PractitionerComponent {
   practitionerId = input("");
   practitioners: { id: string }[] = [];
-  practitionerIdForPatient = "";
 
   constructor(private resourcesService: ResourcesService) {}
 
@@ -25,13 +24,5 @@ export class PractitionerComponent {
           this.practitioners.push({ id });
         }
       });
-  }
-
-  onPractitionerClick(practitionerId: string): void {
-    if (practitionerId === this.practitionerIdForPatient) {
-      this.practitionerIdForPatient = "";
-    } else {
-      this.practitionerIdForPatient = practitionerId;
-    }
   }
 }

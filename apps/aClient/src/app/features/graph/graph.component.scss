@@ -1,14 +1,7 @@
-.graph {
-  display: flex;
-  gap: 12px;
-}
-
-.list {
+.graph-page {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: center;
+  width: 100%;
 }
 
-button {
-  background-color: rgb(246, 135, 153);
-}

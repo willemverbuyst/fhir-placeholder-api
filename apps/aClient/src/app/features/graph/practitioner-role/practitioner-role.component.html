@@ -1,13 +1,7 @@
 <div class="list">
   @for (practitionerRole of practitionerRoles; track practitionerRole.id) {
-  <div class="graph">
-    <button mat-button (click)="onPractitionerRoleClick(practitionerRole.id)">
-      {{ practitionerRole.id }}
-    </button>
-
-    @if (practitionerId === practitionerRole.practitionerId) {
-    <practitioner-resource [practitionerId]="practitionerId" />
-    }
-  </div>
+  <graph-resource-item [id]="practitionerRole.id">
+    <practitioner-resource [practitionerId]="practitionerRole.practitionerId" />
+  </graph-resource-item>
   }
 </div>

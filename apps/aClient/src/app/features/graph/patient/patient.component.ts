@@ -1,19 +1,18 @@
-import { Component, input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { Patient } from 'fhir/r5';
-import { ResourcesService } from '../../../core/services/resources.service';
-import { AppointmentComponent } from '../appointment/appointment.component';
-import { ConditionComponent } from '../condition/condition.component';
+import { Component, input } from "@angular/core";
+import { Patient } from "fhir/r5";
+import { ResourcesService } from "../../../core/services/resources.service";
+import { AppointmentComponent } from "../appointment/appointment.component";
+import { ConditionComponent } from "../condition/condition.component";
+import { ResourceItemComponent } from "../resource-item/resource-item.component";
 
 @Component({
-  selector: 'patient-resource',
-  imports: [MatButtonModule, AppointmentComponent, ConditionComponent],
-  templateUrl: './patient.component.html',
-  styleUrl: './patient.component.scss',
+  selector: "patient-resource",
+  imports: [ResourceItemComponent, AppointmentComponent, ConditionComponent],
+  templateUrl: "./patient.component.html",
+  styleUrl: "./patient.component.scss",
 })
 export class PatientComponent {
-  practitionerId = input('');
-  patientId = '';
+  practitionerId = input("");
   patients: { id: string }[] = [];
 
   constructor(private resourcesService: ResourcesService) {}
@@ -29,13 +28,5 @@ export class PatientComponent {
           }
         }
       });
-  }
-
-  onPatientClick(patientId: string): void {
-    if (patientId === this.patientId) {
-      this.patientId = '';
-    } else {
-      this.patientId = patientId;
-    }
   }
 }

@@ -1,18 +1,17 @@
 import { Component } from "@angular/core";
-import { MatButtonModule } from "@angular/material/button";
 import { Organization } from "fhir/r5";
 import { ResourcesService } from "../../../core/services/resources.service";
 import { PractitionerRoleComponent } from "../practitioner-role/practitioner-role.component";
+import { ResourceItemComponent } from "../resource-item/resource-item.component";
 
 @Component({
   selector: "organization-resource",
-  imports: [MatButtonModule, PractitionerRoleComponent],
+  imports: [ResourceItemComponent, PractitionerRoleComponent],
   templateUrl: "./organization.component.html",
   styleUrl: "./organization.component.scss",
 })
 export class OrganizationComponent {
   organizations: { id: string }[] = [];
-  organizationId = "";
 
   constructor(private resourcesService: ResourcesService) {}
 
@@ -25,13 +24,5 @@ export class OrganizationComponent {
         }
       }
     });
-  }
-
-  onOrganizationClick(organizationId: string): void {
-    if (organizationId === this.organizationId) {
-      this.organizationId = "";
-    } else {
-      this.organizationId = organizationId;
-    }
   }
 }

@@ -1,0 +1,8 @@
+<div class="graph">
+  <div class="resource-item" [class.selected]="selected" (click)="onClick()">
+    {{ id() }}
+  </div>
+  @if(selected) {
+  <ng-content></ng-content>
+  }
+</div>

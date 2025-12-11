@@ -1,10 +1,15 @@
 <div class="list">
   @for (patient of patients; track patient.id) {
-  <graph-resource-item [id]="patient.id">
+  <graph-resource-item
+    [id]="patient.id"
+    (selectedChange)="patient.selected = $event"
+  >
+    @if(patient.selected) {
     <div class="list">
       <appointment-resource [patientId]="patient.id" />
       <condition-resource [patientId]="patient.id" />
     </div>
+    }
   </graph-resource-item>
   }
 </div>

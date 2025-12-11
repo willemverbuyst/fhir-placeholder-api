@@ -1,17 +1,17 @@
-import { Component, input } from "@angular/core";
-import { Observation } from "fhir/r5";
-import { ResourcesService } from "../../../core/services/resources.service";
-import { ResourceItemComponent } from "../resource-item/resource-item.component";
+import { Component, input } from '@angular/core';
+import { Observation } from 'fhir/r5';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { ResourceItemComponent } from '../resource-item/resource-item.component';
 
 @Component({
-  selector: "observation-resource",
+  selector: 'observation-resource',
   imports: [ResourceItemComponent],
-  templateUrl: "./observation.component.html",
-  styleUrl: "./observation.component.scss",
+  templateUrl: './observation.component.html',
+  styleUrl: './observation.component.scss',
 })
 export class ObservationComponent {
-  encounterId = input("");
-  observations: { id: string }[] = [];
+  encounterId = input('');
+  observations: { id: string; selected?: boolean }[] = [];
 
   constructor(private resourcesService: ResourcesService) {}
 

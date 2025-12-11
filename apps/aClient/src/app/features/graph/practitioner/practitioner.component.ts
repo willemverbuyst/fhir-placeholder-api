@@ -1,17 +1,17 @@
-import { Component, input } from "@angular/core";
-import { ResourcesService } from "../../../core/services/resources.service";
-import { PatientComponent } from "../patient/patient.component";
-import { ResourceItemComponent } from "../resource-item/resource-item.component";
+import { Component, input } from '@angular/core';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { PatientComponent } from '../patient/patient.component';
+import { ResourceItemComponent } from '../resource-item/resource-item.component';
 
 @Component({
-  selector: "practitioner-resource",
+  selector: 'practitioner-resource',
   imports: [ResourceItemComponent, PatientComponent],
-  templateUrl: "./practitioner.component.html",
-  styleUrl: "./practitioner.component.scss",
+  templateUrl: './practitioner.component.html',
+  styleUrl: './practitioner.component.scss',
 })
 export class PractitionerComponent {
-  practitionerId = input("");
-  practitioners: { id: string }[] = [];
+  practitionerId = input('');
+  practitioners: { id: string; selected?: boolean }[] = [];
 
   constructor(private resourcesService: ResourcesService) {}
 

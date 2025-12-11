@@ -1,21 +1,22 @@
-import { Component, input } from "@angular/core";
-import { PractitionerRole } from "fhir/r5";
-import { ResourcesService } from "../../../core/services/resources.service";
-import { PractitionerComponent } from "../practitioner/practitioner.component";
-import { ResourceItemComponent } from "../resource-item/resource-item.component";
+import { Component, input } from '@angular/core';
+import { PractitionerRole } from 'fhir/r5';
+import { ResourcesService } from '../../../core/services/resources.service';
+import { PractitionerComponent } from '../practitioner/practitioner.component';
+import { ResourceItemComponent } from '../resource-item/resource-item.component';
 
 @Component({
-  selector: "practitioner-role-resource",
+  selector: 'practitioner-role-resource',
   imports: [ResourceItemComponent, PractitionerComponent],
-  templateUrl: "./practitioner-role.component.html",
-  styleUrl: "./practitioner-role.component.scss",
+  templateUrl: './practitioner-role.component.html',
+  styleUrl: './practitioner-role.component.scss',
 })
 export class PractitionerRoleComponent {
+  organizationId = input('');
   practitionerRoles: {
     id: string;
     practitionerId: string;
+    selected?: boolean;
   }[] = [];
-  organizationId = input("");
 
   constructor(private resourcesService: ResourcesService) {}
 
@@ -30,7 +31,7 @@ export class PractitionerRoleComponent {
               id,
               practitionerId: (
                 entry.resource as PractitionerRole
-              ).practitioner?.reference?.replace("Practitioner/", "") as string,
+              ).practitioner?.reference?.replace('Practitioner/', '') as string,
             });
           }
         }

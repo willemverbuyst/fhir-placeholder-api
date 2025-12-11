@@ -1,5 +1,9 @@
 <div class="list">
   @for (observation of observations; track observation.id) {
-    <graph-resource-item [id]="observation.id"></graph-resource-item>
+  <graph-resource-item
+    [id]="observation.id"
+    (selectedChange)="observation.selected = $event"
+  >
+  </graph-resource-item>
   }
 </div>

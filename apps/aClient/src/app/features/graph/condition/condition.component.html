@@ -1,7 +1,12 @@
 <div class="list">
   @for (condition of conditions; track condition.id) {
-    <graph-resource-item [id]="condition.id">
-      <episode-of-care-resource [conditionId]="condition.id" />
-    </graph-resource-item>
-    }
+  <graph-resource-item
+    [id]="condition.id"
+    (selectedChange)="condition.selected = $event"
+  >
+    @if(condition.selected) {
+    <episode-of-care-resource [conditionId]="condition.id" />
+    }</graph-resource-item
+  >
+  }
 </div>

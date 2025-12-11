@@ -1,7 +1,8 @@
 <div class="list">
   @for (appointment of appointments; track appointment.id) {
-  <div class="graph">
-    <graph-resource-item [id]="appointment.id"></graph-resource-item>
-  </div>
+  <graph-resource-item
+    [id]="appointment.id"
+    (selectedChange)="appointment.selected = $event"
+  ></graph-resource-item>
   }
 </div>

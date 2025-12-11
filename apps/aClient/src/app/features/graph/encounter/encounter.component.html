@@ -1,7 +1,12 @@
 <div class="list">
   @for (encounter of encounters; track encounter.id) {
-  <graph-resource-item [id]="encounter.id">
+  <graph-resource-item
+    [id]="encounter.id"
+    (selectedChange)="encounter.selected = $event"
+  >
+    @if(encounter.selected) {
     <observation-resource [encounterId]="encounter.id" />
-  </graph-resource-item>
+    }</graph-resource-item
+  >
   }
 </div>

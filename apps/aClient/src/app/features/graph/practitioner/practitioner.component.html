@@ -1,7 +1,12 @@
 <div class="list">
   @for (practitioner of practitioners; track practitioner.id) {
-  <graph-resource-item [id]="practitioner.id">
+  <graph-resource-item
+    [id]="practitioner.id"
+    (selectedChange)="practitioner.selected = $event"
+  >
+    @if(practitioner.selected) {
     <patient-resource [practitionerId]="practitioner.id" />
-  </graph-resource-item>
+    }</graph-resource-item
+  >
   }
 </div>

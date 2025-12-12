@@ -14,9 +14,9 @@ export class EpisodeOfCareComponent {
     null;
 
   getUrl() {
-    if (this.parent?.id) {
-      return `EpisodeOfCare?diagnosis-reference=${this.parent.id}`;
+    if (!this.parent?.id) {
+      return undefined;
     }
-    return undefined;
+    return `EpisodeOfCare?diagnosis-reference=${this.parent.id}`;
   }
 }

@@ -14,9 +14,9 @@ export class EncounterComponent {
     null;
 
   getUrl() {
-    if (this.parent?.id) {
-      return `Encounter?episode-of-care=${this.parent.id}`;
+    if (!this.parent?.id) {
+      return undefined;
     }
-    return undefined;
+    return `Encounter?episode-of-care=${this.parent.id}`;
   }
 }

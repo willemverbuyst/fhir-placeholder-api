@@ -18,7 +18,6 @@ export class PractitionerComponent {
     if (!this.parent?.practitioner?.reference?.split('/')[1]) {
       return undefined;
     }
-
     return `Practitioner/${this.parent.practitioner?.reference?.split('/')[1]}`;
   }
 }

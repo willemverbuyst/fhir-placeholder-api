@@ -13,9 +13,9 @@ export class ObservationComponent {
     null;
 
   getUrl() {
-    if (this.parent?.id) {
-      return `Observation?encounter=${this.parent?.id}`;
+    if (!this.parent?.id) {
+      return undefined;
     }
-    return undefined;
+    return `Observation?encounter=${this.parent?.id}`;
   }
 }

@@ -12,9 +12,9 @@ export class AppointmentComponent {
   @Input() parent: (Patient & { id: string; selected: boolean }) | null = null;
 
   getUrl() {
-    if (this.parent?.id) {
-      return `Appointment?patient=${this.parent.id}`;
+    if (!this.parent?.id) {
+      return undefined;
     }
-    return undefined;
+    return `Appointment?patient=${this.parent.id}`;
   }
 }

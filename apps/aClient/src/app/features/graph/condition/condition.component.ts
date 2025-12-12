@@ -13,9 +13,9 @@ export class ConditionComponent {
   @Input() parent: (Patient & { id: string; selected: boolean }) | null = null;
 
   getUrl() {
-    if (this.parent?.id) {
-      return `Condition?patient=${this.parent.id}`;
+    if (!this.parent?.id) {
+      return undefined;
     }
-    return undefined;
+    return `Condition?patient=${this.parent.id}`;
   }
 }

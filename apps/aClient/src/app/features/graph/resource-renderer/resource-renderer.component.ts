@@ -11,7 +11,6 @@ import { ResourceItemComponent } from '../resource-item/resource-item.component'
   styleUrl: './resource-renderer.component.scss',
 })
 export class ResourceRendererComponent {
-  @Input() id: string | undefined = undefined;
   @Input() url: string | undefined = undefined;
   @ContentChild(TemplateRef) content!: TemplateRef<{
     parent: FhirResource & { id: string; selected: boolean };

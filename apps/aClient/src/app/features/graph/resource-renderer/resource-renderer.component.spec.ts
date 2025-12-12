@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { Resource } from 'fhir/r5';
 import { ResourceRendererComponent } from './resource-renderer.component';
 
 describe('ResourceRendererComponent', () => {
-  let component: ResourceRendererComponent;
-  let fixture: ComponentFixture<ResourceRendererComponent>;
+  let component: ResourceRendererComponent<Resource>;
+  let fixture: ComponentFixture<ResourceRendererComponent<Resource>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

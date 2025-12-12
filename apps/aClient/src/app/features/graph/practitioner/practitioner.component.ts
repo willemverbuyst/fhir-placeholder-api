@@ -15,9 +15,9 @@ export class PractitionerComponent {
     | null = null;
 
   getUrl() {
-    if (!this.parent?.practitioner?.reference?.split('/')[1]) {
+    if (!this.parent?.practitioner) {
       return undefined;
     }
-    return `Practitioner/${this.parent.practitioner?.reference?.split('/')[1]}`;
+    return `Practitioner/${this.parent.practitioner}`;
   }
 }

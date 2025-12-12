@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatTab, MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
-import { ResourcesService } from '../../core/services/resources.service';
 import { AppFhirResource } from '../../types';
 
 @Component({
@@ -22,13 +21,8 @@ export class CockpitComponent {
     'PractitionerRole',
   ];
 
-  constructor(private resourcesService: ResourcesService) {}
-
   public onTabChange(event: MatTabChangeEvent): void {
     const resourceType = this.tabLabels[event.index];
-
-    this.resourcesService.getResources(resourceType).subscribe((data) => {
-      console.log('Resources: ', data);
-    });
+    console.log(`Switched to tab: ${resourceType}`);
   }
 }

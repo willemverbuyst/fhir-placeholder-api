@@ -1,12 +1,5 @@
-<div class="list">
-  @for (practitionerRole of practitionerRoles; track practitionerRole.id) {
-  <graph-resource-item
-    [id]="practitionerRole.id"
-    (selectedChange)="practitionerRole.selected = $event"
-  >
-    @if(practitionerRole.selected) {
-    <practitioner-resource [practitionerId]="practitionerRole.practitionerId" />
-    }
-  </graph-resource-item>
-  }
-</div>
+<graph-resource-renderer [url]="getUrl()" [id]="parent?.id">
+  <ng-template let-parent="parent">
+    <practitioner-resource [parent]="parent" />
+  </ng-template>
+</graph-resource-renderer>

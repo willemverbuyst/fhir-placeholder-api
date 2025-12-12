@@ -1,31 +1,22 @@
-import { Component, input } from '@angular/core';
-import { EpisodeOfCare } from 'fhir/r5';
-import { ResourcesService } from '../../../core/services/resources.service';
+import { Component, Input } from '@angular/core';
+import { Condition } from 'fhir/r5';
 import { EncounterComponent } from '../encounter/encounter.component';
-import { ResourceItemComponent } from '../resource-item/resource-item.component';
+import { ResourceRendererComponent } from '../resource-renderer/resource-renderer.component';
 
 @Component({
   selector: 'episode-of-care-resource',
-  imports: [ResourceItemComponent, EncounterComponent],
+  imports: [ResourceRendererComponent, EncounterComponent],
   templateUrl: './episode-of-care.component.html',
   styleUrl: './episode-of-care.component.scss',
 })
 export class EpisodeOfCareComponent {
-  conditionId = input('');
-  episodeOfCares: { id: string; selected?: boolean }[] = [];
+  @Input() parent: (Condition & { id: string; selected: boolean }) | null =
+    null;
 
-  constructor(private resourcesService: ResourcesService) {}
-
-  ngOnInit(): void {
-    this.resourcesService
-      .getResources(`EpisodeOfCare?diagnosis-reference=${this.conditionId()}`)
-      .subscribe((data) => {
-        for (const entry of data.entry || []) {
-          const id = (entry.resource as EpisodeOfCare).id;
-          if (id) {
-            this.episodeOfCares.push({ id });
-          }
-        }
-      });
+  getUrl() {
+    if (this.parent?.id) {
+      return `EpisodeOfCare?diagnosis-reference=${this.parent.id}`;
+    }
+    return undefined;
   }
 }

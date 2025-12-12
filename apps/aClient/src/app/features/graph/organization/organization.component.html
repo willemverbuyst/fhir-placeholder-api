@@ -1,12 +1,5 @@
-<div class="list">
-  @for (organization of organizations; track organization.id) {
-  <graph-resource-item
-    [id]="organization.id"
-    (selectedChange)="organization.selected = $event"
-  >
-    @if(organization.selected) {
-    <practitioner-role-resource [organizationId]="organization.id" />
-    }
-  </graph-resource-item>
-  }
-</div>
+<graph-resource-renderer [url]="getUrl()" [id]="undefined">
+  <ng-template let-parent="parent">
+    <practitioner-role-resource [parent]="parent"
+  /></ng-template>
+</graph-resource-renderer>

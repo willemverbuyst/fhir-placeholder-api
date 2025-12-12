@@ -1,32 +1,27 @@
-import { Component, input } from '@angular/core';
-import { Patient } from 'fhir/r5';
-import { ResourcesService } from '../../../core/services/resources.service';
+import { Component, Input } from '@angular/core';
+import { Practitioner } from 'fhir/r5';
 import { AppointmentComponent } from '../appointment/appointment.component';
 import { ConditionComponent } from '../condition/condition.component';
-import { ResourceItemComponent } from '../resource-item/resource-item.component';
+import { ResourceRendererComponent } from '../resource-renderer/resource-renderer.component';
 
 @Component({
   selector: 'patient-resource',
-  imports: [ResourceItemComponent, AppointmentComponent, ConditionComponent],
+  imports: [
+    ResourceRendererComponent,
+    AppointmentComponent,
+    ConditionComponent,
+  ],
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.scss',
 })
 export class PatientComponent {
-  practitionerId = input('');
-  patients: { id: string; selected?: boolean }[] = [];
+  @Input() parent: (Practitioner & { id: string; selected: boolean }) | null =
+    null;
 
-  constructor(private resourcesService: ResourcesService) {}
-
-  ngOnInit(): void {
-    this.resourcesService
-      .getResources(`Patient?general-practitioner=${this.practitionerId()}`)
-      .subscribe((data) => {
-        for (const entry of data.entry || []) {
-          const id = (entry.resource as Patient).id;
-          if (id) {
-            this.patients.push({ id });
-          }
-        }
-      });
+  getUrl() {
+    if (!this.parent) {
+      return undefined;
+    }
+    return `Patient?general-practitioner=${this.parent.id}`;
   }
 }

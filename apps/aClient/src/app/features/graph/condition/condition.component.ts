@@ -1,31 +1,21 @@
-import { Component, input } from '@angular/core';
-import { Condition } from 'fhir/r5';
-import { ResourcesService } from '../../../core/services/resources.service';
+import { Component, Input } from '@angular/core';
+import { Patient } from 'fhir/r4b';
 import { EpisodeOfCareComponent } from '../episode-of-care/episode-of-care.component';
-import { ResourceItemComponent } from '../resource-item/resource-item.component';
+import { ResourceRendererComponent } from '../resource-renderer/resource-renderer.component';
 
 @Component({
   selector: 'condition-resource',
-  imports: [ResourceItemComponent, EpisodeOfCareComponent],
+  imports: [ResourceRendererComponent, EpisodeOfCareComponent],
   templateUrl: './condition.component.html',
   styleUrl: './condition.component.scss',
 })
 export class ConditionComponent {
-  patientId = input('');
-  conditions: { id: string; selected?: boolean }[] = [];
+  @Input() parent: (Patient & { id: string; selected: boolean }) | null = null;
 
-  constructor(private resourcesService: ResourcesService) {}
-
-  ngOnInit(): void {
-    this.resourcesService
-      .getResources(`Condition?patient=${this.patientId()}`)
-      .subscribe((data) => {
-        for (const entry of data.entry || []) {
-          const id = (entry.resource as Condition).id;
-          if (id) {
-            this.conditions.push({ id });
-          }
-        }
-      });
+  getUrl() {
+    if (this.parent?.id) {
+      return `Condition?patient=${this.parent.id}`;
+    }
+    return undefined;
   }
 }

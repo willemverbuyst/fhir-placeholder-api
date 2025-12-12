@@ -1,15 +1,8 @@
-<div class="list">
-  @for (patient of patients; track patient.id) {
-  <graph-resource-item
-    [id]="patient.id"
-    (selectedChange)="patient.selected = $event"
-  >
-    @if(patient.selected) {
+<graph-resource-renderer [url]="getUrl()" [id]="parent?.id">
+  <ng-template let-parent="parent">
     <div class="list">
-      <appointment-resource [patientId]="patient.id" />
-      <condition-resource [patientId]="patient.id" />
+      <appointment-resource [parent]="parent" />
+      <condition-resource [parent]="parent" />
     </div>
-    }
-  </graph-resource-item>
-  }
-</div>
+  </ng-template>
+</graph-resource-renderer>

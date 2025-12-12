@@ -1,8 +1,3 @@
-<div class="list">
-  @for (appointment of appointments; track appointment.id) {
-  <graph-resource-item
-    [id]="appointment.id"
-    (selectedChange)="appointment.selected = $event"
-  ></graph-resource-item>
-  }
-</div>
+<graph-resource-renderer [url]="getUrl()" [id]="parent?.id">
+  <ng-template let-parent="parent"></ng-template>
+</graph-resource-renderer>

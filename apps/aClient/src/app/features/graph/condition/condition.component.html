@@ -1,12 +1,5 @@
-<div class="list">
-  @for (condition of conditions; track condition.id) {
-  <graph-resource-item
-    [id]="condition.id"
-    (selectedChange)="condition.selected = $event"
-  >
-    @if(condition.selected) {
-    <episode-of-care-resource [conditionId]="condition.id" />
-    }</graph-resource-item
-  >
-  }
-</div>
+<graph-resource-renderer [url]="getUrl()" [id]="parent?.id">
+  <ng-template let-parent="parent">
+    <episode-of-care-resource [parent]="parent"
+  /></ng-template>
+</graph-resource-renderer>

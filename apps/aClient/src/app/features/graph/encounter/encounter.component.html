@@ -1,12 +1,5 @@
-<div class="list">
-  @for (encounter of encounters; track encounter.id) {
-  <graph-resource-item
-    [id]="encounter.id"
-    (selectedChange)="encounter.selected = $event"
-  >
-    @if(encounter.selected) {
-    <observation-resource [encounterId]="encounter.id" />
-    }</graph-resource-item
-  >
-  }
-</div>
+<graph-resource-renderer [url]="getUrl()" [id]="parent?.id">
+  <ng-template let-parent="parent">
+    <observation-resource [parent]="parent"
+  /></ng-template>
+</graph-resource-renderer>

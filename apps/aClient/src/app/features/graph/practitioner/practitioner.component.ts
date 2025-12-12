@@ -1,28 +1,24 @@
-import { Component, input } from '@angular/core';
-import { ResourcesService } from '../../../core/services/resources.service';
+import { Component, Input } from '@angular/core';
+import { PractitionerRole } from 'fhir/r5';
 import { PatientComponent } from '../patient/patient.component';
-import { ResourceItemComponent } from '../resource-item/resource-item.component';
+import { ResourceRendererComponent } from '../resource-renderer/resource-renderer.component';
 
 @Component({
   selector: 'practitioner-resource',
-  imports: [ResourceItemComponent, PatientComponent],
+  imports: [ResourceRendererComponent, PatientComponent],
   templateUrl: './practitioner.component.html',
   styleUrl: './practitioner.component.scss',
 })
 export class PractitionerComponent {
-  practitionerId = input('');
-  practitioners: { id: string; selected?: boolean }[] = [];
+  @Input() parent:
+    | (PractitionerRole & { id: string; selected: boolean })
+    | null = null;
 
-  constructor(private resourcesService: ResourcesService) {}
+  getUrl() {
+    if (!this.parent?.practitioner?.reference?.split('/')[1]) {
+      return undefined;
+    }
 
-  ngOnInit(): void {
-    this.resourcesService
-      .getResources(`Practitioner/${this.practitionerId()}`)
-      .subscribe((data) => {
-        const id = data?.id;
-        if (id) {
-          this.practitioners.push({ id });
-        }
-      });
+    return `Practitioner/${this.parent.practitioner?.reference?.split('/')[1]}`;
   }
 }

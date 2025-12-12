@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 @Component({
   selector: 'graph-resource-item',
@@ -7,7 +7,7 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './resource-item.component.scss',
 })
 export class ResourceItemComponent {
-  id = input('');
+  @Input() id = '';
   selected = false;
   selectedChange = output<boolean>();
 

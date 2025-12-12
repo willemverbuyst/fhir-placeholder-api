@@ -1,0 +1,14 @@
+<div class="list">
+  @for (resource of resources; track resource.id) {
+  <graph-resource-item
+    [id]="resource.id"
+    (selectedChange)="resource.selected = $event"
+  >
+    @if(resource.selected) {
+    <ng-container
+      *ngTemplateOutlet="content; context: { parent: resource }"
+    ></ng-container>
+    }
+  </graph-resource-item>
+  }
+</div>

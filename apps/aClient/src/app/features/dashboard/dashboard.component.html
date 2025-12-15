@@ -1,0 +1,5 @@
+@for (item of resourcesCount | keyvalue ; track item.key) {
+<div class="resource-card">
+  <p>{{ item.key }} - {{ item.value }}</p>
+</div>
+}

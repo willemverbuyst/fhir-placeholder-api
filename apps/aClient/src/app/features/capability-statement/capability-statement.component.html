@@ -1,0 +1,40 @@
+<div>
+  @for (item of capabilityStatementResources; track item.type) {
+  <mat-card appearance="outlined" class="card">
+    <mat-card-header>
+      <mat-card-title class="card-title">
+        {{ item.type }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <section>
+        <h3>Interaction</h3>
+        @for (interaction of item.interaction; track interaction.code) {
+        <ul>
+          <li>{{ interaction.code }}</li>
+        </ul>
+        }
+      </section>
+      @if (item.searchParam) {
+      <section>
+        <h3>Search Params</h3>
+        @for (searchParam of item.searchParam; track searchParam.name) {
+        <ul>
+          <li>
+            <span class="searchParam">
+              <span>
+                {{ searchParam.name }} -
+                {{ searchParam.documentation?.toLocaleLowerCase() }}
+              </span>
+              <span>{{ searchParam.definition }}</span>
+              <span>type: {{ searchParam.type }}</span>
+            </span>
+          </li>
+        </ul>
+        }
+      </section>
+      }
+    </mat-card-content>
+  </mat-card>
+  }
+</div>

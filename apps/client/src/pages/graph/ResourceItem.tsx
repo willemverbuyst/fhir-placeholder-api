@@ -6,7 +6,7 @@ export function ResourceItem({
   children,
 }: {
   id: string;
-  children?: JSX.Element;
+  children?: JSX.Element | null;
 }) {
   const [zoomIn, setZoomIn] = useState<string | undefined>();
 

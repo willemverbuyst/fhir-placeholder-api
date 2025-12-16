@@ -4,10 +4,8 @@ import { ResourcesRenderer } from "../ResourcesRenderer";
 export function Observations({
   encounterId,
 }: {
-  encounterId: string | undefined;
+  encounterId: string;
 }) {
-  if (!encounterId) return null;
-
   return (
     <ResourcesRenderer<Observation>
       resourceType="Observation"

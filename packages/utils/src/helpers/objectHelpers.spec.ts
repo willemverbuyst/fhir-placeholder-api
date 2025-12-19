@@ -3,7 +3,7 @@ import {
   hasKey,
   hasKeyWithValue,
   isEmptyObject,
-  isObject,
+  isPlainObject,
   typedEntries,
   typedKeys,
   typedValues,
@@ -98,26 +98,26 @@ describe("hasKeyWithValue", () => {
   });
 });
 
-describe("isObject", () => {
+describe("isPlainObject", () => {
   it("should return true for plain objects", () => {
-    expect(isObject({})).toBe(true);
-    expect(isObject({ name: "John" })).toBe(true);
+    expect(isPlainObject({})).toBe(true);
+    expect(isPlainObject({ name: "John" })).toBe(true);
   });
 
   it("should return false for arrays", () => {
-    expect(isObject([])).toBe(false);
-    expect(isObject([1, 2, 3])).toBe(false);
+    expect(isPlainObject([])).toBe(false);
+    expect(isPlainObject([1, 2, 3])).toBe(false);
   });
 
   it("should return false for null", () => {
-    expect(isObject(null)).toBe(false);
+    expect(isPlainObject(null)).toBe(false);
   });
 
   it("should return false for primitives", () => {
-    expect(isObject("string")).toBe(false);
-    expect(isObject(123)).toBe(false);
-    expect(isObject(true)).toBe(false);
-    expect(isObject(undefined)).toBe(false);
+    expect(isPlainObject("string")).toBe(false);
+    expect(isPlainObject(123)).toBe(false);
+    expect(isPlainObject(true)).toBe(false);
+    expect(isPlainObject(undefined)).toBe(false);
   });
 });
 

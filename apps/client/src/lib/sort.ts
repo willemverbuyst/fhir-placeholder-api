@@ -1,4 +1,4 @@
-import { hasKeyWithValue, isObject, typedEntries } from "@repo/utils";
+import { hasKeyWithValue, isPlainObject, typedEntries } from "@repo/utils";
 import type { CardRows } from "../config/fhirResources";
 import type { Sorter } from "../interfaces/Sorter";
 
@@ -49,7 +49,7 @@ export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
 
 export function getSortKeys<T>(cardRows: CardRows<T>) {
   return typedEntries(cardRows).reduce((acc, [k, v]) => {
-    if (isObject(v) && hasKeyWithValue(v, "sorter") && v.sorter) {
+    if (isPlainObject(v) && hasKeyWithValue(v, "sorter") && v.sorter) {
       acc.push(k);
     }
     return acc;

@@ -1,7 +1,11 @@
 import { Bundle, Resource } from "fhir/r5";
 
 export function hasId<T extends Resource>(data: T): data is T & { id: string } {
-  return "id" in data && !!data.id;
+  return (
+    Object.hasOwn(data, "id") &&
+    typeof data.id === "string" &&
+    data.id.length > 0
+  );
 }
 
 export function hasResourceType<T extends Resource>(data: T): data is T {
@@ -9,7 +13,7 @@ export function hasResourceType<T extends Resource>(data: T): data is T {
 }
 
 export function isResourceWithId<T extends Resource>(
-  data: T | Bundle<T> | undefined,
+  data: T | Bundle<T> | undefined
 ): data is T & { id: string } {
   return !!data && hasId(data) && hasResourceType(data);
 }

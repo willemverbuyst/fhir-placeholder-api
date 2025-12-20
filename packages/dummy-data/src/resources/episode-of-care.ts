@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
 import type { EpisodeOfCare } from "fhir/r5";
-import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
 
@@ -16,7 +16,7 @@ export function createEpisode({
   return {
     id,
     resourceType: "EpisodeOfCare",
-    status: getRandomElement(EPISODE_OF_CARE_STATUS),
+    status: faker.helpers.arrayElement(EPISODE_OF_CARE_STATUS),
     patient: { reference: `Patient/${patientId}` },
     diagnosis: [
       {
@@ -27,7 +27,7 @@ export function createEpisode({
         ],
       },
     ],
-    type: [{ coding: [getRandomElement(episodeOfCareTypes)] }],
+    type: [{ coding: [faker.helpers.arrayElement(episodeOfCareTypes)] }],
   };
 }
 

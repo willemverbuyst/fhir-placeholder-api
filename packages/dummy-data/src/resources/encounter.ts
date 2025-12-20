@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
 import type { Encounter } from "fhir/r5";
-import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
 
 export function createEncounter({
@@ -15,7 +15,7 @@ export function createEncounter({
   return {
     id,
     resourceType: "Encounter",
-    status: getRandomElement(ENCOUNTER_STATUS),
+    status: faker.helpers.arrayElement(ENCOUNTER_STATUS),
     subject: { reference: `Patient/${patientId}` },
     episodeOfCare: [{ reference: `EpisodeOfCare/${episodeId}` }],
   };

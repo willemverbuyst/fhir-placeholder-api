@@ -1,6 +1,6 @@
 import { ContactPoint } from "fhir/r5";
 
-export const contactSystem: Array<NonNullable<ContactPoint["system"]>> = [
+export const CONTACT_SYSTEM = [
   "phone",
   "fax",
   "email",
@@ -8,4 +8,4 @@ export const contactSystem: Array<NonNullable<ContactPoint["system"]>> = [
   "url",
   "sms",
   "other",
-];
+] as const satisfies ContactPoint["system"][];

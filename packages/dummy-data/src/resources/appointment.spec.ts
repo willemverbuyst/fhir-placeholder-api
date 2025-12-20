@@ -1,4 +1,4 @@
-import { appointmentStatus } from "@repo/fhir-codes";
+import { APPOINTMENT_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
 import { createAppointment, createAppointments } from "./appointment";
 
@@ -15,7 +15,7 @@ describe("createAppointment", () => {
 
     expect(appointment).toHaveProperty("id", appointmentId);
     expect(appointment).toHaveProperty("resourceType", "Appointment");
-    expect(appointmentStatus).toContain(appointment.status);
+    expect(APPOINTMENT_STATUS).toContain(appointment.status);
     expect(appointment.subject).toEqual({
       reference: `Patient/${patientId}`,
     });

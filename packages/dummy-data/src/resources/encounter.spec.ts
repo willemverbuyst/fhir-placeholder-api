@@ -1,4 +1,4 @@
-import { encounterStatus } from "@repo/fhir-codes";
+import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
 import { createEncounter, createEncounters } from "./encounter";
 
@@ -15,7 +15,7 @@ describe("createEncounter", () => {
 
     expect(encounter).toHaveProperty("id");
     expect(encounter.resourceType).toBe("Encounter");
-    expect(Object.values(encounterStatus)).toContain(encounter.status);
+    expect(Object.values(ENCOUNTER_STATUS)).toContain(encounter.status);
     expect(encounter.subject).toEqual({ reference: `Patient/${patientId}` });
     expect(encounter.episodeOfCare).toHaveLength(1);
 

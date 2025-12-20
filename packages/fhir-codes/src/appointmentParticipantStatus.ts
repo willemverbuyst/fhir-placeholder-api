@@ -1,5 +1,8 @@
 import { AppointmentParticipant } from "fhir/r5";
 
-export const appointmentParticipantStatus: Array<
-  AppointmentParticipant["status"]
-> = ["accepted", "declined", "tentative", "needs-action"];
+export const APPOINTMENT_PARTICIPANT_STATUS = [
+  "accepted",
+  "declined",
+  "tentative",
+  "needs-action",
+] as const satisfies AppointmentParticipant["status"][];

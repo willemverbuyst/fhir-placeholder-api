@@ -1,8 +1,7 @@
 import { faker } from "@faker-js/faker";
-import { gender } from "@repo/fhir-codes";
+import { GENDER } from "@repo/fhir-codes";
 import type { Patient } from "fhir/r5";
 import { START_DATE } from "../config";
-import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
 import { languages } from "../valueSets/languages-value-set";
 import { createAddress } from "./address";
@@ -28,7 +27,7 @@ export function createPatient({
       .between({ from: START_DATE, to: Date.now() })
       .toISOString()
       .split("T")[0],
-    gender: getRandomElement(gender),
+    gender: faker.helpers.arrayElement(GENDER),
     active: faker.datatype.boolean(),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],
@@ -40,7 +39,7 @@ export function createPatient({
     ],
     communication: [
       {
-        language: { coding: [getRandomElement(languages)] },
+        language: { coding: [faker.helpers.arrayElement(languages)] },
         preferred: true,
       },
     ],

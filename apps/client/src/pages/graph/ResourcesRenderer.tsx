@@ -16,7 +16,7 @@ export function ResourcesRenderer<T extends Resource>({
 }: {
   resourceType: AppResourceType;
   searchParams?: string;
-  renderItem?: (resource: MappedResource<T>) => JSX.Element | undefined;
+  renderItem?: (resource: MappedResource<T>) => JSX.Element | null;
 }) {
   const { isPending, isError, error, data } = useQuery(
     createResourcesQueryOptions<T>({ resourceType, searchParams }),

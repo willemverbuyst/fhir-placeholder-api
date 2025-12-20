@@ -67,6 +67,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: Appointment["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       status: {
         display: (v: Appointment["status"]) => v,
@@ -92,6 +93,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: Condition["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       subject: {
         display: (v: Condition["subject"]) => getIdFromReference(v),
@@ -100,7 +102,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       },
       note: {
         display: (v: Condition["note"]) => v?.map((n) => n.text),
-        sorter: "asc",
+        sorter: true,
         search: true,
       },
       clinicalStatus: {
@@ -115,6 +117,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: Encounter["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       status: {
         display: (v: Encounter["status"]) => v,
@@ -138,6 +141,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: EpisodeOfCare["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       status: {
         display: (v: EpisodeOfCare["status"]) => v,
@@ -174,6 +178,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: Observation["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       status: {
         display: (v: Observation["status"]) => v,
@@ -204,6 +209,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     cardRows: {
       id: {
         display: (v: Organization["id"]) => v,
+        sorter: "asc",
       },
       active: {
         display: (v: Organization["active"]) =>
@@ -223,6 +229,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: Patient["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       birthDate: {
         display: (v: Patient["birthDate"]) => v,
@@ -242,7 +249,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       name: {
         display: (v: Practitioner["name"]) =>
           v?.map((i) => `${i.family} ${i.given?.join(" ")}`).filter(isString),
-        sorter: "asc",
+        sorter: true,
         search: true,
       },
       telecom: {
@@ -288,6 +295,7 @@ export const FHIR_RESOURCES: ConfigItems = {
     cardRows: {
       id: {
         display: (v: Practitioner["id"]) => v,
+        sorter: "asc",
       },
       birthDate: {
         display: (v: Practitioner["birthDate"]) => v,
@@ -307,7 +315,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       name: {
         display: (v: Practitioner["name"]) =>
           v?.map((i) => `${i.family} ${i.given?.join(" ")}`).filter(isString),
-        sorter: "asc",
+        sorter: true,
         search: true,
       },
       telecom: {
@@ -333,6 +341,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       id: {
         display: (v: PractitionerRole["id"]) => v,
         search: true,
+        sorter: "asc",
       },
       active: {
         display: (v: PractitionerRole["active"]) =>

@@ -33,9 +33,9 @@ export class ObservationController {
         transform: true,
         whitelist: true,
         forbidNonWhitelisted: true,
-      })
+      }),
     )
-    query?: GetObservationDto
+    query?: GetObservationDto,
   ): Promise<Bundle<Observation & Id>> {
     return this.observationService.findAll(query);
   }

@@ -2,7 +2,7 @@
   "version": "0.2",
   "language": "en",
   "words": [
-    "bunchee", // dependency, packages/fhir-codes/package.json
+    "bunchee",
     "fhir",
     "waitlist",
     "onhold",
@@ -10,9 +10,9 @@
     "searchset",
     "knip",
     "noshow",
-    "quuz", // test word
+    "quuz",
     "sonner",
-    "venv" // apps/spreadsheet/README
+    "venv"
   ],
   "ignorePaths": [
     "**/node_modules/**",

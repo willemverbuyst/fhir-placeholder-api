@@ -12,7 +12,6 @@
     "test:unit": "vitest run"
   },
   "devDependencies": {
-    "@types/fhir": "^0.0.41",
     "vitest": "^3.2.3"
   }
 }

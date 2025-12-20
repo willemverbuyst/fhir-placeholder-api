@@ -30,7 +30,6 @@
     "bunchee": "^6.5.2"
   },
   "devDependencies": {
-    "@types/fhir": "^0.0.41",
     "vitest": "^3.2.3"
   }
 }

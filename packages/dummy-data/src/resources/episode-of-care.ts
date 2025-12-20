@@ -1,4 +1,4 @@
-import { episodeOfCareStatus } from "@repo/fhir-codes";
+import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
 import type { EpisodeOfCare } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
@@ -16,7 +16,7 @@ export function createEpisode({
   return {
     id,
     resourceType: "EpisodeOfCare",
-    status: getRandomElement(episodeOfCareStatus),
+    status: getRandomElement(EPISODE_OF_CARE_STATUS),
     patient: { reference: `Patient/${patientId}` },
     diagnosis: [
       {

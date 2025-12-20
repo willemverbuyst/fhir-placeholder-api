@@ -1,4 +1,4 @@
-export function getRandomElement<T>(arr: T[]): T {
+export function getRandomElement<T>(arr: readonly T[]): T {
   if (arr.length === 0) {
     throw new Error("Array is empty");
   }

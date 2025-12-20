@@ -1,4 +1,4 @@
-import { episodeOfCareStatus } from "@repo/fhir-codes";
+import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
 import { createEpisode, createEpisodes } from "./episode-of-care";
@@ -12,7 +12,7 @@ describe("createEpisode", () => {
 
     expect(episode).toHaveProperty("id");
     expect(episode.resourceType).toBe("EpisodeOfCare");
-    expect(Object.values(episodeOfCareStatus)).toContain(episode.status);
+    expect(Object.values(EPISODE_OF_CARE_STATUS)).toContain(episode.status);
     expect(episode.patient).toEqual({ reference: `Patient/${patientId}` });
     expect(episode.diagnosis).toHaveLength(1);
 

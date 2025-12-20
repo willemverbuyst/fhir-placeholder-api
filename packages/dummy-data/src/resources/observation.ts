@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { observationStatus } from "@repo/fhir-codes";
+import { OBSERVATION_STATUS } from "@repo/fhir-codes";
 import type { Observation } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 import type { Id } from "../types";
@@ -17,7 +17,7 @@ export function createObservation({
   return {
     id,
     resourceType: "Observation",
-    status: getRandomElement(observationStatus),
+    status: getRandomElement(OBSERVATION_STATUS),
     code: { coding: [getRandomElement(observationCodes)] },
     encounter: { reference: `Encounter/${encounterId}` },
     subject: { reference: `Patient/${patientId}` },

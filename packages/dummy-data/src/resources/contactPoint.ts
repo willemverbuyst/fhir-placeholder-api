@@ -1,11 +1,11 @@
 import { faker } from "@faker-js/faker";
-import { contactUse } from "@repo/fhir-codes";
+import { CONTACT_USE } from "@repo/fhir-codes";
 import type { ContactPoint } from "fhir/r5";
 import { getRandomElement } from "../helpers/getRandomElement";
 
 export function createEmail(firstName: string, lastName: string) {
   const email: ContactPoint = {
-    use: getRandomElement(contactUse),
+    use: getRandomElement(CONTACT_USE),
     system: "email",
     value: faker.internet.email({
       firstName,
@@ -19,7 +19,7 @@ export function createEmail(firstName: string, lastName: string) {
 
 export function createPhone() {
   const phone: ContactPoint = {
-    use: getRandomElement(contactUse),
+    use: getRandomElement(CONTACT_USE),
     system: "phone",
     value: faker.phone.number({ style: "national" }),
   };

@@ -1,4 +1,4 @@
-import { observationStatus } from "@repo/fhir-codes";
+import { OBSERVATION_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
 import { observationCodes } from "../valueSets/observation-code-value-set";
 import { createObservation, createObservations } from "./observation";
@@ -16,7 +16,7 @@ describe("createObservation", () => {
 
     expect(observation).toHaveProperty("id");
     expect(observation).toHaveProperty("resourceType", "Observation");
-    expect(Object.values(observationStatus)).toContain(observation.status);
+    expect(Object.values(OBSERVATION_STATUS)).toContain(observation.status);
     expect(observation.subject).toEqual({ reference: `Patient/${patientId}` });
     expect(observation.encounter).toEqual({
       reference: `Encounter/${encounterId}`,

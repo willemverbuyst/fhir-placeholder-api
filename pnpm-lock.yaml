@@ -262,6 +262,10 @@ importers:
         version: 6.6.2(typescript@5.9.3)
 
   packages/utils:
+    dependencies:
+      '@repo/fhir-codes':
+        specifier: workspace:*
+        version: link:../fhir-codes
     devDependencies:
       vitest:
         specifier: ^3.2.3

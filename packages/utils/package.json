@@ -11,6 +11,9 @@
     "type:check": "tsc",
     "test:unit": "vitest run"
   },
+  "dependencies": {
+    "@repo/fhir-codes": "workspace:*"
+  },
   "devDependencies": {
     "vitest": "^3.2.3"
   }

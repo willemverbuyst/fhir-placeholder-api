@@ -1,8 +1,4 @@
-import {
-  getResourcesWithIdFromBundle,
-  isBundle,
-  isResourceWithId,
-} from "@repo/utils";
+import { getResourcesWithIdFromBundle, isResourceWithId } from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
 import type { ZodSchema } from "zod";
@@ -18,7 +14,6 @@ import { organizationResourceSchema } from "../lib/validation/organization.valid
 import { patientResourceSchema } from "../lib/validation/patient.validation";
 import { practitionerRoleResourceSchema } from "../lib/validation/practitioner-role.validation";
 import { practitionerResourceSchema } from "../lib/validation/practitioner.validation";
-import { validateBundle } from "../lib/validation/validateBundle";
 import { validateResource } from "../lib/validation/validateResource";
 
 export function createResourcesQueryOptions<T extends Resource>({
@@ -44,88 +39,68 @@ async function fetchResources<T extends Resource>(
   return await response.json();
 }
 
+function getSchemaForResourceType(resourceType: AppResourceType): ZodSchema {
+  switch (resourceType) {
+    case "Appointment":
+      return appointmentResourceSchema;
+    case "Condition":
+      return conditionResourceSchema;
+    case "Encounter":
+      return encounterResourceSchema;
+    case "EpisodeOfCare":
+      return episodeOfCareResourceSchema;
+    case "Observation":
+      return observationResourceSchema;
+    case "Organization":
+      return organizationResourceSchema;
+    case "Patient":
+      return patientResourceSchema;
+    case "Practitioner":
+      return practitionerResourceSchema;
+    case "PractitionerRole":
+      return practitionerRoleResourceSchema;
+    default:
+      throw new Error(`Schema missing for ${resourceType}`);
+  }
+}
+
+function isBundleWithValidation<T extends Resource>(
+  data: unknown,
+  schema: ZodSchema,
+): data is Bundle<T> {
+  try {
+    getBundleSchema(schema).parse(data);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function getResources<T extends Resource>(
   url: string,
   resourceType: AppResourceType,
 ) {
   const rawData = await fetchResources<T>(url);
+  const schema = getSchemaForResourceType(resourceType);
+  const cardRows = FHIR_RESOURCES[resourceType].cardRows;
 
-  let schema: ZodSchema;
-  if (isBundle(rawData)) {
-    switch (resourceType) {
-      case "Appointment":
-        schema = appointmentResourceSchema;
-        break;
-
-      case "Condition":
-        schema = conditionResourceSchema;
-        break;
-
-      case "Encounter":
-        schema = encounterResourceSchema;
-        break;
-
-      case "EpisodeOfCare":
-        schema = episodeOfCareResourceSchema;
-        break;
-
-      case "Observation":
-        schema = observationResourceSchema;
-        break;
-
-      case "Organization":
-        schema = organizationResourceSchema;
-        break;
-
-      case "Patient":
-        schema = patientResourceSchema;
-        break;
-
-      case "Practitioner":
-        schema = practitionerResourceSchema;
-        break;
-
-      case "PractitionerRole":
-        schema = practitionerRoleResourceSchema;
-        break;
-
-      default:
-        throw new Error(`Validation missing for ${url}`);
-    }
-
-    validateBundle({
-      schema: getBundleSchema(schema),
-      resources: rawData,
-      resourceType,
-    });
+  // Check if it's a valid bundle first
+  if (isBundleWithValidation<T>(rawData, schema)) {
     const resources = getResourcesWithIdFromBundle(rawData);
-    const cardRows = FHIR_RESOURCES[resourceType].cardRows;
     const mappedResources = getMappedResources<T>(resources, cardRows);
-
     return mappedResources;
   }
 
+  // Otherwise, try single resource
   if (isResourceWithId(rawData)) {
-    let schema: ZodSchema;
-    switch (resourceType) {
-      case "Practitioner": {
-        schema = practitionerResourceSchema;
-        break;
-      }
-
-      default:
-        throw new Error(`Validation missing for ${url}`);
-    }
-
     validateResource({
       schema: schema,
       resource: rawData,
       resourceType,
     });
-    const cardRows = FHIR_RESOURCES[resourceType].cardRows;
-    const mappedResources = getMappedResource<T>(rawData, cardRows);
 
-    return [mappedResources];
+    const mappedResource = getMappedResource<T>(rawData, cardRows);
+    return [mappedResource];
   }
 
   throw new Error("Failed to process request");

@@ -1,19 +1,22 @@
-import { getResourcesWithIdFromBundle, isResourceWithId } from "@repo/utils";
+import {
+  appointmentResourceSchema,
+  conditionResourceSchema,
+  encounterResourceSchema,
+  episodeOfCareResourceSchema,
+  getBundleSchema,
+  getResourcesWithIdFromBundle,
+  isResourceWithId,
+  observationResourceSchema,
+  organizationResourceSchema,
+  patientResourceSchema,
+  practitionerResourceSchema,
+  practitionerRoleResourceSchema,
+} from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
 import type { ZodSchema } from "zod";
 import { type AppResourceType, FHIR_RESOURCES } from "../config/fhirResources";
 import { getMappedResource, getMappedResources } from "../lib/mappedResources";
-import { appointmentResourceSchema } from "../lib/validation/appointment.validation";
-import { getBundleSchema } from "../lib/validation/bundle.validation";
-import { conditionResourceSchema } from "../lib/validation/condition.validation";
-import { encounterResourceSchema } from "../lib/validation/encounter.validation";
-import { episodeOfCareResourceSchema } from "../lib/validation/episode-of-care.validation";
-import { observationResourceSchema } from "../lib/validation/observation.validation";
-import { organizationResourceSchema } from "../lib/validation/organization.validation";
-import { patientResourceSchema } from "../lib/validation/patient.validation";
-import { practitionerRoleResourceSchema } from "../lib/validation/practitioner-role.validation";
-import { practitionerResourceSchema } from "../lib/validation/practitioner.validation";
 import { validateResource } from "../lib/validation/validateResource";
 
 export function createResourcesQueryOptions<T extends Resource>({

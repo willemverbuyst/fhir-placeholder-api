@@ -1,6 +1,6 @@
+import { capabilityStatementResourceSchema } from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { CapabilityStatement } from "fhir/r5";
-import { capabilityStatementResourceSchema } from "../lib/validation/capability-statement.validation";
 import { validateResource } from "../lib/validation/validateResource";
 
 export function createMetadataQueryOptions() {

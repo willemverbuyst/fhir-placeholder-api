@@ -12,12 +12,14 @@
     "format:fix": "biome format --write .",
     "lint:check": "biome lint",
     "lint:fix": "biome lint --write .",
+    "spell:check": "cspell \"**/*.{ts,tsx,js,jsx,md,json,yml,yaml}\"",
     "test:unit": "turbo run test:unit",
     "test:e2e": "turbo run test:e2e",
     "type:check": "turbo type:check"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "cspell": "^8.17.2",
     "turbo": "^2.5.4"
   },
   "packageManager": "pnpm@10.10.0",

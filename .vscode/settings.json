@@ -1,14 +1,4 @@
 {
-  "cSpell.ignoreWords": [
-    "fhir",
-    "waitlist",
-    "onhold",
-    "codeable",
-    "searchset",
-    "knip",
-    "noshow",
-    "sonner"
-  ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,

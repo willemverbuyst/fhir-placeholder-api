@@ -3,7 +3,7 @@ import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Observation } from "fhir/r5";
 import type { Id } from "../types";
 import { GetObservationDto } from "./dto/get-observation.dto";
-import { observationBundleExample } from "./examples/observation-bundle-example";
+import { observationBundleExample } from "./examples/observation-bundle.example";
 import { ObservationService } from "./observation.service";
 
 @Controller("Observation")

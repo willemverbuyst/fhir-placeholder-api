@@ -1,0 +1,30 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "bunchee",
+    "fhir",
+    "waitlist",
+    "onhold",
+    "codeable",
+    "searchset",
+    "knip",
+    "noshow",
+    "quuz",
+    "sonner",
+    "venv"
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.turbo/**",
+    "**/pnpm-lock.yaml",
+    "**/*.min.js",
+    "**/*.example.ts",
+    "packages/dummy-data/src/valueSets/episode-of-care-type-value-set.ts",
+    "packages/dummy-data/src/valueSets/languages-value-set.ts",
+    "packages/dummy-data/src/valueSets/observation-code-value-set.ts"
+  ],
+  "dictionaries": ["typescript", "node", "html", "css", "npm"]
+}

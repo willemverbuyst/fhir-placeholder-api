@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   code-style:
-    name: Format, Lint, Type Check
     runs-on: ubuntu-latest
 
     steps:
@@ -38,14 +37,11 @@ jobs:
       - name: 🔍 Type check
         run: pnpm type:check
 
+      - name: 📖 Check spelling
+        run: pnpm spell:check
 
-
-  # knip:
-  #   name: Knip
-  #   uses: ./.github/workflows/node-ci.yml
-  #   with:
-  #     run-command: |
-  #       npm run knip
+      - name: ✂️ Knip
+        run: pnpm knip:check
 
   lint-actions:
     name: Lint Actions

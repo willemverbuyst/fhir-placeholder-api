@@ -11,13 +11,13 @@ export function createMetadataQueryOptions() {
   });
 }
 
-export async function fetchMetadata(): Promise<CapabilityStatement> {
+async function fetchMetadata(): Promise<CapabilityStatement> {
   const response = await fetch("http://localhost:8080/api/v2/r5/metadata");
 
   return await response.json();
 }
 
-export async function getMetadata() {
+async function getMetadata() {
   const rawData = await fetchMetadata();
 
   validateResource({

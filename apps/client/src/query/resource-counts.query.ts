@@ -12,7 +12,7 @@ export function createResourceCountQueryOptions() {
   });
 }
 
-export async function fetchResourceCounts(): Promise<ResourceCountsSchema> {
+async function fetchResourceCounts(): Promise<ResourceCountsSchema> {
   const response = await fetch(
     "http://localhost:8080/api/v2/r5/$resource-counts",
   );
@@ -20,7 +20,7 @@ export async function fetchResourceCounts(): Promise<ResourceCountsSchema> {
   return await response.json();
 }
 
-export async function getResourceCounts(): Promise<ResourceCountsSchema> {
+async function getResourceCounts(): Promise<ResourceCountsSchema> {
   const rawData = await fetchResourceCounts();
 
   resourceCountsSchema.parse(rawData);

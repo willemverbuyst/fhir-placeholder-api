@@ -2,11 +2,11 @@ import { hasKeyWithValue, isPlainObject, typedEntries } from "@repo/utils";
 import type { CardRows } from "../config/fhirResources";
 import type { Sorter } from "../interfaces/Sorter";
 
-export function isId(a: unknown): a is string {
+function isId(a: unknown): a is string {
   return typeof a === "string" && /^([a-z]+-)+\d+$/.test(a);
 }
 
-export function getNumericValueFromId(a: unknown) {
+function getNumericValueFromId(a: unknown) {
   if (!isId(a)) {
     throw Error("unexpected id format");
   }
@@ -18,7 +18,7 @@ export function getNumericValueFromId(a: unknown) {
   return Number(match[0]);
 }
 
-export function getSortResult<T>(a: T, b: T) {
+function getSortResult<T>(a: T, b: T) {
   if (a > b) {
     return 1;
   }

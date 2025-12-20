@@ -36,7 +36,7 @@ export function createResourcesQueryOptions<T extends Resource>({
   });
 }
 
-export async function fetchResources<T extends Resource>(
+async function fetchResources<T extends Resource>(
   url: string,
 ): Promise<Bundle<T> | T> {
   const response = await fetch(`http://localhost:8080/api/v2/r5/${url}`);
@@ -44,7 +44,7 @@ export async function fetchResources<T extends Resource>(
   return await response.json();
 }
 
-export async function getResources<T extends Resource>(
+async function getResources<T extends Resource>(
   url: string,
   resourceType: AppResourceType,
 ) {

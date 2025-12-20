@@ -54,7 +54,7 @@ export type ConfigItem<T extends Resource> = {
   cardRows: CardRows<T>;
 };
 
-export type ConfigItems = {
+type ConfigItems = {
   [K in AppResourceType]: ConfigItem<
     Extract<AppFhirResource, { resourceType: K }>
   >;

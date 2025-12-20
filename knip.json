@@ -1,0 +1,57 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["turbo.json"],
+      "project": ["**/*.{js,ts,json}"],
+      "ignore": ["**/dist/**", "**/build/**", "**/.turbo/**"]
+    },
+    "apps/client": {
+      "entry": ["src/main.tsx", "index.html", "vite.config.ts"],
+      "project": ["src/**/*.{ts,tsx}", "**/*.config.{js,ts}"],
+      "ignore": ["src/components/ui/**"],
+      "ignoreDependencies": [
+        "tailwindcss",
+        "globals",
+        "tw-animate-css",
+        "@testing-library/jest-dom",
+        "@testing-library/react"
+      ]
+    },
+    "apps/server": {
+      "entry": ["src/main.ts"],
+      "project": ["src/**/*.ts", "!test/**/*.e2e*.ts"],
+      "ignoreDependencies": [
+        "supertest",
+        "@types/supertest",
+        "ts-loader",
+        "source-map-support"
+      ]
+    },
+    "apps/spreadsheet": {
+      "entry": ["main.py"],
+      "project": ["**/*.py"]
+    },
+    "packages/dummy-data": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "packages/fhir-codes": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "packages/utils": {
+      "entry": ["src/index.ts"],
+      "project": ["src/**/*.ts"]
+    }
+  },
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.turbo/**",
+    "**/coverage/**",
+    "**/*.min.js",
+    "**/pnpm-lock.yaml"
+  ]
+}

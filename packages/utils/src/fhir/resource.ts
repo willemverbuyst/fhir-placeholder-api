@@ -13,7 +13,7 @@ export function hasResourceType<T extends Resource>(data: T): data is T {
 }
 
 export function isResourceWithId<T extends Resource>(
-  data: T | Bundle<T> | undefined
+  data: T | Bundle<T> | undefined,
 ): data is T & { id: string } {
   return !!data && hasId(data) && hasResourceType(data);
 }

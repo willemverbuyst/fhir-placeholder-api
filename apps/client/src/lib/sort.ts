@@ -38,7 +38,7 @@ export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
   if (property === "id") {
     result = getSortResult(
       getNumericValueFromId(aValue),
-      getNumericValueFromId(bValue)
+      getNumericValueFromId(bValue),
     );
   } else {
     result = getSortResult(aValue, bValue);
@@ -48,17 +48,20 @@ export function genericSort<T>(a: T, b: T, propertyType: Sorter<T>): number {
 }
 
 export function getSortKeys<T>(cardRows: CardRows<T>) {
-  return typedEntries(cardRows).reduce((acc, [k, v]) => {
-    if (isPlainObject(v) && hasKeyWithValue(v, "sorter") && v.sorter) {
-      acc.push(k);
-    }
-    return acc;
-  }, [] as (keyof T)[]);
+  return typedEntries(cardRows).reduce(
+    (acc, [k, v]) => {
+      if (isPlainObject(v) && hasKeyWithValue(v, "sorter") && v.sorter) {
+        acc.push(k);
+      }
+      return acc;
+    },
+    [] as (keyof T)[],
+  );
 }
 
 export function getInitialSortProperty<T>(cardRows: CardRows<T>) {
   const property = typedEntries(cardRows).find(
-    ([_, v]) => v?.sorter === "asc" || v?.sorter === "desc"
+    ([_, v]) => v?.sorter === "asc" || v?.sorter === "desc",
   );
 
   const [k, v] = property ?? [];

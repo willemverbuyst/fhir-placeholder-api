@@ -16,7 +16,7 @@ export type CardRows<T> = {
   [K in keyof T]?: {
     display: (
       // biome-ignore lint/suspicious/noExplicitAny: this can be any type
-      v: any
+      v: any,
     ) => string | string[] | undefined;
     sorter?: boolean | "asc" | "desc";
     filter?: boolean;
@@ -166,7 +166,7 @@ export const FHIR_RESOURCES: ConfigItems = {
             ?.flatMap((e) =>
               e.condition
                 ?.map((c) => c.reference && getIdFromReference(c.reference))
-                .filter(isString)
+                .filter(isString),
             )
             .filter(isString),
       },
@@ -272,7 +272,7 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v: Patient["communication"]) =>
           v
             ?.flatMap((p) =>
-              p.language.coding?.map((c) => c.code).filter(isString)
+              p.language.coding?.map((c) => c.code).filter(isString),
             )
             .filter(isString),
       },

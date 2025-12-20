@@ -1,7 +1,7 @@
 import { capabilityStatementResourceSchema } from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { CapabilityStatement } from "fhir/r5";
-import { validateResource } from "../lib/validation/validateResource";
+import { isResourceWithValidation } from "./validation";
 
 export function createMetadataQueryOptions() {
   return queryOptions({
@@ -20,11 +20,13 @@ async function fetchMetadata(): Promise<CapabilityStatement> {
 async function getMetadata() {
   const rawData = await fetchMetadata();
 
-  validateResource({
-    schema: capabilityStatementResourceSchema,
-    resource: rawData,
-    resourceType: "CapabilityStatement",
-  });
+  const resourceValidation = isResourceWithValidation(
+    rawData,
+    capabilityStatementResourceSchema,
+  );
+  if (!resourceValidation.isResource) {
+    throw new Error(`Failed to process request: ${resourceValidation.error}`);
+  }
 
   return rawData;
 }

@@ -1,1 +1,1 @@
-> pnpm turbo --filter @repo/utils build
+> pnpm turbo build --filter=@repo/utils

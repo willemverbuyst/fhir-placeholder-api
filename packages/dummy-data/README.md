@@ -1,0 +1,1 @@
+> pnpm turbo build --filter=@repo/dummy-data

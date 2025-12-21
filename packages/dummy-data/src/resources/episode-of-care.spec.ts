@@ -1,5 +1,6 @@
 import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
 import { createEpisode, createEpisodes } from "./episode-of-care";
 
@@ -55,9 +56,13 @@ describe("createEpisode", () => {
 });
 
 describe("createEpisodes", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("patient", ["patient-1", "patient-2"]);
+
   const episodes = createEpisodes({
     numberOfEpisodes: 4,
     numberOfPatients: 2,
+    idGen,
   });
 
   it.each`
@@ -84,6 +89,7 @@ describe("createEpisodes", () => {
     const episodes = createEpisodes({
       numberOfEpisodes: 4,
       numberOfPatients: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(episodes).toHaveLength(4);
@@ -93,6 +99,7 @@ describe("createEpisodes", () => {
     const episodes = createEpisodes({
       numberOfEpisodes: 0,
       numberOfPatients: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(episodes).toHaveLength(0);

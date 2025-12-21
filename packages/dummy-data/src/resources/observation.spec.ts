@@ -1,5 +1,6 @@
 import { OBSERVATION_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { observationCodes } from "../valueSets/observation-code-value-set";
 import { createObservation, createObservations } from "./observation";
 
@@ -52,10 +53,21 @@ describe("createObservation", () => {
 });
 
 describe("createObservations", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("patient", ["patient-1", "patient-2", "patient-3"]);
+  idGen.refs.set("encounter", [
+    "encounter-1",
+    "encounter-2",
+    "encounter-3",
+    "encounter-4",
+    "encounter-5",
+    "encounter-6",
+  ]);
   const encounters = createObservations({
     numberOfObservations: 12,
     numberOfEncounters: 6,
     numberOfPatients: 3,
+    idGen,
   });
 
   it.each`
@@ -91,6 +103,7 @@ describe("createObservations", () => {
       numberOfObservations: 12,
       numberOfEncounters: 6,
       numberOfPatients: 3,
+      idGen: new IdGenerator(),
     });
 
     expect(observations).toHaveLength(12);
@@ -101,6 +114,7 @@ describe("createObservations", () => {
       numberOfObservations: 0,
       numberOfEncounters: 6,
       numberOfPatients: 3,
+      idGen: new IdGenerator(),
     });
 
     expect(observations).toHaveLength(0);

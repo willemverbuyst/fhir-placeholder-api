@@ -11,7 +11,11 @@ export class IdGenerator {
 
   generateId(resourceType: string): string {
     if (this.strategy === "uuid") {
-      return crypto.randomUUID();
+      const id = crypto.randomUUID();
+      const refs = this.refs.get(resourceType) || [];
+      refs.push(id);
+      this.refs.set(resourceType, refs);
+      return id;
     }
 
     // Sequential strategy
@@ -22,7 +26,6 @@ export class IdGenerator {
     const refs = this.refs.get(resourceType) || [];
     refs.push(id);
     this.refs.set(resourceType, refs);
-
     return id;
   }
 }

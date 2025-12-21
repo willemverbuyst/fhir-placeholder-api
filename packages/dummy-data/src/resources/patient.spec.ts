@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { createPatient, createPatients } from "./patient";
 
 describe("createPatient", () => {
@@ -139,11 +140,20 @@ describe("createPatient", () => {
 });
 
 describe("createPatients", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("organization", ["organization-1", "organization-2"]);
+  idGen.refs.set("practitioner", [
+    "practitioner-1",
+    "practitioner-2",
+    "practitioner-3",
+    "practitioner-4",
+  ]);
   const patients = createPatients({
     numberOfPatients: 8,
     numberOfOrganizations: 2,
     numberOfPractitioners: 4,
     startDate: "1950-01-01",
+    idGen,
   });
 
   it.each`
@@ -181,6 +191,7 @@ describe("createPatients", () => {
       numberOfOrganizations: 1,
       numberOfPractitioners: 1,
       startDate: "1950-01-01",
+      idGen: new IdGenerator(),
     });
 
     expect(patients).toHaveLength(3);
@@ -192,6 +203,7 @@ describe("createPatients", () => {
       numberOfOrganizations: 1,
       numberOfPractitioners: 1,
       startDate: "1950-01-01",
+      idGen: new IdGenerator(),
     });
 
     expect(patients).toHaveLength(0);

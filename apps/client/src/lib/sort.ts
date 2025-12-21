@@ -2,20 +2,25 @@ import { hasKeyWithValue, isPlainObject, typedEntries } from "@repo/utils";
 import type { CardRows } from "../config/fhirResources";
 import type { Sorter } from "../interfaces/Sorter";
 
-function isId(a: unknown): a is string {
+function isSequentialId(a: unknown): a is string {
   return typeof a === "string" && /^([a-z]+-)+\d+$/.test(a);
 }
 
 function getNumericValueFromId(a: unknown) {
-  if (!isId(a)) {
-    throw Error("unexpected id format");
-  }
-  const match = a.match(/\d+/);
+  if (isSequentialId(a)) {
+    const match = a.match(/\d+/);
 
-  if (!match?.length) {
-    throw Error("unexpected id format");
+    if (!match?.length) {
+      throw Error("unexpected id format");
+    }
+    return Number(match[0]);
   }
-  return Number(match[0]);
+
+  if (typeof a === "string") {
+    return a;
+  }
+
+  throw Error("unexpected id format");
 }
 
 function getSortResult<T>(a: T, b: T) {

@@ -30,6 +30,6 @@
     "bunchee": "^6.5.2"
   },
   "devDependencies": {
-    "vitest": "^3.2.3"
+    "vitest": "^4.0.16"
   }
 }

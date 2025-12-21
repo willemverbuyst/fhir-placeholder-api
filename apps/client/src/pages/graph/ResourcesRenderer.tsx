@@ -30,7 +30,11 @@ export function ResourcesRenderer<T extends Resource>({
     <section className="flex flex-col gap-3">
       {data?.map((e) =>
         e.id ? (
-          <ResourceItem key={String(e.id)} id={String(e.id)}>
+          <ResourceItem
+            key={String(e.id)}
+            id={String(e.id)}
+            resourceType={resourceType}
+          >
             {renderItem?.(e)}
           </ResourceItem>
         ) : null,

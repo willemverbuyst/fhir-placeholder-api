@@ -37,5 +37,6 @@ export const dummyDataConfig: DummyDataConfig = {
   numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
   numberOfPractitionerRoles: NUMBER_OF_PRACTITIONER_ROLES,
   startDate: START_DATE,
-  idStrategy: "sequential",
+  // Use UUID for development/production, sequential for tests
+  idStrategy: process.env.NODE_ENV === "test" ? "sequential" : "uuid",
 };

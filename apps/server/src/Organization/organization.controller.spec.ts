@@ -1,7 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Organization } from "fhir/r5";
-import type { Id } from "src/types";
 import { DataStoreService } from "../db/dataStore.service";
 import { OrganizationController } from "./organization.controller";
 import { OrganizationService } from "./organization.service";
@@ -44,7 +43,7 @@ describe("OrganizationController", () => {
 
   describe("findOne", () => {
     it("should call findOne method of OrganizationService", async () => {
-      const mockOrganization: Organization & Id = {
+      const mockOrganization: Organization = {
         id: "1",
         resourceType: "Organization",
       };
@@ -74,7 +73,7 @@ describe("OrganizationController", () => {
 
   describe("update", () => {
     it("should call update method of OrganizationService", async () => {
-      const mockOrganization: Organization & Id = {
+      const mockOrganization: Organization = {
         id: "1",
         resourceType: "Organization",
       };

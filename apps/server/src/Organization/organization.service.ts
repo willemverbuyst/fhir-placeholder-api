@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import type { Bundle, Organization } from "fhir/r5";
 import { DataStoreService } from "../db/dataStore.service";
-import type { Id } from "../types";
 import { wrapInBundle } from "../utils/bundle";
 import type { CreateOrganizationDto } from "./dto/create-organization.dto";
 import type { UpdateOrganizationDto } from "./dto/update-organization.dto";
@@ -12,8 +11,8 @@ export class OrganizationService {
 
   async create(
     createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization & Id> {
-    const newOrganization: Organization & Id = {
+  ): Promise<Organization> {
+    const newOrganization: Organization = {
       id: `organization-${String(this.repo.organizations.length + 1)}`,
       resourceType: "Organization",
       ...createOrganizationDto,
@@ -24,24 +23,24 @@ export class OrganizationService {
     return newOrganization;
   }
 
-  async findAll(): Promise<Bundle<Organization & Id>> {
+  async findAll(): Promise<Bundle<Organization>> {
     const resources = this.repo.organizations;
 
     return wrapInBundle(resources);
   }
 
-  async findOne(id: string): Promise<(Organization & Id) | undefined> {
+  async findOne(id: string): Promise<Organization | undefined> {
     return this.repo.organizations.find((org) => org.id === id);
   }
 
   async update(
     id: string,
     updateOrganizationDto: UpdateOrganizationDto,
-  ): Promise<(Organization & Id) | undefined> {
+  ): Promise<Organization | undefined> {
     const organization = await this.findOne(id);
 
     if (organization) {
-      const updatedOrganization: Organization & Id = {
+      const updatedOrganization: Organization = {
         ...organization,
         ...updateOrganizationDto,
       };

@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import type { Bundle, Patient } from "fhir/r5";
 import { DataStoreService } from "../db/dataStore.service";
-import type { Id } from "../types";
 import { wrapInBundle } from "../utils/bundle";
 
 @Injectable()
@@ -11,7 +10,7 @@ export class PatientService {
   async findAll(query?: {
     organization?: string;
     "general-practitioner"?: string;
-  }): Promise<Bundle<Patient & Id>> {
+  }): Promise<Bundle<Patient>> {
     let resources = this.repo.patients;
 
     if (!query) {
@@ -37,7 +36,7 @@ export class PatientService {
     return wrapInBundle(resources);
   }
 
-  async findOne(id: string): Promise<(Patient & Id) | undefined> {
+  async findOne(id: string): Promise<Patient | undefined> {
     return this.repo.patients.find((patient) => patient.id === id);
   }
 }

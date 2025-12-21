@@ -1,7 +1,6 @@
 import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Observation } from "fhir/r5";
-import type { Id } from "../types";
 import { GetObservationDto } from "./dto/get-observation.dto";
 import { observationBundleExample } from "./examples/observation-bundle.example";
 import { ObservationService } from "./observation.service";
@@ -36,7 +35,7 @@ export class ObservationController {
       }),
     )
     query?: GetObservationDto,
-  ): Promise<Bundle<Observation & Id>> {
+  ): Promise<Bundle<Observation>> {
     return this.observationService.findAll(query);
   }
 }

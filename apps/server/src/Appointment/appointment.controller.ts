@@ -9,7 +9,6 @@ import {
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Appointment, Bundle } from "fhir/r5";
 import * as sanitizeHtml from "sanitize-html";
-import type { Id } from "src/types";
 import { AppointmentService } from "./appointment.service";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
 import { GetAppointmentDto } from "./dto/get-appointment.dto";
@@ -33,7 +32,7 @@ export class AppointmentController {
       }),
     )
     createAppointmentDto: CreateAppointmentDto,
-  ): Promise<Appointment & Id> {
+  ): Promise<Appointment> {
     const subject = sanitizeHtml(createAppointmentDto.subject, {
       allowedTags: [],
       allowedAttributes: {},
@@ -64,7 +63,7 @@ export class AppointmentController {
       }),
     )
     query?: GetAppointmentDto,
-  ): Promise<Bundle<Appointment & Id>> {
+  ): Promise<Bundle<Appointment>> {
     return await this.appointmentService.findAll(query);
   }
 }

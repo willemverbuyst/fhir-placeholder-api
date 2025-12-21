@@ -1,7 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { EpisodeOfCare } from "fhir/r5";
-import type { Id } from "src/types";
 import { DataStoreService } from "../db/dataStore.service";
 import { EpisodeOfCareController } from "./episode-of-care.controller";
 import { EpisodeOfCareService } from "./episode-of-care.service";
@@ -43,7 +42,7 @@ describe("EpisodeOfCareController", () => {
 
   describe("findOne", () => {
     it("should call findAll method of EpisodeOfCareService", async () => {
-      const mockEpisode: EpisodeOfCare & Id = {
+      const mockEpisode: EpisodeOfCare = {
         id: "1",
         resourceType: "EpisodeOfCare",
         status: "active",

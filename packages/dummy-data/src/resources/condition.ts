@@ -1,16 +1,17 @@
 import { faker } from "@faker-js/faker";
 import { CONDITION_CLINICAL_STATUS } from "@repo/fhir-codes";
 import type { Condition } from "fhir/r5";
+import { IdGenerator } from "../idGenerator";
 
 export function createCondition({
   patientId,
   id,
-}: { patientId: string; id: string }): Condition {
+}: { patientId: string | undefined; id: string }): Condition {
   return {
     id,
     note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],
     resourceType: "Condition",
-    subject: { reference: `Patient/${patientId}` },
+    subject: { reference: patientId ? `Patient/${patientId}` : undefined },
     clinicalStatus: {
       coding: [
         {
@@ -25,14 +26,19 @@ export function createCondition({
 export function createConditions({
   numberOfConditions,
   numberOfPatients,
+  idGen,
 }: {
   numberOfConditions: number;
   numberOfPatients: number;
+  idGen: IdGenerator;
 }): Condition[] {
   return Array.from({ length: numberOfConditions }, (_, i) => {
+    const patientIndex = Math.floor(
+      i / (numberOfConditions / numberOfPatients),
+    );
     return createCondition({
-      patientId: `patient-${Math.floor(i / (numberOfConditions / numberOfPatients)) + 1}`,
-      id: `condition-${i + 1}`,
+      patientId: idGen.refs.get("patient")?.[patientIndex],
+      id: idGen.generateId("condition"),
     });
   });
 }

@@ -1,3 +1,5 @@
+import type { DummyDataConfig } from "@repo/dummy-data";
+
 export const START_DATE = "1950-01-01" as const;
 
 export const ORGANIZATIONS = 3;
@@ -24,7 +26,7 @@ export const NUMBER_OF_OBSERVATIONS =
 export const NUMBER_OF_APPOINTMENTS =
   NUMBER_OF_PATIENTS * APPOINTMENTS_PER_PATIENT;
 
-export const dummyDataConfig = {
+export const dummyDataConfig: DummyDataConfig = {
   numberOfAppointments: NUMBER_OF_APPOINTMENTS,
   numberOfConditions: NUMBER_OF_CONDITIONS,
   numberOfEncounters: NUMBER_OF_ENCOUNTERS,
@@ -35,4 +37,5 @@ export const dummyDataConfig = {
   numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
   numberOfPractitionerRoles: NUMBER_OF_PRACTITIONER_ROLES,
   startDate: START_DATE,
+  idStrategy: "sequential",
 };

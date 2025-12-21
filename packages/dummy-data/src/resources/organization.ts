@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import type { Organization } from "fhir/r5";
+import { IdGenerator } from "../idGenerator";
 
 export function createOrganization({ id }: { id: string }): Organization {
   return {
@@ -12,10 +13,12 @@ export function createOrganization({ id }: { id: string }): Organization {
 
 export function createOrganizations({
   numberOfOrganizations,
+  idGen,
 }: {
   numberOfOrganizations: number;
+  idGen: IdGenerator;
 }): Organization[] {
-  return Array.from({ length: numberOfOrganizations }, (_, i) => {
-    return createOrganization({ id: `organization-${i + 1}` });
+  return Array.from({ length: numberOfOrganizations }, () => {
+    return createOrganization({ id: idGen.generateId("organization") });
   });
 }

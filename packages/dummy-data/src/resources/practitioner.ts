@@ -1,13 +1,17 @@
 import { faker } from "@faker-js/faker";
 import { GENDER } from "@repo/fhir-codes";
 import type { Practitioner } from "fhir/r5";
+import { IdGenerator } from "../idGenerator";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
 
 export function createPractitioner({
   id,
   startDate,
-}: { id: string; startDate: `${number}-${number}-${number}` }): Practitioner {
+}: {
+  id: string | undefined;
+  startDate: `${number}-${number}-${number}`;
+}): Practitioner {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
@@ -29,11 +33,16 @@ export function createPractitioner({
 export function createPractitioners({
   numberOfPractitioners,
   startDate,
+  idGen,
 }: {
   numberOfPractitioners: number;
   startDate: `${number}-${number}-${number}`;
+  idGen: IdGenerator;
 }): Practitioner[] {
   return Array.from({ length: numberOfPractitioners }, (_, i) => {
-    return createPractitioner({ id: `practitioner-${i + 1}`, startDate });
+    return createPractitioner({
+      id: idGen.refs.get("practitioner")?.[i],
+      startDate,
+    });
   });
 }

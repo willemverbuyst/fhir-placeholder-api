@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { GENDER } from "@repo/fhir-codes";
 import type { Patient } from "fhir/r5";
+import { IdGenerator } from "../idGenerator";
 import { languages } from "../valueSets/languages-value-set";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
@@ -11,8 +12,8 @@ export function createPatient({
   id,
   startDate,
 }: {
-  organizationId: string;
-  practitionerId: string;
+  organizationId: string | undefined;
+  practitionerId: string | undefined;
   id: string;
   startDate: `${number}-${number}-${number}`;
 }): Patient {
@@ -31,12 +32,16 @@ export function createPatient({
     active: faker.datatype.boolean(),
     telecom: [createEmail(firstName, lastName), createPhone()],
     address: [createAddress()],
-    managingOrganization: { reference: `Organization/${organizationId}` },
-    generalPractitioner: [
-      {
-        reference: `Practitioner/${practitionerId}`,
-      },
-    ],
+    managingOrganization: organizationId
+      ? { reference: `Organization/${organizationId}` }
+      : undefined,
+    generalPractitioner: practitionerId
+      ? [
+          {
+            reference: `Practitioner/${practitionerId}`,
+          },
+        ]
+      : undefined,
     communication: [
       {
         language: { coding: [faker.helpers.arrayElement(languages)] },
@@ -51,25 +56,29 @@ export function createPatients({
   numberOfOrganizations,
   numberOfPractitioners,
   startDate,
+  idGen,
 }: {
   numberOfPatients: number;
   numberOfOrganizations: number;
   numberOfPractitioners: number;
   startDate: `${number}-${number}-${number}`;
+  idGen: IdGenerator;
 }): Patient[] {
   return Array.from(
     {
       length: numberOfPatients,
     },
     (_, i) => {
+      const organizationIndex = Math.floor(
+        i / (numberOfPatients / numberOfOrganizations),
+      );
+      const practitionerIndex = Math.floor(
+        i / (numberOfPatients / numberOfPractitioners),
+      );
       return createPatient({
-        organizationId: `organization-${
-          Math.floor(i / (numberOfPatients / numberOfOrganizations)) + 1
-        }`,
-        practitionerId: `practitioner-${
-          Math.floor(i / (numberOfPatients / numberOfPractitioners)) + 1
-        }`,
-        id: `patient-${i + 1}`,
+        organizationId: idGen.refs.get("organization")?.[organizationIndex],
+        practitionerId: idGen.refs.get("practitioner")?.[practitionerIndex],
+        id: idGen.generateId("patient"),
         startDate,
       });
     },

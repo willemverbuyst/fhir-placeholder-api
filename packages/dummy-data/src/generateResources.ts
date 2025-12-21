@@ -1,3 +1,4 @@
+import { IdGenerator } from "./idGenerator";
 import {
   createAppointments,
   createConditions,
@@ -9,19 +10,7 @@ import {
   createPractitionerRoles,
   createPractitioners,
 } from "./resources";
-
-interface DummyDataConfig {
-  numberOfAppointments: number;
-  numberOfConditions: number;
-  numberOfEncounters: number;
-  numberOfEpisodes: number;
-  numberOfObservations: number;
-  numberOfOrganizations: number;
-  numberOfPatients: number;
-  numberOfPractitioners: number;
-  numberOfPractitionerRoles: number;
-  startDate: `${number}-${number}-${number}`;
-}
+import { DummyDataConfig } from "./types";
 
 export const generateResources = (config: DummyDataConfig) => {
   const {
@@ -35,47 +24,59 @@ export const generateResources = (config: DummyDataConfig) => {
     numberOfPractitioners,
     numberOfPractitionerRoles,
     startDate,
+    idStrategy,
   } = config;
+
+  const idGen = new IdGenerator(idStrategy);
 
   const organizations = createOrganizations({
     numberOfOrganizations,
+    idGen,
   });
   const practitionerRoles = createPractitionerRoles({
     numberOfPractitionerRoles,
     numberOfOrganizations,
+    idGen,
   });
   const practitioners = createPractitioners({
     numberOfPractitioners,
     startDate,
+    idGen,
   });
   const patients = createPatients({
     numberOfPatients,
     numberOfOrganizations,
     numberOfPractitioners,
     startDate,
+    idGen,
   });
   const conditions = createConditions({
     numberOfConditions,
     numberOfPatients,
+    idGen,
   });
   const episodes = createEpisodes({
     numberOfEpisodes,
     numberOfPatients,
+    idGen,
   });
   const encounters = createEncounters({
     numberOfEncounters,
     numberOfPatients,
     numberOfEpisodes,
+    idGen,
   });
   const observations = createObservations({
     numberOfObservations,
     numberOfPatients,
     numberOfEncounters,
+    idGen,
   });
   const appointments = createAppointments({
     numberOfAppointments,
     numberOfPractitioners,
     numberOfPatients,
+    idGen,
   });
 
   return {

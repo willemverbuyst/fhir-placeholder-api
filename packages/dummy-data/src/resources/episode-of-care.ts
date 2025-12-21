@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
 import type { EpisodeOfCare } from "fhir/r5";
-import type { Id } from "../types";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";
 
 export function createEpisode({
@@ -12,7 +11,7 @@ export function createEpisode({
   patientId: string;
   conditionId: string;
   id: string;
-}): EpisodeOfCare & Id {
+}): EpisodeOfCare {
   return {
     id,
     resourceType: "EpisodeOfCare",
@@ -37,7 +36,7 @@ export function createEpisodes({
 }: {
   numberOfEpisodes: number;
   numberOfPatients: number;
-}): (EpisodeOfCare & Id)[] {
+}): EpisodeOfCare[] {
   return Array.from({ length: numberOfEpisodes }, (_, i) => {
     return createEpisode({
       patientId: `patient-${Math.floor(i / (numberOfEpisodes / numberOfPatients)) + 1}`,

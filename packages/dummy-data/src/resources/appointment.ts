@@ -4,14 +4,16 @@ import {
   APPOINTMENT_STATUS,
 } from "@repo/fhir-codes";
 import type { Appointment } from "fhir/r5";
-import type { Id } from "../types";
 
 export function createAppointment({
   patientId,
   practitionerId,
   id,
-}: { patientId: string; practitionerId: string; id: string }): Appointment &
-  Id {
+}: {
+  patientId: string;
+  practitionerId: string;
+  id: string;
+}): Appointment {
   return {
     id,
     resourceType: "Appointment",
@@ -42,7 +44,7 @@ export function createAppointments({
   numberOfAppointments: number;
   numberOfPatients: number;
   numberOfPractitioners: number;
-}): (Appointment & Id)[] {
+}): Appointment[] {
   return Array.from({ length: numberOfAppointments }, (_, i) => {
     return createAppointment({
       patientId: `patient-${Math.floor(i / (numberOfAppointments / numberOfPatients)) + 1}`,

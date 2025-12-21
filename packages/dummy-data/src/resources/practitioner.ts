@@ -2,11 +2,10 @@ import { faker } from "@faker-js/faker";
 import { GENDER } from "@repo/fhir-codes";
 import type { Practitioner } from "fhir/r5";
 import { START_DATE } from "../config";
-import type { Id } from "../types";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
 
-export function createPractitioner({ id }: { id: string }): Practitioner & Id {
+export function createPractitioner({ id }: { id: string }): Practitioner {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
@@ -29,7 +28,7 @@ export function createPractitioners({
   numberOfPractitioners,
 }: {
   numberOfPractitioners: number;
-}): (Practitioner & Id)[] {
+}): Practitioner[] {
   return Array.from({ length: numberOfPractitioners }, (_, i) => {
     return createPractitioner({ id: `practitioner-${i + 1}` });
   });

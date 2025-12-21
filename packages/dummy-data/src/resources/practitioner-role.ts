@@ -1,5 +1,4 @@
 import type { PractitionerRole } from "fhir/r5";
-import type { Id } from "../types";
 
 export function createPractitionerRole({
   practitionerRoleId,
@@ -9,7 +8,7 @@ export function createPractitionerRole({
   practitionerRoleId: string;
   organizationId: string;
   practitionerId: string;
-}): PractitionerRole & Id {
+}): PractitionerRole {
   return {
     id: practitionerRoleId,
     resourceType: "PractitionerRole",
@@ -25,7 +24,7 @@ export function createPractitionerRoles({
 }: {
   numberOfPractitionerRoles: number;
   numberOfOrganizations: number;
-}): (PractitionerRole & Id)[] {
+}): PractitionerRole[] {
   return Array.from({ length: numberOfPractitionerRoles }, (_, i) => {
     return createPractitionerRole({
       practitionerRoleId: `practitioner-role-${i + 1}`,

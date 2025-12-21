@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { OBSERVATION_STATUS } from "@repo/fhir-codes";
 import type { Observation } from "fhir/r5";
-import type { Id } from "../types";
 import { observationCodes } from "../valueSets/observation-code-value-set";
 
 export function createObservation({
@@ -12,7 +11,7 @@ export function createObservation({
   patientId: string;
   encounterId: string;
   id: string;
-}): Observation & Id {
+}): Observation {
   return {
     id,
     resourceType: "Observation",
@@ -32,7 +31,7 @@ export function createObservations({
   numberOfObservations: number;
   numberOfPatients: number;
   numberOfEncounters: number;
-}): (Observation & Id)[] {
+}): Observation[] {
   return Array.from({ length: numberOfObservations }, (_, i) => {
     return createObservation({
       patientId: `patient-${

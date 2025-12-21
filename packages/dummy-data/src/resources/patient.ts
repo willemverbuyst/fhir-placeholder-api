@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker";
 import { GENDER } from "@repo/fhir-codes";
 import type { Patient } from "fhir/r5";
 import { START_DATE } from "../config";
-import type { Id } from "../types";
 import { languages } from "../valueSets/languages-value-set";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
@@ -15,7 +14,7 @@ export function createPatient({
   organizationId: string;
   practitionerId: string;
   id: string;
-}): Patient & Id {
+}): Patient {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
@@ -54,7 +53,7 @@ export function createPatients({
   numberOfPatients: number;
   numberOfOrganizations: number;
   numberOfPractitioners: number;
-}): (Patient & Id)[] {
+}): Patient[] {
   return Array.from(
     {
       length: numberOfPatients,

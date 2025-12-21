@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
 import type { Encounter } from "fhir/r5";
-import type { Id } from "../types";
 
 export function createEncounter({
   patientId,
@@ -11,7 +10,7 @@ export function createEncounter({
   patientId: string;
   episodeId: string;
   id: string;
-}): Encounter & Id {
+}): Encounter {
   return {
     id,
     resourceType: "Encounter",
@@ -29,7 +28,7 @@ export function createEncounters({
   numberOfEncounters: number;
   numberOfPatients: number;
   numberOfEpisodes: number;
-}): (Encounter & Id)[] {
+}): Encounter[] {
   return Array.from({ length: numberOfEncounters }, (_, i) => {
     return createEncounter({
       patientId: `patient-${Math.floor(i / (numberOfEncounters / numberOfPatients)) + 1}`,

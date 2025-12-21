@@ -7,7 +7,7 @@ import type {
 } from "../interfaces/MappedResource";
 
 export function getMappedResource<T extends Resource>(
-  resource: T & { id: string },
+  resource: T,
   cardRows: CardRows<T>,
 ): MappedResource<T> {
   const mappedResource: MappedResource<T> = {};
@@ -21,7 +21,7 @@ export function getMappedResource<T extends Resource>(
 }
 
 export function getMappedResources<T extends Resource>(
-  resources: (T & { id: string })[],
+  resources: T[],
   cardRows: CardRows<T>,
 ): MappedResources<T> {
   return resources.reduce((acc: MappedResources<T>, it) => {

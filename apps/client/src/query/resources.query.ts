@@ -1,4 +1,4 @@
-import { getResourcesWithIdFromBundle, isResourceWithId } from "@repo/utils";
+import { getResourcesFromBundle } from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
 import { type AppResourceType, FHIR_RESOURCES } from "../config/fhirResources";
@@ -43,15 +43,15 @@ async function getResources<T extends Resource>(
   const bundleValidation = isBundleWithValidation(rawData, schema);
   let error = bundleValidation.error;
   if (bundleValidation.isBundle) {
-    const resources = getResourcesWithIdFromBundle(rawData as Bundle<T>);
+    const resources = getResourcesFromBundle(rawData as Bundle<T>);
     const mappedResources = getMappedResources<T>(resources, cardRows);
     return mappedResources;
   }
 
   const resourceValidation = isResourceWithValidation(rawData, schema);
   error = resourceValidation.error;
-  if (resourceValidation.isResource && isResourceWithId<T>(rawData)) {
-    const mappedResource = getMappedResource<T>(rawData, cardRows);
+  if (resourceValidation.isResource) {
+    const mappedResource = getMappedResource<T>(rawData as T, cardRows);
     return [mappedResource];
   }
 

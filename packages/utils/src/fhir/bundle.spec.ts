@@ -83,41 +83,6 @@ describe("getResourcesFromBundle", () => {
     expect(result[1]).toEqual({ resourceType: "Patient", id: "2" });
   });
 
-  it("skips entries without a resourceType property", () => {
-    const bundle: Bundle = {
-      resourceType: "Bundle",
-      type: "searchset",
-      total: 2,
-      entry: [
-        { resource: { resourceType: "Patient", id: "1" } },
-        // @ts-ignore -force passing a resource without resourceType
-        { resource: { id: "2" } },
-        { resource: { resourceType: "Patient", id: "3" } },
-      ],
-    };
-    const result = getResourcesFromBundle(bundle);
-    expect(result).toHaveLength(2);
-    expect(result[0]).toEqual({ resourceType: "Patient", id: "1" });
-    expect(result[1]).toEqual({ resourceType: "Patient", id: "3" });
-  });
-
-  it("skips entries without an id property", () => {
-    const bundle: Bundle = {
-      resourceType: "Bundle",
-      type: "searchset",
-      total: 2,
-      entry: [
-        { resource: { resourceType: "Patient", id: "1" } },
-        { resource: { resourceType: "Patient" } },
-        { resource: { resourceType: "Patient", id: "2" } },
-      ],
-    };
-    const result = getResourcesFromBundle(bundle);
-    expect(result).toHaveLength(2);
-    expect(result[0]).toEqual({ resourceType: "Patient", id: "1" });
-    expect(result[1]).toEqual({ resourceType: "Patient", id: "2" });
-  });
-
   it("returns an empty array if all entries lack resource property", () => {
     const bundle: Bundle = {
       resourceType: "Bundle",

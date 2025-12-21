@@ -41,7 +41,6 @@ async function getResources<T extends Resource>(
   const cardRows = FHIR_RESOURCES[resourceType].cardRows;
 
   const bundleValidation = isBundleWithValidation(rawData, schema);
-  let error = bundleValidation.error;
   if (bundleValidation.isBundle) {
     const resources = getResourcesFromBundle(rawData as Bundle<T>);
     const mappedResources = getMappedResources<T>(resources, cardRows);
@@ -49,11 +48,12 @@ async function getResources<T extends Resource>(
   }
 
   const resourceValidation = isResourceWithValidation(rawData, schema);
-  error = resourceValidation.error;
   if (resourceValidation.isResource) {
     const mappedResource = getMappedResource<T>(rawData as T, cardRows);
     return [mappedResource];
   }
 
-  throw new Error(`Failed to process request: ${error}`);
+  throw new Error(
+    `Failed to process request: ${[bundleValidation.error, resourceValidation.error].join("; ")}`,
+  );
 }

@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { GENDER } from "@repo/fhir-codes";
 import type { Patient } from "fhir/r5";
-import { START_DATE } from "../config";
 import { languages } from "../valueSets/languages-value-set";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
@@ -10,10 +9,12 @@ export function createPatient({
   organizationId,
   practitionerId,
   id,
+  startDate,
 }: {
   organizationId: string;
   practitionerId: string;
   id: string;
+  startDate: `${number}-${number}-${number}`;
 }): Patient {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
@@ -23,7 +24,7 @@ export function createPatient({
     name: [{ family: lastName, given: [firstName] }],
     resourceType: "Patient",
     birthDate: faker.date
-      .between({ from: START_DATE, to: Date.now() })
+      .between({ from: startDate, to: Date.now() })
       .toISOString()
       .split("T")[0],
     gender: faker.helpers.arrayElement(GENDER),
@@ -49,10 +50,12 @@ export function createPatients({
   numberOfPatients,
   numberOfOrganizations,
   numberOfPractitioners,
+  startDate,
 }: {
   numberOfPatients: number;
   numberOfOrganizations: number;
   numberOfPractitioners: number;
+  startDate: `${number}-${number}-${number}`;
 }): Patient[] {
   return Array.from(
     {
@@ -67,6 +70,7 @@ export function createPatients({
           Math.floor(i / (numberOfPatients / numberOfPractitioners)) + 1
         }`,
         id: `patient-${i + 1}`,
+        startDate,
       });
     },
   );

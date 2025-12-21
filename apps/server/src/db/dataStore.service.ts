@@ -11,17 +11,7 @@ import type {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import {
-  NUMBER_OF_APPOINTMENTS,
-  NUMBER_OF_CONDITIONS,
-  NUMBER_OF_ENCOUNTERS,
-  NUMBER_OF_EPISODES,
-  NUMBER_OF_OBSERVATIONS,
-  NUMBER_OF_ORGANIZATIONS,
-  NUMBER_OF_PATIENTS,
-  NUMBER_OF_PRACTITIONERS,
-  NUMBER_OF_PRACTITIONER_ROLES,
-} from "../../config";
+import { dummyDataConfig } from "../../config";
 
 @Injectable()
 export class DataStoreService {
@@ -36,17 +26,7 @@ export class DataStoreService {
   public appointments: Appointment[] = [];
 
   constructor() {
-    const resources = generateResources({
-      numberOfAppointments: NUMBER_OF_APPOINTMENTS,
-      numberOfConditions: NUMBER_OF_CONDITIONS,
-      numberOfEncounters: NUMBER_OF_ENCOUNTERS,
-      numberOfEpisodes: NUMBER_OF_EPISODES,
-      numberOfObservations: NUMBER_OF_OBSERVATIONS,
-      numberOfOrganizations: NUMBER_OF_ORGANIZATIONS,
-      numberOfPatients: NUMBER_OF_PATIENTS,
-      numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
-      numberOfPractitionerRoles: NUMBER_OF_PRACTITIONER_ROLES,
-    });
+    const resources = generateResources(dummyDataConfig);
 
     this.appointments = resources.appointments;
     this.conditions = resources.conditions;

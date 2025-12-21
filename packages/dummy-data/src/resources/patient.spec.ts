@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { START_DATE } from "../config";
 import { createPatient, createPatients } from "./patient";
 
 describe("createPatient", () => {
@@ -11,6 +10,7 @@ describe("createPatient", () => {
       organizationId,
       practitionerId,
       id: patientId,
+      startDate: "1950-01-01",
     });
 
     expect(patient).toHaveProperty("id");
@@ -77,13 +77,14 @@ describe("createPatient", () => {
       organizationId,
       practitionerId,
       id: patientId,
+      startDate: "1950-01-01",
     });
 
     if (!patient.birthDate) {
       throw new Error("Patient birthDate is undefined");
     }
     const birthDate = new Date(patient.birthDate);
-    const startDate = new Date(START_DATE);
+    const startDate = new Date("1950-01-01");
     const now = new Date();
 
     expect(birthDate.getTime()).toBeGreaterThanOrEqual(startDate.getTime());
@@ -98,6 +99,7 @@ describe("createPatient", () => {
       organizationId,
       practitionerId,
       id: patientId,
+      startDate: "1950-01-01",
     });
 
     if (!patient.telecom) {
@@ -121,6 +123,7 @@ describe("createPatient", () => {
       organizationId,
       practitionerId,
       id: patientId,
+      startDate: "1950-01-01",
     });
 
     if (!patient.address) {
@@ -140,6 +143,7 @@ describe("createPatients", () => {
     numberOfPatients: 8,
     numberOfOrganizations: 2,
     numberOfPractitioners: 4,
+    startDate: "1950-01-01",
   });
 
   it.each`
@@ -176,6 +180,7 @@ describe("createPatients", () => {
       numberOfPatients: 3,
       numberOfOrganizations: 1,
       numberOfPractitioners: 1,
+      startDate: "1950-01-01",
     });
 
     expect(patients).toHaveLength(3);
@@ -186,6 +191,7 @@ describe("createPatients", () => {
       numberOfPatients: 0,
       numberOfOrganizations: 1,
       numberOfPractitioners: 1,
+      startDate: "1950-01-01",
     });
 
     expect(patients).toHaveLength(0);

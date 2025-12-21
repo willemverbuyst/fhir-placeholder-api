@@ -1,11 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { GENDER } from "@repo/fhir-codes";
 import type { Practitioner } from "fhir/r5";
-import { START_DATE } from "../config";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
 
-export function createPractitioner({ id }: { id: string }): Practitioner {
+export function createPractitioner({
+  id,
+  startDate,
+}: { id: string; startDate: `${number}-${number}-${number}` }): Practitioner {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
@@ -15,7 +17,7 @@ export function createPractitioner({ id }: { id: string }): Practitioner {
     name: [{ family: lastName, given: [firstName] }],
     active: true,
     birthDate: faker.date
-      .between({ from: START_DATE, to: Date.now() })
+      .between({ from: startDate, to: Date.now() })
       .toISOString()
       .split("T")[0],
     gender: faker.helpers.arrayElement(GENDER),
@@ -26,10 +28,12 @@ export function createPractitioner({ id }: { id: string }): Practitioner {
 
 export function createPractitioners({
   numberOfPractitioners,
+  startDate,
 }: {
   numberOfPractitioners: number;
+  startDate: `${number}-${number}-${number}`;
 }): Practitioner[] {
   return Array.from({ length: numberOfPractitioners }, (_, i) => {
-    return createPractitioner({ id: `practitioner-${i + 1}` });
+    return createPractitioner({ id: `practitioner-${i + 1}`, startDate });
   });
 }

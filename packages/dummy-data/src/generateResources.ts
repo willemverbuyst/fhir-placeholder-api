@@ -20,6 +20,7 @@ interface DummyDataConfig {
   numberOfPatients: number;
   numberOfPractitioners: number;
   numberOfPractitionerRoles: number;
+  startDate: `${number}-${number}-${number}`;
 }
 
 export const generateResources = (config: DummyDataConfig) => {
@@ -33,6 +34,7 @@ export const generateResources = (config: DummyDataConfig) => {
     numberOfPatients,
     numberOfPractitioners,
     numberOfPractitionerRoles,
+    startDate,
   } = config;
 
   const organizations = createOrganizations({
@@ -44,11 +46,13 @@ export const generateResources = (config: DummyDataConfig) => {
   });
   const practitioners = createPractitioners({
     numberOfPractitioners,
+    startDate,
   });
   const patients = createPatients({
     numberOfPatients,
     numberOfOrganizations,
     numberOfPractitioners,
+    startDate,
   });
   const conditions = createConditions({
     numberOfConditions,

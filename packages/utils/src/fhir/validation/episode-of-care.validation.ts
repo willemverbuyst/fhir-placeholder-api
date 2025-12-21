@@ -1,17 +1,10 @@
+import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
 import { z } from "zod";
 
 export const episodeOfCareResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("EpisodeOfCare"),
-  status: z.enum([
-    "planned",
-    "waitlist",
-    "active",
-    "onhold",
-    "finished",
-    "cancelled",
-    "entered-in-error",
-  ]),
+  status: z.enum(EPISODE_OF_CARE_STATUS),
   patient: z.object({ reference: z.string() }),
   diagnosis: z.array(
     z.object({

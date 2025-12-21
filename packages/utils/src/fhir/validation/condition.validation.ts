@@ -1,3 +1,4 @@
+import { CONDITION_CLINICAL_STATUS } from "@repo/fhir-codes";
 import { z } from "zod";
 
 export const conditionResourceSchema = z.object({
@@ -8,15 +9,7 @@ export const conditionResourceSchema = z.object({
   clinicalStatus: z.object({
     coding: z.array(
       z.object({
-        code: z.enum([
-          "active",
-          "recurrence",
-          "relapse",
-          "inactive",
-          "remission",
-          "resolved",
-          "unknown",
-        ]),
+        code: z.enum(CONDITION_CLINICAL_STATUS),
         system: z.literal(
           "http://terminology.hl7.org/CodeSystem/condition-clinical",
         ),

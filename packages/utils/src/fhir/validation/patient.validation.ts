@@ -1,3 +1,4 @@
+import { GENDER } from "@repo/fhir-codes";
 import { z } from "zod";
 
 export const patientResourceSchema = z.object({
@@ -5,7 +6,7 @@ export const patientResourceSchema = z.object({
   resourceType: z.literal("Patient"),
   name: z.array(z.object({ family: z.string(), given: z.array(z.string()) })),
   birthDate: z.string(),
-  gender: z.enum(["male", "female", "unknown", "other"]),
+  gender: z.enum(GENDER),
   active: z.boolean(),
   telecom: z.array(
     z.object({ use: z.string(), system: z.string(), value: z.string() }),

@@ -1,8 +1,19 @@
-import {
-  type ResourceCountsSchema,
-  resourceCountsSchema,
-} from "@/lib/validation/resource-counts.validation";
 import { queryOptions } from "@tanstack/react-query";
+import { z } from "zod";
+
+const resourceCountsSchema = z.object({
+  patients: z.number(),
+  episodes: z.number(),
+  conditions: z.number(),
+  organizations: z.number(),
+  practitioners: z.number(),
+  practitionerRoles: z.number(),
+  encounters: z.number(),
+  observations: z.number(),
+  appointments: z.number(),
+});
+
+type ResourceCountsSchema = z.infer<typeof resourceCountsSchema>;
 
 export function createResourceCountQueryOptions() {
   return queryOptions({

@@ -1,25 +1,13 @@
-import {
-  getResourcesWithIdFromBundle,
-  isBundle,
-  isResourceWithId,
-} from "@repo/utils";
+import { getResourcesFromBundle } from "@repo/utils";
 import { queryOptions } from "@tanstack/react-query";
 import type { Bundle, Resource } from "fhir/r5";
-import type { ZodSchema } from "zod";
 import { type AppResourceType, FHIR_RESOURCES } from "../config/fhirResources";
 import { getMappedResource, getMappedResources } from "../lib/mappedResources";
-import { appointmentResourceSchema } from "../lib/validation/appointment.validation";
-import { getBundleSchema } from "../lib/validation/bundle.validation";
-import { conditionResourceSchema } from "../lib/validation/condition.validation";
-import { encounterResourceSchema } from "../lib/validation/encounter.validation";
-import { episodeOfCareResourceSchema } from "../lib/validation/episode-of-care.validation";
-import { observationResourceSchema } from "../lib/validation/observation.validation";
-import { organizationResourceSchema } from "../lib/validation/organization.validation";
-import { patientResourceSchema } from "../lib/validation/patient.validation";
-import { practitionerRoleResourceSchema } from "../lib/validation/practitioner-role.validation";
-import { practitionerResourceSchema } from "../lib/validation/practitioner.validation";
-import { validateBundle } from "../lib/validation/validateBundle";
-import { validateResource } from "../lib/validation/validateResource";
+import {
+  getSchemaForResourceType,
+  isBundleWithValidation,
+  isResourceWithValidation,
+} from "./validation";
 
 export function createResourcesQueryOptions<T extends Resource>({
   resourceType,
@@ -49,84 +37,23 @@ async function getResources<T extends Resource>(
   resourceType: AppResourceType,
 ) {
   const rawData = await fetchResources<T>(url);
+  const schema = getSchemaForResourceType(resourceType);
+  const cardRows = FHIR_RESOURCES[resourceType].cardRows;
 
-  let schema: ZodSchema;
-  if (isBundle(rawData)) {
-    switch (resourceType) {
-      case "Appointment":
-        schema = appointmentResourceSchema;
-        break;
-
-      case "Condition":
-        schema = conditionResourceSchema;
-        break;
-
-      case "Encounter":
-        schema = encounterResourceSchema;
-        break;
-
-      case "EpisodeOfCare":
-        schema = episodeOfCareResourceSchema;
-        break;
-
-      case "Observation":
-        schema = observationResourceSchema;
-        break;
-
-      case "Organization":
-        schema = organizationResourceSchema;
-        break;
-
-      case "Patient":
-        schema = patientResourceSchema;
-        break;
-
-      case "Practitioner":
-        schema = practitionerResourceSchema;
-        break;
-
-      case "PractitionerRole":
-        schema = practitionerRoleResourceSchema;
-        break;
-
-      default:
-        throw new Error(`Validation missing for ${url}`);
-    }
-
-    validateBundle({
-      schema: getBundleSchema(schema),
-      resources: rawData,
-      resourceType,
-    });
-    const resources = getResourcesWithIdFromBundle(rawData);
-    const cardRows = FHIR_RESOURCES[resourceType].cardRows;
+  const bundleValidation = isBundleWithValidation(rawData, schema);
+  if (bundleValidation.isBundle) {
+    const resources = getResourcesFromBundle(rawData as Bundle<T>);
     const mappedResources = getMappedResources<T>(resources, cardRows);
-
     return mappedResources;
   }
 
-  if (isResourceWithId(rawData)) {
-    let schema: ZodSchema;
-    switch (resourceType) {
-      case "Practitioner": {
-        schema = practitionerResourceSchema;
-        break;
-      }
-
-      default:
-        throw new Error(`Validation missing for ${url}`);
-    }
-
-    validateResource({
-      schema: schema,
-      resource: rawData,
-      resourceType,
-    });
-    const cardRows = FHIR_RESOURCES[resourceType].cardRows;
-    const mappedResources = getMappedResource<T>(rawData, cardRows);
-
-    return [mappedResources];
+  const resourceValidation = isResourceWithValidation(rawData, schema);
+  if (resourceValidation.isResource) {
+    const mappedResource = getMappedResource<T>(rawData as T, cardRows);
+    return [mappedResource];
   }
 
-  throw new Error("Failed to process request");
+  throw new Error(
+    `Failed to process request: ${[bundleValidation.error, resourceValidation.error].join("; ")}`,
+  );
 }

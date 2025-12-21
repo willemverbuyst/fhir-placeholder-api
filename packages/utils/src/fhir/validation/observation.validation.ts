@@ -1,18 +1,10 @@
+import { OBSERVATION_STATUS } from "@repo/fhir-codes";
 import { z } from "zod";
 
 export const observationResourceSchema = z.object({
   id: z.string(),
   resourceType: z.literal("Observation"),
-  status: z.enum([
-    "registered",
-    "preliminary",
-    "final",
-    "amended",
-    "corrected",
-    "cancelled",
-    "entered-in-error",
-    "unknown",
-  ]),
+  status: z.enum(OBSERVATION_STATUS),
   code: z.object({
     coding: z.array(
       z.object({

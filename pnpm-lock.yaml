@@ -26,6 +26,9 @@ importers:
       typescript:
         specifier: ^5.8.3
         version: 5.9.3
+      zod:
+        specifier: ^3.25.50
+        version: 3.25.76
 
   apps/client:
     dependencies:
@@ -104,9 +107,6 @@ importers:
       tailwindcss:
         specifier: ^4.1.6
         version: 4.1.17
-      zod:
-        specifier: ^3.25.50
-        version: 3.25.76
       zustand:
         specifier: ^5.0.5
         version: 5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1))
@@ -262,6 +262,10 @@ importers:
         version: 6.6.2(typescript@5.9.3)
 
   packages/utils:
+    dependencies:
+      '@repo/fhir-codes':
+        specifier: workspace:*
+        version: link:../fhir-codes
     devDependencies:
       vitest:
         specifier: ^3.2.3

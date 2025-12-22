@@ -3,6 +3,7 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from "@nestjs/common";
+import { dummyDataConfig } from "config";
 import type { Appointment, Bundle } from "fhir/r5";
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
@@ -33,7 +34,10 @@ export class AppointmentService {
     }
 
     const newAppointment: Appointment = {
-      id: `appointment-${String(this.repo.appointments.length + 1)}`,
+      id:
+        dummyDataConfig.idStrategy === "sequential"
+          ? `appointment-${String(this.repo.appointments.length + 1)}`
+          : crypto.randomUUID(),
       resourceType: "Appointment",
       subject: { reference: `Patient/${createAppointmentDto.subject}` },
       status: createAppointmentDto.status,

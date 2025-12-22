@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { dummyDataConfig } from "config";
 import type { Bundle, Organization } from "fhir/r5";
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
@@ -13,7 +14,10 @@ export class OrganizationService {
     createOrganizationDto: CreateOrganizationDto,
   ): Promise<Organization> {
     const newOrganization: Organization = {
-      id: `organization-${String(this.repo.organizations.length + 1)}`,
+      id:
+        dummyDataConfig.idStrategy === "sequential"
+          ? `organization-${String(this.repo.organizations.length + 1)}`
+          : crypto.randomUUID(),
       resourceType: "Organization",
       ...createOrganizationDto,
     };

@@ -12,6 +12,7 @@ export function Organizations() {
           <PractitionerRoles organizationId={resource.id} />
         ) : null
       }
+      styles="flex-col"
     />
   );
 }

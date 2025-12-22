@@ -1,5 +1,6 @@
 import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { InfoAlert } from "@/components/alert/InfoAlert";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import type { Resource } from "fhir/r5";
 import type { JSX } from "react";
@@ -13,10 +14,12 @@ export function ResourcesRenderer<T extends Resource>({
   resourceType,
   searchParams,
   renderItem,
+  styles,
 }: {
   resourceType: AppResourceType;
   searchParams?: string;
   renderItem?: (resource: MappedResource<T>) => JSX.Element | null;
+  styles?: string;
 }) {
   const { isPending, isError, error, data } = useQuery(
     createResourcesQueryOptions<T>({ resourceType, searchParams }),
@@ -27,7 +30,7 @@ export function ResourcesRenderer<T extends Resource>({
   if (!data) return <InfoAlert title="no data" />;
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className={cn("flex gap-3", styles)}>
       {data?.map((e) =>
         e.id ? (
           <ResourceItem

@@ -14,7 +14,7 @@ export function ResourceItem({
   const [zoomIn, setZoomIn] = useState<string | undefined>();
 
   return (
-    <section className="flex gap-3">
+    <section className="flex flex-col flex-1 gap-3">
       <button
         type="button"
         className={cn(

@@ -18,7 +18,7 @@ export function ResourceItem({
       <button
         type="button"
         className={cn(
-          "flex flex-col items-center p-4 rounded-md text-white w-[350px] cursor-pointer",
+          "flex flex-col items-center p-4 rounded-md flex-1 text-white cursor-pointer",
           zoomIn
             ? "bg-secondary font-bold hover:bg-secondary/90"
             : "bg-primary hover:bg-primary/90",
@@ -29,7 +29,7 @@ export function ResourceItem({
         }}
       >
         <span>{resourceType}</span>
-        <span>{id}</span>
+        <span className="text-xs">{id}</span>
       </button>
       {zoomIn && children ? children : null}
     </section>

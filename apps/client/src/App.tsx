@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="w-full min-h-screen flex flex-col items-center gap-10">
       <Header />
-      <main>
+      <main className="px-5">
         <Routes>
           <Route index element={<CapabilityStatementPage />} />
           <Route path="graph" element={<GraphPage />} />

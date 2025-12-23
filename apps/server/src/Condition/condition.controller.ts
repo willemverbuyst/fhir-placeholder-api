@@ -8,7 +8,6 @@ import {
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Condition } from "fhir/r5";
-import type { Id } from "src/types";
 import { ConditionService } from "./condition.service";
 import { GetConditionDto } from "./dto/get-condition.dto";
 import { conditionBundleExample } from "./examples/condition-bundle.example";
@@ -38,7 +37,7 @@ export class ConditionController {
       }),
     )
     query?: GetConditionDto,
-  ): Promise<Bundle<Condition & Id>> {
+  ): Promise<Bundle<Condition>> {
     return await this.conditionService.findAll(query);
   }
 
@@ -50,7 +49,7 @@ export class ConditionController {
     description: "Condition not found",
   })
   @Get(":id")
-  async findOne(@Param("id") id: string): Promise<Condition & Id> {
+  async findOne(@Param("id") id: string): Promise<Condition> {
     const condition = await this.conditionService.findOne(id);
     if (!condition) {
       throw new NotFoundException("condition not found");

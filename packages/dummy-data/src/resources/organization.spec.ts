@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { createOrganization, createOrganizations } from "./organization";
 
 describe("createOrganization", () => {
@@ -15,7 +16,10 @@ describe("createOrganization", () => {
 
 describe("createOrganizations", () => {
   it("should create the specified number of organizations", () => {
-    const organizations = createOrganizations({ numberOfOrganizations: 5 });
+    const organizations = createOrganizations({
+      numberOfOrganizations: 5,
+      idGen: new IdGenerator(),
+    });
 
     expect(organizations).toHaveLength(5);
     for (const organization of organizations) {
@@ -25,7 +29,10 @@ describe("createOrganizations", () => {
   });
 
   it("should return an empty array if numberOfOrganizations is 0", () => {
-    const organizations = createOrganizations({ numberOfOrganizations: 0 });
+    const organizations = createOrganizations({
+      numberOfOrganizations: 0,
+      idGen: new IdGenerator(),
+    });
 
     expect(organizations).toHaveLength(0);
   });

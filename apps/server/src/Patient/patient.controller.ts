@@ -8,7 +8,6 @@ import {
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Patient } from "fhir/r5";
-import type { Id } from "../types";
 import { GetPatientDto } from "./dto/get-patient.dto";
 import { patientBundleExample } from "./examples/patient-bundle.example";
 import { patientExample } from "./examples/patient.example";
@@ -44,7 +43,7 @@ export class PatientController {
       }),
     )
     query?: GetPatientDto,
-  ): Promise<Bundle<Patient & Id>> {
+  ): Promise<Bundle<Patient>> {
     return await this.patientsService.findAll(query);
   }
 
@@ -56,7 +55,7 @@ export class PatientController {
     description: "Patient not found",
   })
   @Get(":id")
-  async findOne(@Param("id") id: string): Promise<Patient & Id> {
+  async findOne(@Param("id") id: string): Promise<Patient> {
     const patient = await this.patientsService.findOne(id);
     if (!patient) {
       throw new NotFoundException("patient not found");

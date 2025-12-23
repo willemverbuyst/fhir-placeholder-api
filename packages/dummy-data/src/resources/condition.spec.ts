@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { createCondition, createConditions } from "./condition";
 
 describe("createCondition", () => {
@@ -65,9 +66,12 @@ describe("createCondition", () => {
 });
 
 describe("createConditions", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("patient", ["patient-1", "patient-2"]);
   const conditions = createConditions({
     numberOfConditions: 4,
     numberOfPatients: 2,
+    idGen,
   });
 
   it.each`
@@ -94,6 +98,7 @@ describe("createConditions", () => {
     const conditions = createConditions({
       numberOfConditions: 4,
       numberOfPatients: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(conditions).toHaveLength(4);
@@ -103,6 +108,7 @@ describe("createConditions", () => {
     const conditions = createConditions({
       numberOfConditions: 0,
       numberOfPatients: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(conditions).toHaveLength(0);

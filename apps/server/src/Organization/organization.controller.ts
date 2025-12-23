@@ -11,7 +11,6 @@ import {
 import { ApiNotFoundResponse, ApiOkResponse } from "@nestjs/swagger";
 import type { Bundle, Organization } from "fhir/r5";
 import * as sanitizeHtml from "sanitize-html";
-import type { Id } from "src/types";
 import { CreateOrganizationDto } from "./dto/create-organization.dto";
 import { UpdateOrganizationDto } from "./dto/update-organization.dto";
 import { organizationBundleExample } from "./examples/organization-bundle.example";
@@ -36,7 +35,7 @@ export class OrganizationController {
       }),
     )
     createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization & Id> {
+  ): Promise<Organization> {
     const name = sanitizeHtml(createOrganizationDto.name, {
       allowedTags: [],
       allowedAttributes: {},
@@ -52,7 +51,7 @@ export class OrganizationController {
     example: organizationBundleExample,
   })
   @Get()
-  async findAll(): Promise<Bundle<Organization & Id>> {
+  async findAll(): Promise<Bundle<Organization>> {
     return this.organizationsService.findAll();
   }
 
@@ -64,7 +63,7 @@ export class OrganizationController {
     description: "Organization not found",
   })
   @Get(":id")
-  async findOne(@Param("id") id: string): Promise<Organization & Id> {
+  async findOne(@Param("id") id: string): Promise<Organization> {
     const organization = await this.organizationsService.findOne(id);
     if (!organization) {
       throw new NotFoundException("organization not found");
@@ -90,7 +89,7 @@ export class OrganizationController {
       }),
     )
     updateOrganizationDto: UpdateOrganizationDto,
-  ): Promise<Organization & Id> {
+  ): Promise<Organization> {
     const organization = await this.organizationsService.update(
       id,
       updateOrganizationDto,

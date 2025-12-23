@@ -1,5 +1,6 @@
 import { APPOINTMENT_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { createAppointment, createAppointments } from "./appointment";
 
 describe("createAppointment", () => {
@@ -35,10 +36,23 @@ describe("createAppointment", () => {
 });
 
 describe("createAppointments", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("patient", [
+    "patient-1",
+    "patient-2",
+    "patient-3",
+    "patient-4",
+    "patient-5",
+    "patient-6",
+    "patient-7",
+    "patient-8",
+  ]);
+  idGen.refs.set("practitioner", ["practitioner-1", "practitioner-2"]);
   const appointments = createAppointments({
     numberOfAppointments: 16,
     numberOfPatients: 8,
     numberOfPractitioners: 2,
+    idGen,
   });
 
   it.each`
@@ -84,6 +98,7 @@ describe("createAppointments", () => {
       numberOfAppointments: 8,
       numberOfPatients: 4,
       numberOfPractitioners: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(appointments).toHaveLength(8);
@@ -94,6 +109,7 @@ describe("createAppointments", () => {
       numberOfAppointments: 0,
       numberOfPatients: 4,
       numberOfPractitioners: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(appointments).toHaveLength(0);

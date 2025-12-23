@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import {
   createPractitionerRole,
   createPractitionerRoles,
@@ -28,9 +29,22 @@ describe("createOrganization", () => {
 });
 
 describe("createPractitionerRoles", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("organization", ["organization-1", "organization-2"]);
+  idGen.refs.set("practitioner", [
+    "practitioner-1",
+    "practitioner-2",
+    "practitioner-3",
+    "practitioner-4",
+    "practitioner-5",
+    "practitioner-6",
+    "practitioner-7",
+    "practitioner-8",
+  ]);
   const practitionerRoles = createPractitionerRoles({
     numberOfPractitionerRoles: 8,
     numberOfOrganizations: 2,
+    idGen,
   });
 
   it.each`
@@ -64,6 +78,7 @@ describe("createPractitionerRoles", () => {
     const practitionerRoles = createPractitionerRoles({
       numberOfPractitionerRoles: 3,
       numberOfOrganizations: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(practitionerRoles).toHaveLength(3);
@@ -73,6 +88,7 @@ describe("createPractitionerRoles", () => {
     const practitionerRoles = createPractitionerRoles({
       numberOfPractitionerRoles: 0,
       numberOfOrganizations: 2,
+      idGen: new IdGenerator(),
     });
 
     expect(practitionerRoles).toHaveLength(0);

@@ -20,25 +20,27 @@ export function DashboardPage() {
   }));
 
   return (
-    <section className="h-[50vh] w-[50vw]">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart width={150} height={40} data={chartData}>
-          <Bar dataKey="value" fill="var(--color-chart-2)">
-            <LabelList
-              dataKey="value"
-              position="top"
+    <div className="w-full flex flex-col items-center p-20">
+      <section className="h-[50vh] w-[50vw]">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart width={150} height={40} data={chartData}>
+            <Bar dataKey="value" fill="var(--color-chart-2)">
+              <LabelList
+                dataKey="value"
+                position="top"
+                stroke="var(--foreground)"
+                offset={10}
+              />
+            </Bar>
+            <XAxis
+              dataKey="resourceType"
+              axisLine={false}
+              tickLine={false}
               stroke="var(--foreground)"
-              offset={10}
             />
-          </Bar>
-          <XAxis
-            dataKey="resourceType"
-            axisLine={false}
-            tickLine={false}
-            stroke="var(--foreground)"
-          />
-        </BarChart>
-      </ResponsiveContainer>
-    </section>
+          </BarChart>
+        </ResponsiveContainer>
+      </section>
+    </div>
   );
 }

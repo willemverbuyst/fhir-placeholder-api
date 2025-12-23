@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from "@nestjs/common";
 import type { Appointment, Bundle } from "fhir/r5";
-import type { Id } from "src/types";
+import { dummyDataConfig } from "../../config";
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
@@ -15,7 +15,7 @@ export class AppointmentService {
 
   async create(
     createAppointmentDto: CreateAppointmentDto,
-  ): Promise<Appointment & Id> {
+  ): Promise<Appointment> {
     const patient = this.repo.patients.find(
       (p) => p.id === createAppointmentDto.subject,
     );
@@ -33,8 +33,11 @@ export class AppointmentService {
       );
     }
 
-    const newAppointment: Appointment & Id = {
-      id: `appointment-${String(this.repo.appointments.length + 1)}`,
+    const newAppointment: Appointment = {
+      id:
+        dummyDataConfig.idStrategy === "sequential"
+          ? `appointment-${String(this.repo.appointments.length + 1)}`
+          : crypto.randomUUID(),
       resourceType: "Appointment",
       subject: { reference: `Patient/${createAppointmentDto.subject}` },
       status: createAppointmentDto.status,
@@ -59,9 +62,7 @@ export class AppointmentService {
     return newAppointment;
   }
 
-  async findAll(query?: { patient?: string }): Promise<
-    Bundle<Appointment & Id>
-  > {
+  async findAll(query?: { patient?: string }): Promise<Bundle<Appointment>> {
     let resources = this.repo.appointments;
 
     if (!query) {

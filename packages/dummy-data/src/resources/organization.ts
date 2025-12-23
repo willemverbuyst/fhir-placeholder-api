@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
 import type { Organization } from "fhir/r5";
-import type { Id } from "../types";
+import { IdGenerator } from "../idGenerator";
 
-export function createOrganization({ id }: { id: string }): Organization & Id {
+export function createOrganization({ id }: { id: string }): Organization {
   return {
     id,
     resourceType: "Organization",
@@ -13,10 +13,12 @@ export function createOrganization({ id }: { id: string }): Organization & Id {
 
 export function createOrganizations({
   numberOfOrganizations,
+  idGen,
 }: {
   numberOfOrganizations: number;
-}): (Organization & Id)[] {
-  return Array.from({ length: numberOfOrganizations }, (_, i) => {
-    return createOrganization({ id: `organization-${i + 1}` });
+  idGen: IdGenerator;
+}): Organization[] {
+  return Array.from({ length: numberOfOrganizations }, () => {
+    return createOrganization({ id: idGen.generateId("organization") });
   });
 }

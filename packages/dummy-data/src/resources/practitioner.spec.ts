@@ -1,11 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { START_DATE } from "../config";
+import { IdGenerator } from "../idGenerator";
 import { createPractitioner, createPractitioners } from "./practitioner";
 
 describe("createPractitioner", () => {
   it("should create a Practitioner with a valid structure", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner({ id: practitionerId });
+    const practitioner = createPractitioner({
+      id: practitionerId,
+      startDate: "1950-01-01",
+    });
 
     expect(practitioner).toHaveProperty("id");
     expect(practitioner).toHaveProperty("resourceType", "Practitioner");
@@ -33,13 +36,16 @@ describe("createPractitioner", () => {
 
   it("should generate a valid birthDate within the specified range", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner({ id: practitionerId });
+    const practitioner = createPractitioner({
+      id: practitionerId,
+      startDate: "1950-01-01",
+    });
 
     if (!practitioner.birthDate) {
       throw new Error("Practitioner birthDate is undefined");
     }
     const birthDate = new Date(practitioner.birthDate);
-    const startDate = new Date(START_DATE);
+    const startDate = new Date("1950-01-01");
     const now = new Date();
 
     expect(birthDate.getTime()).toBeGreaterThanOrEqual(startDate.getTime());
@@ -48,7 +54,10 @@ describe("createPractitioner", () => {
 
   it("should create telecom entries with valid email and phone", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner({ id: practitionerId });
+    const practitioner = createPractitioner({
+      id: practitionerId,
+      startDate: "1950-01-01",
+    });
 
     if (!practitioner.telecom) {
       throw new Error("Practitioner telecom array is undefined");
@@ -65,7 +74,10 @@ describe("createPractitioner", () => {
 
   it("should create a valid address", () => {
     const practitionerId = "practitioner-1";
-    const practitioner = createPractitioner({ id: practitionerId });
+    const practitioner = createPractitioner({
+      id: practitionerId,
+      startDate: "1950-01-01",
+    });
 
     if (!practitioner.address) {
       throw new Error("Practitioner address array is undefined");
@@ -83,7 +95,11 @@ describe("createPractitioner", () => {
 
 describe("createPractitioners", () => {
   it("should create the specified number of practitioners", () => {
-    const practitioners = createPractitioners({ numberOfPractitioners: 5 });
+    const practitioners = createPractitioners({
+      numberOfPractitioners: 5,
+      startDate: "1950-01-01",
+      idGen: new IdGenerator(),
+    });
 
     expect(practitioners).toHaveLength(5);
 
@@ -94,7 +110,11 @@ describe("createPractitioners", () => {
   });
 
   it("should return an empty array if numberOfPractitioners is 0", () => {
-    const practitioners = createPractitioners({ numberOfPractitioners: 0 });
+    const practitioners = createPractitioners({
+      numberOfPractitioners: 0,
+      startDate: "1950-01-01",
+      idGen: new IdGenerator(),
+    });
 
     expect(practitioners).toHaveLength(0);
   });

@@ -1,5 +1,5 @@
 import type { PractitionerRole } from "fhir/r5";
-import type { Id } from "../types";
+import { IdGenerator } from "../idGenerator";
 
 export function createPractitionerRole({
   practitionerRoleId,
@@ -7,13 +7,15 @@ export function createPractitionerRole({
   practitionerId,
 }: {
   practitionerRoleId: string;
-  organizationId: string;
+  organizationId: string | undefined;
   practitionerId: string;
-}): PractitionerRole & Id {
+}): PractitionerRole {
   return {
     id: practitionerRoleId,
     resourceType: "PractitionerRole",
-    organization: { reference: `Organization/${organizationId}` },
+    organization: organizationId
+      ? { reference: `Organization/${organizationId}` }
+      : undefined,
     practitioner: { reference: `Practitioner/${practitionerId}` },
     active: true,
   };
@@ -22,17 +24,20 @@ export function createPractitionerRole({
 export function createPractitionerRoles({
   numberOfPractitionerRoles,
   numberOfOrganizations,
+  idGen,
 }: {
   numberOfPractitionerRoles: number;
   numberOfOrganizations: number;
-}): (PractitionerRole & Id)[] {
+  idGen: IdGenerator;
+}): PractitionerRole[] {
   return Array.from({ length: numberOfPractitionerRoles }, (_, i) => {
+    const organizationIndex = Math.floor(
+      i / (numberOfPractitionerRoles / numberOfOrganizations),
+    );
     return createPractitionerRole({
-      practitionerRoleId: `practitioner-role-${i + 1}`,
-      organizationId: `organization-${
-        Math.floor(i / (numberOfPractitionerRoles / numberOfOrganizations)) + 1
-      }`,
-      practitionerId: `practitioner-${i + 1}`,
+      practitionerRoleId: idGen.generateId("practitioner-role"),
+      organizationId: idGen.refs.get("organization")?.[organizationIndex],
+      practitionerId: idGen.generateId("practitioner"),
     });
   });
 }

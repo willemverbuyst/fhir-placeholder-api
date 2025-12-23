@@ -1,7 +1,6 @@
 import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Encounter } from "fhir/r5";
-import type { Id } from "src/types";
 import { GetEncounterDto } from "./dto/get-encounter.dto";
 import { EncounterService } from "./encounter.service";
 import { encounterBundleExample } from "./examples/encounter-bundle.example";
@@ -36,7 +35,7 @@ export class EncounterController {
       }),
     )
     query?: GetEncounterDto,
-  ): Promise<Bundle<Encounter & Id>> {
+  ): Promise<Bundle<Encounter>> {
     return await this.encounterService.findAll(query);
   }
 }

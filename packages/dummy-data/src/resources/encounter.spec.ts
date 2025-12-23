@@ -1,5 +1,6 @@
 import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
 import { describe, expect, it } from "vitest";
+import { IdGenerator } from "../idGenerator";
 import { createEncounter, createEncounters } from "./encounter";
 
 describe("createEncounter", () => {
@@ -28,10 +29,19 @@ describe("createEncounter", () => {
 });
 
 describe("createEncounters", () => {
+  const idGen = new IdGenerator();
+  idGen.refs.set("patient", ["patient-1", "patient-2"]);
+  idGen.refs.set("episode-of-care", [
+    "episode-of-care-1",
+    "episode-of-care-2",
+    "episode-of-care-3",
+    "episode-of-care-4",
+  ]);
   const encounters = createEncounters({
     numberOfEncounters: 12,
     numberOfPatients: 2,
     numberOfEpisodes: 4,
+    idGen,
   });
 
   it.each`
@@ -70,6 +80,7 @@ describe("createEncounters", () => {
       numberOfEncounters: 3,
       numberOfPatients: 1,
       numberOfEpisodes: 1,
+      idGen: new IdGenerator(),
     });
 
     expect(encounters).toHaveLength(3);
@@ -80,6 +91,7 @@ describe("createEncounters", () => {
       numberOfEncounters: 0,
       numberOfPatients: 1,
       numberOfEpisodes: 1,
+      idGen: new IdGenerator(),
     });
 
     expect(encounters).toHaveLength(0);

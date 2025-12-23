@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { dummyDataConfig } from "config";
 import type { Bundle, Organization } from "fhir/r5";
+import { dummyDataConfig } from "../../config";
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 import type { CreateOrganizationDto } from "./dto/create-organization.dto";

@@ -1,8 +1,11 @@
 import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
-import { CONDITIONS_PER_PATIENT, NUMBER_OF_CONDITIONS } from "../config";
 import { AppModule } from "../src/app.module";
+import {
+  CONDITIONS_PER_PATIENT,
+  NUMBER_OF_CONDITIONS,
+} from "../src/config/dummyDataConfig";
 
 describe("ConditionController (e2e)", () => {
   let app: INestApplication;

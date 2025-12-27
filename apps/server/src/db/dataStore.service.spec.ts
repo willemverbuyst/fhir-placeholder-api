@@ -7,7 +7,7 @@ import {
   NUMBER_OF_PRACTITIONERS,
   NUMBER_OF_PRACTITIONER_ROLES,
   ORGANIZATIONS,
-} from "../../config";
+} from "../config/dummyDataConfig";
 import { DataStoreService } from "./dataStore.service";
 
 describe("DataStoreService", () => {

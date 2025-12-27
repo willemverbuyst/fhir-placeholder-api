@@ -1,6 +1,7 @@
 import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
+import { AppModule } from "../src/app.module";
 import {
   NUMBER_OF_APPOINTMENTS,
   NUMBER_OF_CONDITIONS,
@@ -11,8 +12,7 @@ import {
   NUMBER_OF_PATIENTS,
   NUMBER_OF_PRACTITIONERS,
   NUMBER_OF_PRACTITIONER_ROLES,
-} from "../config";
-import { AppModule } from "../src/app.module";
+} from "../src/config/dummyDataConfig";
 
 describe("ResourceCountsController (e2e)", () => {
   let app: INestApplication;

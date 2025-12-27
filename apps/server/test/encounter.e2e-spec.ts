@@ -1,12 +1,12 @@
 import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
+import { AppModule } from "../src/app.module";
 import {
   ENCOUNTERS_PER_PATIENT,
   EPISODES_PER_PATIENT,
   NUMBER_OF_ENCOUNTERS,
-} from "../config";
-import { AppModule } from "../src/app.module";
+} from "../src/config/dummyDataConfig";
 
 describe("EncounterController (e2e)", () => {
   let app: INestApplication;

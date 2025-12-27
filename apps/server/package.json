@@ -7,9 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "cleanup": "tsx scripts/cleanup.ts",
     "dev": "nest start --watch",
-    "setup-config": "tsx scripts/setup-config.ts",
     "start": "nest start",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",

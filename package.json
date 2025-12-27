@@ -21,6 +21,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/fhir": "^0.0.41",
+    "@types/node": "^25.0.3",
     "cspell": "^8.17.2",
     "knip": "^5.44.0",
     "turbo": "^2.5.4",

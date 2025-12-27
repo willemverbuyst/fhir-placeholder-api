@@ -5,7 +5,7 @@ import {
   CONFIG_FILE_PATH,
   CONFIG_PRESETS,
   type UserDummyDataConfig,
-} from "../user-config";
+} from "./configPresets";
 
 const rl = createInterface({
   input: process.stdin,

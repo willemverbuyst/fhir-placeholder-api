@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, unlinkSync } from "node:fs";
-import { CONFIG_FILE_PATH } from "../user-config";
+import { CONFIG_FILE_PATH } from "./configPresets";
 
 function main() {
   console.log("🧹 FHIR Dummy Data Configuration Cleanup");

@@ -1,12 +1,25 @@
 import type { DummyDataConfig } from "@repo/dummy-data";
 import { existsSync, readFileSync } from "node:fs";
-import {
-  CONFIG_EXPIRY_MS,
-  CONFIG_FILE_PATH,
-  type UserDummyDataConfig,
-} from "./user-config.js";
 
-export const START_DATE = "1950-01-01" as const;
+export interface UserDummyDataConfig {
+  preset?: "small" | "medium" | "large" | "custom";
+  organizations: number;
+  practitionerRolesPerOrganization: number;
+  practitionersPerOrganization: number;
+  patientsPerPractitioner: number;
+  appointmentsPerPatient: number;
+  episodesPerPatient: number;
+  conditionsPerPatient: number;
+  encountersPerPatient: number;
+  observationsPerEncounter: number;
+  idStrategy: "sequential" | "uuid";
+  startDate: `${number}-${number}-${number}`;
+  createdAt: string; // ISO timestamp for expiry
+}
+
+// Config expiry (2 days in milliseconds)
+export const CONFIG_EXPIRY_MS = 2 * 24 * 60 * 60 * 1000;
+export const CONFIG_FILE_PATH = "./src/config/dummyDataConfig.json";
 
 // Default hardcoded values (fallback)
 export const ORGANIZATIONS = 3;
@@ -18,9 +31,14 @@ export const EPISODES_PER_PATIENT = 4;
 export const CONDITIONS_PER_PATIENT = 4;
 export const ENCOUNTERS_PER_PATIENT = 20;
 export const OBSERVATIONS_PER_ENCOUNTER = 2;
+export const START_DATE = "1950-01-01" as const;
 
 function loadUserConfig(): UserDummyDataConfig | null {
+  console.log(
+    `🔍 Checking for user dummy data configuration at: ${CONFIG_FILE_PATH}`,
+  );
   if (!existsSync(CONFIG_FILE_PATH)) {
+    console.log("   No user configuration file found.");
     return null;
   }
 

@@ -11,7 +11,7 @@ import type {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import { dummyDataConfig } from "../../config";
+import { dummyDataConfig } from "../config/dummyDataConfig";
 
 @Injectable()
 export class DataStoreService {

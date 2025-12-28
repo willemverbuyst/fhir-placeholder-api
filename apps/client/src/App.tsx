@@ -5,6 +5,7 @@ import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityS
 import { CockpitPage } from "./pages/cockpit/CockpitPage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
 import { GraphPage } from "./pages/graph/GraphPage";
+import { TreePage } from "./pages/tree/TreePage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="graph" element={<GraphPage />} />
           <Route path="cockpit" element={<CockpitPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="tree" element={<TreePage />} />
         </Routes>
       </main>
       <Toaster />

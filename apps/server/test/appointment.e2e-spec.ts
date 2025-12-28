@@ -1,7 +1,6 @@
 import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
-import { APPOINTMENTS_PER_PATIENT, NUMBER_OF_APPOINTMENTS } from "../config";
 import { AppModule } from "../src/app.module";
 
 describe("AppointmentController (e2e)", () => {
@@ -24,7 +23,7 @@ describe("AppointmentController (e2e)", () => {
         const appointments = res.body;
         expect(appointments).toBeDefined();
         expect(appointments).toHaveProperty("resourceType", "Bundle");
-        expect(appointments.entry).toHaveLength(NUMBER_OF_APPOINTMENTS);
+        expect(appointments.entry).toHaveLength(48);
       });
   });
 
@@ -33,10 +32,10 @@ describe("AppointmentController (e2e)", () => {
       .get("/Appointment?patient=Patient/patient-1")
       .expect(200)
       .then((res) => {
-        const conditions = res.body;
-        expect(conditions).toBeDefined();
-        expect(conditions).toHaveProperty("resourceType", "Bundle");
-        expect(conditions.entry).toHaveLength(APPOINTMENTS_PER_PATIENT);
+        const appointments = res.body;
+        expect(appointments).toBeDefined();
+        expect(appointments).toHaveProperty("resourceType", "Bundle");
+        expect(appointments.entry).toHaveLength(2);
       });
   });
 });

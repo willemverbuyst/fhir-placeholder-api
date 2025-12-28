@@ -1,7 +1,6 @@
 import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
-import { NUMBER_OF_PRACTITIONERS } from "../config";
 import { AppModule } from "../src/app.module";
 
 describe("PractitionerController (e2e)", () => {
@@ -24,7 +23,7 @@ describe("PractitionerController (e2e)", () => {
         const practitioners = res.body;
         expect(practitioners).toBeDefined();
         expect(practitioners).toHaveProperty("resourceType", "Bundle");
-        expect(practitioners.entry).toHaveLength(NUMBER_OF_PRACTITIONERS);
+        expect(practitioners.entry).toHaveLength(6);
       });
   });
 

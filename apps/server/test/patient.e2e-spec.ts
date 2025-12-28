@@ -1,11 +1,6 @@
 import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
-import {
-  NUMBER_OF_ORGANIZATIONS,
-  NUMBER_OF_PATIENTS,
-  NUMBER_OF_PRACTITIONERS,
-} from "../config";
 import { AppModule } from "../src/app.module";
 
 describe("PatientController (e2e)", () => {
@@ -28,7 +23,7 @@ describe("PatientController (e2e)", () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(NUMBER_OF_PATIENTS);
+        expect(patients.entry).toHaveLength(24);
       });
   });
 
@@ -40,9 +35,7 @@ describe("PatientController (e2e)", () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(
-          NUMBER_OF_PATIENTS / NUMBER_OF_ORGANIZATIONS,
-        );
+        expect(patients.entry).toHaveLength(8);
       });
   });
 
@@ -54,9 +47,7 @@ describe("PatientController (e2e)", () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(
-          NUMBER_OF_PATIENTS / NUMBER_OF_PRACTITIONERS,
-        );
+        expect(patients.entry).toHaveLength(4);
       });
   });
 
@@ -70,9 +61,7 @@ describe("PatientController (e2e)", () => {
         const patients = res.body;
         expect(patients).toBeDefined();
         expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(
-          NUMBER_OF_PATIENTS / NUMBER_OF_PRACTITIONERS,
-        );
+        expect(patients.entry).toHaveLength(4);
       });
   });
 

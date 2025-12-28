@@ -11,7 +11,7 @@ import type {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import { dummyDataConfig } from "../../config";
+import { dummyDataConfig } from "../../scripts/dummyDataConfig";
 
 @Injectable()
 export class DataStoreService {
@@ -37,22 +37,5 @@ export class DataStoreService {
     this.patients = resources.patients;
     this.practitioners = resources.practitioners;
     this.practitionerRoles = resources.practitionerRoles;
-
-    if (process.env.NODE_ENV === "development") {
-      console.dir(
-        {
-          patients: this.patients.length,
-          episodes: this.episodes.length,
-          conditions: this.conditions.length,
-          organizations: this.organizations.length,
-          practitionerRoles: this.practitionerRoles.length,
-          practitioners: this.practitioners.length,
-          encounters: this.encounters.length,
-          observations: this.observations.length,
-          appointments: this.appointments.length,
-        },
-        { depth: null, colors: true },
-      );
-    }
   }
 }

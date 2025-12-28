@@ -1,13 +1,3 @@
-import {
-  NUMBER_OF_CONDITIONS,
-  NUMBER_OF_ENCOUNTERS,
-  NUMBER_OF_EPISODES,
-  NUMBER_OF_OBSERVATIONS,
-  NUMBER_OF_PATIENTS,
-  NUMBER_OF_PRACTITIONERS,
-  NUMBER_OF_PRACTITIONER_ROLES,
-  ORGANIZATIONS,
-} from "../../config";
 import { DataStoreService } from "./dataStore.service";
 
 describe("DataStoreService", () => {
@@ -18,17 +8,15 @@ describe("DataStoreService", () => {
   });
 
   it("should initialize organizations with the correct number of items", () => {
-    expect(dataStoreService.organizations.length).toBe(ORGANIZATIONS);
+    expect(dataStoreService.organizations.length).toBe(3);
   });
 
   it("should initialize practitioner roles with the correct number of items", () => {
-    expect(dataStoreService.practitioners.length).toBe(
-      NUMBER_OF_PRACTITIONER_ROLES,
-    );
+    expect(dataStoreService.practitioners.length).toBe(6);
   });
 
   it("should initialize practitioners with the correct number of items", () => {
-    expect(dataStoreService.practitioners.length).toBe(NUMBER_OF_PRACTITIONERS);
+    expect(dataStoreService.practitioners.length).toBe(6);
   });
 
   it("should have the same number of practitioners as practitioner roles", () => {
@@ -38,31 +26,22 @@ describe("DataStoreService", () => {
   });
 
   it("should initialize patients with the correct number of items", () => {
-    expect(dataStoreService.patients.length).toBe(NUMBER_OF_PATIENTS);
+    expect(dataStoreService.patients.length).toBe(24);
   });
 
   it("should initialize conditions for each patient", () => {
-    expect(dataStoreService.conditions.length).toBe(NUMBER_OF_CONDITIONS);
+    expect(dataStoreService.conditions.length).toBe(96);
   });
 
   it("should initialize episodes for each patient", () => {
-    expect(dataStoreService.episodes.length).toBe(NUMBER_OF_EPISODES);
+    expect(dataStoreService.episodes.length).toBe(96);
   });
 
   it("should initialize encounters for each patient", () => {
-    expect(dataStoreService.encounters.length).toBe(NUMBER_OF_ENCOUNTERS);
+    expect(dataStoreService.encounters.length).toBe(480);
   });
 
   it("should initialize observations for each patient", () => {
-    expect(dataStoreService.observations.length).toBe(NUMBER_OF_OBSERVATIONS);
-  });
-
-  it("should console.log the initialized data in development mode", () => {
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    const logSpy = jest.spyOn(console, "dir").mockImplementation(() => {});
-    process.env.NODE_ENV = "development";
-    dataStoreService = new DataStoreService();
-    expect(logSpy).toHaveBeenCalled();
-    logSpy.mockRestore();
+    expect(dataStoreService.observations.length).toBe(960);
   });
 });

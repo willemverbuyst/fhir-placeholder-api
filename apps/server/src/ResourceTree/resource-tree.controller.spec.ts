@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ResourceTreeController } from './resource-tree.controller';
-import { ResourceTreeService } from './resource-tree.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ResourceTreeController } from "./resource-tree.controller";
+import { ResourceTreeService } from "./resource-tree.service";
 
-describe('ResourceTreeController', () => {
+describe("ResourceTreeController", () => {
   let controller: ResourceTreeController;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('ResourceTreeController', () => {
     controller = module.get<ResourceTreeController>(ResourceTreeController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

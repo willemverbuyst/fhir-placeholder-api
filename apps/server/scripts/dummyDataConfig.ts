@@ -1,51 +1,11 @@
 import type { DummyDataConfig } from "@repo/dummy-data";
 import { existsSync, readFileSync } from "node:fs";
-
-export interface UserDummyDataConfig {
-  preset?: "small" | "medium" | "large" | "custom";
-  organizations: number;
-  practitionerRolesPerOrganization: number;
-  practitionersPerOrganization: number;
-  patientsPerPractitioner: number;
-  appointmentsPerPatient: number;
-  episodesPerPatient: number;
-  conditionsPerPatient: number;
-  encountersPerPatient: number;
-  observationsPerEncounter: number;
-  idStrategy: "sequential" | "uuid";
-  startDate: `${number}-${number}-${number}`;
-  createdAt: string; // ISO timestamp for expiry
-}
-
-// Config expiry (2 days in milliseconds)
-export const CONFIG_EXPIRY_MS = 2 * 24 * 60 * 60 * 1000;
-export const CONFIG_FILE_PATH = "./src/config/dummyDataConfig.json";
-
-// Default hardcoded values (fallback)
-export const ORGANIZATIONS = 3;
-export const PRACTITIONER_ROLES_PER_ORGANIZATION = 2;
-export const PRACTITIONERS_PER_ORGANIZATION = 2;
-export const PATIENTS_PER_PRACTITIONER = 4;
-export const APPOINTMENTS_PER_PATIENT = 2;
-export const EPISODES_PER_PATIENT = 4;
-export const CONDITIONS_PER_PATIENT = 4;
-export const ENCOUNTERS_PER_PATIENT = 20;
-export const OBSERVATIONS_PER_ENCOUNTER = 2;
-export const START_DATE = "1950-01-01" as const;
-
-export const NUMBER_OF_ORGANIZATIONS = ORGANIZATIONS;
-export const NUMBER_OF_PRACTITIONER_ROLES =
-  PRACTITIONER_ROLES_PER_ORGANIZATION * ORGANIZATIONS;
-export const NUMBER_OF_PRACTITIONERS = NUMBER_OF_PRACTITIONER_ROLES;
-export const NUMBER_OF_PATIENTS =
-  PATIENTS_PER_PRACTITIONER * NUMBER_OF_PRACTITIONERS;
-export const NUMBER_OF_CONDITIONS = NUMBER_OF_PATIENTS * CONDITIONS_PER_PATIENT;
-export const NUMBER_OF_EPISODES = NUMBER_OF_PATIENTS * EPISODES_PER_PATIENT;
-export const NUMBER_OF_ENCOUNTERS = NUMBER_OF_PATIENTS * ENCOUNTERS_PER_PATIENT;
-export const NUMBER_OF_OBSERVATIONS =
-  NUMBER_OF_ENCOUNTERS * OBSERVATIONS_PER_ENCOUNTER;
-export const NUMBER_OF_APPOINTMENTS =
-  NUMBER_OF_PATIENTS * APPOINTMENTS_PER_PATIENT;
+import {
+  CONFIG_EXPIRY_MS,
+  CONFIG_FILE_PATH,
+  UserDummyDataConfig,
+} from "./configPresets";
+import { defaultConfig } from "./defaultConfig";
 
 function loadUserConfig(): UserDummyDataConfig | null {
   console.log(
@@ -83,6 +43,10 @@ function loadUserConfig(): UserDummyDataConfig | null {
 }
 
 function buildDummyDataConfig(): DummyDataConfig {
+  if (process.env.NODE_ENV === "test") {
+    return defaultConfig;
+  }
+
   const userConfig = loadUserConfig();
 
   if (userConfig) {
@@ -92,7 +56,8 @@ function buildDummyDataConfig(): DummyDataConfig {
     const numberOfOrganizations = userConfig.organizations;
     const numberOfPractitionerRoles =
       userConfig.practitionerRolesPerOrganization * numberOfOrganizations;
-    const numberOfPractitioners = numberOfPractitionerRoles; // Always equal
+    const numberOfPractitioners =
+      userConfig.practitionersPerOrganization * numberOfOrganizations;
     const numberOfPatients =
       numberOfPractitioners * userConfig.patientsPerPractitioner;
     const numberOfAppointments =
@@ -123,20 +88,7 @@ function buildDummyDataConfig(): DummyDataConfig {
 
   // Fallback to hardcoded defaults
   console.log("📋 Using default hardcoded configuration for dummy data");
-
-  return {
-    numberOfAppointments: NUMBER_OF_APPOINTMENTS,
-    numberOfConditions: NUMBER_OF_CONDITIONS,
-    numberOfEncounters: NUMBER_OF_ENCOUNTERS,
-    numberOfEpisodes: NUMBER_OF_EPISODES,
-    numberOfObservations: NUMBER_OF_OBSERVATIONS,
-    numberOfOrganizations: NUMBER_OF_ORGANIZATIONS,
-    numberOfPatients: NUMBER_OF_PATIENTS,
-    numberOfPractitioners: NUMBER_OF_PRACTITIONERS,
-    numberOfPractitionerRoles: NUMBER_OF_PRACTITIONER_ROLES,
-    startDate: START_DATE,
-    idStrategy: process.env.NODE_ENV === "test" ? "sequential" : "uuid",
-  };
+  return defaultConfig;
 }
 
 export const dummyDataConfig: DummyDataConfig = buildDummyDataConfig();

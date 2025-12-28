@@ -2,11 +2,6 @@ import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 import { AppModule } from "../src/app.module";
-import {
-  ENCOUNTERS_PER_PATIENT,
-  NUMBER_OF_OBSERVATIONS,
-  OBSERVATIONS_PER_ENCOUNTER,
-} from "../src/config/dummyDataConfig";
 
 describe("ObservationController (e2e)", () => {
   let app: INestApplication;
@@ -28,7 +23,7 @@ describe("ObservationController (e2e)", () => {
         const observations = res.body;
         expect(observations).toBeDefined();
         expect(observations).toHaveProperty("resourceType", "Bundle");
-        expect(observations.entry).toHaveLength(NUMBER_OF_OBSERVATIONS);
+        expect(observations.entry).toHaveLength(960);
       });
   });
 
@@ -40,9 +35,7 @@ describe("ObservationController (e2e)", () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty("resourceType", "Bundle");
-        expect(encounters.entry).toHaveLength(
-          ENCOUNTERS_PER_PATIENT * OBSERVATIONS_PER_ENCOUNTER,
-        );
+        expect(encounters.entry).toHaveLength(40);
       });
   });
 
@@ -54,7 +47,7 @@ describe("ObservationController (e2e)", () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty("resourceType", "Bundle");
-        expect(encounters.entry).toHaveLength(OBSERVATIONS_PER_ENCOUNTER);
+        expect(encounters.entry).toHaveLength(2);
       });
   });
 
@@ -66,7 +59,7 @@ describe("ObservationController (e2e)", () => {
         const encounters = res.body;
         expect(encounters).toBeDefined();
         expect(encounters).toHaveProperty("resourceType", "Bundle");
-        expect(encounters.entry).toHaveLength(OBSERVATIONS_PER_ENCOUNTER);
+        expect(encounters.entry).toHaveLength(2);
       });
   });
 });

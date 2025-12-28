@@ -2,10 +2,6 @@ import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 import { AppModule } from "../src/app.module";
-import {
-  CONDITIONS_PER_PATIENT,
-  NUMBER_OF_CONDITIONS,
-} from "../src/config/dummyDataConfig";
 
 describe("ConditionController (e2e)", () => {
   let app: INestApplication;
@@ -27,7 +23,7 @@ describe("ConditionController (e2e)", () => {
         const conditions = res.body;
         expect(conditions).toBeDefined();
         expect(conditions).toHaveProperty("resourceType", "Bundle");
-        expect(conditions.entry).toHaveLength(NUMBER_OF_CONDITIONS);
+        expect(conditions.entry).toHaveLength(96);
       });
   });
 
@@ -39,7 +35,7 @@ describe("ConditionController (e2e)", () => {
         const conditions = res.body;
         expect(conditions).toBeDefined();
         expect(conditions).toHaveProperty("resourceType", "Bundle");
-        expect(conditions.entry).toHaveLength(CONDITIONS_PER_PATIENT);
+        expect(conditions.entry).toHaveLength(4);
       });
   });
 

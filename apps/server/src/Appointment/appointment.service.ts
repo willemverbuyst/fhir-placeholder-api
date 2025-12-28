@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from "@nestjs/common";
 import type { Appointment, Bundle } from "fhir/r5";
-import { dummyDataConfig } from "../config/dummyDataConfig";
+import { dummyDataConfig } from "../../scripts/dummyDataConfig";
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";

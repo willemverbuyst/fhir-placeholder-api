@@ -2,17 +2,6 @@ import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 import { AppModule } from "../src/app.module";
-import {
-  NUMBER_OF_APPOINTMENTS,
-  NUMBER_OF_CONDITIONS,
-  NUMBER_OF_ENCOUNTERS,
-  NUMBER_OF_EPISODES,
-  NUMBER_OF_OBSERVATIONS,
-  NUMBER_OF_ORGANIZATIONS,
-  NUMBER_OF_PATIENTS,
-  NUMBER_OF_PRACTITIONERS,
-  NUMBER_OF_PRACTITIONER_ROLES,
-} from "../src/config/dummyDataConfig";
 
 describe("ResourceCountsController (e2e)", () => {
   let app: INestApplication;
@@ -43,15 +32,15 @@ describe("ResourceCountsController (e2e)", () => {
           appointments,
         } = res.body;
 
-        expect(patients).toBe(NUMBER_OF_PATIENTS);
-        expect(episodes).toBe(NUMBER_OF_EPISODES);
-        expect(conditions).toBe(NUMBER_OF_CONDITIONS);
-        expect(organizations).toBe(NUMBER_OF_ORGANIZATIONS);
-        expect(practitioners).toBe(NUMBER_OF_PRACTITIONERS);
-        expect(practitionerRoles).toBe(NUMBER_OF_PRACTITIONER_ROLES);
-        expect(encounters).toBe(NUMBER_OF_ENCOUNTERS);
-        expect(observations).toBe(NUMBER_OF_OBSERVATIONS);
-        expect(appointments).toBe(NUMBER_OF_APPOINTMENTS);
+        expect(patients).toBe(24);
+        expect(episodes).toBe(96);
+        expect(conditions).toBe(96);
+        expect(organizations).toBe(3);
+        expect(practitioners).toBe(6);
+        expect(practitionerRoles).toBe(6);
+        expect(encounters).toBe(480);
+        expect(observations).toBe(960);
+        expect(appointments).toBe(48);
       });
   });
 });

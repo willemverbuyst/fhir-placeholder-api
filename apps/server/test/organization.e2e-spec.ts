@@ -2,7 +2,6 @@ import type { INestApplication } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import * as request from "supertest";
 import { AppModule } from "../src/app.module";
-import { NUMBER_OF_ORGANIZATIONS } from "../src/config/dummyDataConfig";
 
 describe("OrganizationController (e2e)", () => {
   let app: INestApplication;
@@ -24,7 +23,7 @@ describe("OrganizationController (e2e)", () => {
         const organizations = res.body;
         expect(organizations).toBeDefined();
         expect(organizations).toHaveProperty("resourceType", "Bundle");
-        expect(organizations.entry).toHaveLength(NUMBER_OF_ORGANIZATIONS);
+        expect(organizations.entry).toHaveLength(3);
       });
   });
 

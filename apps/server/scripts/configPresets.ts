@@ -74,4 +74,6 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
   },
 };
 
-export const CONFIG_FILE_PATH = "../server/src/config/dummyDataConfig.json";
+export const CONFIG_FILE_PATH = "./scripts/dummyDataConfig.json";
+// Config expiry (2 days in milliseconds)
+export const CONFIG_EXPIRY_MS = 2 * 24 * 60 * 60 * 1000;

@@ -39,4 +39,4 @@ __pycache__/
 .env.test
 
 # User configuration files
-apps/server/src/config/dummyDataConfig.json
+apps/server/scripts/dummyDataConfig.json

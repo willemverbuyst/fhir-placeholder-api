@@ -1,5 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
 
+type TreeNode = {
+  name: string;
+  children: TreeNode[];
+};
+
 export function createResourceTreeQueryOptions() {
   return queryOptions({
     queryKey: ["resource-tree"],
@@ -8,7 +13,7 @@ export function createResourceTreeQueryOptions() {
   });
 }
 
-async function fetchResourceTree(): Promise<Record<string, unknown>> {
+async function fetchResourceTree(): Promise<TreeNode> {
   const response = await fetch(
     "http://localhost:8080/api/v2/r5/$resource-tree",
   );
@@ -16,7 +21,7 @@ async function fetchResourceTree(): Promise<Record<string, unknown>> {
   return await response.json();
 }
 
-async function getResourceTree(): Promise<Record<string, unknown>> {
+async function getResourceTree(): Promise<TreeNode> {
   const rawData = await fetchResourceTree();
 
   return rawData;

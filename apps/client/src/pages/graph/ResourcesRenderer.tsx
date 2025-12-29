@@ -14,12 +14,10 @@ export function ResourcesRenderer<T extends Resource>({
   resourceType,
   searchParams,
   renderItem,
-  styles,
 }: {
   resourceType: AppResourceType;
   searchParams?: string;
   renderItem?: (resource: MappedResource<T>) => JSX.Element | null;
-  styles?: string;
 }) {
   const { isPending, isError, error, data } = useQuery(
     createResourcesQueryOptions<T>({ resourceType, searchParams }),

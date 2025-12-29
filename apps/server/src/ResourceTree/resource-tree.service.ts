@@ -51,32 +51,34 @@ export class ResourceTreeService {
     );
 
     const encounterTree = R.mapValues(encountersByEpisode, (encounters) =>
-      encounters.map((enc) => ({
-        [`Encounter/${enc.id ?? "unknown"}`]:
-          obsByEncounter[`Encounter/${enc.id}`].map(
-            (obs) => `Observation/${obs.id}`,
-          ) || [],
+      encounters.map((encounter) => ({
+        name: `Encounter/${encounter.id}`,
+        children:
+          obsByEncounter[`Encounter/${encounter.id}`].map((obs) => ({
+            name: `Observation/${obs.id}`,
+            children: [],
+          })) || [],
       })),
     );
 
     const episodeTree = R.mapValues(episodesByCondition, (episodes) =>
-      episodes.map((ep) => ({
-        [`EpisodeOfCare/${ep.id ?? "unknown"}`]:
-          encounterTree[`EpisodeOfCare/${ep.id}`] || [],
+      episodes.map((episode) => ({
+        name: `EpisodeOfCare/${episode.id}`,
+        children: encounterTree[`EpisodeOfCare/${episode.id}`] || [],
       })),
     );
 
     const conditionTree = R.mapValues(conditionsByPatient, (conditions) =>
-      conditions.map((cond) => ({
-        [`Condition/${cond.id ?? "unknown"}`]:
-          episodeTree[`Condition/${cond.id}`] || [],
+      conditions.map((condition) => ({
+        name: `Condition/${condition.id}`,
+        children: episodeTree[`Condition/${condition.id}`] || [],
       })),
     );
 
     const patientTree = R.mapValues(patientsByPractitioner, (patients) =>
-      patients.map((pat) => ({
-        [`Patient/${pat.id ?? "unknown"}`]:
-          conditionTree[`Patient/${pat.id}`] || [],
+      patients.map((patient) => ({
+        name: `Patient/${patient.id}`,
+        children: conditionTree[`Patient/${patient.id}`] || [],
       })),
     );
 
@@ -84,8 +86,8 @@ export class ResourceTreeService {
       practitionersByPractitionerRoles,
       (practitioners) =>
         practitioners.map((practitioner) => ({
-          [`Practitioner/${practitioner.id}`]:
-            patientTree[`Practitioner/${practitioner.id}`] || [],
+          name: `Practitioner/${practitioner.id}`,
+          children: patientTree[`Practitioner/${practitioner.id}`] || [],
         })),
     );
 
@@ -93,11 +95,16 @@ export class ResourceTreeService {
       practitionerRolesByOrganization,
       (practitionerRoles) =>
         practitionerRoles.map((practitionerRole) => ({
-          [`PractitionerRole/${practitionerRole.id}`]:
-            practitionerTree[`PractitionerRole/${practitionerRole.id}`],
+          name: `PractitionerRole/${practitionerRole.id}`,
+          children: practitionerTree[`PractitionerRole/${practitionerRole.id}`],
         })),
     );
 
-    return { tree: practitionerRoleTree };
+    const organizationTree = this.repo.organizations.map((organization) => ({
+      name: `Organization/${organization.id}`,
+      children: practitionerRoleTree[`Organization/${organization.id}`],
+    }));
+
+    return { name: "tree", children: organizationTree };
   }
 }

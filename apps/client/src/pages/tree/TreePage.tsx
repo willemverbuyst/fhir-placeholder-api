@@ -6,16 +6,46 @@ import { createResourceTreeQueryOptions } from "@/query/resource-tree.query";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-function ResourceItem({
-  name,
-  children,
-}: {
+export type TreeNode = {
   name: string;
+  children: TreeNode[];
+};
+
+function getNamesOfChildren(nodes: TreeNode[]): string[] {
+  let names: string[] = [];
+  for (const node of nodes) {
+    names.push(node.name);
+    if (node.children.length > 0) {
+      names = names.concat(getNamesOfChildren(node.children));
+    }
+  }
+  return names;
+}
+
+function ResourceItem({
+  treeNode,
+  children,
+  highlightedResources,
+  setHighlightedResources,
+}: {
+  treeNode: TreeNode;
   children?: React.ReactNode;
+  highlightedResources: string[];
+  setHighlightedResources: (ids: string[]) => void;
 }) {
-  const [zoomIn, setZoomIn] = useState<string | undefined>();
-  const resourceType = name.split("/")[0];
-  const id = name.split("/")[1];
+  const resourceType = treeNode.name.split("/")[0];
+  const id = treeNode.name.split("/")[1];
+
+  function handleClick() {
+    if (highlightedResources?.includes(treeNode.name)) {
+      setHighlightedResources([]);
+    } else {
+      const allChildNames = getNamesOfChildren(treeNode.children);
+      setHighlightedResources([treeNode.name, ...allChildNames]);
+      //
+      // setHighlightedResources([treeNode.name]);
+    }
+  }
 
   return (
     <section className="flex gap-3">
@@ -23,14 +53,11 @@ function ResourceItem({
         type="button"
         className={cn(
           "flex flex-col items-center p-4 rounded-md w-[350px] text-white cursor-pointer",
-          zoomIn
+          highlightedResources?.includes(treeNode.name)
             ? "bg-secondary font-bold hover:bg-secondary/90"
             : "bg-primary hover:bg-primary/90",
         )}
-        onClick={() => {
-          if (zoomIn) setZoomIn(undefined);
-          else setZoomIn(id);
-        }}
+        onClick={() => handleClick()}
       >
         <span className="sticky top-0 flex flex-col items-center gap-1">
           <span>{resourceType}</span>
@@ -42,26 +69,43 @@ function ResourceItem({
   );
 }
 
-export function RenderTree({ treeNode }: { treeNode: TreeNode }) {
+function RenderTree({
+  treeNode,
+  highlightedResources,
+  setHighlightedResources,
+}: {
+  treeNode: TreeNode;
+  highlightedResources: string[];
+  setHighlightedResources: (ids: string[]) => void;
+}) {
   return (
-    <ResourceItem key={String(treeNode.name)} name={treeNode.name}>
+    <ResourceItem
+      key={treeNode.name}
+      treeNode={treeNode}
+      highlightedResources={highlightedResources}
+      setHighlightedResources={setHighlightedResources}
+    >
       <section className={"flex flex-col gap-3"}>
         {treeNode.children.map((child) => (
-          <RenderTree key={child.name} treeNode={child} />
+          <RenderTree
+            key={child.name}
+            treeNode={child}
+            highlightedResources={highlightedResources}
+            setHighlightedResources={setHighlightedResources}
+          />
         ))}
       </section>
     </ResourceItem>
   );
 }
 
-export type TreeNode = {
-  name: string;
-  children: TreeNode[];
-};
-
 export function TreePage() {
   const { isPending, isError, error, data } = useQuery(
     createResourceTreeQueryOptions(),
+  );
+
+  const [highlightedResources, setHighlightedResources] = useState<string[]>(
+    [],
   );
 
   if (isPending) return <LoadingSpinner />;
@@ -69,6 +113,11 @@ export function TreePage() {
   if (!data) return <InfoAlert title="...no data" />;
 
   return data.children.map((child) => (
-    <RenderTree key={child.name} treeNode={child} />
+    <RenderTree
+      key={child.name}
+      treeNode={child}
+      highlightedResources={highlightedResources}
+      setHighlightedResources={setHighlightedResources}
+    />
   ));
 }

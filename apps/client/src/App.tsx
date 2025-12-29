@@ -4,8 +4,7 @@ import { Toaster } from "./components/ui/sonner";
 import { CapabilityStatementPage } from "./pages/capabilityStatement/CapabilityStatementPage";
 import { CockpitPage } from "./pages/cockpit/CockpitPage";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
-import { GraphPage } from "./pages/graph/GraphPage";
-import { TreePage } from "./pages/tree/TreePage";
+import { DendrogramPage } from "./pages/dendrogram/DendrogramPage";
 
 function App() {
   return (
@@ -14,10 +13,9 @@ function App() {
       <main className="px-5">
         <Routes>
           <Route index element={<CapabilityStatementPage />} />
-          <Route path="graph" element={<GraphPage />} />
+          <Route path="dendrogram" element={<DendrogramPage />} />
           <Route path="cockpit" element={<CockpitPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="tree" element={<TreePage />} />
         </Routes>
       </main>
       <Toaster />

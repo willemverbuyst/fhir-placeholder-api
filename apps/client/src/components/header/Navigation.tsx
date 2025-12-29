@@ -18,7 +18,7 @@ function NavigationItems() {
       </NavigationMenuItem>
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <NavLink to="/graph">Graph</NavLink>
+          <NavLink to="/dendrogram">Dendrogram</NavLink>
         </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem>
@@ -29,11 +29,6 @@ function NavigationItems() {
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
           <NavLink to="/dashboard">Dashboard</NavLink>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <NavLink to="/tree">Tree</NavLink>
         </NavigationMenuLink>
       </NavigationMenuItem>
     </>

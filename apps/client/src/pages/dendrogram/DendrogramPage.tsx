@@ -99,7 +99,7 @@ function RenderTree({
   );
 }
 
-export function TreePage() {
+export function DendrogramPage() {
   const { isPending, isError, error, data } = useQuery(
     createResourceTreeQueryOptions(),
   );

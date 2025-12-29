@@ -42,8 +42,6 @@ function ResourceItem({
     } else {
       const allChildNames = getNamesOfChildren(treeNode.children);
       setHighlightedResources([treeNode.name, ...allChildNames]);
-      //
-      // setHighlightedResources([treeNode.name]);
     }
   }
 

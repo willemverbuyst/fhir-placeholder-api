@@ -1,9 +1,19 @@
 import { queryOptions } from "@tanstack/react-query";
+import { z } from "zod";
 
 type TreeNode = {
   name: string;
   children: TreeNode[];
 };
+
+const resourceTreeSchema: z.ZodType<TreeNode> = z.lazy(() =>
+  z.object({
+    name: z.string(),
+    children: z.array(z.lazy(() => resourceTreeSchema)),
+  }),
+);
+
+type ResourceTreeSchema = z.infer<typeof resourceTreeSchema>;
 
 export function createResourceTreeQueryOptions() {
   return queryOptions({
@@ -13,7 +23,7 @@ export function createResourceTreeQueryOptions() {
   });
 }
 
-async function fetchResourceTree(): Promise<TreeNode> {
+async function fetchResourceTree(): Promise<ResourceTreeSchema> {
   const response = await fetch(
     "http://localhost:8080/api/v2/r5/$resource-tree",
   );
@@ -21,8 +31,10 @@ async function fetchResourceTree(): Promise<TreeNode> {
   return await response.json();
 }
 
-async function getResourceTree(): Promise<TreeNode> {
+async function getResourceTree(): Promise<ResourceTreeSchema> {
   const rawData = await fetchResourceTree();
+
+  resourceTreeSchema.parse(rawData);
 
   return rawData;
 }

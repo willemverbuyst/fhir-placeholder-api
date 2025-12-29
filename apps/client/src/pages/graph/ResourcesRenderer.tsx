@@ -30,7 +30,7 @@ export function ResourcesRenderer<T extends Resource>({
   if (!data) return <InfoAlert title="no data" />;
 
   return (
-    <section className={cn("flex gap-3", styles)}>
+    <section className={cn("flex flex-col gap-3")}>
       {data?.map((e) =>
         e.id ? (
           <ResourceItem

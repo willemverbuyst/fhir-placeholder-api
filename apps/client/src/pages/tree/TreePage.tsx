@@ -4,19 +4,18 @@ import { InfoAlert } from "@/components/alert/InfoAlert";
 import { cn } from "@/lib/utils";
 import { createResourceTreeQueryOptions } from "@/query/resource-tree.query";
 import { useQuery } from "@tanstack/react-query";
-import { Resource } from "fhir/r5";
 import { useState } from "react";
 
 function ResourceItem({
-  id,
-  resourceType,
+  name,
   children,
 }: {
-  id: string;
-  resourceType: Resource["resourceType"];
+  name: string;
   children?: React.ReactNode;
 }) {
   const [zoomIn, setZoomIn] = useState<string | undefined>();
+  const resourceType = name.split("/")[0];
+  const id = name.split("/")[1];
 
   return (
     <section className="flex gap-3">
@@ -33,8 +32,10 @@ function ResourceItem({
           else setZoomIn(id);
         }}
       >
-        <span>{resourceType}</span>
-        <span className="text-xs">{id}</span>
+        <span className="sticky top-0 flex flex-col items-center gap-1">
+          <span>{resourceType}</span>
+          <span className="text-xs">{id}</span>
+        </span>
       </button>
       {children ? children : null}
     </section>
@@ -43,11 +44,7 @@ function ResourceItem({
 
 export function RenderTree({ treeNode }: { treeNode: TreeNode }) {
   return (
-    <ResourceItem
-      key={String(treeNode.name)}
-      id={String(treeNode.name.split("/")[1])}
-      resourceType={treeNode.name.split("/")[0]}
-    >
+    <ResourceItem key={String(treeNode.name)} name={treeNode.name}>
       <section className={"flex flex-col gap-3"}>
         {treeNode.children.map((child) => (
           <RenderTree key={child.name} treeNode={child} />

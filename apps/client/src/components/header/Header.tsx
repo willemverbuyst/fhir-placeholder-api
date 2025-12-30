@@ -3,12 +3,16 @@ import { Navigation } from "./Navigation";
 
 export function Header() {
   return (
-    <header className="w-full z-10 sticky flex flex-col top-0 px-4 pb-4">
-      <section className="flex justify-between">
-        <h1 className="text-3xl p-2">Fhir Placeholder Api</h1>
+    <header className="grid grid-cols-3 sticky top-0 bg-background/80 p-5 h-[72px] items-center">
+      <div className="justify-self-start">
+        <span className="text-3xl font-bold">Fhir Placeholder Api</span>
+      </div>
+      <div className="justify-self-center">
+        <Navigation />
+      </div>
+      <div className="justify-self-end">
         <LightDarkModeToggle />
-      </section>
-      <Navigation />
+      </div>
     </header>
   );
 }

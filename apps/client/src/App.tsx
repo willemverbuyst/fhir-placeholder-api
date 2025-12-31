@@ -12,7 +12,7 @@ function App() {
       <div className="w-screen max-w-full overflow-hidden">
         <Header />
       </div>
-      <main className="w-screen overflow-auto">
+      <main className="w-screen grid items-center overflow-auto">
         <Routes>
           <Route index element={<CapabilityStatementPage />} />
           <Route path="dendrogram" element={<DendrogramPage />} />

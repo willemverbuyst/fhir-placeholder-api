@@ -50,17 +50,15 @@ function ResourceItem({
       <button
         type="button"
         className={cn(
-          "flex flex-col items-center p-4 rounded-md w-[350px] text-white cursor-pointer",
+          "flex flex-col items-center p-4 rounded-md text-white cursor-pointer w-[270px] min-h-[60px] shrink-0 gap-1",
           highlightedResources?.includes(treeNode.name)
             ? "bg-secondary font-bold hover:bg-secondary/90"
             : "bg-primary hover:bg-primary/90",
         )}
         onClick={() => handleClick()}
       >
-        <span className="sticky top-0 flex flex-col items-center gap-1">
-          <span>{resourceType}</span>
-          <span className="text-xs">{id}</span>
-        </span>
+        <span>{resourceType}</span>
+        <span className="text-xs">{id}</span>
       </button>
       {children ? children : null}
     </section>
@@ -77,23 +75,25 @@ function RenderTree({
   setHighlightedResources: (ids: string[]) => void;
 }) {
   return (
-    <ResourceItem
-      key={treeNode.name}
-      treeNode={treeNode}
-      highlightedResources={highlightedResources}
-      setHighlightedResources={setHighlightedResources}
-    >
-      <section className={"flex flex-col gap-3"}>
-        {treeNode.children.map((child) => (
-          <RenderTree
-            key={child.name}
-            treeNode={child}
-            highlightedResources={highlightedResources}
-            setHighlightedResources={setHighlightedResources}
-          />
-        ))}
-      </section>
-    </ResourceItem>
+    <section>
+      <ResourceItem
+        key={treeNode.name}
+        treeNode={treeNode}
+        highlightedResources={highlightedResources}
+        setHighlightedResources={setHighlightedResources}
+      >
+        <section className={`grid grid-rows-${treeNode.children.length} gap-3`}>
+          {treeNode.children.map((child) => (
+            <RenderTree
+              key={child.name}
+              treeNode={child}
+              highlightedResources={highlightedResources}
+              setHighlightedResources={setHighlightedResources}
+            />
+          ))}
+        </section>
+      </ResourceItem>
+    </section>
   );
 }
 
@@ -110,12 +110,18 @@ export function DendrogramPage() {
   if (isError) return <ErrorAlert error={error} />;
   if (!data) return <InfoAlert title="...no data" />;
 
-  return data.children.map((child) => (
-    <RenderTree
-      key={child.name}
-      treeNode={child}
-      highlightedResources={highlightedResources}
-      setHighlightedResources={setHighlightedResources}
-    />
-  ));
+  return (
+    <div className="justify-self-center p-4">
+      <section className={`grid grid-rows-${data.children.length} gap-3`}>
+        {data.children.map((child) => (
+          <RenderTree
+            key={child.name}
+            treeNode={child}
+            highlightedResources={highlightedResources}
+            setHighlightedResources={setHighlightedResources}
+          />
+        ))}
+      </section>
+    </div>
+  );
 }

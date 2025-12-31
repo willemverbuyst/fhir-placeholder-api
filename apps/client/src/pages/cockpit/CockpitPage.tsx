@@ -50,7 +50,7 @@ export function CockpitPage() {
   }, [resource, setSearchParams]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center gap-6">
+    <div className="w-full min-h-screen flex flex-col items-center gap-6 p-4">
       <div className="flex gap-2">
         {APP_RESOURCE_TYPES.map((k) => (
           <Button

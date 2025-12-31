@@ -22,7 +22,7 @@ export function CapabilityStatementPage() {
   if (!data) return <InfoAlert title="no data" />;
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center gap-4">
+    <div className="w-full min-h-screen flex flex-col items-center gap-4 p-4">
       {data?.rest?.map((i) => {
         if (i.mode === "server") {
           return (

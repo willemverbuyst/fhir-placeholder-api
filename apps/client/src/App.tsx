@@ -8,9 +8,11 @@ import { DendrogramPage } from "./pages/dendrogram/DendrogramPage";
 
 function App() {
   return (
-    <div className="w-full min-h-screen flex flex-col items-center gap-10">
-      <Header />
-      <main className="px-5">
+    <div className="grid grid-rows-[auto_1fr] w-screen h-screen overflow-hidden">
+      <div className="w-screen max-w-full overflow-hidden">
+        <Header />
+      </div>
+      <main className="w-screen overflow-auto">
         <Routes>
           <Route index element={<CapabilityStatementPage />} />
           <Route path="dendrogram" element={<DendrogramPage />} />

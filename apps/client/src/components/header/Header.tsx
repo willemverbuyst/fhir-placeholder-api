@@ -3,7 +3,7 @@ import { Navigation } from "./Navigation";
 
 export function Header() {
   return (
-    <header className="grid grid-cols-3 sticky top-0 bg-background/80 p-5 h-[72px] items-center">
+    <header className="grid grid-cols-3 sticky top-0 p-5 h-[72px] items-center">
       <div className="justify-self-start">
         <span className="text-3xl font-bold">Fhir Placeholder Api</span>
       </div>

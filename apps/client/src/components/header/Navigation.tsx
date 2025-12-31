@@ -18,7 +18,7 @@ function NavigationItems() {
       </NavigationMenuItem>
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <NavLink to="/graph">Graph</NavLink>
+          <NavLink to="/dendrogram">Dendrogram</NavLink>
         </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem>
@@ -56,7 +56,7 @@ export function Navigation() {
           <div className="bg-black rounded-full w-8 h-1 mt-1 opacity-100 group-open:opacity-0 transition-all" />
           <div className="bg-black rounded-full w-8 h-1 mt-1 group-open:-rotate-45 transition-all top-0 group-open:-top-2 relative" />
         </button>
-        <section className="absolute top-[48px] left-0 w-full peer-open:flex hidden bg-white justify-center">
+        <section className="absolute top-12 left-0 w-full peer-open:flex hidden bg-white justify-center">
           <NavigationMenu>
             <NavigationMenuList className="flex flex-col bg-white w-full items-center">
               <NavigationItems />

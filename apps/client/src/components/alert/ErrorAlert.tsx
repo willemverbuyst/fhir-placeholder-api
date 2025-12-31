@@ -9,7 +9,7 @@ export function ErrorAlert({
   actionCaption,
 }: { error: Error; action?: () => void; actionCaption?: string }) {
   return (
-    <Alert variant="destructive">
+    <Alert variant="destructive" className="max-w-lg mx-auto">
       <AlertCircleIcon />
       <AlertTitle>An error has occurred</AlertTitle>
       <AlertDescription>

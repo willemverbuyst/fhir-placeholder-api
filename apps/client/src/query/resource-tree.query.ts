@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { z } from "zod";
 
-type TreeNode = {
+export type TreeNode = {
   name: string;
   children: TreeNode[];
 };

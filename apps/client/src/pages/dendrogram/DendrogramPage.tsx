@@ -2,14 +2,12 @@ import { LoadingSpinner } from "@/components/LoadingSpinner";
 import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { InfoAlert } from "@/components/alert/InfoAlert";
 import { cn } from "@/lib/utils";
-import { createResourceTreeQueryOptions } from "@/query/resource-tree.query";
+import {
+  TreeNode,
+  createResourceTreeQueryOptions,
+} from "@/query/resource-tree.query";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-
-export type TreeNode = {
-  name: string;
-  children: TreeNode[];
-};
 
 function getNamesOfChildren(nodes: TreeNode[]): string[] {
   let names: string[] = [];

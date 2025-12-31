@@ -12,10 +12,12 @@ export function CapabilityStatementPage() {
 
   if (isPending)
     return (
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <CardsSkeleton key={i} />
-        ))}
+      <div className="justify-self-center p-4">
+        <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <CardsSkeleton key={i} />
+          ))}
+        </div>
       </div>
     );
   if (isError) return <ErrorAlert error={error} />;

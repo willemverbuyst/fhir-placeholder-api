@@ -29,6 +29,11 @@ export class ResourceTreeService {
       (condition) => condition.subject?.reference ?? "unknown",
     );
 
+    const appointmentsByPatient = R.groupBy(
+      this.repo.conditions,
+      (condition) => condition.subject?.reference ?? "unknown",
+    );
+
     const patientsByPractitioner = R.groupBy(
       this.repo.patients,
       (patient) => patient.generalPractitioner?.[0]?.reference ?? "unknown",
@@ -75,10 +80,21 @@ export class ResourceTreeService {
       })),
     );
 
+    const appointmentTree = R.mapValues(appointmentsByPatient, (appointments) =>
+      appointments.map((appointment) => ({
+        name: `Appointment/${appointment.id}`,
+        children: [],
+      })),
+    );
+
     const patientTree = R.mapValues(patientsByPractitioner, (patients) =>
       patients.map((patient) => ({
         name: `Patient/${patient.id}`,
-        children: conditionTree[`Patient/${patient.id}`] || [],
+        children:
+          R.concat(
+            conditionTree[`Patient/${patient.id}`],
+            appointmentTree[`Patient/${patient.id}`],
+          ) || [],
       })),
     );
 

@@ -21,10 +21,6 @@ export type CardRows<T> = {
     sorter?: boolean | "asc" | "desc";
     filter?: boolean;
     search?: boolean;
-    tooltip?: (
-      // biome-ignore lint/suspicious/noExplicitAny: this can be any type
-      v: any,
-    ) => string;
   };
 };
 

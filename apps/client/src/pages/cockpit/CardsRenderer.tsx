@@ -52,7 +52,6 @@ export function CardsRenderer<T extends Resource>(props: {
                         <ul>
                           {v.map((i) => (
                             <li key={i} className="text-right">
-                              {" "}
                               {i}
                             </li>
                           ))}

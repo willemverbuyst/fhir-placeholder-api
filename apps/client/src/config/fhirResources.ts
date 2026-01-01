@@ -164,9 +164,9 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v: EpisodeOfCare["diagnosis"]) =>
           v
             ?.flatMap((e) =>
-              e.condition
-                ?.map((c) => c.reference && getIdFromReference(c.reference))
-                .filter(isString),
+              e.condition?.map(
+                (c) => c.reference && getIdFromReference(c.reference),
+              ),
             )
             .filter(isString),
       },
@@ -271,9 +271,7 @@ export const FHIR_RESOURCES: ConfigItems = {
       communication: {
         display: (v: Patient["communication"]) =>
           v
-            ?.flatMap((p) =>
-              p.language.coding?.map((c) => c.code).filter(isString),
-            )
+            ?.flatMap((p) => p.language.coding?.map((c) => c.display ?? c.code))
             .filter(isString),
       },
       address: {

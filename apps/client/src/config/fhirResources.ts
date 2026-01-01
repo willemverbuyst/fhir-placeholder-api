@@ -21,6 +21,10 @@ export type CardRows<T> = {
     sorter?: boolean | "asc" | "desc";
     filter?: boolean;
     search?: boolean;
+    tooltip?: (
+      // biome-ignore lint/suspicious/noExplicitAny: this can be any type
+      v: any,
+    ) => string;
   };
 };
 
@@ -272,7 +276,9 @@ export const FHIR_RESOURCES: ConfigItems = {
         display: (v: Patient["communication"]) =>
           v
             ?.flatMap((p) =>
-              p.language.coding?.map((c) => c.code).filter(isString),
+              p.language.coding
+                ?.map((c) => c.display ?? c.code)
+                .filter(isString),
             )
             .filter(isString),
       },

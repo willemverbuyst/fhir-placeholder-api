@@ -48,15 +48,17 @@ function ResourceItem({
       <button
         type="button"
         className={cn(
-          "flex flex-col items-center p-4 rounded-md text-white cursor-pointer w-[270px] min-h-[60px] shrink-0 gap-1",
+          "flex flex-col items-center p-4 rounded-md text-white cursor-pointer w-[270px] min-h-14 shrink-0",
           highlightedResources?.includes(treeNode.name)
             ? "bg-secondary font-bold hover:bg-secondary/90"
             : "bg-primary hover:bg-primary/90",
         )}
         onClick={() => handleClick()}
       >
-        <span>{resourceType}</span>
-        <span className="text-xs">{id}</span>
+        <div className="sticky top-0 flex flex-col gap-1 py-1">
+          <span>{resourceType}</span>
+          <span className="text-xs">{id}</span>
+        </div>
       </button>
       {children ? children : null}
     </section>

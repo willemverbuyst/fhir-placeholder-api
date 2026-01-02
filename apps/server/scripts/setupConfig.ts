@@ -141,6 +141,22 @@ async function customConfiguration(): Promise<UserDummyDataConfig> {
     console.log("❌ Please enter a valid number (minimum 1)");
   }
 
+  // Allergies per patient
+  let allergiesPerPatient: number;
+  while (true) {
+    const value = await prompt("Allergies per patient [1]: ");
+    if (!value) {
+      allergiesPerPatient = 1;
+      break;
+    }
+    const num = validateNumber(value, 1);
+    if (num) {
+      allergiesPerPatient = num;
+      break;
+    }
+    console.log("❌ Please enter a valid number (minimum 1)");
+  }
+
   // Episodes per patient
   let episodesPerPatient: number;
   while (true) {
@@ -241,6 +257,7 @@ async function customConfiguration(): Promise<UserDummyDataConfig> {
     practitionerRolesPerOrganization,
     practitionersPerOrganization,
     patientsPerPractitioner,
+    allergiesPerPatient,
     appointmentsPerPatient,
     episodesPerPatient,
     conditionsPerPatient,
@@ -269,6 +286,7 @@ function displaySummary(config: UserDummyDataConfig) {
     `Patients: ${totalPatients} (${config.patientsPerPractitioner} per practitioner)`,
   );
   console.log(`Appointments: ${totalPatients * config.appointmentsPerPatient}`);
+  console.log(`Allergies: ${totalPatients * config.allergiesPerPatient}`);
   console.log(`Episodes: ${totalPatients * config.episodesPerPatient}`);
   console.log(`Conditions: ${totalPatients * config.conditionsPerPatient}`);
   console.log(`Encounters: ${totalEncounters}`);

@@ -6,6 +6,7 @@ const {
   practitionerRolesPerOrganization,
   practitionersPerOrganization,
   patientsPerPractitioner,
+  allergiesPerPatient,
   appointmentsPerPatient,
   episodesPerPatient,
   conditionsPerPatient,
@@ -25,8 +26,10 @@ const numberOfEpisodes = numberOfPatients * episodesPerPatient;
 const numberOfEncounters = numberOfPatients * encountersPerPatient;
 const numberOfObservations = numberOfEncounters * observationsPerEncounter;
 const numberOfAppointments = numberOfPatients * appointmentsPerPatient;
+const numberOfAllergies = numberOfPatients * allergiesPerPatient;
 
 export const defaultConfig: DummyDataConfig = {
+  numberOfAllergies,
   numberOfAppointments,
   numberOfConditions,
   numberOfEncounters,

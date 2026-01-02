@@ -69,8 +69,10 @@ function buildDummyDataConfig(): DummyDataConfig {
       numberOfPatients * userConfig.encountersPerPatient;
     const numberOfObservations =
       numberOfEncounters * userConfig.observationsPerEncounter;
+    const numberOfAllergies = numberOfPatients * userConfig.allergiesPerPatient;
 
     return {
+      numberOfAllergies,
       numberOfAppointments,
       numberOfConditions,
       numberOfEncounters,

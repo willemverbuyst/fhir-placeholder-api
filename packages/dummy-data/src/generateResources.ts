@@ -1,5 +1,6 @@
 import { IdGenerator } from "./idGenerator";
 import {
+  createAllergies,
   createAppointments,
   createConditions,
   createEncounters,
@@ -14,6 +15,7 @@ import { DummyDataConfig } from "./types";
 
 export const generateResources = (config: DummyDataConfig) => {
   const {
+    numberOfAllergies,
     numberOfAppointments,
     numberOfConditions,
     numberOfEncounters,
@@ -78,6 +80,12 @@ export const generateResources = (config: DummyDataConfig) => {
     numberOfPatients,
     idGen,
   });
+  const allergies = createAllergies({
+    numberOfAllergies,
+    numberOfPatients,
+    numberOfEncounters,
+    idGen,
+  });
 
   return {
     organizations,
@@ -89,5 +97,6 @@ export const generateResources = (config: DummyDataConfig) => {
     encounters,
     observations,
     appointments,
+    allergies,
   };
 };

@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { generateResources } from "@repo/dummy-data";
 import type {
+  AllergyIntolerance,
   Appointment,
   Condition,
   Encounter,
@@ -24,10 +25,12 @@ export class DataStoreService {
   public encounters: Encounter[] = [];
   public observations: Observation[] = [];
   public appointments: Appointment[] = [];
+  public allergies: AllergyIntolerance[] = [];
 
   constructor() {
     const resources = generateResources(dummyDataConfig);
 
+    this.allergies = resources.allergies;
     this.appointments = resources.appointments;
     this.conditions = resources.conditions;
     this.encounters = resources.encounters;

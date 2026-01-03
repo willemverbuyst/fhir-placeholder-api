@@ -1,5 +1,6 @@
 import { type MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config/dist";
+import { AllergyIntoleranceModule } from "./AllergyIntolerance/allergy-intolerance.module";
 import { AppointmentModule } from "./Appointment/appointment.module";
 import { ConditionModule } from "./Condition/condition.module";
 import { EncounterModule } from "./Encounter/encounter.module";
@@ -39,6 +40,7 @@ import { LoggerMiddleware } from "./middlewares/logger.middlewares";
     AppointmentModule,
     ResourceCountsModule,
     ResourceTreeModule,
+    AllergyIntoleranceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

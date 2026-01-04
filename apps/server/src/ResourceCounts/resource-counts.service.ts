@@ -16,6 +16,7 @@ export class ResourceCountsService {
       encounters: this.repo.encounters.length,
       observations: this.repo.observations.length,
       appointments: this.repo.appointments.length,
+      allergies: this.repo.allergies.length,
     };
   }
 }

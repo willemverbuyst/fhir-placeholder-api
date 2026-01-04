@@ -1,4 +1,4 @@
-import { OBSERVATION_STATUS } from "@repo/fhir-codes";
+import { OBSERVATION_STATUS } from "@repo/fhir-terminology";
 import { z } from "zod";
 
 export const observationResourceSchema = z.object({

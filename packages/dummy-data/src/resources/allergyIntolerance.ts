@@ -4,7 +4,7 @@ import {
   ALLERGY_INTOLERANCE_CLINICAL_STATUS,
   ALLERGY_INTOLERANCE_CRITICALITY,
   ALLERGY_INTOLERANCE_TYPE,
-} from "@repo/fhir-codes";
+} from "@repo/fhir-terminology";
 import type { AllergyIntolerance } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 

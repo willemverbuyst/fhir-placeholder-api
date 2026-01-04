@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { CONDITION_CLINICAL_STATUS } from "@repo/fhir-codes";
+import { CONDITION_CLINICAL_STATUS } from "@repo/fhir-terminology";
 import type { Condition } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 

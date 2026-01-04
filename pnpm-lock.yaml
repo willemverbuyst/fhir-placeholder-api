@@ -165,9 +165,9 @@ importers:
       '@repo/dummy-data':
         specifier: workspace:*
         version: link:../../packages/dummy-data
-      '@repo/fhir-codes':
+      '@repo/fhir-terminology':
         specifier: workspace:*
-        version: link:../../packages/fhir-codes
+        version: link:../../packages/fhir-terminology
       class-sanitizer:
         specifier: ^1.0.1
         version: 1.0.1
@@ -247,9 +247,9 @@ importers:
       '@faker-js/faker':
         specifier: ^9.7.0
         version: 9.9.0
-      '@repo/fhir-codes':
+      '@repo/fhir-terminology':
         specifier: workspace:*
-        version: link:../fhir-codes
+        version: link:../fhir-terminology
       bunchee:
         specifier: ^6.5.2
         version: 6.9.3(typescript@5.9.3)
@@ -258,7 +258,7 @@ importers:
         specifier: ^3.2.3
         version: 3.2.4(@types/node@25.0.3)(jiti@2.6.1)(jsdom@26.1.0)(less@4.2.2)(lightningcss@1.30.2)(sass@1.85.0)(terser@5.44.1)(tsx@4.21.0)(yaml@2.8.2)
 
-  packages/fhir-codes:
+  packages/fhir-terminology:
     dependencies:
       bunchee:
         specifier: ^6.5.2
@@ -266,9 +266,12 @@ importers:
 
   packages/utils:
     dependencies:
-      '@repo/fhir-codes':
+      '@repo/fhir-terminology':
         specifier: workspace:*
-        version: link:../fhir-codes
+        version: link:../fhir-terminology
+      bunchee:
+        specifier: ^6.5.2
+        version: 6.9.3(typescript@5.9.3)
     devDependencies:
       vitest:
         specifier: ^3.2.3

@@ -1,4 +1,4 @@
-import { OBSERVATION_STATUS } from "@repo/fhir-codes";
+import { OBSERVATION_STATUS } from "@repo/fhir-terminology";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
 import { observationCodes } from "../valueSets/observation-code-value-set";

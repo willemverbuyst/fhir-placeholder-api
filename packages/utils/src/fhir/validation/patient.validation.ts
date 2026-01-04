@@ -1,4 +1,4 @@
-import { GENDER } from "@repo/fhir-codes";
+import { GENDER } from "@repo/fhir-terminology";
 import { z } from "zod";
 
 export const patientResourceSchema = z.object({

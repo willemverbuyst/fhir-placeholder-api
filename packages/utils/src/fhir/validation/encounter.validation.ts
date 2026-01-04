@@ -1,4 +1,4 @@
-import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
+import { ENCOUNTER_STATUS } from "@repo/fhir-terminology";
 import { z } from "zod";
 
 export const encounterResourceSchema = z.object({

@@ -1,4 +1,4 @@
-import { CONDITION_CLINICAL_STATUS } from "@repo/fhir-codes";
+import { CONDITION_CLINICAL_STATUS } from "@repo/fhir-terminology";
 import { z } from "zod";
 
 export const conditionResourceSchema = z.object({

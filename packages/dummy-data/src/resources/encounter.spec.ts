@@ -1,4 +1,4 @@
-import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
+import { ENCOUNTER_STATUS } from "@repo/fhir-terminology";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
 import { createEncounter, createEncounters } from "./encounter";

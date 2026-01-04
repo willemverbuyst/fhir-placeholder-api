@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { ADDRESS_TYPE, ADDRESS_USE } from "@repo/fhir-codes";
+import { ADDRESS_TYPE, ADDRESS_USE } from "@repo/fhir-terminology";
 import type { Address } from "fhir/r5";
 
 export function createAddress() {

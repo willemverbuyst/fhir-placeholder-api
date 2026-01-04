@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
+import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-terminology";
 import type { EpisodeOfCare } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";

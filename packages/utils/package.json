@@ -3,16 +3,30 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "files": [],
+  "files": ["dist"],
+  "main": "./dist/es/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "import": {
+        "types": "./dist/es/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    }
   },
   "scripts": {
+    "build": "bunchee",
     "type:check": "tsc",
     "test:unit": "vitest run"
   },
   "dependencies": {
-    "@repo/fhir-codes": "workspace:*"
+    "@repo/fhir-terminology": "workspace:*",
+    "bunchee": "^6.5.2"
   },
   "devDependencies": {
     "vitest": "^3.2.3"

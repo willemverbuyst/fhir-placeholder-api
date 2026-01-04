@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { CONTACT_USE } from "@repo/fhir-codes";
+import { CONTACT_USE } from "@repo/fhir-terminology";
 import type { ContactPoint } from "fhir/r5";
 
 export function createEmail(firstName: string, lastName: string) {

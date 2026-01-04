@@ -36,7 +36,7 @@
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
     },
-    "packages/fhir-codes": {
+    "packages/fhir-terminology": {
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
     },

@@ -1,5 +1,5 @@
 {
-  "name": "@repo/fhir-codes",
+  "name": "@repo/fhir-terminology",
   "private": true,
   "version": "0.0.0",
   "type": "module",

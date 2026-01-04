@@ -1,4 +1,4 @@
-import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
+import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-terminology";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
 import { episodeOfCareTypes } from "../valueSets/episode-of-care-type-value-set";

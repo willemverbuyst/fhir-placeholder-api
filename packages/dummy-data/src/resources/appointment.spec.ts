@@ -1,4 +1,4 @@
-import { APPOINTMENT_STATUS } from "@repo/fhir-codes";
+import { APPOINTMENT_STATUS } from "@repo/fhir-terminology";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
 import { createAppointment, createAppointments } from "./appointment";

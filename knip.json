@@ -7,7 +7,7 @@
       "ignore": ["**/dist/**", "**/build/**", "**/.turbo/**"]
     },
     "apps/client": {
-      "entry": ["src/main.tsx", "index.html", "vite.config.ts"],
+      "entry": ["src/main.tsx", "index.html"],
       "project": ["src/**/*.{ts,tsx}", "**/*.config.{js,ts}"],
       "ignore": ["src/components/ui/**"],
       "ignoreDependencies": [
@@ -52,6 +52,8 @@
     "**/.turbo/**",
     "**/coverage/**",
     "**/*.min.js",
-    "**/pnpm-lock.yaml"
+    "**/pnpm-lock.yaml",
+    "packages/utils/src/fhir/validation/**",
+    "packages/utils/src/fhir/index.ts"
   ]
 }

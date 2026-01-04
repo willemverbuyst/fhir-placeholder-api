@@ -52,8 +52,6 @@
     "**/.turbo/**",
     "**/coverage/**",
     "**/*.min.js",
-    "**/pnpm-lock.yaml",
-    "packages/utils/src/fhir/validation/**",
-    "packages/utils/src/fhir/index.ts"
+    "**/pnpm-lock.yaml"
   ]
 }

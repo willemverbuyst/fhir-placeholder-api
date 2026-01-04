@@ -26,7 +26,7 @@ export function createAllergy({
     patient: { reference: `Patient/${patientId}` },
     encounter: { reference: `Encounter/${encounterId}` },
     note: [{ text: faker.lorem.sentence({ min: 5, max: 7 }) }],
-    type: faker.helpers.arrayElement(ALLERGY_INTOLERANCE_TYPE),
+    type: { coding: [faker.helpers.arrayElement(ALLERGY_INTOLERANCE_TYPE)] },
     category: [faker.helpers.arrayElement(ALLERGY_INTOLERANCE_CATEGORY)],
     criticality: faker.helpers.arrayElement(ALLERGY_INTOLERANCE_CRITICALITY),
   };

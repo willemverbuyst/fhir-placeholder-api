@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { ENCOUNTER_STATUS } from "@repo/fhir-codes";
+import { ENCOUNTER_STATUS } from "@repo/fhir-terminology";
 import type { Encounter } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 

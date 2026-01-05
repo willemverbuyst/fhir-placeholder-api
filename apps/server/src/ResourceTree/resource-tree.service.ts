@@ -12,6 +12,11 @@ export class ResourceTreeService {
       (observation) => observation.encounter?.reference,
     );
 
+    const allergiesByEncounter = R.groupBy(
+      this.repo.allergies,
+      (allergy) => allergy.encounter?.reference ?? "unknown",
+    );
+
     const encountersByEpisode = R.groupBy(
       this.repo.encounters,
       (encounter) => encounter.episodeOfCare?.[0]?.reference ?? "unknown",
@@ -58,11 +63,16 @@ export class ResourceTreeService {
     const encounterTree = R.mapValues(encountersByEpisode, (encounters) =>
       encounters.map((encounter) => ({
         name: `Encounter/${encounter.id}`,
-        children:
+        children: R.concat(
+          allergiesByEncounter[`Encounter/${encounter.id}`]?.map((allergy) => ({
+            name: `AllergyIntolerance/${allergy.id}`,
+            children: [],
+          })) || [],
           obsByEncounter[`Encounter/${encounter.id}`].map((obs) => ({
             name: `Observation/${obs.id}`,
             children: [],
           })) || [],
+        ),
       })),
     );
 

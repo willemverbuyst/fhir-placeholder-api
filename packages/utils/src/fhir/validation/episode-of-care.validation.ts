@@ -1,4 +1,4 @@
-import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-codes";
+import { EPISODE_OF_CARE_STATUS } from "@repo/fhir-terminology";
 import { z } from "zod";
 
 export const episodeOfCareResourceSchema = z.object({

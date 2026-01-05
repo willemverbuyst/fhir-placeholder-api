@@ -74,6 +74,10 @@ export class MetadataController {
               interaction: [{ code: "search-type" }],
             },
             {
+              type: "AllergyIntolerance",
+              interaction: [{ code: "search-type" }],
+            },
+            {
               type: "EpisodeOfCare",
               interaction: [{ code: "read" }, { code: "search-type" }],
               searchParam: [

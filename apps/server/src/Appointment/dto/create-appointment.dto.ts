@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { APPOINTMENT_STATUS } from "@repo/fhir-codes";
+import { APPOINTMENT_STATUS } from "@repo/fhir-terminology";
 import { Escape, Trim } from "class-sanitizer";
 import { IsIn, IsNotEmpty, IsString } from "class-validator";
 

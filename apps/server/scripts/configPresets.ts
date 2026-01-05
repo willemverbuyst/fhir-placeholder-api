@@ -5,6 +5,7 @@ export interface UserDummyDataConfig {
   practitionersPerOrganization: number;
   patientsPerPractitioner: number;
   appointmentsPerPatient: number;
+  allergiesPerPatient: number;
   episodesPerPatient: number;
   conditionsPerPatient: number;
   encountersPerPatient: number;
@@ -29,6 +30,7 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
       practitionerRolesPerOrganization: 2,
       practitionersPerOrganization: 2,
       patientsPerPractitioner: 4,
+      allergiesPerPatient: 1,
       appointmentsPerPatient: 2,
       episodesPerPatient: 4,
       conditionsPerPatient: 4,
@@ -46,6 +48,7 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
       practitionerRolesPerOrganization: 2,
       practitionersPerOrganization: 2,
       patientsPerPractitioner: 10,
+      allergiesPerPatient: 2,
       appointmentsPerPatient: 3,
       episodesPerPatient: 5,
       conditionsPerPatient: 6,
@@ -63,6 +66,7 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
       practitionerRolesPerOrganization: 2,
       practitionersPerOrganization: 2,
       patientsPerPractitioner: 20,
+      allergiesPerPatient: 2,
       appointmentsPerPatient: 4,
       episodesPerPatient: 6,
       conditionsPerPatient: 8,

@@ -3,7 +3,7 @@ import { IdGenerator } from "../idGenerator";
 import {
   createPractitionerRole,
   createPractitionerRoles,
-} from "./practitioner-role";
+} from "./practitionerRole";
 
 describe("createOrganization", () => {
   it("should create an practitionerRole with a valid structure", () => {

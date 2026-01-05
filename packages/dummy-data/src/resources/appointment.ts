@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import {
   APPOINTMENT_PARTICIPANT_STATUS,
   APPOINTMENT_STATUS,
-} from "@repo/fhir-codes";
+} from "@repo/fhir-terminology";
 import type { Appointment } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 

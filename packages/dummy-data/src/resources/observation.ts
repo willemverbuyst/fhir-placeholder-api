@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { OBSERVATION_STATUS } from "@repo/fhir-codes";
+import { OBSERVATION_STATUS } from "@repo/fhir-terminology";
 import type { Observation } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 import { observationCodes } from "../valueSets/observation-code-value-set";

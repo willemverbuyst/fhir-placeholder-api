@@ -30,6 +30,7 @@ describe("ResourceCountsController (e2e)", () => {
           encounters,
           observations,
           appointments,
+          allergies,
         } = res.body;
 
         expect(patients).toBe(24);
@@ -41,6 +42,7 @@ describe("ResourceCountsController (e2e)", () => {
         expect(encounters).toBe(480);
         expect(observations).toBe(960);
         expect(appointments).toBe(48);
+        expect(allergies).toBe(24);
       });
   });
 });

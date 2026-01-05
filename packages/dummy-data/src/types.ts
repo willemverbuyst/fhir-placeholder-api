@@ -1,5 +1,6 @@
 export type IdStrategy = "sequential" | "uuid";
 export interface DummyDataConfig {
+  numberOfAllergies: number;
   numberOfAppointments: number;
   numberOfConditions: number;
   numberOfEncounters: number;

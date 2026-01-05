@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { GENDER } from "@repo/fhir-codes";
+import { GENDER } from "@repo/fhir-terminology";
 import type { Practitioner } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 import { createAddress } from "./address";

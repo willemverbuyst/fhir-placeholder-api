@@ -1,7 +1,7 @@
 import {
   APPOINTMENT_PARTICIPANT_STATUS,
   APPOINTMENT_STATUS,
-} from "@repo/fhir-codes";
+} from "@repo/fhir-terminology";
 import { z } from "zod";
 
 export const appointmentResourceSchema = z.object({

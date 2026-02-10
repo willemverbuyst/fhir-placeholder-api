@@ -9,7 +9,8 @@ permissions:
   pull-requests: write
 
 jobs:
-  code-style:
+  check-code:
+    name: Check Code
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +24,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: "./.nvmrc"
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: 📥 Install dependencies
         run: pnpm install

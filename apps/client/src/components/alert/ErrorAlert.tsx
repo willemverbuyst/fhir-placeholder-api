@@ -7,7 +7,11 @@ export function ErrorAlert({
   error,
   action,
   actionCaption,
-}: { error: Error; action?: () => void; actionCaption?: string }) {
+}: {
+  error: Error;
+  action?: () => void;
+  actionCaption?: string;
+}) {
   return (
     <Alert variant="destructive" className="max-w-lg mx-auto">
       <AlertCircleIcon />

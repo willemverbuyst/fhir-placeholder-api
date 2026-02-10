@@ -19,8 +19,10 @@ export function OrganizationForm() {
     mutationFn: ({
       resourceType,
       body,
-    }: { resourceType: string; body: { name: string; active: boolean } }) =>
-      postData(body, resourceType),
+    }: {
+      resourceType: string;
+      body: { name: string; active: boolean };
+    }) => postData(body, resourceType),
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
       setResourceForm(null);

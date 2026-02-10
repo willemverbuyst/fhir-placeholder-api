@@ -56,13 +56,13 @@ describe("getResourcesFromBundle", () => {
 
   it("returns an empty array if bundle is not a Bundle", () => {
     const resource = { resourceType: "Patient", id: "1" };
-    // @ts-ignore -force passing a non-bundle object
+    // @ts-expect-error - force passing a non-bundle object
     expect(getResourcesFromBundle(resource)).toEqual([]);
   });
 
   it("returns an empty array if bundle.entry is undefined", () => {
     const bundle = { resourceType: "Bundle", entry: undefined };
-    // @ts-ignore -force passing a bundle without entry
+    // @ts-expect-error - force passing a bundle without entry
     expect(getResourcesFromBundle(bundle)).toEqual([]);
   });
 

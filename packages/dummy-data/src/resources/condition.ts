@@ -6,7 +6,10 @@ import { IdGenerator } from "../idGenerator";
 export function createCondition({
   patientId,
   id,
-}: { patientId: string | undefined; id: string }): Condition {
+}: {
+  patientId: string | undefined;
+  id: string;
+}): Condition {
   return {
     id,
     note: [{ text: faker.lorem.sentence({ min: 3, max: 5 }) }],

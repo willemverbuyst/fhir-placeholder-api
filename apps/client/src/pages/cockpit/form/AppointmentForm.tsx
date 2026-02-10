@@ -25,8 +25,10 @@ export function AppointmentForm() {
     mutationFn: ({
       resourceType,
       body,
-    }: { resourceType: string; body: { subject: string; status: string } }) =>
-      postData(body, resourceType),
+    }: {
+      resourceType: string;
+      body: { subject: string; status: string };
+    }) => postData(body, resourceType),
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ["Organization"] });
       setResourceForm(null);

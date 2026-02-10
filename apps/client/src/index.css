@@ -90,7 +90,9 @@
 
 .dark {
   --background: oklch(20.8% 0.042 265.755); /* Near-black, blue-violet */
-  --foreground: oklch(95% 0.005 265); /* Very light gray-blue for high contrast */
+  --foreground: oklch(
+    95% 0.005 265
+  ); /* Very light gray-blue for high contrast */
 
   --card: oklch(24% 0.045 265.755);
   --card-foreground: var(--foreground);

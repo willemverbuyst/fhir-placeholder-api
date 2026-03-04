@@ -29,8 +29,5 @@
   "dependencies": {
     "@repo/fhir-terminology": "workspace:*",
     "bunchee": "^6.5.2"
-  },
-  "devDependencies": {
-    "vitest": "^3.2.3"
   }
 }

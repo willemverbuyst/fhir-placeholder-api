@@ -13,6 +13,7 @@ import { AppointmentService } from "./appointment.service";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";
 import { GetAppointmentDto } from "./dto/get-appointment.dto";
 import { appointmentBundleExample } from "./examples/appointment-bundle.example";
+import { appointmentExample } from "./examples/appointment.example";
 
 @Controller("Appointment")
 export class AppointmentController {
@@ -20,7 +21,7 @@ export class AppointmentController {
 
   @ApiOkResponse({
     description: "The organization is created successfully",
-    // example: organizationExample,
+    example: appointmentExample,
   })
   @Post()
   async create(
@@ -44,7 +45,7 @@ export class AppointmentController {
   }
 
   @ApiOkResponse({
-    description: "All conditions",
+    description: "All appointments",
     example: appointmentBundleExample,
   })
   @ApiQuery({

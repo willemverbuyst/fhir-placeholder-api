@@ -13,7 +13,7 @@ PORT=8080
 
 ## :rocket: Run Server
 
-> npm run start
+> pnpm run start
 
 You can change the number of resources in the [config](./src/db/dataStore.config.ts)
 

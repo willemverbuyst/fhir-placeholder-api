@@ -260,6 +260,12 @@ importers:
         specifier: ^6.5.2
         version: 6.9.4(typescript@5.9.3)
 
+  packages/normalizer:
+    dependencies:
+      bunchee:
+        specifier: ^6.5.2
+        version: 6.9.4(typescript@5.9.3)
+
   packages/utils:
     dependencies:
       '@repo/fhir-terminology':

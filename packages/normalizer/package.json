@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+
   "keywords": [],
   "author": "Willem Verbuyst",
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
+  "scripts": {
+    "build": "bunchee",
+    "type:check": "tsc",
+    "test:unit": "vitest run"
+  },
   "dependencies": {
     "bunchee": "^6.5.2"
   }

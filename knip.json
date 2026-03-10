@@ -3,11 +3,10 @@
   "workspaces": {
     ".": {
       "entry": ["turbo.json"],
-      "project": ["**/*.{js,ts,json}"],
-      "ignore": ["**/dist/**", "**/build/**", "**/.turbo/**"]
+      "project": ["**/*.{js,ts,json}"]
     },
     "apps/client": {
-      "entry": ["src/main.tsx", "index.html"],
+      "entry": ["index.html"],
       "project": ["src/**/*.{ts,tsx}", "**/*.config.{js,ts}"],
       "ignore": ["src/components/ui/**"],
       "ignoreDependencies": [
@@ -44,14 +43,5 @@
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
     }
-  },
-  "ignore": [
-    "**/node_modules/**",
-    "**/dist/**",
-    "**/build/**",
-    "**/.turbo/**",
-    "**/coverage/**",
-    "**/*.min.js",
-    "**/pnpm-lock.yaml"
-  ]
+  }
 }

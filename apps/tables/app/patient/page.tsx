@@ -22,95 +22,50 @@ export default function PatientPage() {
             <table className={styling.table}>
               <thead className={styling.thead}>
                 <tr>
-                  <th rowSpan={3} scope="col" className={styling.th}>
+                  <th rowSpan={3} className={styling.th}>
                     resourceType
                   </th>
-                  <th rowSpan={3} scope="col" className={styling.th}>
+                  <th rowSpan={3} className={styling.th}>
                     id
                   </th>
-                  <th rowSpan={3} scope="col" className={styling.th}>
+                  <th rowSpan={3} className={styling.th}>
                     active
                   </th>
-                  <th
-                    rowSpan={1}
-                    colSpan={2}
-                    scope="colgroup"
-                    className={styling.th}
-                  >
+                  <th rowSpan={1} colSpan={2} className={styling.th}>
                     text
                   </th>
-                  <th
-                    rowSpan={1}
-                    colSpan={5}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th rowSpan={1} colSpan={5} className={styling.th}>
                     telecom
                   </th>
-                  <th
-                    rowSpan={3}
-                    colSpan={1}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th rowSpan={3} colSpan={1} className={styling.th}>
                     gender
                   </th>
                 </tr>
                 <tr>
-                  <th
-                    colSpan={1}
-                    rowSpan={2}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th colSpan={1} rowSpan={2} className={styling.th}>
                     status
                   </th>
-                  <th
-                    colSpan={1}
-                    rowSpan={2}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th colSpan={1} rowSpan={2} className={styling.th}>
                     div
                   </th>
-                  <th
-                    colSpan={1}
-                    rowSpan={2}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th colSpan={1} rowSpan={2} className={styling.th}>
                     use
                   </th>
-                  <th
-                    colSpan={1}
-                    rowSpan={2}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th colSpan={1} rowSpan={2} className={styling.th}>
                     system
                   </th>
-                  <th
-                    colSpan={1}
-                    rowSpan={2}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th colSpan={1} rowSpan={2} className={styling.th}>
                     value
                   </th>
-                  <th
-                    colSpan={1}
-                    rowSpan={2}
-                    scope="col"
-                    className={styling.th}
-                  >
+                  <th colSpan={1} rowSpan={2} className={styling.th}>
                     rank
                   </th>
-                  <th colSpan={1} scope="colgroup" className={styling.th}>
+                  <th colSpan={1} className={styling.th}>
                     period
                   </th>
                 </tr>
                 <tr>
-                  <th colSpan={1} scope="col" className={styling.th}>
+                  <th colSpan={1} className={styling.th}>
                     end
                   </th>
                 </tr>

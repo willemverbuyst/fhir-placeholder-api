@@ -62,7 +62,7 @@ export default function PatientPage() {
                   <TableCell rowSpan={4} value="Patient" />
                   <TableCell rowSpan={4} value="Patient-1" />
                   <TableCell rowSpan={4} value="generated" />
-                  <TableCell rowSpan={4} value="blabla" />
+                  <TableCell rowSpan={4} value="some html here" />
                   <TableCell rowSpan={4} value="usual" />
                   <TableCell
                     rowSpan={4}

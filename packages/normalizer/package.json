@@ -5,7 +5,6 @@
   "main": "index.js",
 
   "keywords": [],
-  "author": "Willem Verbuyst",
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "scripts": {

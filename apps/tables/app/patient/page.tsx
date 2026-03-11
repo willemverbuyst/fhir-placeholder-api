@@ -17,7 +17,10 @@ export default function PatientPage() {
         <div className="overflow-x-auto rounded-lg border border-zinc-200">
           <Suspense
             fallback={
-              <LoadingOverlay mode="inline" label="Loading patient resources…" />
+              <LoadingOverlay
+                mode="inline"
+                label="Loading patient resources…"
+              />
             }
           >
             <DataTable<Patient> resourceType="Patient" />

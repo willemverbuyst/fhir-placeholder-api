@@ -5,9 +5,16 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
-  { href: "/patient", label: "Patient" },
-  { href: "/episode", label: "Episode" },
+  { href: "/allergy-intolerance", label: "AllergyIntolerance" },
+  { href: "/appointment", label: "Appointment" },
   { href: "/condition", label: "Condition" },
+  { href: "/encounter", label: "Encounter" },
+  { href: "/episode-of-care", label: "EpisodeOfCare" },
+  { href: "/observation", label: "Observation" },
+  { href: "/organization", label: "Organization" },
+  { href: "/patient", label: "Patient" },
+  { href: "/practitioner", label: "Practitioner" },
+  { href: "/practitioner-role", label: "PractitionerRole" },
 ] as const;
 
 export default function Header() {

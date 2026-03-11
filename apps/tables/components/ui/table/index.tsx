@@ -5,7 +5,7 @@ const styling = {
   tbody: "bg-slate-700 divide-y divide-zinc-300",
   tr: "",
   th: "text-nowrap px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-200",
-  td: "text-nowrap px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-300",
+  td: "break-words px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-300 max-w-[200px] truncate",
 };
 
 function Table({ children }: { children: React.ReactNode }) {
@@ -33,7 +33,12 @@ function TableCell({
   colSpan?: number;
 }) {
   return value ? (
-    <td className={styling.td} rowSpan={rowSpan} colSpan={colSpan}>
+    <td
+      className={styling.td}
+      rowSpan={rowSpan}
+      colSpan={colSpan}
+      title={String(value)}
+    >
       {value}
     </td>
   ) : (

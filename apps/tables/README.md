@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tables app
 
-## Getting Started
+The tables app is a small Next.js UI for exploring FHIR resources exposed by the `fhir-placeholder-api` project. It renders simple table views for common resources (patients, organizations, encounters, observations, and more) so you can quickly inspect placeholder data while developing or testing the backend.
 
-First, run the development server:
+The app lives in the `apps/tables` workspace package and is intended for **local development and debugging**, not production use.
+
+## Tech stack
+
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript with React
+- **Styling**: TailwindCSS
+- **Monorepo tooling**: Turborepo with `pnpm` workspaces
+- **Shared logic**: `@repo/normalizer` for shaping FHIR data
+
+## Getting started
+
+### Prerequisites
+
+- **Node.js**: `>= 22` (see root `package.json` engines)
+- **Package manager**: `pnpm` (see `packageManager` in the root `package.json`)
+- A running instance of the `fhir-placeholder-api` backend (typically via the root README instructions)
+
+### Install dependencies
+
+From the repo root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This installs dependencies for all workspace packages, including the tables app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Run the tables app
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+From the repo root, use the Turborepo dev script:
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+This starts dev servers for any packages configured with a `dev` script, including `apps/tables`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Alternatively, you can run the app package directly:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd apps/tables
+pnpm dev
+```
 
-## Deploy on Vercel
+Once the dev server is running, open:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `http://localhost:3000` – main landing page
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can then navigate to specific resource tables using the sidebar or direct URLs, for example:
+
+- `/patient`
+- `/practitioner`
+- `/practitioner-role`
+- `/appointment`
+- `/encounter`
+- `/episode-of-care`
+- `/organization`
+- `/observation`
+- `/condition`
+- `/allergy-intolerance`
+
+## Scripts
+
+All scripts below are defined in `apps/tables/package.json`.
+
+- **`pnpm dev`**: Start the Next.js dev server for the tables app.
+- **`pnpm build`**: Build the app for production.
+- **`pnpm start`**: Run the production build.
+
+From the repo root you can also use the shared scripts:
+
+- **`pnpm dev`**: Run `dev` in all relevant packages via Turborepo.
+- **`pnpm build`**: Run `build` in all relevant packages via Turborepo.
+
+## Project structure
+
+Key paths under `apps/tables`:
+
+- **`app/`**: Next.js App Router entrypoint and route tree.
+  - `app/page.tsx`: Landing page for the tables UI.
+  - `app/layout.tsx`: Root layout, including shared layout and providers.
+  - `app/*/page.tsx`: Resource-specific table pages (e.g. `patient`, `organization`, `observation`, etc.).
+  - `app/loading.tsx`: Global loading UI while routes fetch data.
+  - `app/globals.css`: Global styles for the app.
+- **`components/`**: Shared presentational and layout components.
+  - `components/Header.tsx`: Top-level header/navigation.
+  - `components/DataTable.tsx`: Generic table component used by resource pages.
+  - `components/LoadingOverlay.tsx`: Overlay shown while data is loading.
+- **`next.config.ts`** / **`postcss.config.mjs`** / **`tsconfig.json`**: Local configuration for Next.js, PostCSS/Tailwind, and TypeScript.
+
+When adding new tables or views, prefer:
+
+- Reusing `DataTable` where possible.
+- Adding new routes under `app/<resource>/page.tsx`.
+- Keeping layout concerns in `layout.tsx` and shared UI in `components/`.
+
+## Environment and configuration
+
+The tables app expects to talk to the `fhir-placeholder-api` backend. The exact configuration (e.g. base URL or proxy settings) is determined by the Next.js runtime and any fetch logic in the route components or shared libraries such as `@repo/normalizer`.

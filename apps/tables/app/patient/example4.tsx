@@ -28,23 +28,21 @@ type TableData = {
 function prepareDataForTable(data: Record<string, unknown>): TableData {
   const tableData: TableData = { headers: new Set<string>(), data: [] };
 
-  for (const key of Object.keys(data)) {
-    const i = key.indexOf(".");
-    const prefix = key.slice(0, i);
-    const keyWithoutPrefix = key.slice(i + 1);
+  for (const [key, value] of Object.entries(data)) {
+    const separatorIndex = key.indexOf(".");
+    const prefix = key.slice(0, separatorIndex);
+    const keyWithoutPrefix = key.slice(separatorIndex + 1);
+    const rowIndex = Number(prefix);
 
-    if (Number.isNaN(Number(prefix))) {
+    if (!Number.isInteger(rowIndex) || rowIndex < 0) {
       throw new Error(`Invalid key: ${key}`);
     }
 
     tableData.headers.add(keyWithoutPrefix);
-    if (!tableData.data[prefix as unknown as number]) {
-      tableData.data[prefix as unknown as number] = new Map<string, string>();
+    if (!tableData.data[rowIndex]) {
+      tableData.data[rowIndex] = new Map<string, string>();
     }
-    tableData.data[prefix as unknown as number].set(
-      keyWithoutPrefix,
-      String(data[key]),
-    );
+    tableData.data[rowIndex].set(keyWithoutPrefix, String(value));
   }
 
   return tableData;

@@ -97,7 +97,7 @@ export default function Example4() {
       </TableHead>
       <TableBody>
         {tableData.data.map((row, index) => (
-          <TableRow key={index}>
+          <TableRow key={row.get("id") ?? `row-${index}`}>
             {Array.from(tableData.headers).map((header) => (
               <TableCell key={header} value={row.get(header)} />
             ))}

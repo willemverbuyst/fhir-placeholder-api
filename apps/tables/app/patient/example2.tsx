@@ -62,12 +62,12 @@ export default function Example2() {
           <TableCell rowSpan={2} value="official" />
           <TableCell rowSpan={2} value="Chalmers" />
           <TableCell value="Peter" />
-          <TableCell rowSpan={2} value="-" />
+          <TableCell rowSpan={2} value="&nbsp;" />
           <TableCell rowSpan={2} value="home" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
           <TableCell rowSpan={6} value="male" />
         </TableRow>
         <TableRow>
@@ -75,14 +75,14 @@ export default function Example2() {
         </TableRow>
         <TableRow>
           <TableCell value="usual" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="Jim" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="mobile" />
           <TableCell value="phone" />
           <TableCell value="1234567890" />
           <TableCell value={1} />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
         </TableRow>
         <TableRow>
           <TableCell rowSpan={3} value="maiden" />
@@ -102,7 +102,7 @@ export default function Example2() {
           <TableCell value="old" />
           <TableCell value="email" />
           <TableCell value="john.doe@example.com" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="2021-01-01" />
         </TableRow>
         <TableRow>
@@ -124,12 +124,12 @@ export default function Example2() {
           <TableCell rowSpan={2} value="official" />
           <TableCell rowSpan={2} value="Chalmers" />
           <TableCell value="Peter" />
-          <TableCell rowSpan={2} value="-" />
+          <TableCell rowSpan={2} value="&nbsp;" />
           <TableCell rowSpan={2} value="home" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
           <TableCell rowSpan={6} value="male" />
         </TableRow>
         <TableRow>
@@ -137,14 +137,14 @@ export default function Example2() {
         </TableRow>
         <TableRow>
           <TableCell value="usual" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="Jim" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="mobile" />
           <TableCell value="phone" />
           <TableCell value="1234567890" />
           <TableCell value={1} />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
         </TableRow>
         <TableRow>
           <TableCell rowSpan={3} value="maiden" />
@@ -164,7 +164,7 @@ export default function Example2() {
           <TableCell value="old" />
           <TableCell value="email" />
           <TableCell value="john.doe@example.com" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="2021-01-01" />
         </TableRow>
         <TableRow>
@@ -186,12 +186,12 @@ export default function Example2() {
           <TableCell rowSpan={2} value="official" />
           <TableCell rowSpan={2} value="Chalmers" />
           <TableCell value="Peter" />
-          <TableCell rowSpan={2} value="-" />
+          <TableCell rowSpan={2} value="&nbsp;" />
           <TableCell rowSpan={2} value="home" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
-          <TableCell rowSpan={2} value="-" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
+          <TableCell rowSpan={2} value="&nbsp;" />
           <TableCell rowSpan={6} value="male" />
         </TableRow>
         <TableRow>
@@ -199,14 +199,14 @@ export default function Example2() {
         </TableRow>
         <TableRow>
           <TableCell value="usual" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="Jim" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="mobile" />
           <TableCell value="phone" />
           <TableCell value="1234567890" />
           <TableCell value={1} />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
         </TableRow>
         <TableRow>
           <TableCell rowSpan={3} value="maiden" />
@@ -226,7 +226,7 @@ export default function Example2() {
           <TableCell value="old" />
           <TableCell value="email" />
           <TableCell value="john.doe@example.com" />
-          <TableCell value="-" />
+          <TableCell value="&nbsp;" />
           <TableCell value="2021-01-01" />
         </TableRow>
       </TableBody>

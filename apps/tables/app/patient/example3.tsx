@@ -3,7 +3,7 @@ import { DataTable } from "@/components/ui/table";
 const { Table, TableHead, TableRow, TableHeader, TableCell, TableBody } =
   DataTable;
 
-export default function Example2() {
+export default function Example3() {
   return (
     <Table>
       <TableHead>
@@ -34,21 +34,18 @@ export default function Example2() {
       </TableHead>
       <TableBody>
         <TableRow>
-          <TableCell rowSpan={4} value="Patient" />
-          <TableCell rowSpan={4} value="Patient-1" />
-          <TableCell rowSpan={4} value="generated" />
-          <TableCell rowSpan={4} value="some html here" />
-          <TableCell rowSpan={4} value="usual" />
-          <TableCell
-            rowSpan={4}
-            value="http://terminology.hl7.org/CodeSystem/v2-0203"
-          />
-          <TableCell rowSpan={4} value="MR" />
-          <TableCell rowSpan={4} value="urn:oid:1.2.36.146.595.217.0.1" />
-          <TableCell rowSpan={4} value="12345" />
-          <TableCell rowSpan={4} value="2001-05-06" />
-          <TableCell rowSpan={4} value="Acme Healthcare" />
-          <TableCell rowSpan={4} value="true" />
+          <TableCell value="Patient" />
+          <TableCell value="Patient-1" />
+          <TableCell value="generated" />
+          <TableCell value="some html here" />
+          <TableCell value="usual" />
+          <TableCell value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+          <TableCell value="MR" />
+          <TableCell value="urn:oid:1.2.36.146.595.217.0.1" />
+          <TableCell value="12345" />
+          <TableCell value="2001-05-06" />
+          <TableCell value="Acme Healthcare" />
+          <TableCell value="true" />
           <TableCell value="official" />
           <TableCell value="Chalmers" />
           <TableCell value="Peter James" />
@@ -58,9 +55,21 @@ export default function Example2() {
           <TableCell />
           <TableCell />
           <TableCell />
-          <TableCell rowSpan={4} value="male" />
+          <TableCell value="male" />
         </TableRow>
         <TableRow>
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
           <TableCell value="usual" />
           <TableCell />
           <TableCell value="Jim" />
@@ -70,24 +79,55 @@ export default function Example2() {
           <TableCell value="1234567890" />
           <TableCell value={1} />
           <TableCell />
+          <TableCell />
         </TableRow>
         <TableRow>
-          <TableCell rowSpan={2} value="maiden" />
-          <TableCell rowSpan={2} value="Windsor" />
-          <TableCell rowSpan={2} value="Peter James" />
-          <TableCell rowSpan={2} value="2002" />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell value="maiden" />
+          <TableCell value="Windsor" />
+          <TableCell value="Peter James" />
+          <TableCell value="2002" />
           <TableCell value="work" />
           <TableCell value="phone" />
           <TableCell value="1234567890" />
           <TableCell value={2} />
           <TableCell value="2021-01-01" />
+          <TableCell />
         </TableRow>
         <TableRow>
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
+          <TableCell />
           <TableCell value="old" />
           <TableCell value="email" />
           <TableCell value="john.doe@example.com" />
           <TableCell />
           <TableCell value="2021-01-01" />
+          <TableCell />
         </TableRow>
       </TableBody>
     </Table>

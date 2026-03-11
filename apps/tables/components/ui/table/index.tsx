@@ -1,9 +1,9 @@
 const styling = {
-  table: "min-w-full divide-y divide-white bg-slate-900",
+  table: "min-w-full divide-y divide-zinc-300 bg-slate-900",
   thead: "bg-slate-900",
-  tbody: "bg-slate-900 divide-y divide-white",
-  tr: "bg-slate-700",
-  th: "bg-slate-900 px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-200",
+  tbody: "bg-slate-700 divide-y divide-zinc-300",
+  tr: "",
+  th: "text-nowrap px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-200",
   td: "text-nowrap px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-300",
 };
 

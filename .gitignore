@@ -28,6 +28,8 @@ dist-ssr
 *.sln
 *.sw?
 
+.next/
+
 venv
 __pycache__/
 *.xlsx

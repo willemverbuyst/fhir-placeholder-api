@@ -17,6 +17,9 @@
         "@testing-library/react"
       ]
     },
+    "apps/tables": {
+      "ignoreDependencies": ["postcss"]
+    },
     "apps/server": {
       "entry": ["src/main.ts"],
       "project": ["src/**/*.ts", "!test/**/*.e2e*.ts"],

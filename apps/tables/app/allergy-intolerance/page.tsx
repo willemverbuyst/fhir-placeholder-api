@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import DataTable from "@/components/DataTable";
 import { AllergyIntolerance } from "fhir/r5";
+
+export const metadata: Metadata = {
+  title: "Allergy Intolerance",
+};
 
 export default function AllergyIntolerancePage() {
   return (

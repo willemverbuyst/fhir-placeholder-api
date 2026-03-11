@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import DataTable from "@/components/DataTable";
 import { Condition } from "fhir/r5";
+
+export const metadata: Metadata = {
+  title: "Condition",
+};
 
 export default function ConditionPage() {
   return (

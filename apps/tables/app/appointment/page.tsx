@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import DataTable from "@/components/DataTable";
 import { Appointment } from "fhir/r5";
+
+export const metadata: Metadata = {
+  title: "Appointment",
+};
 
 export default function AppointmentPage() {
   return (

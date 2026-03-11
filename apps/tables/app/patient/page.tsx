@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import DataTable from "@/components/DataTable";
 import { Patient } from "fhir/r5";
+
+export const metadata: Metadata = {
+  title: "Patient",
+};
 
 export default function PatientPage() {
   return (

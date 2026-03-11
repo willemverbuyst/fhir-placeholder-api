@@ -1,5 +1,6 @@
 const styling = {
   table: "min-w-full divide-y divide-zinc-300 bg-slate-900",
+  caption: "text-left p-4 bg-slate-900 text-xl text-zinc-300",
   thead: "bg-slate-900",
   tbody: "bg-slate-700 divide-y divide-zinc-300",
   tr: "",
@@ -9,6 +10,9 @@ const styling = {
 
 function Table({ children }: { children: React.ReactNode }) {
   return <table className={styling.table}>{children}</table>;
+}
+function TableCaption({ children }: { children: React.ReactNode }) {
+  return <caption className={styling.caption}>{children}</caption>;
 }
 function TableHead({ children }: { children: React.ReactNode }) {
   return <thead className={styling.thead}>{children}</thead>;
@@ -54,6 +58,7 @@ function TableHeader({
 
 export const DataTable = {
   Table,
+  TableCaption,
   TableHead,
   TableBody,
   TableRow,

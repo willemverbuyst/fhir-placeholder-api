@@ -1,11 +1,19 @@
 import { DataTable } from "@/components/ui/table";
 
-const { Table, TableHead, TableRow, TableHeader, TableCell, TableBody } =
-  DataTable;
+const {
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableCell,
+  TableBody,
+  TableCaption,
+} = DataTable;
 
 export default function Example4() {
   return (
     <Table>
+      <TableCaption>All data on single row</TableCaption>
       <TableHead>
         <TableRow>
           <TableHeader value="resourceType" />

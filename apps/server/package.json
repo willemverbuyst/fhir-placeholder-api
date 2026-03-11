@@ -22,7 +22,7 @@
     "type:check": "tsc"
   },
   "dependencies": {
-    "@nestjs/common": "^11.1.15",
+    "@nestjs/common": "^11.1.16",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.1.15",
     "@nestjs/mapped-types": "^2.1.0",

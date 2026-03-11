@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Example1 from "./example1";
 import Example2 from "./example2";
-import Example3 from "./example3";
 import Example4 from "./example4";
 
 export default function PatientPage() {
@@ -22,11 +21,11 @@ export default function PatientPage() {
             <Example2 />
           </div>
         </section>
-        <section>
+        {/* <section>
           <div className="overflow-x-auto rounded-lg border border-zinc-200">
             <Example3 />
           </div>
-        </section>
+        </section> */}
         <section>
           <div className="overflow-x-auto rounded-lg border border-zinc-200">
             <Example4 />

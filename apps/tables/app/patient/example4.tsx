@@ -95,6 +95,84 @@ export default function Example4() {
           <TableCell value="2021-01-01" />
           <TableCell value="male" />
         </TableRow>
+        <TableRow>
+          <TableCell value="Patient" />
+          <TableCell value="Patient-1" />
+          <TableCell value="generated" />
+          <TableCell value="some html here" />
+          <TableCell value="usual" />
+          <TableCell value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+          <TableCell value="MR" />
+          <TableCell value="urn:oid:1.2.36.146.595.217.0.1" />
+          <TableCell value="12345" />
+          <TableCell value="2001-05-06" />
+          <TableCell value="Acme Healthcare" />
+          <TableCell value="true" />
+          <TableCell value="Chalmers" />
+          <TableCell value="official" />
+          <TableCell value="Peter" />
+          <TableCell value="James" />
+          <TableCell value="usual" />
+          <TableCell value="Jim" />
+          <TableCell value="Windsor" />
+          <TableCell value="maiden" />
+          <TableCell value="Peter" />
+          <TableCell value="James" />
+          <TableCell value="2002" />
+          <TableCell value="home" />
+          <TableCell value={1} />
+          <TableCell value="work" />
+          <TableCell value="1234567890" />
+          <TableCell value="phone" />
+          <TableCell value={2} />
+          <TableCell value="mobile" />
+          <TableCell value="1234567890" />
+          <TableCell value="phone" />
+          <TableCell value="old" />
+          <TableCell value="1234567890" />
+          <TableCell value="phone" />
+          <TableCell value="2021-01-01" />
+          <TableCell value="male" />
+        </TableRow>
+        <TableRow>
+          <TableCell value="Patient" />
+          <TableCell value="Patient-1" />
+          <TableCell value="generated" />
+          <TableCell value="some html here" />
+          <TableCell value="usual" />
+          <TableCell value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+          <TableCell value="MR" />
+          <TableCell value="urn:oid:1.2.36.146.595.217.0.1" />
+          <TableCell value="12345" />
+          <TableCell value="2001-05-06" />
+          <TableCell value="Acme Healthcare" />
+          <TableCell value="true" />
+          <TableCell value="Chalmers" />
+          <TableCell value="official" />
+          <TableCell value="Peter" />
+          <TableCell value="James" />
+          <TableCell value="usual" />
+          <TableCell value="Jim" />
+          <TableCell value="Windsor" />
+          <TableCell value="maiden" />
+          <TableCell value="Peter" />
+          <TableCell value="James" />
+          <TableCell value="2002" />
+          <TableCell value="home" />
+          <TableCell value={1} />
+          <TableCell value="work" />
+          <TableCell value="1234567890" />
+          <TableCell value="phone" />
+          <TableCell value={2} />
+          <TableCell value="mobile" />
+          <TableCell value="1234567890" />
+          <TableCell value="phone" />
+          <TableCell value="old" />
+          <TableCell value="1234567890" />
+          <TableCell value="phone" />
+          <TableCell value="2021-01-01" />
+          <TableCell value="male" />
+        </TableRow>
       </TableBody>
     </Table>
   );

@@ -21,7 +21,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="flex gap-4 pb-4 sm:items-start">
+    <header className="flex w-full justify-center gap-4 pb-4 sm:items-start">
       {NAV_LINKS.map(({ href, label }) => {
         const isActive = pathname === href;
 

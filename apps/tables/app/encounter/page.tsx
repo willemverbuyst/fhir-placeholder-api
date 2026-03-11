@@ -4,7 +4,7 @@ import { Encounter } from "fhir/r5";
 export default function EncounterPage() {
   return (
     <>
-      <h1 className="text-2xl font-bold">Encounter</h1>
+      <h1 className="text-2xl font-bold text-center">Encounter</h1>
 
       <section>
         <div className="overflow-x-auto rounded-lg border border-zinc-200">

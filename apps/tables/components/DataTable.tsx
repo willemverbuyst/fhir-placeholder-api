@@ -1,6 +1,7 @@
 const styling = {
   table: "min-w-full divide-y divide-zinc-300 bg-slate-900",
   caption: "text-left p-4 bg-slate-900 text-xl text-zinc-300",
+  footer: "bg-slate-900",
   thead: "bg-slate-900",
   tbody: "bg-slate-700 divide-y divide-zinc-300",
   tr: "",
@@ -13,6 +14,9 @@ function Table({ children }: { children: React.ReactNode }) {
 }
 function TableCaption({ children }: { children: React.ReactNode }) {
   return <caption className={styling.caption}>{children}</caption>;
+}
+function TableFooter({ children }: { children: React.ReactNode }) {
+  return <tfoot className={styling.footer}>{children}</tfoot>;
 }
 function TableHead({ children }: { children: React.ReactNode }) {
   return <thead className={styling.thead}>{children}</thead>;
@@ -156,8 +160,7 @@ export default async function DataTable<T extends Resource>({
 
   return (
     <Table>
-      <TableCaption>Total of {tableData.rows.length} resources</TableCaption>
-      <TableCaption>{tableData.headers.size} columns</TableCaption>
+      <TableCaption>{`${resourceType}s`}</TableCaption>
       <TableHead>
         <TableRow>
           {Array.from(tableData.headers).map((header) => (
@@ -174,6 +177,14 @@ export default async function DataTable<T extends Resource>({
           </TableRow>
         ))}
       </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell
+            colSpan={tableData.headers.size}
+            value={`${tableData.rows.length} resources`}
+          />
+        </TableRow>
+      </TableFooter>
     </Table>
   );
 }

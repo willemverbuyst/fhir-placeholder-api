@@ -1,17 +1,27 @@
 import { DataTable } from "@/components/ui/table";
 import { normalizeJSON } from "@repo/normalizer";
 import { Bundle, Patient } from "fhir/r2";
-import { useEffect, useState } from "react";
+
+type TableData = {
+  headers: Set<string>;
+  rows: Map<string, string>[];
+};
+
+type NormalizedData = Record<string, unknown>;
 
 function transformKeyToHeader(key: string): string {
+  if (!key) {
+    return "";
+  }
+
   const segments = key.split(".");
 
   const normalizedSegments = segments.map((segment) => {
     if (/^\d+$/.test(segment)) {
       const numericSegment = Number(segment);
-      return Number.isInteger(numericSegment) && numericSegment >= 0
-        ? (numericSegment + 1).toString()
-        : segment;
+      if (Number.isInteger(numericSegment) && numericSegment >= 0) {
+        return (numericSegment + 1).toString();
+      }
     }
 
     return segment;
@@ -20,29 +30,31 @@ function transformKeyToHeader(key: string): string {
   return normalizedSegments.join(" ");
 }
 
-type TableData = {
-  headers: Set<string>;
-  data: Map<string, string>[];
-};
-
-function prepareDataForTable(data: Record<string, unknown>): TableData {
-  const tableData: TableData = { headers: new Set<string>(), data: [] };
+function prepareDataForTable(data: NormalizedData): TableData {
+  const tableData: TableData = { headers: new Set<string>(), rows: [] };
 
   for (const [key, value] of Object.entries(data)) {
     const separatorIndex = key.indexOf(".");
+
+    if (separatorIndex === -1) {
+      continue;
+    }
+
     const prefix = key.slice(0, separatorIndex);
     const keyWithoutPrefix = key.slice(separatorIndex + 1);
     const rowIndex = Number(prefix);
 
     if (!Number.isInteger(rowIndex) || rowIndex < 0) {
-      throw new Error(`Invalid key: ${key}`);
+      continue;
     }
 
     tableData.headers.add(keyWithoutPrefix);
-    if (!tableData.data[rowIndex]) {
-      tableData.data[rowIndex] = new Map<string, string>();
+
+    if (!tableData.rows[rowIndex]) {
+      tableData.rows[rowIndex] = new Map<string, string>();
     }
-    tableData.data[rowIndex].set(keyWithoutPrefix, String(value));
+
+    tableData.rows[rowIndex].set(keyWithoutPrefix, String(value));
   }
 
   return tableData;
@@ -58,30 +70,32 @@ const {
   TableCaption,
 } = DataTable;
 
-export default function Example4() {
-  const [patients, setPatients] = useState<Record<string, unknown>>();
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/api/v2/r5/Patient");
+async function fetchPatientBundle(): Promise<Bundle<Patient>> {
+  const apiUrl = "http://localhost:8080/api/v2/r5/Patient";
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch patients: ${response.status}`);
-        }
+  const response = await fetch(apiUrl, {
+    cache: "no-store",
+  });
 
-        const data = (await response.json()) as Bundle<Patient>;
-        const patients = data.entry?.map((entry) => entry.resource);
-        const normalizedPatients = normalizeJSON(patients);
-        console.log("Fetched patients Bundle<Patient>", normalizedPatients);
-        setPatients(normalizedPatients);
-      } catch (error) {
-        console.error("Error fetching patients", error);
-      }
-    };
+  if (!response.ok) {
+    throw new Error(`Failed to fetch patients: ${response.status}`);
+  }
 
-    void fetchPatients();
-  }, []);
-  const tableData = prepareDataForTable(patients ?? {});
+  const data = (await response.json()) as Bundle<Patient>;
+
+  return data;
+}
+
+function buildTableDataFromBundle(bundle: Bundle<Patient>): TableData {
+  const patients = bundle.entry?.map((entry) => entry.resource).filter(Boolean);
+  const normalizedPatients = normalizeJSON(patients) as NormalizedData;
+
+  return prepareDataForTable(normalizedPatients);
+}
+
+export default async function PatientDataTable() {
+  const bundle = await fetchPatientBundle();
+  const tableData = buildTableDataFromBundle(bundle);
 
   return (
     <Table>
@@ -94,7 +108,7 @@ export default function Example4() {
         </TableRow>
       </TableHead>
       <TableBody>
-        {tableData.data.map((row, index) => (
+        {tableData.rows.map((row, index) => (
           <TableRow key={row.get("id") ?? `row-${index}`}>
             {Array.from(tableData.headers).map((header) => (
               <TableCell key={header} value={row.get(header)} />

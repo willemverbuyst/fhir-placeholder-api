@@ -32,7 +32,7 @@ function TableCell({
   rowSpan?: number;
   colSpan?: number;
 }) {
-  return value ? (
+  return (
     <td
       className={styling.td}
       rowSpan={rowSpan}
@@ -41,8 +41,6 @@ function TableCell({
     >
       {value}
     </td>
-  ) : (
-    <td className={styling.td}></td>
   );
 }
 function TableHeader({

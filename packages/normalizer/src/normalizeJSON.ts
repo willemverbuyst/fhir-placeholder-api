@@ -15,7 +15,7 @@ export function normalizeJSON(data: unknown) {
     key: string;
   };
 
-  const stack: StackItem[] = [{ value: data, key: "__" }];
+  const stack: StackItem[] = [{ value: data, key: "" }];
 
   while (stack.length) {
     const item = stack.pop();
@@ -28,10 +28,11 @@ export function normalizeJSON(data: unknown) {
     if (Array.isArray(value)) {
       for (let i = value.length - 1; i >= 0; i--) {
         const item = value[i];
+        const nextKey = key ? `${key}.${i}` : `${i}`;
         if (isPlainObject(item) || Array.isArray(item)) {
-          stack.push({ value: item, key: `${key}.${i}` });
+          stack.push({ value: item, key: nextKey });
         } else {
-          result[`${key}.${i}`] = item;
+          result[nextKey] = item;
         }
       }
     } else if (isPlainObject(value)) {

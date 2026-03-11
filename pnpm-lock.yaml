@@ -241,6 +241,9 @@ importers:
 
   apps/tables:
     dependencies:
+      '@repo/normalizer':
+        specifier: workspace:*
+        version: link:../../packages/normalizer
       next:
         specifier: 16.1.6
         version: 16.1.6(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(sass@1.85.0)

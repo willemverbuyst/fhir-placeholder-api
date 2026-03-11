@@ -31,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="flex flex-col min-h-screen justify-center font-sans p-16">
+        <div className="flex min-h-screen flex-col justify-center font-sans p-16">
           <Header />
           <main className="flex min-h-screen w-full flex-col gap-4">
             {children}

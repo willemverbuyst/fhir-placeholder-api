@@ -20,7 +20,7 @@ export const toTimelineEntryFromEncounter = (
 ): TimelineEntry => {
   const encounterId = encounter.id ?? "unknown";
   const date = encounter.actualPeriod?.start ?? "";
-  const status = encounter.status ?? "unknown";
+  const status = encounter.status ?? "";
 
   return {
     encounterId,

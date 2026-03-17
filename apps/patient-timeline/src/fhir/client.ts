@@ -1,11 +1,12 @@
 import { Effect } from "effect";
+import type { Bundle, Encounter } from "fhir/r5.js";
 import { FetchError, PatientNotFoundError } from "../errors/errors.js";
 
 const BASE_URL = "http://localhost:8080/api/v2/r5";
 
 export const fetchEncounterBundle = (
   patientId: string,
-): Effect.Effect<unknown, FetchError, never> =>
+): Effect.Effect<Bundle<Encounter>, FetchError, never> =>
   Effect.tryPromise({
     try: async () => {
       const response = await fetch(
@@ -18,7 +19,7 @@ export const fetchEncounterBundle = (
         );
       }
 
-      const json = (await response.json()) as unknown;
+      const json: Bundle<Encounter> = await response.json();
 
       return json;
     },

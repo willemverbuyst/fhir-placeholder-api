@@ -1,4 +1,8 @@
-export const extractResources = <T>(bundle: unknown): T[] => {
+import type { Bundle, Resource } from "fhir/r5";
+
+export const extractResources = <T extends Resource>(
+  bundle: Bundle<T>,
+): T[] => {
   if (bundle === null || typeof bundle !== "object") {
     return [];
   }

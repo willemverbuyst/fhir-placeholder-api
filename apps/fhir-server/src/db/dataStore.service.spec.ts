@@ -1,47 +1,35 @@
+import { generateResources } from "@repo/dummy-data";
+import { dummyDataConfig } from "../../scripts/dummyDataConfig";
 import { DataStoreService } from "./dataStore.service";
 
+jest.mock("@repo/dummy-data", () => {
+  const mockResources = {
+    allergies: [],
+    appointments: [],
+    conditions: [],
+    encounters: [],
+    episodes: [],
+    observations: [],
+    organizations: [],
+    patients: [],
+    practitioners: [],
+    practitionerRoles: [],
+  } as const;
+
+  return {
+    generateResources: jest.fn(() => mockResources),
+  };
+});
+
 describe("DataStoreService", () => {
-  let dataStoreService: DataStoreService;
+  it("should call generateResources with dummyDataConfig on construction", () => {
+    const generateResourcesMock = generateResources as jest.MockedFunction<
+      typeof generateResources
+    >;
 
-  beforeEach(() => {
-    dataStoreService = new DataStoreService();
-  });
+    new DataStoreService();
 
-  it("should initialize organizations with the correct number of items", () => {
-    expect(dataStoreService.organizations.length).toBe(3);
-  });
-
-  it("should initialize practitioner roles with the correct number of items", () => {
-    expect(dataStoreService.practitioners.length).toBe(6);
-  });
-
-  it("should initialize practitioners with the correct number of items", () => {
-    expect(dataStoreService.practitioners.length).toBe(6);
-  });
-
-  it("should have the same number of practitioners as practitioner roles", () => {
-    expect(dataStoreService.practitioners.length).toBe(
-      dataStoreService.practitionerRoles.length,
-    );
-  });
-
-  it("should initialize patients with the correct number of items", () => {
-    expect(dataStoreService.patients.length).toBe(24);
-  });
-
-  it("should initialize conditions for each patient", () => {
-    expect(dataStoreService.conditions.length).toBe(96);
-  });
-
-  it("should initialize episodes for each patient", () => {
-    expect(dataStoreService.episodes.length).toBe(96);
-  });
-
-  it("should initialize encounters for each patient", () => {
-    expect(dataStoreService.encounters.length).toBe(480);
-  });
-
-  it("should initialize observations for each patient", () => {
-    expect(dataStoreService.observations.length).toBe(960);
+    expect(generateResourcesMock).toHaveBeenCalledTimes(1);
+    expect(generateResourcesMock).toHaveBeenCalledWith(dummyDataConfig);
   });
 });

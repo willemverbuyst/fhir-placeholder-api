@@ -5,7 +5,7 @@
       "entry": ["turbo.json"],
       "project": ["**/*.{js,ts,json}"]
     },
-    "apps/client": {
+    "apps/fhir-client": {
       "entry": ["index.html"],
       "project": ["src/**/*.{ts,tsx}", "**/*.config.{js,ts}"],
       "ignore": ["src/components/ui/**"],
@@ -17,10 +17,10 @@
         "@testing-library/react"
       ]
     },
-    "apps/tables": {
+    "apps/json-to-tables": {
       "ignoreDependencies": ["postcss"]
     },
-    "apps/server": {
+    "apps/fhir-server": {
       "entry": ["src/main.ts"],
       "project": ["src/**/*.ts", "!test/**/*.e2e*.ts"],
       "ignoreDependencies": [
@@ -30,7 +30,7 @@
         "source-map-support"
       ]
     },
-    "apps/spreadsheet": {
+    "apps/fhir-to-spreadsheet": {
       "entry": ["main.py"],
       "project": ["**/*.py"]
     },

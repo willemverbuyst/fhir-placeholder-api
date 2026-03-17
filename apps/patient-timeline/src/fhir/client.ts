@@ -24,5 +24,3 @@ export const fetchEncounterBundle = (
     },
     catch: (cause: unknown) => new FetchError("Encounter fetch failed", cause),
   });
-
-export { BASE_URL };

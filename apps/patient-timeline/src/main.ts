@@ -1,8 +1,12 @@
 import http, { type IncomingMessage, type ServerResponse } from "http";
-import { Effect } from "effect";
-import { fetchEncounterBundle } from "./fhir/client.js";
+import { Cause, Effect, Exit } from "effect";
+import { fetchEncounterBundle, fetchPatient } from "./fhir/client.js";
 import { getPatientTimeline } from "./services/timelineService.js";
-import { FetchError, InvalidFhirStructureError } from "./errors/errors.js";
+import {
+  FetchError,
+  InvalidFhirStructureError,
+  PatientNotFoundError,
+} from "./errors/errors.js";
 
 type Request = IncomingMessage;
 type Response = ServerResponse<Request>;
@@ -43,24 +47,42 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
     return;
   }
 
-  const effect = getPatientTimeline(fetchEncounterBundle, patientId);
+  const effect = Effect.gen(function* (_) {
+    yield* _(fetchPatient(patientId));
 
-  void Effect.runPromise(effect).then(
-    (timeline) => {
-      sendJson(res, 200, timeline);
-    },
-    (error: unknown) => {
-      if (
-        error instanceof FetchError ||
-        error instanceof InvalidFhirStructureError
-      ) {
-        sendJson(res, 502, { error: error.message });
-        return;
-      }
+    const timeline = yield* _(
+      getPatientTimeline(fetchEncounterBundle, patientId),
+    );
 
-      sendJson(res, 500, { error: "Unexpected error" });
-    },
-  );
+    return timeline;
+  });
+
+  void Effect.runPromiseExit(effect).then((exit) => {
+    if (Exit.isSuccess(exit)) {
+      sendJson(res, 200, exit.value);
+      return;
+    }
+
+    const error = Cause.squash(exit.cause);
+
+    if (error instanceof PatientNotFoundError) {
+      sendJson(res, 404, {
+        error: "Patient not found",
+        patientId,
+      });
+      return;
+    }
+
+    if (
+      error instanceof FetchError ||
+      error instanceof InvalidFhirStructureError
+    ) {
+      sendJson(res, 502, { error: error.message });
+      return;
+    }
+
+    sendJson(res, 500, { error: "Unexpected error" });
+  });
 };
 
 const handleRequest = (req: Request, res: Response): void => {

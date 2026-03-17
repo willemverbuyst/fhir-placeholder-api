@@ -14,3 +14,13 @@ export class InvalidFhirStructureError extends Error {
     this.name = "InvalidFhirStructureError";
   }
 }
+
+export class PatientNotFoundError extends Error {
+  constructor(
+    message: string,
+    readonly cause?: unknown,
+  ) {
+    super(message);
+    this.name = "PatientNotFoundError";
+  }
+}

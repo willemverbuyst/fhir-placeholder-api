@@ -20,9 +20,53 @@ export function createPatient({
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
 
+  const createSimpleName = (): Patient["name"] => [
+    {
+      family: lastName,
+      given: [firstName],
+    },
+  ];
+
+  const createComplexName = (): Patient["name"] => {
+    const primaryGiven = [firstName];
+
+    if (faker.datatype.boolean() && primaryGiven.length < 2) {
+      primaryGiven.push(faker.person.firstName());
+    }
+
+    const primaryName = {
+      family: lastName,
+      given: primaryGiven,
+    };
+
+    const names: Patient["name"] = [primaryName];
+
+    if (faker.datatype.boolean() && names.length < 2) {
+      const secondaryFirstName = faker.person.firstName();
+      const secondaryLastName = faker.person.lastName();
+
+      const secondaryGiven = [secondaryFirstName];
+
+      if (faker.datatype.boolean() && secondaryGiven.length < 2) {
+        secondaryGiven.push(faker.person.firstName());
+      }
+
+      names.push({
+        family: secondaryLastName,
+        given: secondaryGiven,
+      });
+    }
+
+    return names;
+  };
+
+  const name: Patient["name"] = faker.datatype.boolean()
+    ? createSimpleName()
+    : createComplexName();
+
   return {
     id,
-    name: [{ family: lastName, given: [firstName] }],
+    name,
     resourceType: "Patient",
     birthDate: faker.date
       .between({ from: startDate, to: Date.now() })

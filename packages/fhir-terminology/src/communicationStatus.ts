@@ -9,4 +9,3 @@ export const COMMUNICATION_STATUS = [
   "entered-in-error",
   "unknown",
 ] as const satisfies Communication["status"][];
-

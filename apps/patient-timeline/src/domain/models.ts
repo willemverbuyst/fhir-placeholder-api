@@ -1,5 +1,3 @@
-import type { EpisodeOfCare } from "fhir/r5";
-
 export type ObservationSummary = {
   id: string;
   status: string;
@@ -10,11 +8,16 @@ export type TimelineEntry = {
   encounterId: string;
   date: string;
   status: string;
-  episode?: EpisodeOfCare;
+  episodes: EpisodeSummary[];
   observations: ObservationSummary[];
 };
 
 export type TimelineResponse = {
   timeline: TimelineEntry[];
   warnings: string[];
+};
+
+export type EpisodeSummary = {
+  id: string;
+  status: string;
 };

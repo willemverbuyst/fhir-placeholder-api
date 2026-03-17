@@ -1,10 +1,11 @@
 import { Effect } from "effect";
-import type { Bundle, Encounter, Observation } from "fhir/r5.js";
+import type { Bundle, Encounter, EpisodeOfCare, Observation } from "fhir/r5.js";
 import { type TimelineEntry, type TimelineResponse } from "../domain/models.js";
 import {
   sortTimelineEntries,
-  toTimelineEntryFromEncounter,
+  toEpisodeSummary,
   toObservationSummary,
+  toTimelineEntryFromEncounter,
 } from "../domain/transformers.js";
 import { FetchError, InvalidFhirStructureError } from "../errors/errors.js";
 import { extractResources } from "../utils/bundles.js";
@@ -17,6 +18,9 @@ export const getPatientTimeline = (
   fetchObservationBundle: (
     patientId: string,
   ) => Effect.Effect<Bundle<Observation>, FetchError, never>,
+  fetchEpisodeOfCareBundle: (
+    patientId: string,
+  ) => Effect.Effect<Bundle<EpisodeOfCare>, FetchError, never>,
   patientId: string,
 ): Effect.Effect<
   TimelineResponse,
@@ -24,14 +28,16 @@ export const getPatientTimeline = (
   never
 > =>
   Effect.gen(function* (_) {
-    const [encounterBundle, observationBundle] = yield* _(
+    const [encounterBundle, episodeBundle, observationBundle] = yield* _(
       Effect.all([
         fetchEncounterBundle(patientId),
+        fetchEpisodeOfCareBundle(patientId),
         fetchObservationBundle(patientId),
       ]),
     );
 
     const encounters = extractResources<Encounter>(encounterBundle);
+    const episodes = extractResources<EpisodeOfCare>(episodeBundle);
     const observations = extractResources<Observation>(observationBundle);
 
     const { byEncounterId, orphanedCount } = groupObservationsByEncounter(
@@ -44,10 +50,16 @@ export const getPatientTimeline = (
         const entry = toTimelineEntryFromEncounter(encounter);
         const encounterObservations =
           byEncounterId.get(entry.encounterId) ?? [];
+        const encounterEpisodes = episodes.filter((episode) =>
+          encounter.episodeOfCare?.some(
+            (eoc) => episode.id && eoc.reference?.endsWith(episode.id),
+          ),
+        );
 
         return {
           ...entry,
           observations: encounterObservations.map(toObservationSummary),
+          episodes: encounterEpisodes.map(toEpisodeSummary),
         };
       }),
     );

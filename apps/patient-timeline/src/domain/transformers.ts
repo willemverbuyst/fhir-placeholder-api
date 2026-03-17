@@ -1,5 +1,9 @@
-import type { Encounter, Observation } from "fhir/r5";
-import { type ObservationSummary, type TimelineEntry } from "./models.js";
+import type { Encounter, EpisodeOfCare, Observation } from "fhir/r5";
+import {
+  type EpisodeSummary,
+  type ObservationSummary,
+  type TimelineEntry,
+} from "./models.js";
 
 const encounterDateToTimestamp = (date: string): number => {
   if (date === "") {
@@ -26,6 +30,7 @@ export const toTimelineEntryFromEncounter = (
     encounterId,
     date,
     status,
+    episodes: [],
     observations: [],
   };
 };
@@ -42,6 +47,15 @@ export const toObservationSummary = (
     id,
     status,
     note,
+  };
+};
+
+export const toEpisodeSummary = (episode: EpisodeOfCare): EpisodeSummary => {
+  const id = episode.id ?? "unknown";
+
+  return {
+    id,
+    status: episode.status ?? "",
   };
 };
 

@@ -7,6 +7,7 @@ import {
 } from "./errors/errors.js";
 import {
   fetchEncounterBundle,
+  fetchEpisodeOfCareBundle,
   fetchObservationBundle,
   fetchPatient,
 } from "./fhir/client.js";
@@ -58,6 +59,7 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
       getPatientTimeline(
         fetchEncounterBundle,
         fetchObservationBundle,
+        fetchEpisodeOfCareBundle,
         patientId,
       ),
     );

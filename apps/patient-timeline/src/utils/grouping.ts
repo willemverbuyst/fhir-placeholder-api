@@ -20,7 +20,9 @@ export const groupObservationsByEncounter = (
   observations: Observation[],
 ): ObservationGroupingResult => {
   const encounterIds = new Set(
-    encounters.map((encounter) => encounter.id).filter((id): id is string => id !== undefined && id !== ""),
+    encounters
+      .map((encounter) => encounter.id)
+      .filter((id): id is string => id !== undefined && id !== ""),
   );
 
   const byEncounterId = new Map<string, Observation[]>();
@@ -55,4 +57,3 @@ export const groupObservationsByEncounter = (
     orphanedCount,
   };
 };
-

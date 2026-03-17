@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { Bundle, Encounter, Observation } from "fhir/r5.js";
+import type { Bundle, Encounter, EpisodeOfCare, Observation } from "fhir/r5.js";
 import { FetchError, PatientNotFoundError } from "../errors/errors.js";
 
 const BASE_URL = "http://localhost:8080/api/v2/r5";
@@ -26,6 +26,29 @@ export const fetchEncounterBundle = (
     catch: (cause: unknown) => new FetchError("Encounter fetch failed", cause),
   });
 
+export const fetchEpisodeOfCareBundle = (
+  patientId: string,
+): Effect.Effect<Bundle<EpisodeOfCare>, FetchError, never> =>
+  Effect.tryPromise({
+    try: async () => {
+      const response = await fetch(
+        `${BASE_URL}/EpisodeOfCare?patient=${encodeURIComponent(patientId)}`,
+      );
+
+      if (!response.ok) {
+        throw new FetchError(
+          `Failed to fetch episodes of care (status ${response.status})`,
+        );
+      }
+
+      const json: Bundle<EpisodeOfCare> = await response.json();
+
+      return json;
+    },
+    catch: (cause: unknown) =>
+      new FetchError("Episode of care fetch failed", cause),
+  });
+
 export const fetchObservationBundle = (
   patientId: string,
 ): Effect.Effect<Bundle<Observation>, FetchError, never> =>
@@ -45,7 +68,8 @@ export const fetchObservationBundle = (
 
       return json;
     },
-    catch: (cause: unknown) => new FetchError("Observation fetch failed", cause),
+    catch: (cause: unknown) =>
+      new FetchError("Observation fetch failed", cause),
   });
 
 export const fetchPatient = (

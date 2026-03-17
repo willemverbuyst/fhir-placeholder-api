@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Tables | Home",
-    template: "Tables | %s",
+    default: "Json to Tables | Home",
+    template: "Json to Tables | %s",
   },
   description: "Fhir JSON conversion to tables",
 };

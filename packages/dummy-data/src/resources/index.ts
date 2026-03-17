@@ -8,3 +8,4 @@ export * from "./organization";
 export * from "./patient";
 export * from "./practitioner";
 export * from "./practitionerRole";
+export * from "./communication";

@@ -6,10 +6,12 @@
     // "outDir": "./dist",
 
     // Environment Settings
+    // Use ESNext modules with bundler-style resolution so we don't need .js extensions in TS source files
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
+    "module": "esnext",
     "target": "esnext",
-    "types": [],
+    "types": ["node"],
+    "moduleResolution": "bundler",
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],

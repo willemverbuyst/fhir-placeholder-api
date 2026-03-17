@@ -2,14 +2,16 @@
   "name": "patient-timeline",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsx src/main.ts",
+    "dev": "tsx watch src/main.ts"
   },
   "keywords": [],
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "devDependencies": {
+    "tsx": "^4.19.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {

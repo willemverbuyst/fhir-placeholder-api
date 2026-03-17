@@ -67,6 +67,7 @@ export const generateResources = (config: DummyDataConfig) => {
     numberOfPatients,
     numberOfEpisodes,
     idGen,
+    patients,
   });
   const observations = createObservations({
     numberOfObservations,

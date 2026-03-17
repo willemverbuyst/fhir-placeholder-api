@@ -12,6 +12,7 @@ export function createEncounter({
   episodeId: string | undefined;
   id: string;
 }): Encounter {
+  const startDate = new Date("2000-01-01");
   return {
     id,
     resourceType: "Encounter",
@@ -20,6 +21,11 @@ export function createEncounter({
     episodeOfCare: [
       { reference: episodeId ? `EpisodeOfCare/${episodeId}` : undefined },
     ],
+    actualPeriod: {
+      start: faker.date
+        .between({ from: startDate, to: Date.now() })
+        .toISOString(),
+    },
   };
 }
 

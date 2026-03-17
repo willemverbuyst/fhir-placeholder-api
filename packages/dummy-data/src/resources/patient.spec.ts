@@ -1,3 +1,4 @@
+import { Patient } from "fhir/r5";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
 import { createPatient, createPatients } from "./patient";
@@ -136,6 +137,30 @@ describe("createPatient", () => {
     expect(patient.address[0]).toHaveProperty("state");
     expect(patient.address[0]).toHaveProperty("postalCode");
     expect(patient.address[0]).toHaveProperty("country");
+  });
+
+  it("creates patients with 1 or 2 name entries and 1 or 2 given names", () => {
+    const idGen = new IdGenerator();
+
+    const patients: Patient[] = createPatients({
+      numberOfPatients: 50,
+      numberOfOrganizations: 1,
+      numberOfPractitioners: 1,
+      startDate: "1970-01-01",
+      idGen,
+    });
+
+    expect(patients.length).toBe(50);
+
+    patients.forEach((patient) => {
+      expect(patient.name?.length).toBeGreaterThanOrEqual(1);
+      expect(patient.name?.length).toBeLessThanOrEqual(2);
+
+      patient.name?.forEach((n) => {
+        expect(n.given?.length).toBeGreaterThanOrEqual(1);
+        expect(n.given?.length).toBeLessThanOrEqual(2);
+      });
+    });
   });
 });
 

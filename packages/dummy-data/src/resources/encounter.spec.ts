@@ -1,4 +1,5 @@
 import { ENCOUNTER_STATUS } from "@repo/fhir-terminology";
+import { Patient } from "fhir/r5";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
 import { createEncounter, createEncounters } from "./encounter";
@@ -8,10 +9,12 @@ describe("createEncounter", () => {
     const patientId = "patient-1";
     const episodeId = "episode-1";
     const encounterId = "encounter-1";
+    const startDate = new Date("2000-01-01T00:00:00.000Z");
     const encounter = createEncounter({
       patientId,
       episodeId,
       id: encounterId,
+      startDate,
     });
 
     expect(encounter).toHaveProperty("id");
@@ -25,6 +28,32 @@ describe("createEncounter", () => {
     }
 
     expect(encounter.episodeOfCare[0].reference?.split("/")[1]).toBe(episodeId);
+
+    if (!encounter.actualPeriod?.start) {
+      throw new Error("Encounter actualPeriod.start is missing");
+    }
+
+    const actualStart = new Date(encounter.actualPeriod.start);
+    expect(actualStart.getTime()).toBeGreaterThanOrEqual(startDate.getTime());
+    expect(actualStart.getTime()).toBeLessThanOrEqual(Date.now());
+  });
+
+  it("should not create an Encounter with an actualPeriod.start if the patient's birthDate is not provided", () => {
+    const patientId = "patient-1";
+    const episodeId = "episode-1";
+    const encounterId = "encounter-1";
+    const encounter = createEncounter({
+      patientId,
+      episodeId,
+      id: encounterId,
+      startDate: undefined,
+    });
+
+    expect(encounter).toHaveProperty("id");
+    expect(encounter.resourceType).toBe("Encounter");
+    expect(encounter.subject).toEqual({ reference: `Patient/${patientId}` });
+    expect(encounter.episodeOfCare).toHaveLength(1);
+    expect(encounter.actualPeriod).toBeUndefined();
   });
 });
 
@@ -37,11 +66,24 @@ describe("createEncounters", () => {
     "episode-of-care-3",
     "episode-of-care-4",
   ]);
+  const patients: Patient[] = [
+    {
+      resourceType: "Patient",
+      id: "patient-1",
+      birthDate: "1980-01-01",
+    },
+    {
+      resourceType: "Patient",
+      id: "patient-2",
+      birthDate: "1990-01-01",
+    },
+  ];
   const encounters = createEncounters({
     numberOfEncounters: 12,
     numberOfPatients: 2,
     numberOfEpisodes: 4,
     idGen,
+    patients,
   });
 
   it.each`
@@ -72,6 +114,15 @@ describe("createEncounters", () => {
       expect(encounter.episodeOfCare?.[0]?.reference).toBe(
         `EpisodeOfCare/${episodeId}`,
       );
+      expect(encounter.actualPeriod?.start).toBeDefined();
+      expect(
+        new Date(encounter.actualPeriod?.start ?? "").getTime(),
+      ).toBeGreaterThanOrEqual(
+        new Date(
+          patients[Number.parseInt(patientId.replace("patient-", ""), 10) - 1]
+            .birthDate ?? "",
+        ).getTime(),
+      );
     },
   );
 
@@ -81,6 +132,13 @@ describe("createEncounters", () => {
       numberOfPatients: 1,
       numberOfEpisodes: 1,
       idGen: new IdGenerator(),
+      patients: [
+        {
+          resourceType: "Patient",
+          id: "patient-1",
+          birthDate: "1985-01-01",
+        },
+      ],
     });
 
     expect(encounters).toHaveLength(3);
@@ -92,6 +150,13 @@ describe("createEncounters", () => {
       numberOfPatients: 1,
       numberOfEpisodes: 1,
       idGen: new IdGenerator(),
+      patients: [
+        {
+          resourceType: "Patient",
+          id: "patient-1",
+          birthDate: "1985-01-01",
+        },
+      ],
     });
 
     expect(encounters).toHaveLength(0);

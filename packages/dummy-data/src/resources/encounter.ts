@@ -1,19 +1,20 @@
 import { faker } from "@faker-js/faker";
 import { ENCOUNTER_STATUS } from "@repo/fhir-terminology";
-import type { Encounter } from "fhir/r5";
+import type { Encounter, Patient } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 
 export function createEncounter({
   patientId,
   episodeId,
   id,
+  startDate,
 }: {
   patientId: string | undefined;
   episodeId: string | undefined;
   id: string;
+  startDate: Date | undefined;
 }): Encounter {
-  const startDate = new Date("2000-01-01");
-  return {
+  const encounter: Encounter = {
     id,
     resourceType: "Encounter",
     status: faker.helpers.arrayElement(ENCOUNTER_STATUS),
@@ -21,12 +22,17 @@ export function createEncounter({
     episodeOfCare: [
       { reference: episodeId ? `EpisodeOfCare/${episodeId}` : undefined },
     ],
-    actualPeriod: {
+  };
+
+  if (startDate) {
+    encounter.actualPeriod = {
       start: faker.date
         .between({ from: startDate, to: Date.now() })
         .toISOString(),
-    },
-  };
+    };
+  }
+
+  return encounter;
 }
 
 export function createEncounters({
@@ -34,11 +40,13 @@ export function createEncounters({
   numberOfPatients,
   numberOfEpisodes,
   idGen,
+  patients,
 }: {
   numberOfEncounters: number;
   numberOfPatients: number;
   numberOfEpisodes: number;
   idGen: IdGenerator;
+  patients: Patient[];
 }): Encounter[] {
   return Array.from({ length: numberOfEncounters }, (_, i) => {
     const patientIndex = Math.floor(
@@ -47,10 +55,12 @@ export function createEncounters({
     const episodeIndex = Math.floor(
       i / (numberOfEncounters / numberOfEpisodes),
     );
+    const dob = patients[patientIndex].birthDate;
     return createEncounter({
       patientId: idGen.refs.get("patient")?.[patientIndex],
       episodeId: idGen.refs.get("episode-of-care")?.[episodeIndex],
       id: idGen.generateId("encounter"),
+      startDate: dob ? new Date(dob) : undefined,
     });
   });
 }

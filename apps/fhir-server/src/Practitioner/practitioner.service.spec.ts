@@ -1,31 +1,28 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { Practitioner } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { PractitionerService } from "./practitioner.service";
 
 describe("PractitionerService", () => {
   let service: PractitionerService;
-  const mockDataStore = {
-    practitioners: [
-      {
-        id: "1",
-        resourceType: "Practitioner",
-      },
-      {
-        id: "2",
-        resourceType: "Practitioner",
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "practitioners">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PractitionerService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      practitioners: [
+        {
+          id: "1",
+          resourceType: "Practitioner",
+        } as Practitioner,
+        {
+          id: "2",
+          resourceType: "Practitioner",
+        } as Practitioner,
       ],
-    }).compile();
+    };
 
-    service = module.get<PractitionerService>(PractitionerService);
+    service = new PractitionerService(
+      repoMock as DataStoreService,
+    );
   });
 
   it("should be defined", () => {

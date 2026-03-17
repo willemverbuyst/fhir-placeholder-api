@@ -1,51 +1,46 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { EpisodeOfCare } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { EpisodeOfCareService } from "./episode-of-care.service";
 
 describe("EpisodeOfCareService", () => {
   let service: EpisodeOfCareService;
-  const mockDataStore = {
-    episodes: [
-      {
-        id: "1",
-        resourceType: "EpisodeOfCare",
-        status: "active",
-        patient: { reference: "Patient/1" },
-        diagnosis: [
-          { condition: [{ reference: { reference: "condition/2" } }] },
-        ],
-      },
-      {
-        id: "2",
-        resourceType: "EpisodeOfCare",
-        status: "active",
-        patient: { reference: "Patient/2" },
-        diagnosis: [
-          { condition: [{ reference: { reference: "condition/2" } }] },
-          { condition: [{ reference: { reference: "condition/3" } }] },
-        ],
-      },
-      {
-        id: "3",
-        resourceType: "EpisodeOfCare",
-        status: "active",
-        patient: { reference: "Patient/1" },
-        diagnosis: [
-          { condition: [{ reference: { reference: "condition/4" } }] },
-        ],
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "episodes">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        EpisodeOfCareService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      episodes: [
+        {
+          id: "1",
+          resourceType: "EpisodeOfCare",
+          status: "active",
+          patient: { reference: "Patient/1" },
+          diagnosis: [
+            { condition: [{ reference: { reference: "condition/2" } }] },
+          ],
+        } as EpisodeOfCare,
+        {
+          id: "2",
+          resourceType: "EpisodeOfCare",
+          status: "active",
+          patient: { reference: "Patient/2" },
+          diagnosis: [
+            { condition: [{ reference: { reference: "condition/2" } }] },
+            { condition: [{ reference: { reference: "condition/3" } }] },
+          ],
+        } as EpisodeOfCare,
+        {
+          id: "3",
+          resourceType: "EpisodeOfCare",
+          status: "active",
+          patient: { reference: "Patient/1" },
+          diagnosis: [
+            { condition: [{ reference: { reference: "condition/4" } }] },
+          ],
+        } as EpisodeOfCare,
       ],
-    }).compile();
+    };
 
-    service = module.get<EpisodeOfCareService>(EpisodeOfCareService);
+    service = new EpisodeOfCareService(repoMock as DataStoreService);
   });
 
   it("should be defined", () => {

@@ -1,26 +1,24 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { AllergyIntolerance } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { AllergyIntoleranceService } from "./allergy-intolerance.service";
 
 describe("AllergyIntoleranceService", () => {
   let service: AllergyIntoleranceService;
-  const mockDataStore = {
-    allergies: [
-      {
-        id: "1",
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "allergies">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AllergyIntoleranceService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      allergies: [
+        {
+          id: "1",
+          resourceType: "AllergyIntolerance",
+        } as AllergyIntolerance,
       ],
-    }).compile();
+    };
 
-    service = module.get<AllergyIntoleranceService>(AllergyIntoleranceService);
+    service = new AllergyIntoleranceService(
+      repoMock as DataStoreService,
+    );
   });
 
   it("should be defined", () => {

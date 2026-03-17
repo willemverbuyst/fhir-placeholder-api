@@ -1,53 +1,50 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { PractitionerRole } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { PractitionerRoleService } from "./practitioner-role.service";
 
 describe("PractitionerRoleService", () => {
   let service: PractitionerRoleService;
-  const mockDataStore = {
-    practitionerRoles: [
-      {
-        id: "1",
-        resourceType: "PractitionerRole",
-        organization: {
-          reference: "Organization/1",
-        },
-        practitioner: {
-          reference: "Practitioner/1",
-        },
-      },
-      {
-        id: "2",
-        resourceType: "PractitionerRole",
-        organization: {
-          reference: "Organization/1",
-        },
-        practitioner: {
-          reference: "Practitioner/2",
-        },
-      },
-      {
-        id: "3",
-        resourceType: "PractitionerRole",
-        organization: {
-          reference: "Organization/2",
-        },
-        practitioner: {
-          reference: "Practitioner/3",
-        },
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "practitionerRoles">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PractitionerRoleService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      practitionerRoles: [
+        {
+          id: "1",
+          resourceType: "PractitionerRole",
+          organization: {
+            reference: "Organization/1",
+          },
+          practitioner: {
+            reference: "Practitioner/1",
+          },
+        } as PractitionerRole,
+        {
+          id: "2",
+          resourceType: "PractitionerRole",
+          organization: {
+            reference: "Organization/1",
+          },
+          practitioner: {
+            reference: "Practitioner/2",
+          },
+        } as PractitionerRole,
+        {
+          id: "3",
+          resourceType: "PractitionerRole",
+          organization: {
+            reference: "Organization/2",
+          },
+          practitioner: {
+            reference: "Practitioner/3",
+          },
+        } as PractitionerRole,
       ],
-    }).compile();
+    };
 
-    service = module.get<PractitionerRoleService>(PractitionerRoleService);
+    service = new PractitionerRoleService(
+      repoMock as DataStoreService,
+    );
   });
 
   it("should be defined", () => {

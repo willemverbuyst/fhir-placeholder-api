@@ -1,38 +1,33 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { Condition } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { ConditionService } from "./condition.service";
 
 describe("ConditionService", () => {
   let service: ConditionService;
-  const mockDataStore = {
-    conditions: [
-      {
-        id: "1",
-        resourceType: "Condition",
-        subject: {
-          reference: "Patient/1",
-        },
-      },
-      {
-        id: "2",
-        note: [{ text: "test note" }],
-        resourceType: "Condition",
-        subject: {
-          reference: "Patient/2",
-        },
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "conditions">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        ConditionService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      conditions: [
+        {
+          id: "1",
+          resourceType: "Condition",
+          subject: {
+            reference: "Patient/1",
+          },
+        } as Condition,
+        {
+          id: "2",
+          note: [{ text: "test note" }],
+          resourceType: "Condition",
+          subject: {
+            reference: "Patient/2",
+          },
+        } as Condition,
       ],
-    }).compile();
+    };
 
-    service = module.get<ConditionService>(ConditionService);
+    service = new ConditionService(repoMock as DataStoreService);
   });
 
   it("should be defined", () => {

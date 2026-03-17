@@ -1,37 +1,34 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { Appointment } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { AppointmentService } from "./appointment.service";
 
 describe("AppointmentService", () => {
   let service: AppointmentService;
-  const mockDataStore = {
-    appointments: [
-      {
-        id: "1",
-        resourceType: "Appointment",
-        subject: {
-          reference: "Patient/1",
-        },
-      },
-      {
-        id: "2",
-        resourceType: "Appointment",
-        subject: {
-          reference: "Patient/2",
-        },
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "appointments">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AppointmentService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      appointments: [
+        {
+          id: "1",
+          resourceType: "Appointment",
+          subject: {
+            reference: "Patient/1",
+          },
+        } as Appointment,
+        {
+          id: "2",
+          resourceType: "Appointment",
+          subject: {
+            reference: "Patient/2",
+          },
+        } as Appointment,
       ],
-    }).compile();
+    };
 
-    service = module.get<AppointmentService>(AppointmentService);
+    service = new AppointmentService(
+      repoMock as DataStoreService,
+    );
   });
 
   it("should be defined", () => {

@@ -1,53 +1,48 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { Observation } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { ObservationService } from "./observation.service";
 
 describe("ObservationService", () => {
   let service: ObservationService;
-  const mockDataStore = {
-    observations: [
-      {
-        id: "1",
-        resourceType: "Observation",
-        encounter: { reference: "Encounter/1" },
-        subject: { reference: "Patient/1" },
-      },
-      {
-        id: "2",
-        resourceType: "Observation",
-        encounter: { reference: "Encounter/1" },
-        subject: { reference: "Patient/1" },
-      },
-      {
-        id: "3",
-        resourceType: "Observation",
-        encounter: { reference: "Encounter/2" },
-        subject: { reference: "Patient/2" },
-      },
-      {
-        id: "4",
-        resourceType: "Observation",
-        encounter: { reference: "Encounter/2" },
-        subject: { reference: "Patient/2" },
-      },
-      {
-        id: "5",
-        resourceType: "Observation",
-        encounter: { reference: "Encounter/3" },
-        subject: { reference: "Patient/2" },
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "observations">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        ObservationService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      observations: [
+        {
+          id: "1",
+          resourceType: "Observation",
+          encounter: { reference: "Encounter/1" },
+          subject: { reference: "Patient/1" },
+        } as Observation,
+        {
+          id: "2",
+          resourceType: "Observation",
+          encounter: { reference: "Encounter/1" },
+          subject: { reference: "Patient/1" },
+        } as Observation,
+        {
+          id: "3",
+          resourceType: "Observation",
+          encounter: { reference: "Encounter/2" },
+          subject: { reference: "Patient/2" },
+        } as Observation,
+        {
+          id: "4",
+          resourceType: "Observation",
+          encounter: { reference: "Encounter/2" },
+          subject: { reference: "Patient/2" },
+        } as Observation,
+        {
+          id: "5",
+          resourceType: "Observation",
+          encounter: { reference: "Encounter/3" },
+          subject: { reference: "Patient/2" },
+        } as Observation,
       ],
-    }).compile();
+    };
 
-    service = module.get<ObservationService>(ObservationService);
+    service = new ObservationService(repoMock as DataStoreService);
   });
 
   it("should be defined", () => {

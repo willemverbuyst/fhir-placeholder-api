@@ -1,59 +1,54 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { Patient } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { PatientService } from "./patient.service";
 
 describe("PatientService", () => {
   let service: PatientService;
-  const mockDataStore = {
-    patients: [
-      {
-        id: "1",
-        resourceType: "Patient",
-        managingOrganization: {
-          reference: "Organization/1",
-        },
-        generalPractitioner: [
-          {
-            reference: "Practitioner/1",
-          },
-        ],
-      },
-      {
-        id: "2",
-        resourceType: "Patient",
-        managingOrganization: {
-          reference: "Organization/1",
-        },
-        generalPractitioner: [
-          {
-            reference: "Practitioner/2",
-          },
-        ],
-      },
-      {
-        id: "2",
-        resourceType: "Patient",
-        managingOrganization: {
-          reference: "Organization/2",
-        },
-        generalPractitioner: [
-          {
-            reference: "Practitioner/2",
-          },
-        ],
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "patients">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PatientService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      patients: [
+        {
+          id: "1",
+          resourceType: "Patient",
+          managingOrganization: {
+            reference: "Organization/1",
+          },
+          generalPractitioner: [
+            {
+              reference: "Practitioner/1",
+            },
+          ],
+        } as Patient,
+        {
+          id: "2",
+          resourceType: "Patient",
+          managingOrganization: {
+            reference: "Organization/1",
+          },
+          generalPractitioner: [
+            {
+              reference: "Practitioner/2",
+            },
+          ],
+        } as Patient,
+        {
+          id: "3",
+          resourceType: "Patient",
+          managingOrganization: {
+            reference: "Organization/2",
+          },
+          generalPractitioner: [
+            {
+              reference: "Practitioner/2",
+            },
+          ],
+        } as Patient,
       ],
-    }).compile();
+    };
 
-    service = module.get<PatientService>(PatientService);
+    service = new PatientService(repoMock as DataStoreService);
   });
 
   it("should be defined", () => {

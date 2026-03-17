@@ -1,38 +1,33 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import type { Organization } from "fhir/r5";
+import type { DataStoreService } from "../db/dataStore.service";
 import { OrganizationService } from "./organization.service";
 
 describe("OrganizationService", () => {
   let service: OrganizationService;
-  const mockDataStore = {
-    organizations: [
-      {
-        id: "1",
-        resourceType: "Organization",
-        name: "test organization",
-      },
-      {
-        id: "2",
-        resourceType: "Organization",
-        name: "another test organization",
-      },
-      {
-        id: "3",
-        resourceType: "Organization",
-        name: "test organization",
-      },
-    ],
-  };
+  let repoMock: Pick<DataStoreService, "organizations">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        OrganizationService,
-        { provide: DataStoreService, useValue: mockDataStore },
+  beforeEach(() => {
+    repoMock = {
+      organizations: [
+        {
+          id: "1",
+          resourceType: "Organization",
+          name: "test organization",
+        } as Organization,
+        {
+          id: "2",
+          resourceType: "Organization",
+          name: "another test organization",
+        } as Organization,
+        {
+          id: "3",
+          resourceType: "Organization",
+          name: "test organization",
+        } as Organization,
       ],
-    }).compile();
+    };
 
-    service = module.get<OrganizationService>(OrganizationService);
+    service = new OrganizationService(repoMock as DataStoreService);
   });
 
   it("should be defined", () => {
@@ -94,7 +89,7 @@ describe("OrganizationService", () => {
       expect(newOrganization.active).toBe(false);
 
       const allOrganizations = await service.findAll();
-      expect(allOrganizations?.entry?.length).toBe(5);
+      expect(allOrganizations?.entry?.length).toBe(4);
     });
   });
 

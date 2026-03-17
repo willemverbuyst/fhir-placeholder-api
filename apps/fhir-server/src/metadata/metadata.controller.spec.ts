@@ -1,16 +1,10 @@
-import { Test, type TestingModule } from "@nestjs/testing";
 import { MetadataController } from "./metadata.controller";
 
 describe("MetadataController", () => {
   let controller: MetadataController;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [MetadataController],
-      providers: [],
-    }).compile();
-
-    controller = module.get<MetadataController>(MetadataController);
+  beforeEach(() => {
+    controller = new MetadataController();
   });
 
   it("should be defined", () => {

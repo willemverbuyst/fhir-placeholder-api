@@ -1,31 +1,22 @@
 import { NotFoundException } from "@nestjs/common";
-import { Test, type TestingModule } from "@nestjs/testing";
 import type { Condition } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
 import { ConditionController } from "./condition.controller";
-import { ConditionService } from "./condition.service";
+import type { ConditionService } from "./condition.service";
 
 describe("ConditionsController", () => {
   let controller: ConditionController;
   let service: ConditionService;
+  let serviceMock: jest.Mocked<Pick<ConditionService, "findAll" | "findOne">>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [ConditionController],
-      providers: [
-        {
-          provide: ConditionService,
-          useValue: {
-            findAll: jest.fn(),
-            findOne: jest.fn(),
-          },
-        },
-        DataStoreService,
-      ],
-    }).compile();
+  beforeEach(() => {
+    serviceMock = {
+      findAll: jest.fn(),
+      findOne: jest.fn(),
+    };
 
-    controller = module.get<ConditionController>(ConditionController);
-    service = module.get<ConditionService>(ConditionService);
+    service = serviceMock as unknown as ConditionService;
+
+    controller = new ConditionController(service);
   });
 
   it("should be defined", () => {
@@ -36,7 +27,7 @@ describe("ConditionsController", () => {
     it("should call findAll method of ConditionService", () => {
       controller.findAll();
 
-      expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(serviceMock.findAll).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -48,19 +39,22 @@ describe("ConditionsController", () => {
         clinicalStatus: {},
         subject: {},
       };
-      jest.spyOn(service, "findOne").mockResolvedValue(mockCondition);
+
+      serviceMock.findOne.mockResolvedValue(mockCondition);
+
       const result = await controller.findOne("1");
+
       expect(result).toEqual(mockCondition);
-      expect(service.findOne).toHaveBeenCalledWith("1");
+      expect(serviceMock.findOne).toHaveBeenCalledWith("1");
     });
 
     it("should throw an error if condition with id is not found", async () => {
-      jest.spyOn(service, "findOne").mockResolvedValue(undefined);
+      serviceMock.findOne.mockResolvedValue(undefined);
 
       await expect(controller.findOne("unknown")).rejects.toThrow(
         NotFoundException,
       );
-      expect(service.findOne).toHaveBeenCalledWith("unknown");
+      expect(serviceMock.findOne).toHaveBeenCalledWith("unknown");
     });
   });
 });

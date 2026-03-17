@@ -1,28 +1,18 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
 import { ObservationController } from "./observation.controller";
-import { ObservationService } from "./observation.service";
+import type { ObservationService } from "./observation.service";
 
 describe("ObservationController", () => {
   let controller: ObservationController;
   let service: ObservationService;
+  let serviceMock: jest.Mocked<Pick<ObservationService, "findAll">>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [ObservationController],
-      providers: [
-        {
-          provide: ObservationService,
-          useValue: {
-            findAll: jest.fn(),
-          },
-        },
-        DataStoreService,
-      ],
-    }).compile();
+  beforeEach(() => {
+    serviceMock = {
+      findAll: jest.fn(),
+    };
 
-    controller = module.get<ObservationController>(ObservationController);
-    service = module.get<ObservationService>(ObservationService);
+    service = serviceMock as unknown as ObservationService;
+    controller = new ObservationController(service);
   });
 
   it("should be defined", () => {
@@ -32,7 +22,7 @@ describe("ObservationController", () => {
   describe("findAll", () => {
     it("should call findAll method of ObservationService", async () => {
       await controller.findAll();
-      expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(serviceMock.findAll).toHaveBeenCalledTimes(1);
     });
   });
 });

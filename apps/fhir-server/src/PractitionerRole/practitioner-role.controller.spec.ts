@@ -1,30 +1,18 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
 import { PractitionerRoleController } from "./practitioner-role.controller";
-import { PractitionerRoleService } from "./practitioner-role.service";
+import type { PractitionerRoleService } from "./practitioner-role.service";
 
 describe("PractitionerRoleController", () => {
   let controller: PractitionerRoleController;
   let service: PractitionerRoleService;
+  let serviceMock: jest.Mocked<Pick<PractitionerRoleService, "findAll">>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [PractitionerRoleController],
-      providers: [
-        {
-          provide: PractitionerRoleService,
-          useValue: {
-            findAll: jest.fn(),
-          },
-        },
-        DataStoreService,
-      ],
-    }).compile();
+  beforeEach(() => {
+    serviceMock = {
+      findAll: jest.fn(),
+    };
 
-    controller = module.get<PractitionerRoleController>(
-      PractitionerRoleController,
-    );
-    service = module.get<PractitionerRoleService>(PractitionerRoleService);
+    service = serviceMock as unknown as PractitionerRoleService;
+    controller = new PractitionerRoleController(service);
   });
 
   it("should be defined", () => {
@@ -35,7 +23,7 @@ describe("PractitionerRoleController", () => {
     it("should call findAll method of PractitionerRoleService", () => {
       controller.findAll();
 
-      expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(serviceMock.findAll).toHaveBeenCalledTimes(1);
     });
   });
 });

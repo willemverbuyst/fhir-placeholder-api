@@ -1,26 +1,18 @@
-import { Test, TestingModule } from "@nestjs/testing";
 import { AllergyIntoleranceController } from "./allergy-intolerance.controller";
-import { AllergyIntoleranceService } from "./allergy-intolerance.service";
+import type { AllergyIntoleranceService } from "./allergy-intolerance.service";
 
 describe("AllergyIntoleranceController", () => {
   let controller: AllergyIntoleranceController;
   let service: AllergyIntoleranceService;
+  let serviceMock: jest.Mocked<Pick<AllergyIntoleranceService, "findAll">>;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AllergyIntoleranceController],
-      providers: [
-        {
-          provide: AllergyIntoleranceService,
-          useValue: { findAll: jest.fn() },
-        },
-      ],
-    }).compile();
+  beforeEach(() => {
+    serviceMock = {
+      findAll: jest.fn(),
+    };
 
-    controller = module.get<AllergyIntoleranceController>(
-      AllergyIntoleranceController,
-    );
-    service = module.get<AllergyIntoleranceService>(AllergyIntoleranceService);
+    service = serviceMock as unknown as AllergyIntoleranceService;
+    controller = new AllergyIntoleranceController(service);
   });
 
   it("should be defined", () => {
@@ -31,7 +23,7 @@ describe("AllergyIntoleranceController", () => {
     it("should call findAll method of AppointmentService", () => {
       controller.findAll();
 
-      expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(serviceMock.findAll).toHaveBeenCalledTimes(1);
     });
   });
 });

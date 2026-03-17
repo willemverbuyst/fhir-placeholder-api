@@ -5,7 +5,11 @@ import {
   InvalidFhirStructureError,
   PatientNotFoundError,
 } from "./errors/errors.js";
-import { fetchEncounterBundle, fetchPatient } from "./fhir/client.js";
+import {
+  fetchEncounterBundle,
+  fetchObservationBundle,
+  fetchPatient,
+} from "./fhir/client.js";
 import { getPatientTimeline } from "./services/timelineService.js";
 
 type Request = IncomingMessage;
@@ -51,7 +55,11 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
     yield* _(fetchPatient(patientId));
 
     const timeline = yield* _(
-      getPatientTimeline(fetchEncounterBundle, patientId),
+      getPatientTimeline(
+        fetchEncounterBundle,
+        fetchObservationBundle,
+        patientId,
+      ),
     );
 
     return timeline;

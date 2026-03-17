@@ -1,12 +1,12 @@
-import http, { type IncomingMessage, type ServerResponse } from "http";
+import http, { type IncomingMessage, type ServerResponse } from "node:http";
 import { Cause, Effect, Exit } from "effect";
-import { fetchEncounterBundle, fetchPatient } from "./fhir/client.js";
-import { getPatientTimeline } from "./services/timelineService.js";
 import {
   FetchError,
   InvalidFhirStructureError,
   PatientNotFoundError,
 } from "./errors/errors.js";
+import { fetchEncounterBundle, fetchPatient } from "./fhir/client.js";
+import { getPatientTimeline } from "./services/timelineService.js";
 
 type Request = IncomingMessage;
 type Response = ServerResponse<Request>;

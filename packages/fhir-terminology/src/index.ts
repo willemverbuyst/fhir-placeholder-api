@@ -13,3 +13,4 @@ export * from "./encounterStatus";
 export * from "./episodeOfCareStatus";
 export * from "./gender";
 export * from "./observationStatus";
+export * from "./communicationStatus";

@@ -25,4 +25,3 @@ export const extractResources = <T>(bundle: unknown): T[] => {
 
   return resources;
 };
-

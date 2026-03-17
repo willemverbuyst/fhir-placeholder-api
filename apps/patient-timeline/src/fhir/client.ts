@@ -22,9 +22,7 @@ export const fetchEncounterBundle = (
 
       return json;
     },
-    catch: (cause: unknown) =>
-      new FetchError("Encounter fetch failed", cause),
+    catch: (cause: unknown) => new FetchError("Encounter fetch failed", cause),
   });
 
 export { BASE_URL };
-

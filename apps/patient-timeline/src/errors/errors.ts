@@ -1,5 +1,8 @@
 export class FetchError extends Error {
-  constructor(message: string, readonly cause?: unknown) {
+  constructor(
+    message: string,
+    readonly cause?: unknown,
+  ) {
     super(message);
     this.name = "FetchError";
   }
@@ -11,4 +14,3 @@ export class InvalidFhirStructureError extends Error {
     this.name = "InvalidFhirStructureError";
   }
 }
-

@@ -1,7 +1,4 @@
-import http, {
-  type IncomingMessage,
-  type ServerResponse,
-} from "http";
+import http, { type IncomingMessage, type ServerResponse } from "http";
 import { Effect } from "effect";
 import { fetchEncounterBundle } from "./fhir/client.js";
 import { getPatientTimeline } from "./services/timelineService.js";
@@ -10,11 +7,7 @@ import { FetchError, InvalidFhirStructureError } from "./errors/errors.js";
 type Request = IncomingMessage;
 type Response = ServerResponse<Request>;
 
-const sendJson = (
-  res: Response,
-  statusCode: number,
-  body: unknown,
-): void => {
+const sendJson = (res: Response, statusCode: number, body: unknown): void => {
   const json = JSON.stringify(body);
 
   res.statusCode = statusCode;
@@ -31,7 +24,11 @@ const getPatientIdFromUrl = (url: string | undefined): string | null => {
   const parsedUrl = new URL(url, "http://localhost");
   const segments = parsedUrl.pathname.split("/").filter(Boolean);
 
-  if (segments.length === 3 && segments[0] === "patient" && segments[2] === "timeline") {
+  if (
+    segments.length === 3 &&
+    segments[0] === "patient" &&
+    segments[2] === "timeline"
+  ) {
     return segments[1] ?? null;
   }
 
@@ -53,7 +50,10 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
       sendJson(res, 200, timeline);
     },
     (error: unknown) => {
-      if (error instanceof FetchError || error instanceof InvalidFhirStructureError) {
+      if (
+        error instanceof FetchError ||
+        error instanceof InvalidFhirStructureError
+      ) {
         sendJson(res, 502, { error: error.message });
         return;
       }
@@ -95,4 +95,3 @@ Effect.runPromise(serverEffect).catch((error) => {
   console.error("Server failed to start", error);
   process.exit(1);
 });
-

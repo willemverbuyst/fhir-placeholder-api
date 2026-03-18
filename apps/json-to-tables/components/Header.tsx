@@ -11,7 +11,6 @@ export default async function Header() {
   const resourceTypes = extractSupportedResourceTypes(capabilityStatement);
 
   const links: NavLink[] = [
-    { href: "/", label: "Home" },
     ...resourceTypes.map((resourceType) => ({
       href: `/${resourceType}`,
       label: resourceType,

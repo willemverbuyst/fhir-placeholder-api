@@ -2,6 +2,7 @@ import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Communication } from "fhir/r5";
 import { CommunicationService } from "./communication.service";
+import { communicationBundleExample } from "./dto/examples/communication-bundle.example";
 import { GetCommunicationDto } from "./dto/get-communication.dto";
 
 @Controller("Communication")
@@ -10,6 +11,7 @@ export class CommunicationController {
 
   @ApiOkResponse({
     description: "All communications",
+    example: communicationBundleExample,
   })
   @ApiQuery({
     name: "patient",

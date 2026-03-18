@@ -65,6 +65,7 @@ export const getPatientTimeline = (
     );
 
     const response: TimelineResponse = {
+      patient: null,
       timeline: timelineEntries,
       warnings:
         orphanedCount > 0

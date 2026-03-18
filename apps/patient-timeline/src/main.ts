@@ -1,5 +1,5 @@
 import http, { type IncomingMessage, type ServerResponse } from "node:http";
-import { Cause, Effect, Exit } from "effect";
+import { Cause, Effect, Either, Exit } from "effect";
 import {
   FetchError,
   InvalidFhirStructureError,
@@ -11,6 +11,7 @@ import {
   fetchObservationBundle,
   fetchPatient,
 } from "./fhir/client.js";
+import { formatName } from "./name/formatNameClient.js";
 import { getPatientTimeline } from "./services/timelineService.js";
 
 type Request = IncomingMessage;
@@ -53,7 +54,7 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
   }
 
   const effect = Effect.gen(function* (_) {
-    yield* _(fetchPatient(patientId));
+    const patient = yield* _(fetchPatient(patientId));
 
     const timeline = yield* _(
       getPatientTimeline(
@@ -64,7 +65,25 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
       ),
     );
 
-    return timeline;
+    const formattedNameEither = yield* _(
+      Effect.either(formatName(patient.name ?? [])),
+    );
+
+    const patientName = Either.isRight(formattedNameEither)
+      ? formattedNameEither.right
+      : null;
+    const patientNameWarning = Either.isRight(formattedNameEither)
+      ? null
+      : "Name formatting unavailable";
+
+    return {
+      ...timeline,
+      patient: patientName,
+      warnings:
+        patientNameWarning === null
+          ? timeline.warnings
+          : [...timeline.warnings, patientNameWarning],
+    };
   });
 
   void Effect.runPromiseExit(effect).then((exit) => {

@@ -2,9 +2,11 @@ import { IdGenerator } from "./idGenerator";
 import {
   createAllergies,
   createAppointments,
+  createCommunications,
   createConditions,
   createEncounters,
   createEpisodes,
+  createFlags,
   createObservations,
   createOrganizations,
   createPatients,
@@ -21,6 +23,8 @@ export const generateResources = (config: DummyDataConfig) => {
     numberOfEncounters,
     numberOfEpisodes,
     numberOfObservations,
+    numberOfFlags,
+    numberOfCommunications,
     numberOfOrganizations,
     numberOfPatients,
     numberOfPractitioners,
@@ -75,6 +79,18 @@ export const generateResources = (config: DummyDataConfig) => {
     numberOfEncounters,
     idGen,
   });
+  const flags = createFlags({
+    numberOfFlags,
+    numberOfPatients,
+    numberOfEncounters,
+    idGen,
+  });
+  const communications = createCommunications({
+    numberOfCommunications,
+    numberOfPatients,
+    numberOfEncounters,
+    idGen,
+  });
   const appointments = createAppointments({
     numberOfAppointments,
     numberOfPractitioners,
@@ -97,6 +113,8 @@ export const generateResources = (config: DummyDataConfig) => {
     episodes,
     encounters,
     observations,
+    flags,
+    communications,
     appointments,
     allergies,
   };

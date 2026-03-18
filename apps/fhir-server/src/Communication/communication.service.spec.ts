@@ -1,38 +1,39 @@
 import { Test, type TestingModule } from "@nestjs/testing";
 import { DataStoreService } from "../db/dataStore.service";
-import { ObservationService } from "./observation.service";
+import { CommunicationService } from "./communication.service";
 
-describe("ObservationService", () => {
-  let service: ObservationService;
+describe("CommunicationService", () => {
+  let service: CommunicationService;
+
   const mockDataStore = {
-    observations: [
+    communications: [
       {
         id: "1",
-        resourceType: "Observation",
+        resourceType: "Communication",
         encounter: { reference: "Encounter/1" },
         subject: { reference: "Patient/1" },
       },
       {
         id: "2",
-        resourceType: "Observation",
+        resourceType: "Communication",
         encounter: { reference: "Encounter/1" },
         subject: { reference: "Patient/1" },
       },
       {
         id: "3",
-        resourceType: "Observation",
+        resourceType: "Communication",
         encounter: { reference: "Encounter/2" },
         subject: { reference: "Patient/2" },
       },
       {
         id: "4",
-        resourceType: "Observation",
+        resourceType: "Communication",
         encounter: { reference: "Encounter/2" },
         subject: { reference: "Patient/2" },
       },
       {
         id: "5",
-        resourceType: "Observation",
+        resourceType: "Communication",
         encounter: { reference: "Encounter/3" },
         subject: { reference: "Patient/2" },
       },
@@ -42,12 +43,12 @@ describe("ObservationService", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ObservationService,
+        CommunicationService,
         { provide: DataStoreService, useValue: mockDataStore },
       ],
     }).compile();
 
-    service = module.get<ObservationService>(ObservationService);
+    service = module.get<CommunicationService>(CommunicationService);
   });
 
   it("should be defined", () => {
@@ -55,25 +56,25 @@ describe("ObservationService", () => {
   });
 
   describe("findAll", () => {
-    it("should return all observations", async () => {
+    it("should return all communications", async () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(5);
     });
 
-    it("should return all observations filtered by patient", async () => {
+    it("should return all communications filtered by patient", async () => {
       const bundle = await service.findAll({ patient: "2" });
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(3);
     });
 
-    it("should return all observations filtered by encounter", async () => {
+    it("should return all communications filtered by encounter", async () => {
       const bundle = await service.findAll({ encounter: "2" });
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
     });
 
-    it("should return all observations filtered by patient and encounter", async () => {
+    it("should return all communications filtered by patient and encounter", async () => {
       const bundle = await service.findAll({
         patient: "2",
         encounter: "2",
@@ -82,7 +83,7 @@ describe("ObservationService", () => {
       expect(bundle.entry?.length).toBe(2);
     });
 
-    it("should return no observations filtered by patient and encounter", async () => {
+    it("should return no communications filtered by patient and encounter", async () => {
       const bundle = await service.findAll({
         patient: "1",
         encounter: "3",

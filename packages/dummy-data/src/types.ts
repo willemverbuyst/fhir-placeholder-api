@@ -6,6 +6,8 @@ export interface DummyDataConfig {
   numberOfEncounters: number;
   numberOfEpisodes: number;
   numberOfObservations: number;
+  numberOfFlags: number;
+  numberOfCommunications: number;
   numberOfOrganizations: number;
   numberOfPatients: number;
   numberOfPractitioners: number;

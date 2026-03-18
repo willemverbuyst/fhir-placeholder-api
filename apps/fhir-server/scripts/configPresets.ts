@@ -10,6 +10,8 @@ export interface UserDummyDataConfig {
   conditionsPerPatient: number;
   encountersPerPatient: number;
   observationsPerEncounter: number;
+  flagsPerEncounter: number;
+  communicationsPerEncounter: number;
   idStrategy: "sequential" | "uuid";
   startDate: `${number}-${number}-${number}`;
   createdAt: string; // ISO timestamp for expiry
@@ -36,6 +38,8 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
       conditionsPerPatient: 4,
       encountersPerPatient: 20,
       observationsPerEncounter: 2,
+      flagsPerEncounter: 1,
+      communicationsPerEncounter: 1,
       idStrategy: "uuid",
       startDate: "1950-01-01",
     },
@@ -54,6 +58,8 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
       conditionsPerPatient: 6,
       encountersPerPatient: 25,
       observationsPerEncounter: 3,
+      flagsPerEncounter: 1,
+      communicationsPerEncounter: 1,
       idStrategy: "uuid",
       startDate: "1950-01-01",
     },
@@ -72,6 +78,8 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
       conditionsPerPatient: 8,
       encountersPerPatient: 30,
       observationsPerEncounter: 3,
+      flagsPerEncounter: 1,
+      communicationsPerEncounter: 1,
       idStrategy: "uuid",
       startDate: "1950-01-01",
     },

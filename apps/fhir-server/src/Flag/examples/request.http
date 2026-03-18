@@ -1,0 +1,9 @@
+###
+GET http://localhost:8080/api/v2/r5/Flag
+
+###
+GET http://localhost:8080/api/v2/r5/Flag?patient=fbf98903-7680-4fa1-b3f3-95d931563a48
+
+###
+GET http://localhost:8080/api/v2/r5/Flag?encounter=b2ff4f86-3718-49f9-a7a6-0449f85f31a2
+

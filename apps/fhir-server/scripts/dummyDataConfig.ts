@@ -1,5 +1,5 @@
-import type { DummyDataConfig } from "@repo/dummy-data";
 import { existsSync, readFileSync } from "node:fs";
+import type { DummyDataConfig } from "@repo/dummy-data";
 import {
   CONFIG_EXPIRY_MS,
   CONFIG_FILE_PATH,
@@ -70,6 +70,9 @@ function buildDummyDataConfig(): DummyDataConfig {
     const numberOfObservations =
       numberOfEncounters * userConfig.observationsPerEncounter;
     const numberOfAllergies = numberOfPatients * userConfig.allergiesPerPatient;
+    const numberOfFlags = numberOfEncounters * userConfig.flagsPerEncounter;
+    const numberOfCommunications =
+      numberOfEncounters * userConfig.communicationsPerEncounter;
 
     return {
       numberOfAllergies,
@@ -78,6 +81,8 @@ function buildDummyDataConfig(): DummyDataConfig {
       numberOfEncounters,
       numberOfEpisodes,
       numberOfObservations,
+      numberOfFlags,
+      numberOfCommunications,
       numberOfOrganizations,
       numberOfPatients,
       numberOfPractitioners,

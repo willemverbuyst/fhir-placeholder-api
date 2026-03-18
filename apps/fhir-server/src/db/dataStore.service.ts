@@ -3,9 +3,11 @@ import { generateResources } from "@repo/dummy-data";
 import type {
   AllergyIntolerance,
   Appointment,
+  Communication,
   Condition,
   Encounter,
   EpisodeOfCare,
+  Flag,
   Observation,
   Organization,
   Patient,
@@ -26,6 +28,8 @@ export class DataStoreService {
   public observations: Observation[] = [];
   public appointments: Appointment[] = [];
   public allergies: AllergyIntolerance[] = [];
+  public flags: Flag[] = [];
+  public communications: Communication[] = [];
 
   constructor() {
     const resources = generateResources(dummyDataConfig);
@@ -40,5 +44,7 @@ export class DataStoreService {
     this.patients = resources.patients;
     this.practitioners = resources.practitioners;
     this.practitionerRoles = resources.practitionerRoles;
+    this.flags = resources.flags;
+    this.communications = resources.communications;
   }
 }

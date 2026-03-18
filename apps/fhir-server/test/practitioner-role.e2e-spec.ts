@@ -20,10 +20,10 @@ describe("PatientController (e2e)", () => {
       .get("/PractitionerRole")
       .expect(200)
       .then((res) => {
-        const patients = res.body;
-        expect(patients).toBeDefined();
-        expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(6);
+        const practitionerRoles = res.body;
+        expect(practitionerRoles).toBeDefined();
+        expect(practitionerRoles).toHaveProperty("resourceType", "Bundle");
+        expect(practitionerRoles.entry).toHaveLength(6);
       });
   });
 
@@ -32,10 +32,10 @@ describe("PatientController (e2e)", () => {
       .get("/PractitionerRole?organization=organization-1")
       .expect(200)
       .then((res) => {
-        const patients = res.body;
-        expect(patients).toBeDefined();
-        expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(2);
+        const practitionerRoles = res.body;
+        expect(practitionerRoles).toBeDefined();
+        expect(practitionerRoles).toHaveProperty("resourceType", "Bundle");
+        expect(practitionerRoles.entry).toHaveLength(2);
       });
   });
 
@@ -44,10 +44,10 @@ describe("PatientController (e2e)", () => {
       .get("/PractitionerRole?practitioner=practitioner-1")
       .expect(200)
       .then((res) => {
-        const patients = res.body;
-        expect(patients).toBeDefined();
-        expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(1);
+        const practitionerRoles = res.body;
+        expect(practitionerRoles).toBeDefined();
+        expect(practitionerRoles).toHaveProperty("resourceType", "Bundle");
+        expect(practitionerRoles.entry).toHaveLength(1);
       });
   });
 
@@ -58,10 +58,10 @@ describe("PatientController (e2e)", () => {
       )
       .expect(200)
       .then((res) => {
-        const patients = res.body;
-        expect(patients).toBeDefined();
-        expect(patients).toHaveProperty("resourceType", "Bundle");
-        expect(patients.entry).toHaveLength(1);
+        const practitionerRoles = res.body;
+        expect(practitionerRoles).toBeDefined();
+        expect(practitionerRoles).toHaveProperty("resourceType", "Bundle");
+        expect(practitionerRoles.entry).toHaveLength(1);
       });
   });
 });

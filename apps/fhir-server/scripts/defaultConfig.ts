@@ -12,6 +12,8 @@ const {
   conditionsPerPatient,
   encountersPerPatient,
   observationsPerEncounter,
+  flagsPerEncounter,
+  communicationsPerEncounter,
   startDate,
 } = CONFIG_PRESETS.small.config;
 
@@ -27,6 +29,8 @@ const numberOfEncounters = numberOfPatients * encountersPerPatient;
 const numberOfObservations = numberOfEncounters * observationsPerEncounter;
 const numberOfAppointments = numberOfPatients * appointmentsPerPatient;
 const numberOfAllergies = numberOfPatients * allergiesPerPatient;
+const numberOfFlags = numberOfEncounters * flagsPerEncounter;
+const numberOfCommunications = numberOfEncounters * communicationsPerEncounter;
 
 export const defaultConfig: DummyDataConfig = {
   numberOfAllergies,
@@ -35,6 +39,8 @@ export const defaultConfig: DummyDataConfig = {
   numberOfEncounters,
   numberOfEpisodes,
   numberOfObservations,
+  numberOfFlags,
+  numberOfCommunications,
   numberOfOrganizations,
   numberOfPatients,
   numberOfPractitioners,

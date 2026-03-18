@@ -221,6 +221,39 @@ async function customConfiguration(): Promise<UserDummyDataConfig> {
     console.log("❌ Please enter a valid number (minimum 1)");
   }
 
+  // Flags per encounter
+  let flagsPerEncounter: number;
+  while (true) {
+    const value = await prompt("Flags per encounter [1]: ");
+    if (!value) {
+      flagsPerEncounter = 1;
+      break;
+    }
+
+    const num = validateNumber(value, 1);
+    if (num) {
+      flagsPerEncounter = num;
+      break;
+    }
+    console.log("❌ Please enter a valid number (minimum 1)");
+  }
+
+  // Communications per encounter
+  let communicationsPerEncounter: number;
+  while (true) {
+    const value = await prompt("Communications per encounter [1]: ");
+    if (!value) {
+      communicationsPerEncounter = 1;
+      break;
+    }
+    const num = validateNumber(value, 1);
+    if (num) {
+      communicationsPerEncounter = num;
+      break;
+    }
+    console.log("❌ Please enter a valid number (minimum 1)");
+  }
+
   // ID Strategy
   let idStrategy: "sequential" | "uuid";
   while (true) {
@@ -263,6 +296,8 @@ async function customConfiguration(): Promise<UserDummyDataConfig> {
     conditionsPerPatient,
     encountersPerPatient,
     observationsPerEncounter,
+    flagsPerEncounter,
+    communicationsPerEncounter,
     idStrategy,
     startDate,
     createdAt: new Date().toISOString(),
@@ -275,6 +310,9 @@ function displaySummary(config: UserDummyDataConfig) {
   const totalPatients = totalPractitioners * config.patientsPerPractitioner;
   const totalEncounters = totalPatients * config.encountersPerPatient;
   const totalObservations = totalEncounters * config.observationsPerEncounter;
+  const totalFlags = totalEncounters * config.flagsPerEncounter;
+  const totalCommunications =
+    totalEncounters * config.communicationsPerEncounter;
 
   console.log("\n📊 Configuration Summary:");
   console.log("─".repeat(40));
@@ -291,6 +329,8 @@ function displaySummary(config: UserDummyDataConfig) {
   console.log(`Conditions: ${totalPatients * config.conditionsPerPatient}`);
   console.log(`Encounters: ${totalEncounters}`);
   console.log(`Observations: ${totalObservations}`);
+  console.log(`Flags: ${totalFlags}`);
+  console.log(`Communications: ${totalCommunications}`);
   console.log(`ID Strategy: ${config.idStrategy}`);
   console.log(`Start Date: ${config.startDate}`);
   console.log("─".repeat(40));

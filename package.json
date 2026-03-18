@@ -32,7 +32,8 @@
     "turbo": "^2.8.16",
     "typescript": "^5.8.3",
     "vitest": "^4.0.18",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "bunchee": "^6.5.2"
   },
   "packageManager": "pnpm@10.10.0",
   "engines": {

@@ -23,6 +23,9 @@ importers:
       '@types/node':
         specifier: ^25.3.3
         version: 25.5.0
+      bunchee:
+        specifier: ^6.5.2
+        version: 6.9.4(typescript@5.9.3)
       cspell:
         specifier: ^9.6.4
         version: 9.7.0
@@ -293,30 +296,16 @@ importers:
       '@repo/fhir-terminology':
         specifier: workspace:*
         version: link:../fhir-terminology
-      bunchee:
-        specifier: ^6.5.2
-        version: 6.9.4(typescript@5.9.3)
 
-  packages/fhir-terminology:
-    dependencies:
-      bunchee:
-        specifier: ^6.5.2
-        version: 6.9.4(typescript@5.9.3)
+  packages/fhir-terminology: {}
 
-  packages/normalizer:
-    dependencies:
-      bunchee:
-        specifier: ^6.5.2
-        version: 6.9.4(typescript@5.9.3)
+  packages/normalizer: {}
 
   packages/utils:
     dependencies:
       '@repo/fhir-terminology':
         specifier: workspace:*
         version: link:../fhir-terminology
-      bunchee:
-        specifier: ^6.5.2
-        version: 6.9.4(typescript@5.9.3)
 
 packages:
 
@@ -368,10 +357,6 @@ packages:
 
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==}
-
-  '@babel/code-frame@7.27.1':
-    resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/code-frame@7.29.0':
     resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
@@ -6331,13 +6316,6 @@ snapshots:
 
   '@asamuzakjp/nwsapi@2.3.9': {}
 
-  '@babel/code-frame@7.27.1':
-    dependencies:
-      '@babel/helper-validator-identifier': 7.28.5
-      js-tokens: 4.0.0
-      picocolors: 1.1.1
-    optional: true
-
   '@babel/code-frame@7.29.0':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
@@ -11384,7 +11362,7 @@ snapshots:
       rollup: 4.53.3
       typescript: 5.9.3
     optionalDependencies:
-      '@babel/code-frame': 7.27.1
+      '@babel/code-frame': 7.29.0
 
   rollup-plugin-swc3@0.11.2(@swc/core@1.15.3(@swc/helpers@0.5.17))(rollup@4.53.3):
     dependencies:

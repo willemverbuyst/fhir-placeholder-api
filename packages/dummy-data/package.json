@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
-    "@repo/fhir-terminology": "workspace:*",
-    "bunchee": "^6.5.2"
+    "@repo/fhir-terminology": "workspace:*"
   }
 }

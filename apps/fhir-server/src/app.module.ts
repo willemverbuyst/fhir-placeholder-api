@@ -4,6 +4,7 @@ import { AllergyIntoleranceModule } from "./AllergyIntolerance/allergy-intoleran
 import { AppointmentModule } from "./Appointment/appointment.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { CommunicationModule } from "./Communication/communication.module";
 import { ConditionModule } from "./Condition/condition.module";
 import configuration from "./config/configuration";
 import { DataStoreModule } from "./db/dataStore.module";
@@ -38,6 +39,7 @@ import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
     EncounterModule,
     ObservationModule,
     FlagModule,
+    CommunicationModule,
     PractitionerRoleModule,
     AppointmentModule,
     ResourceCountsModule,

@@ -4,7 +4,7 @@ import { FlagService } from "./flag.service";
 
 describe("FlagService", () => {
   let service: FlagService;
-  const mockDataStore: Pick<DataStoreService, "flags"> = {
+  const mockDataStore = {
     flags: [
       {
         id: "1",

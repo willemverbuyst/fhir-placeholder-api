@@ -5,7 +5,7 @@ import { CommunicationService } from "./communication.service";
 describe("CommunicationService", () => {
   let service: CommunicationService;
 
-  const mockDataStore: Pick<DataStoreService, "communications"> = {
+  const mockDataStore = {
     communications: [
       {
         id: "1",

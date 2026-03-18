@@ -1,8 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import { ErrorAlert } from "@/components/alert/ErrorAlert";
 import { InfoAlert } from "@/components/alert/InfoAlert";
 import { CardsSkeleton } from "@/components/skeleton/CardSkeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
 import { createMetadataQueryOptions } from "../../query/metadata.query";
 
 export function CapabilityStatementPage() {

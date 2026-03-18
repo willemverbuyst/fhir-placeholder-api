@@ -1,5 +1,6 @@
 # Dummy Data
 
-## Scripts
+## What is this?
 
-> pnpm turbo build --filter=@repo/dummy-data
+This package provides utilities and datasets for generating FHIR R5-compliant dummy data, useful for development, testing, and demos.
+

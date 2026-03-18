@@ -12,6 +12,16 @@ export class ResourceTreeService {
       (observation) => observation.encounter?.reference,
     );
 
+    const communicationsByEncounter = R.groupBy(
+      this.repo.communications,
+      (communication) => communication.encounter?.reference,
+    );
+
+    const flagsByEncounter = R.groupBy(
+      this.repo.flags,
+      (flag) => flag.encounter?.reference,
+    );
+
     const allergiesByEncounter = R.groupBy(
       this.repo.allergies,
       (allergy) => allergy.encounter?.reference ?? "unknown",
@@ -63,16 +73,28 @@ export class ResourceTreeService {
     const encounterTree = R.mapValues(encountersByEpisode, (encounters) =>
       encounters.map((encounter) => ({
         name: `Encounter/${encounter.id}`,
-        children: R.concat(
-          allergiesByEncounter[`Encounter/${encounter.id}`]?.map((allergy) => ({
-            name: `AllergyIntolerance/${allergy.id}`,
-            children: [],
-          })) || [],
-          obsByEncounter[`Encounter/${encounter.id}`].map((obs) => ({
+        children: [
+          ...(allergiesByEncounter[`Encounter/${encounter.id}`]?.map(
+            (allergy) => ({
+              name: `AllergyIntolerance/${allergy.id}`,
+              children: [],
+            }),
+          ) || []),
+          ...(obsByEncounter[`Encounter/${encounter.id}`]?.map((obs) => ({
             name: `Observation/${obs.id}`,
             children: [],
-          })) || [],
-        ),
+          })) || []),
+          ...(communicationsByEncounter[`Encounter/${encounter.id}`]?.map(
+            (communication) => ({
+              name: `Communication/${communication.id}`,
+              children: [],
+            }),
+          ) || []),
+          ...(flagsByEncounter[`Encounter/${encounter.id}`]?.map((flag) => ({
+            name: `Flag/${flag.id}`,
+            children: [],
+          })) || []),
+        ],
       })),
     );
 

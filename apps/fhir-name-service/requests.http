@@ -1,0 +1,15 @@
+###
+POST http://localhost:8081/format-name
+Content-Type: application/json
+
+[
+  {
+  "given": ["John", "Doe"],
+  "family": "Smith"
+  },
+  {
+  "given": ["Donny", "D", "3"],
+  "family": "Duck"
+  }
+]
+

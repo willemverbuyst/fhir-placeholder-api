@@ -1,45 +1,26 @@
-"use client";
+import HeaderNavClient from "@/components/HeaderNavClient";
+import {
+  extractSupportedResourceTypes,
+  fetchCapabilityStatement,
+} from "@/lib/metadata";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+export type NavLink = { href: string; label: string };
 
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/allergy-intolerance", label: "AllergyIntolerance" },
-  { href: "/appointment", label: "Appointment" },
-  { href: "/condition", label: "Condition" },
-  { href: "/encounter", label: "Encounter" },
-  { href: "/episode-of-care", label: "EpisodeOfCare" },
-  { href: "/observation", label: "Observation" },
-  { href: "/organization", label: "Organization" },
-  { href: "/patient", label: "Patient" },
-  { href: "/practitioner", label: "Practitioner" },
-  { href: "/practitioner-role", label: "PractitionerRole" },
-] as const;
+export default async function Header() {
+  const capabilityStatement = await fetchCapabilityStatement();
+  const resourceTypes = extractSupportedResourceTypes(capabilityStatement);
 
-export default function Header() {
-  const pathname = usePathname();
+  const links: NavLink[] = [
+    { href: "/", label: "Home" },
+    ...resourceTypes.map((resourceType) => ({
+      href: `/${resourceType}`,
+      label: resourceType,
+    })),
+  ];
 
   return (
-    <header className="flex w-full justify-center gap-4 pb-4 sm:items-start">
-      {NAV_LINKS.map(({ href, label }) => {
-        const isActive = pathname === href;
-
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={`text-base ${
-              isActive
-                ? "font-semibold text-zinc-300"
-                : "text-blue-600 hover:underline"
-            }`}
-            aria-current={isActive ? "page" : undefined}
-          >
-            {label}
-          </Link>
-        );
-      })}
+    <header className="flex w-full justify-center pb-4 sm:items-start">
+      <HeaderNavClient links={links} />
     </header>
   );
 }

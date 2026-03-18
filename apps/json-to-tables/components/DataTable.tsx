@@ -64,8 +64,7 @@ function TableHeader({
 }
 
 import { normalizeJSON } from "@repo/normalizer";
-import { Bundle } from "fhir/r2";
-import { Resource } from "fhir/r5";
+import type { Bundle, Resource } from "fhir/r5";
 
 type TableData = {
   headers: Set<string>;
@@ -125,9 +124,7 @@ function prepareDataForTable(data: NormalizedData): TableData {
   return tableData;
 }
 
-async function fetchBundle<T extends Resource>(
-  resourceType: string,
-): Promise<Bundle<T>> {
+async function fetchBundle(resourceType: string): Promise<Bundle<Resource>> {
   const apiUrl = `http://localhost:8080/api/v2/r5/${resourceType}`;
 
   const response = await fetch(apiUrl, {
@@ -138,25 +135,27 @@ async function fetchBundle<T extends Resource>(
     throw new Error(`Failed to fetch resources: ${response.status}`);
   }
 
-  const data = (await response.json()) as Bundle<T>;
+  const data = (await response.json()) as Bundle<Resource>;
 
   return data;
 }
 
-function buildTableDataFromBundle<T>(bundle: Bundle<T>): TableData {
-  const patients = bundle.entry?.map((entry) => entry.resource).filter(Boolean);
-  const normalizedPatients = normalizeJSON(patients) as NormalizedData;
+function buildTableDataFromBundle(bundle: Bundle<Resource>): TableData {
+  const resources = bundle.entry
+    ?.map((entry) => entry.resource)
+    .filter(Boolean);
+  const normalizedResources = normalizeJSON(resources) as NormalizedData;
 
-  return prepareDataForTable(normalizedPatients);
+  return prepareDataForTable(normalizedResources);
 }
 
-export default async function DataTable<T extends Resource>({
+export default async function DataTable({
   resourceType,
 }: {
   resourceType: string;
 }) {
-  const bundle = await fetchBundle<T>(resourceType);
-  const tableData = buildTableDataFromBundle<T>(bundle);
+  const bundle = await fetchBundle(resourceType);
+  const tableData = buildTableDataFromBundle(bundle);
 
   return (
     <Table>

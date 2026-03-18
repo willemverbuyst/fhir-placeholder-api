@@ -1,15 +1,15 @@
 import { FLAG_STATUS } from "@repo/fhir-terminology";
 import { describe, expect, it } from "vitest";
 import { IdGenerator } from "../idGenerator";
-import { generateFlag, generateFlags } from "./flag";
+import { createFlag, createFlags } from "./flag";
 
-describe("generateFlag", () => {
+describe("createFlag", () => {
   it("should create a flag with a valid structure", () => {
     const patientId = "patient-1";
     const encounterId = "encounter-1";
     const flagId = "flag-1";
 
-    const flag = generateFlag({
+    const flag = createFlag({
       patientId,
       encounterId,
       id: flagId,
@@ -29,7 +29,7 @@ describe("generateFlag", () => {
   });
 });
 
-describe("generateFlags", () => {
+describe("createFlags", () => {
   const idGen = new IdGenerator();
 
   idGen.refs.set("patient", ["patient-1", "patient-2"]);
@@ -41,7 +41,7 @@ describe("generateFlags", () => {
     "encounter-4",
   ]);
 
-  const flags = generateFlags({
+  const flags = createFlags({
     numberOfFlags: 16,
     numberOfPatients: 2,
     numberOfEncounters: 4,
@@ -79,7 +79,7 @@ describe("generateFlags", () => {
   );
 
   it("should create the specified number of flags", () => {
-    const flags = generateFlags({
+    const flags = createFlags({
       numberOfFlags: 8,
       numberOfPatients: 4,
       numberOfEncounters: 4,
@@ -90,7 +90,7 @@ describe("generateFlags", () => {
   });
 
   it("should return an empty array if numberOfFlags is 0", () => {
-    const flags = generateFlags({
+    const flags = createFlags({
       numberOfFlags: 0,
       numberOfPatients: 4,
       numberOfEncounters: 4,

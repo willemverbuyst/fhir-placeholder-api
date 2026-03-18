@@ -3,7 +3,7 @@ import { FLAG_STATUS } from "@repo/fhir-terminology";
 import type { Flag } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 
-export function generateFlag({
+export function createFlag({
   patientId,
   encounterId,
   id,
@@ -24,7 +24,7 @@ export function generateFlag({
   };
 }
 
-export function generateFlags({
+export function createFlags({
   numberOfFlags,
   numberOfPatients,
   numberOfEncounters,
@@ -39,7 +39,7 @@ export function generateFlags({
     const patientIndex = Math.floor(i / (numberOfFlags / numberOfPatients));
     const encounterIndex = Math.floor(i / (numberOfFlags / numberOfEncounters));
 
-    return generateFlag({
+    return createFlag({
       patientId: idGen.refs.get("patient")?.[patientIndex],
       encounterId: idGen.refs.get("encounter")?.[encounterIndex],
       id: idGen.generateId("flag"),

@@ -13,6 +13,16 @@ A collection of tools centered around Fhir R5 dummy data.
 - [fhir-to-tables](apps/fhir-to-tables)
 - [patient-timeline](apps/patient-timeline)
 
+## App interactions
+
+```mermaid
+flowchart LR
+  FC[fhir-client] --> FS[fhir-server]
+  FTS[fhir-to-spreadsheet] --> FS
+  FTT[fhir-to-tables] --> FS
+  PT[patient-timeline] --> FS
+```
+
 ## Packages
 
 - [dummy-data](packages/dummy-data)

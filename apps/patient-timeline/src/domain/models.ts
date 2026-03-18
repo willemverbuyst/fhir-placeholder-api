@@ -13,6 +13,7 @@ export type TimelineEntry = {
 };
 
 export type TimelineResponse = {
+  patient: string | null;
   timeline: TimelineEntry[];
   warnings: string[];
 };

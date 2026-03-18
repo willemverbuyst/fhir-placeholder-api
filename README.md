@@ -21,6 +21,7 @@ flowchart LR
   FTS[fhir-to-spreadsheet] --> FS
   FTT[fhir-to-tables] --> FS
   PT[patient-timeline] --> FS
+  PT --> FNS[fhir-name-service]
 ```
 
 ## Packages

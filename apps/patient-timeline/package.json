@@ -10,9 +10,6 @@
   "keywords": [],
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
-  "devDependencies": {
-    "typescript": "^5.9.3"
-  },
   "dependencies": {
     "effect": "^3.20.0"
   }

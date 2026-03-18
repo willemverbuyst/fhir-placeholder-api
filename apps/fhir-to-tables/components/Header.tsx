@@ -1,14 +1,16 @@
 import HeaderNavClient from "@/components/HeaderNavClient";
 import {
   extractSupportedResourceTypes,
-  fetchCapabilityStatement,
+  fetchCapabilityStatementSafe,
 } from "@/lib/metadata";
 
 export type NavLink = { href: string; label: string };
 
 export default async function Header() {
-  const capabilityStatement = await fetchCapabilityStatement();
-  const resourceTypes = extractSupportedResourceTypes(capabilityStatement);
+  const capabilityStatement = await fetchCapabilityStatementSafe();
+  const resourceTypes = capabilityStatement
+    ? extractSupportedResourceTypes(capabilityStatement)
+    : [];
 
   const links: NavLink[] = [
     ...resourceTypes.map((resourceType) => ({

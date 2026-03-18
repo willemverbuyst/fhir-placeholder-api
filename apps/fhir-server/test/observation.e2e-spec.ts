@@ -52,14 +52,32 @@ describe("ObservationController (e2e)", () => {
   });
 
   it("/Observation?encounter=encounter-2&patient=patient-2 (GET) - OK", async () => {
-    return request(app.getHttpServer())
-      .get("/Observation?encounter=encounter-2&patient=patient-2")
-      .expect(200)
-      .then((res) => {
-        const observations = res.body;
-        expect(observations).toBeDefined();
-        expect(observations).toHaveProperty("resourceType", "Bundle");
-        expect(observations.entry).toHaveLength(2);
-      });
+    return (
+      request(app.getHttpServer())
+        // no observations for this combination
+        .get("/Observation?encounter=encounter-2&patient=patient-2")
+        .expect(200)
+        .then((res) => {
+          const observations = res.body;
+          expect(observations).toBeDefined();
+          expect(observations).toHaveProperty("resourceType", "Bundle");
+          expect(observations.entry).toHaveLength(0);
+        })
+    );
+  });
+
+  it("/Observation?encounter=encounter-2&patient=patient-1 (GET) - OK", async () => {
+    return (
+      request(app.getHttpServer())
+        // no observations for this combination
+        .get("/Observation?encounter=encounter-2&patient=patient-1")
+        .expect(200)
+        .then((res) => {
+          const observations = res.body;
+          expect(observations).toBeDefined();
+          expect(observations).toHaveProperty("resourceType", "Bundle");
+          expect(observations.entry).toHaveLength(2);
+        })
+    );
   });
 });

@@ -51,6 +51,21 @@ describe("CommunicationController (e2e)", () => {
       });
   });
 
+  it("/Communication?encounter=encounter-2&patient=patient-2 (GET) - OK", async () => {
+    return (
+      request(app.getHttpServer())
+        // no communications for this combination
+        .get("/Communication?encounter=encounter-2&patient=patient-2")
+        .expect(200)
+        .then((res) => {
+          const communications = res.body;
+          expect(communications).toBeDefined();
+          expect(communications).toHaveProperty("resourceType", "Bundle");
+          expect(communications.entry).toHaveLength(0);
+        })
+    );
+  });
+
   it("/Communication?encounter=encounter-1&patient=patient-1(GET) - OK", async () => {
     return request(app.getHttpServer())
       .get("/Communication?encounter=encounter-1&patient=patient-1")

@@ -81,5 +81,14 @@ describe("FlagService", () => {
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
     });
+
+    it("should return no flags filtered by patient and encounter", async () => {
+      const bundle = await service.findAll({
+        patient: "1",
+        encounter: "3",
+      });
+      expect(bundle).toBeDefined();
+      expect(bundle.entry?.length).toBe(0);
+    });
   });
 });

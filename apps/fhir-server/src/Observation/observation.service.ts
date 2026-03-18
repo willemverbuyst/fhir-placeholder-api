@@ -19,13 +19,17 @@ export class ObservationService {
 
     const { patient, encounter } = query;
 
-    if (patient) {
+    if (patient && encounter) {
+      resources = this.repo.observations.filter(
+        (o) =>
+          o.subject?.reference?.endsWith(patient) &&
+          o.encounter?.reference?.endsWith(encounter),
+      );
+    } else if (patient) {
       resources = this.repo.observations.filter((o) =>
         o.subject?.reference?.endsWith(patient),
       );
-    }
-
-    if (encounter) {
+    } else if (encounter) {
       resources = this.repo.observations.filter((o) =>
         o.encounter?.reference?.endsWith(encounter),
       );

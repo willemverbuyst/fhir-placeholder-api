@@ -52,8 +52,23 @@ describe("FlagController (e2e)", () => {
   });
 
   it("/Flag?encounter=encounter-2&patient=patient-2 (GET) - OK", async () => {
+    return (
+      request(app.getHttpServer())
+        // no flags for this combination
+        .get("/Flag?encounter=encounter-2&patient=patient-2")
+        .expect(200)
+        .then((res) => {
+          const flags = res.body;
+          expect(flags).toBeDefined();
+          expect(flags).toHaveProperty("resourceType", "Bundle");
+          expect(flags.entry).toHaveLength(0);
+        })
+    );
+  });
+
+  it("/Flag?encounter=encounter-2&patient=patient-1 (GET) - OK", async () => {
     return request(app.getHttpServer())
-      .get("/Flag?encounter=encounter-2&patient=patient-2")
+      .get("/Flag?encounter=encounter-2&patient=patient-1")
       .expect(200)
       .then((res) => {
         const flags = res.body;

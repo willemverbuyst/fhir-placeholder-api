@@ -21,13 +21,17 @@ export class FlagService {
 
     const { patient, encounter } = query;
 
-    if (patient) {
+    if (patient && encounter) {
+      resources = this.repo.flags.filter(
+        (flag) =>
+          flag.subject?.reference?.endsWith(patient) &&
+          flag.encounter?.reference?.endsWith(encounter),
+      );
+    } else if (patient) {
       resources = this.repo.flags.filter((flag) =>
         flag.subject?.reference?.endsWith(patient),
       );
-    }
-
-    if (encounter) {
+    } else if (encounter) {
       resources = this.repo.flags.filter((flag) =>
         flag.encounter?.reference?.endsWith(encounter),
       );

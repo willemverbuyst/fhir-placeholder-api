@@ -21,13 +21,17 @@ export class CommunicationService {
 
     const { patient, encounter } = query;
 
-    if (patient) {
+    if (patient && encounter) {
+      resources = resources.filter(
+        (communication) =>
+          communication.subject?.reference?.endsWith(patient) &&
+          communication.encounter?.reference?.endsWith(encounter),
+      );
+    } else if (patient) {
       resources = resources.filter((communication) =>
         communication.subject?.reference?.endsWith(patient),
       );
-    }
-
-    if (encounter) {
+    } else if (encounter) {
       resources = resources.filter((communication) =>
         communication.encounter?.reference?.endsWith(encounter),
       );

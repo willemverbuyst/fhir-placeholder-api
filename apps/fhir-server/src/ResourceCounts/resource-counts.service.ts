@@ -17,6 +17,8 @@ export class ResourceCountsService {
       observations: this.repo.observations.length,
       appointments: this.repo.appointments.length,
       allergies: this.repo.allergies.length,
+      communications: this.repo.communications.length,
+      flags: this.repo.flags.length,
     };
   }
 }

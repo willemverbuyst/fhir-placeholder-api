@@ -22,8 +22,8 @@ export default function HeaderNavClient({ links }: HeaderNavClientProps) {
             href={href}
             className={`text-base ${
               isActive
-                ? "font-semibold text-zinc-300"
-                : "text-blue-600 hover:underline"
+                ? "font-semibold text-primary"
+                : "text-muted-foreground hover:underline"
             }`}
             aria-current={isActive ? "page" : undefined}
           >

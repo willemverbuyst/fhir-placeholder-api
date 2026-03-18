@@ -18,8 +18,17 @@ export default async function Header() {
   ];
 
   return (
-    <header className="flex w-full justify-center pb-4 sm:items-start">
-      <HeaderNavClient links={links} />
+    <header className="flex w-full flex-col items-center pb-4">
+      <nav className="w-full max-w-[1200px] flex flex-col gap-2">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+          <HeaderNavClient
+            links={links.slice(0, Math.ceil(links.length / 2))}
+          />
+        </div>
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
+          <HeaderNavClient links={links.slice(Math.ceil(links.length / 2))} />
+        </div>
+      </nav>
     </header>
   );
 }

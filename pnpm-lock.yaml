@@ -248,7 +248,7 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
 
-  apps/json-to-tables:
+  apps/fhir-to-tables:
     dependencies:
       '@repo/normalizer':
         specifier: workspace:*

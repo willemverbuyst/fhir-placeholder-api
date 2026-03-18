@@ -32,10 +32,10 @@ describe("ObservationController (e2e)", () => {
       .get("/Observation?patient=patient-2")
       .expect(200)
       .then((res) => {
-        const encounters = res.body;
-        expect(encounters).toBeDefined();
-        expect(encounters).toHaveProperty("resourceType", "Bundle");
-        expect(encounters.entry).toHaveLength(40);
+        const observations = res.body;
+        expect(observations).toBeDefined();
+        expect(observations).toHaveProperty("resourceType", "Bundle");
+        expect(observations.entry).toHaveLength(40);
       });
   });
 
@@ -44,10 +44,10 @@ describe("ObservationController (e2e)", () => {
       .get("/Observation?encounter=encounter-2")
       .expect(200)
       .then((res) => {
-        const encounters = res.body;
-        expect(encounters).toBeDefined();
-        expect(encounters).toHaveProperty("resourceType", "Bundle");
-        expect(encounters.entry).toHaveLength(2);
+        const observations = res.body;
+        expect(observations).toBeDefined();
+        expect(observations).toHaveProperty("resourceType", "Bundle");
+        expect(observations.entry).toHaveLength(2);
       });
   });
 
@@ -56,10 +56,10 @@ describe("ObservationController (e2e)", () => {
       .get("/Observation?encounter=encounter-2&patient=patient-2")
       .expect(200)
       .then((res) => {
-        const encounters = res.body;
-        expect(encounters).toBeDefined();
-        expect(encounters).toHaveProperty("resourceType", "Bundle");
-        expect(encounters.entry).toHaveLength(2);
+        const observations = res.body;
+        expect(observations).toBeDefined();
+        expect(observations).toHaveProperty("resourceType", "Bundle");
+        expect(observations.entry).toHaveLength(2);
       });
   });
 });

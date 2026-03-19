@@ -1,21 +1,21 @@
 import { CONFIG_PRESETS, type UserDummyDataConfig } from "@repo/config-scripts";
 
-export type PromptFn = (question: string) => Promise<string>;
-export type LogFn = (message: string) => void;
-export type NowFn = () => Date;
+type PromptFn = (question: string) => Promise<string>;
+type LogFn = (message: string) => void;
+type NowFn = () => Date;
 
-export type SetupFlowDecision =
+type SetupFlowDecision =
   | { kind: "cancelled"; reason: "overwrite-denied" | "save-denied" }
   | { kind: "save"; config: UserDummyDataConfig };
 
-export type SetupFlowInput = {
+type SetupFlowInput = {
   prompt: PromptFn;
   log: LogFn;
   now: NowFn;
   existingConfig: UserDummyDataConfig | null;
 };
 
-export type ConfigSummary = {
+type ConfigSummary = {
   totalPractitioners: number;
   totalPatients: number;
   totalAppointments: number;

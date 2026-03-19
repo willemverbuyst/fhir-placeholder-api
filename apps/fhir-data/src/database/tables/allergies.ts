@@ -1,6 +1,6 @@
 import { AllergyIntolerance } from "fhir/r5";
-import { getDb } from "./db";
-import { createJsonResourceTable } from "./jsonResourceTable";
+import { getDb } from "../db";
+import { createJsonResourceTable } from "../jsonResourceTable";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -52,17 +52,15 @@ const allergyIntoleranceTable = createJsonResourceTable<AllergyIntolerance>({
   getId: (allergyIntolerance) => allergyIntolerance.id,
 });
 
-export function findAllergyIntolerance(
-  id: string,
-): AllergyIntolerance | undefined {
+export function findAllergy(id: string): AllergyIntolerance | undefined {
   return allergyIntoleranceTable.find(id);
 }
 
-export function getAllergyIntolerance(id: string): AllergyIntolerance {
+export function getAllergy(id: string): AllergyIntolerance {
   return allergyIntoleranceTable.get(id);
 }
 
-export function getAllAllergyIntolerances(): AllergyIntolerance[] {
+export function getAllAllergies(): AllergyIntolerance[] {
   return allergyIntoleranceTable.getAll();
 }
 

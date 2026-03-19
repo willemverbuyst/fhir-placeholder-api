@@ -1,6 +1,6 @@
 import { Patient } from "fhir/r5";
-import { getDb } from "./db";
-import { createJsonResourceTable } from "./jsonResourceTable";
+import { getDb } from "../db";
+import { createJsonResourceTable } from "../jsonResourceTable";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;

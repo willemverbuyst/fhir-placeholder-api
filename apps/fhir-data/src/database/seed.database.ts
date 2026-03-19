@@ -1,5 +1,5 @@
+import { defaultConfig } from "@repo/config-scripts";
 import { generateResources } from "@repo/dummy-data";
-import { defaultConfig } from "../scripts/defaultConfig";
 import {
   seedAllergies,
   seedAppointments,

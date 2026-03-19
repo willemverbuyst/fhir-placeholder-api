@@ -165,6 +165,9 @@ importers:
 
   apps/fhir-data:
     dependencies:
+      '@repo/config-scripts':
+        specifier: workspace:*
+        version: link:../../packages/config-scripts
       '@repo/dummy-data':
         specifier: workspace:*
         version: link:../../packages/dummy-data

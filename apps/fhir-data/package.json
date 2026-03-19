@@ -29,6 +29,7 @@
     "data:seed": "tsx ./src/database/main.ts"
   },
   "dependencies": {
+    "@repo/config-scripts": "workspace:*",
     "@repo/dummy-data": "workspace:*",
     "better-sqlite3": "^12.8.0"
   },

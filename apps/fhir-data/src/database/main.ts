@@ -1,6 +1,6 @@
 import { cleanupDatabase } from "./cleanup.database";
-import { getAllOrganizations } from "./organization";
 import { seedDatabase } from "./seed.database";
+import { getAllOrganizations } from "./tables/organization";
 
 cleanupDatabase();
 seedDatabase();

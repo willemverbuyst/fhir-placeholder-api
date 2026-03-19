@@ -30,6 +30,31 @@ function validateDate(value: string): boolean {
   return !Number.isNaN(date.getTime());
 }
 
+async function selectIdStrategy(
+  defaultValue: UserDummyDataConfig["idStrategy"],
+): Promise<UserDummyDataConfig["idStrategy"]> {
+  const promptLabel =
+    defaultValue === "uuid"
+      ? "ID strategy (sequential/uuid) [uuid]: "
+      : "ID strategy (sequential/uuid) [sequential]: ";
+
+  while (true) {
+    const value = await prompt(promptLabel);
+    const normalizedValue = value.toLowerCase();
+
+    if (!value) {
+      return defaultValue;
+    }
+    if (normalizedValue === "uuid") {
+      return "uuid";
+    }
+    if (normalizedValue === "sequential") {
+      return "sequential";
+    }
+    console.log('❌ Please enter "sequential" or "uuid"');
+  }
+}
+
 async function selectPreset(): Promise<UserDummyDataConfig | null> {
   console.log("\n🎛️  Available presets:");
   console.log("1. Small - 3 organizations, 24 patients (development)");
@@ -254,20 +279,8 @@ async function customConfiguration(): Promise<UserDummyDataConfig> {
     console.log("❌ Please enter a valid number (minimum 1)");
   }
 
-  // ID Strategy
-  let idStrategy: "sequential" | "uuid";
-  while (true) {
-    const value = await prompt("ID strategy (sequential/uuid) [uuid]: ");
-    if (!value || value.toLowerCase() === "uuid") {
-      idStrategy = "uuid";
-      break;
-    }
-    if (value.toLowerCase() === "sequential") {
-      idStrategy = "sequential";
-      break;
-    }
-    console.log('❌ Please enter "sequential" or "uuid"');
-  }
+  // ID strategy
+  const idStrategy = await selectIdStrategy("uuid");
 
   // Start date
   let startDate: `${number}-${number}-${number}`;
@@ -362,7 +375,11 @@ async function main() {
 
     let finalConfig: UserDummyDataConfig;
     if (presetConfig?.preset) {
-      finalConfig = presetConfig;
+      const idStrategy = await selectIdStrategy(presetConfig.idStrategy);
+      finalConfig = {
+        ...presetConfig,
+        idStrategy,
+      };
       console.log(
         `\n✅ Selected preset: ${CONFIG_PRESETS[presetConfig.preset].name}`,
       );

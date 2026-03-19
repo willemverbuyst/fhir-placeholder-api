@@ -26,7 +26,7 @@
     "type:check": "tsc",
     "config:cleanup": "tsx ./src/scripts/cleanup.ts",
     "config:seed": "tsx ./src/scripts/setupConfig.ts",
-    "data:seed": "tsx ./src/database/patients.ts"
+    "data:seed": "tsx ./src/database/main.ts"
   },
   "dependencies": {
     "@repo/dummy-data": "workspace:*",

@@ -1,4 +1,5 @@
-import { Patient } from "fhir/r5";
+import { Organization, Patient } from "fhir/r5";
+import { seedOrganizations } from "./organization";
 import { seedPatients } from "./patients";
 
 const examplePatient: Patient = {
@@ -71,6 +72,15 @@ const examplePatient: Patient = {
 
 const patients: Patient[] = [examplePatient as Patient];
 
+const exampleOrganization: Organization = {
+  resourceType: "Organization",
+  id: "example-organization-1",
+  name: "Example Organization",
+};
+
+const organizations: Organization[] = [exampleOrganization as Organization];
+
 export function seedDatabase(): void {
   seedPatients(patients);
+  seedOrganizations(organizations);
 }

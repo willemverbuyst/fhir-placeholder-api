@@ -1,25 +1,22 @@
-import Database from "better-sqlite3";
 import { Patient } from "fhir/r5";
+import { getDb } from "./db";
 
-const DB_FILE_PATH = "fhir.db";
-let db: InstanceType<typeof Database> | null = null;
+let isInitialized = false;
 
-function getDb(): InstanceType<typeof Database> {
-  if (db) return db;
+function initPatientTable(): void {
+  if (isInitialized) return;
 
-  const connection = new Database(DB_FILE_PATH);
-  connection.exec(`
+  getDb().exec(`
     CREATE TABLE IF NOT EXISTS Patient (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `);
-
-  db = connection;
-  return db;
+  isInitialized = true;
 }
 
 export function getPatient(id: string): Patient {
+  initPatientTable();
   const row = getDb()
     .prepare("SELECT resource FROM Patient WHERE id = ?")
     .get(id) as { resource: string } | undefined;
@@ -32,6 +29,7 @@ export function getPatient(id: string): Patient {
 }
 
 export function getAllPatients(): Patient[] {
+  initPatientTable();
   const rows = getDb().prepare("SELECT resource FROM Patient").all() as Array<{
     resource: string;
   }>;
@@ -40,11 +38,13 @@ export function getAllPatients(): Patient[] {
 }
 
 export function cleanupPatients(): number {
+  initPatientTable();
   const result = getDb().prepare("DELETE FROM Patient").run();
   return result.changes;
 }
 
 export function seedPatients(patients: Patient[]): number {
+  initPatientTable();
   const database = getDb();
   const insert = database.prepare(
     "INSERT OR REPLACE INTO Patient (id, resource) VALUES (?, ?)",

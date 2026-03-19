@@ -3,9 +3,10 @@ import type { DummyDataConfig } from "@repo/dummy-data";
 import {
   CONFIG_EXPIRY_MS,
   CONFIG_FILE_PATH,
-  UserDummyDataConfig,
+  type UserDummyDataConfig,
 } from "./configPresets";
 import { defaultConfig } from "./defaultConfig";
+import { isConfigExpired, toDummyDataConfig } from "./dummyDataConfig.core";
 
 function loadUserConfig(): UserDummyDataConfig | null {
   console.log(
@@ -20,15 +21,22 @@ function loadUserConfig(): UserDummyDataConfig | null {
     const configData = readFileSync(CONFIG_FILE_PATH, "utf-8");
     const userConfig: UserDummyDataConfig = JSON.parse(configData);
 
-    // Check if config is expired (2 days old)
-    const createdAt = new Date(userConfig.createdAt);
     const now = new Date();
-    const age = now.getTime() - createdAt.getTime();
+    const createdAt = new Date(userConfig.createdAt);
+    const ageInDays = Math.floor(
+      (now.getTime() - createdAt.getTime()) / (24 * 60 * 60 * 1000),
+    );
 
-    if (age > CONFIG_EXPIRY_MS) {
+    if (
+      isConfigExpired({
+        createdAt: userConfig.createdAt,
+        now,
+        expiryMs: CONFIG_EXPIRY_MS,
+      })
+    ) {
       console.warn("⚠️  FHIR Configuration Warning:");
       console.warn(
-        `   Your dummy data configuration is ${Math.floor(age / (24 * 60 * 60 * 1000))} days old.`,
+        `   Your dummy data configuration is ${ageInDays} days old.`,
       );
       console.warn('   Consider running "pnpm setup-config" to refresh it.');
       console.warn('   Or "pnpm cleanup" to use defaults.');
@@ -51,46 +59,10 @@ function buildDummyDataConfig(): DummyDataConfig {
 
   if (userConfig) {
     console.log(`📋 Using ${userConfig.preset} configuration for dummy data`);
-
-    // Calculate derived values from user config
-    const numberOfOrganizations = userConfig.organizations;
-    const numberOfPractitionerRoles =
-      userConfig.practitionerRolesPerOrganization * numberOfOrganizations;
-    const numberOfPractitioners =
-      userConfig.practitionersPerOrganization * numberOfOrganizations;
-    const numberOfPatients =
-      numberOfPractitioners * userConfig.patientsPerPractitioner;
-    const numberOfAppointments =
-      numberOfPatients * userConfig.appointmentsPerPatient;
-    const numberOfEpisodes = numberOfPatients * userConfig.episodesPerPatient;
-    const numberOfConditions =
-      numberOfPatients * userConfig.conditionsPerPatient;
-    const numberOfEncounters =
-      numberOfPatients * userConfig.encountersPerPatient;
-    const numberOfObservations =
-      numberOfEncounters * userConfig.observationsPerEncounter;
-    const numberOfAllergies = numberOfPatients * userConfig.allergiesPerPatient;
-    const numberOfFlags = numberOfEncounters * userConfig.flagsPerEncounter;
-    const numberOfCommunications =
-      numberOfEncounters * userConfig.communicationsPerEncounter;
-
-    return {
-      numberOfAllergies,
-      numberOfAppointments,
-      numberOfConditions,
-      numberOfEncounters,
-      numberOfEpisodes,
-      numberOfObservations,
-      numberOfFlags,
-      numberOfCommunications,
-      numberOfOrganizations,
-      numberOfPatients,
-      numberOfPractitioners,
-      numberOfPractitionerRoles,
-      startDate: userConfig.startDate,
-      idStrategy:
-        process.env.NODE_ENV === "test" ? "sequential" : userConfig.idStrategy,
-    };
+    return toDummyDataConfig({
+      userConfig,
+      nodeEnv: process.env.NODE_ENV,
+    });
   }
 
   // Fallback to hardcoded defaults

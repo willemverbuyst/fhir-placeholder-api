@@ -11,8 +11,8 @@
   "observationsPerEncounter": 2,
   "flagsPerEncounter": 1,
   "communicationsPerEncounter": 1,
-  "idStrategy": "sequential",
+  "idStrategy": "uuid",
   "startDate": "1950-01-01",
   "preset": "small",
-  "createdAt": "2026-03-19T06:00:21.937Z"
+  "createdAt": "2026-03-19T13:50:27.252Z"
 }

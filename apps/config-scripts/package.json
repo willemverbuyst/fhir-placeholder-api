@@ -25,7 +25,9 @@
     "build": "bunchee",
     "type:check": "tsc",
     "config:cleanup": "tsx ./src/cleanup.ts",
-    "config:create": "tsx ./src/setupConfig.ts"
+    "config:create": "tsx ./src/setupConfig.ts",
+    "test:unit": "vitest run src",
+    "test:integration": "vitest run tests"
   },
   "dependencies": {
     "@repo/dummy-data": "workspace:*"

@@ -1,5 +1,5 @@
 {
-  "name": "config-scripts",
+  "name": "@repo/config-scripts",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -24,10 +24,7 @@
   "scripts": {
     "build": "bunchee",
     "type:check": "tsc",
-    "config:cleanup": "tsx ./src/cleanup.ts",
-    "config:create": "tsx ./src/setupConfig.ts",
-    "test:unit": "vitest run src",
-    "test:integration": "vitest run tests"
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@repo/dummy-data": "workspace:*"

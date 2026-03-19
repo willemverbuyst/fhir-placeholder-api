@@ -51,11 +51,11 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
 
-  apps/config-scripts:
+  apps/config-cli:
     dependencies:
-      '@repo/dummy-data':
+      '@repo/config-scripts':
         specifier: workspace:*
-        version: link:../../packages/dummy-data
+        version: link:../../packages/config-scripts
 
   apps/fhir-client:
     dependencies:
@@ -306,6 +306,12 @@ importers:
       effect:
         specifier: ^3.20.0
         version: 3.20.0
+
+  packages/config-scripts:
+    dependencies:
+      '@repo/dummy-data':
+        specifier: workspace:*
+        version: link:../dummy-data
 
   packages/dummy-data:
     dependencies:

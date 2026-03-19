@@ -1,68 +1,69 @@
 import { Patient } from "fhir/r5";
 import { getDb } from "./db";
+import { createJsonResourceTable } from "./jsonResourceTable";
 
-let isInitialized = false;
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
 
-function initPatientTable(): void {
-  if (isInitialized) return;
+function parsePatientJson(json: string): Patient {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json) as unknown;
+  } catch (error) {
+    throw new Error(
+      `Failed to parse Patient JSON: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
 
-  getDb().exec(`
+  if (!isRecord(parsed)) {
+    throw new Error("Invalid Patient JSON: expected object");
+  }
+
+  const resourceType = parsed.resourceType;
+  if (resourceType !== "Patient") {
+    throw new Error(
+      `Invalid Patient JSON: expected resourceType "Patient" but got ${String(resourceType)}`,
+    );
+  }
+
+  const id = parsed.id;
+  if (id !== undefined && typeof id !== "string") {
+    throw new Error("Invalid Patient JSON: `id` must be a string when present");
+  }
+
+  return parsed as unknown as Patient;
+}
+
+const patientTable = createJsonResourceTable<Patient>({
+  tableName: "Patient",
+  createTableSql: `
     CREATE TABLE IF NOT EXISTS Patient (
       id TEXT PRIMARY KEY,
       resource JSON
     )
-  `);
-  isInitialized = true;
+  `,
+  getDb,
+  parse: parsePatientJson,
+  getId: (patient) => patient.id,
+});
+
+export function findPatient(id: string): Patient | undefined {
+  return patientTable.find(id);
 }
 
 export function getPatient(id: string): Patient {
-  initPatientTable();
-  const row = getDb()
-    .prepare("SELECT resource FROM Patient WHERE id = ?")
-    .get(id) as { resource: string } | undefined;
-
-  if (!row) {
-    throw new Error(`Patient not found: ${id}`);
-  }
-
-  return JSON.parse(row.resource) as Patient;
+  return patientTable.get(id);
 }
 
 export function getAllPatients(): Patient[] {
-  initPatientTable();
-  const rows = getDb().prepare("SELECT resource FROM Patient").all() as Array<{
-    resource: string;
-  }>;
-
-  return rows.map((row) => JSON.parse(row.resource) as Patient);
+  return patientTable.getAll();
 }
 
 export function cleanupPatients(): number {
-  initPatientTable();
-  const result = getDb().prepare("DELETE FROM Patient").run();
-  return result.changes;
+  return patientTable.cleanup();
 }
 
 export function seedPatients(patients: Patient[]): number {
-  initPatientTable();
-  const database = getDb();
-  const insert = database.prepare(
-    "INSERT OR REPLACE INTO Patient (id, resource) VALUES (?, ?)",
-  );
-
-  // Transaction keeps the seed operation consistent and reasonably fast.
-  return database.transaction(() => {
-    let inserted = 0;
-
-    for (const patient of patients) {
-      if (!patient.id) {
-        throw new Error("Seed patient is missing `id`");
-      }
-
-      const result = insert.run(patient.id, JSON.stringify(patient));
-      inserted += result.changes;
-    }
-
-    return inserted;
-  })();
+  return patientTable.seed(patients);
 }

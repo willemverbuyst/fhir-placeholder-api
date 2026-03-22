@@ -1,6 +1,8 @@
 packages:
   - apps/*
+  - cli/*
   - packages/*
+  - services/*
 ignoredBuiltDependencies:
   - '@nestjs/core'
   - '@parcel/watcher'

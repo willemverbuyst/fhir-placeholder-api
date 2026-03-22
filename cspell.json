@@ -13,7 +13,8 @@
     "noshow",
     "quuz",
     "sonner",
-    "venv"
+    "venv",
+    "unrs-resolver"
   ],
   "ignorePaths": [
     "**/node_modules/**",

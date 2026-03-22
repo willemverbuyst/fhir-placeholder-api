@@ -24,8 +24,5 @@
   "scripts": {
     "build": "bunchee",
     "type:check": "tsc"
-  },
-  "dependencies": {
-    "bunchee": "^6.5.2"
   }
 }

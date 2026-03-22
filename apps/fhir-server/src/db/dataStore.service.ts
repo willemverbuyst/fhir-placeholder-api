@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { dummyDataConfig } from "@repo/config-scripts";
 import { generateResources } from "@repo/dummy-data";
 import type {
   AllergyIntolerance,
@@ -14,7 +15,6 @@ import type {
   Practitioner,
   PractitionerRole,
 } from "fhir/r5";
-import { dummyDataConfig } from "../../scripts/dummyDataConfig";
 
 @Injectable()
 export class DataStoreService {

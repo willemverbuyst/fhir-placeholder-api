@@ -1,5 +1,5 @@
 {
-  "name": "@repo/dummy-data",
+  "name": "config-cli",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -24,10 +24,12 @@
   "scripts": {
     "build": "bunchee",
     "type:check": "tsc",
-    "test:unit": "vitest run"
+    "config:cleanup": "tsx ./src/cleanup.ts",
+    "config:create": "tsx ./src/setupConfig.ts",
+    "test:unit": "vitest run src",
+    "test:integration": "vitest run tests"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.7.0",
-    "@repo/fhir-terminology": "workspace:*"
+    "@repo/config-scripts": "workspace:*"
   }
 }

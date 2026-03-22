@@ -27,7 +27,6 @@
     "test:unit": "vitest run"
   },
   "dependencies": {
-    "@repo/fhir-terminology": "workspace:*",
-    "bunchee": "^6.5.2"
+    "@repo/fhir-terminology": "workspace:*"
   }
 }

@@ -1,0 +1,67 @@
+import { Patient } from "fhir/r5";
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
+
+function parsePatientJson(json: string): Patient {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json) as unknown;
+  } catch (error) {
+    throw new Error(
+      `Failed to parse Patient JSON: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+
+  if (!isRecord(parsed)) {
+    throw new Error("Invalid Patient JSON: expected object");
+  }
+
+  const resourceType = parsed.resourceType;
+  if (resourceType !== "Patient") {
+    throw new Error(
+      `Invalid Patient JSON: expected resourceType "Patient" but got ${String(resourceType)}`,
+    );
+  }
+
+  const id = parsed.id;
+  if (id !== undefined && typeof id !== "string") {
+    throw new Error("Invalid Patient JSON: `id` must be a string when present");
+  }
+
+  return parsed as unknown as Patient;
+}
+
+const patientTable = (db: DB) =>
+  createJsonResourceTable<Patient>({
+    tableName: "Patient",
+    createTableSql: `
+    CREATE TABLE IF NOT EXISTS Patient (
+      id TEXT PRIMARY KEY,
+      resource JSON
+    )
+  `,
+    getDb: () => db.getDb(),
+    parse: parsePatientJson,
+    getId: (patient) => patient.id,
+  });
+
+export function findPatient(db: DB, id: string): Patient | undefined {
+  return patientTable(db).find(id);
+}
+
+export function getPatient(db: DB, id: string): Patient {
+  return patientTable(db).get(id);
+}
+
+export function getAllPatients(db: DB): Patient[] {
+  return patientTable(db).getAll();
+}
+
+export function cleanupPatients(db: DB): number {
+  return patientTable(db).cleanup();
+}
+
+export function seedPatients(db: DB, patients: Patient[]): number {
+  return patientTable(db).seed(patients);
+}

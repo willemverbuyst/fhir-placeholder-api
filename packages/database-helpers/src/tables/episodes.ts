@@ -1,10 +1,7 @@
 import { EpisodeOfCare } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseEpisodeOfCareJson(json: string): EpisodeOfCare {
   let parsed: unknown;
@@ -37,35 +34,39 @@ function parseEpisodeOfCareJson(json: string): EpisodeOfCare {
   return parsed as unknown as EpisodeOfCare;
 }
 
-const episodeOfCareTable = createJsonResourceTable<EpisodeOfCare>({
-  tableName: "EpisodeOfCare",
-  createTableSql: `
+const episodeOfCareTable = (db: DB) =>
+  createJsonResourceTable<EpisodeOfCare>({
+    tableName: "EpisodeOfCare",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS EpisodeOfCare (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseEpisodeOfCareJson,
-  getId: (episodeOfCare) => episodeOfCare.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseEpisodeOfCareJson,
+    getId: (episodeOfCare) => episodeOfCare.id,
+  });
 
-export function findEpisodeOfCare(id: string): EpisodeOfCare | undefined {
-  return episodeOfCareTable.find(id);
+export function findEpisodeOfCare(
+  db: DB,
+  id: string,
+): EpisodeOfCare | undefined {
+  return episodeOfCareTable(db).find(id);
 }
 
-export function getEpisodeOfCare(id: string): EpisodeOfCare {
-  return episodeOfCareTable.get(id);
+export function getEpisodeOfCare(db: DB, id: string): EpisodeOfCare {
+  return episodeOfCareTable(db).get(id);
 }
 
-export function getAllEpisodeOfCares(): EpisodeOfCare[] {
-  return episodeOfCareTable.getAll();
+export function getAllEpisodeOfCares(db: DB): EpisodeOfCare[] {
+  return episodeOfCareTable(db).getAll();
 }
 
-export function cleanupEpisodes(): number {
-  return episodeOfCareTable.cleanup();
+export function cleanupEpisodes(db: DB): number {
+  return episodeOfCareTable(db).cleanup();
 }
 
-export function seedEpisodes(episodes: EpisodeOfCare[]): number {
-  return episodeOfCareTable.seed(episodes);
+export function seedEpisodes(db: DB, episodes: EpisodeOfCare[]): number {
+  return episodeOfCareTable(db).seed(episodes);
 }

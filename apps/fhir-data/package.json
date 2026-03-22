@@ -6,34 +6,14 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/es/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/es/index.d.ts",
-  "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/es/index.d.ts",
-        "default": "./dist/es/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/index.d.cts",
-        "default": "./dist/cjs/index.cjs"
-      }
-    }
-  },
   "scripts": {
     "build": "bunchee",
     "type:check": "tsc",
-    "config:cleanup": "tsx ./src/scripts/cleanup.ts",
-    "config:seed": "tsx ./src/scripts/setupConfig.ts",
-    "data:seed": "tsx ./src/database/main.ts"
+    "data:check": "tsx ./src/main.ts",
+    "data:cleanup:db": "tsx ./src/cleanup.ts",
+    "data:seed:db": "tsx ./src/seed.ts"
   },
   "dependencies": {
-    "@repo/config-scripts": "workspace:*",
-    "@repo/dummy-data": "workspace:*",
-    "better-sqlite3": "^12.8.0"
-  },
-  "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13"
+    "@repo/database-helpers": "workspace:*"
   }
 }

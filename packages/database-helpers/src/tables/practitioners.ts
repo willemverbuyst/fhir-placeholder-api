@@ -1,10 +1,7 @@
 import { Practitioner } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parsePractitionerJson(json: string): Practitioner {
   let parsed: unknown;
@@ -37,35 +34,39 @@ function parsePractitionerJson(json: string): Practitioner {
   return parsed as unknown as Practitioner;
 }
 
-const practitionerTable = createJsonResourceTable<Practitioner>({
-  tableName: "Practitioner",
-  createTableSql: `
+const practitionerTable = (db: DB) =>
+  createJsonResourceTable<Practitioner>({
+    tableName: "Practitioner",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Practitioner (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parsePractitionerJson,
-  getId: (practitioner) => practitioner.id,
-});
+    getDb: () => db.getDb(),
+    parse: parsePractitionerJson,
+    getId: (practitioner) => practitioner.id,
+  });
 
-export function findPractitioner(id: string): Practitioner | undefined {
-  return practitionerTable.find(id);
+export function findPractitioner(db: DB, id: string): Practitioner | undefined {
+  return practitionerTable(db).find(id);
 }
 
-export function getPractitioner(id: string): Practitioner {
-  return practitionerTable.get(id);
+export function getPractitioner(db: DB, id: string): Practitioner {
+  return practitionerTable(db).get(id);
 }
 
-export function getAllPractitioners(): Practitioner[] {
-  return practitionerTable.getAll();
+export function getAllPractitioners(db: DB): Practitioner[] {
+  return practitionerTable(db).getAll();
 }
 
-export function cleanupPractitioners(): number {
-  return practitionerTable.cleanup();
+export function cleanupPractitioners(db: DB): number {
+  return practitionerTable(db).cleanup();
 }
 
-export function seedPractitioners(practitioners: Practitioner[]): number {
-  return practitionerTable.seed(practitioners);
+export function seedPractitioners(
+  db: DB,
+  practitioners: Practitioner[],
+): number {
+  return practitionerTable(db).seed(practitioners);
 }

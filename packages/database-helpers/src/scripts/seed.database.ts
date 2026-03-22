@@ -13,7 +13,8 @@ import {
   seedPatients,
   seedPractitionerRoles,
   seedPractitioners,
-} from "./tables";
+} from "../tables";
+import { DB } from "../utils";
 
 const {
   allergies,
@@ -30,17 +31,17 @@ const {
   organizations,
 } = generateResources(defaultConfig);
 
-export function seedDatabase(): void {
-  seedAllergies(allergies);
-  seedAppointments(appointments);
-  seedConditions(conditions);
-  seedEncounters(encounters);
-  seedEpisodes(episodes);
-  seedObservations(observations);
-  seedFlags(flags);
-  seedCommunications(communications);
-  seedPatients(patients);
-  seedPractitionerRoles(practitionerRoles);
-  seedPractitioners(practitioners);
-  seedOrganizations(organizations);
+export function seedDatabase(db: DB): void {
+  seedAllergies(db, allergies);
+  seedAppointments(db, appointments);
+  seedConditions(db, conditions);
+  seedEncounters(db, encounters);
+  seedEpisodes(db, episodes);
+  seedObservations(db, observations);
+  seedFlags(db, flags);
+  seedCommunications(db, communications);
+  seedPatients(db, patients);
+  seedPractitionerRoles(db, practitionerRoles);
+  seedPractitioners(db, practitioners);
+  seedOrganizations(db, organizations);
 }

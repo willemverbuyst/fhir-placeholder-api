@@ -1,10 +1,7 @@
 import { Flag } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseFlagJson(json: string): Flag {
   let parsed: unknown;
@@ -35,35 +32,36 @@ function parseFlagJson(json: string): Flag {
   return parsed as unknown as Flag;
 }
 
-const flagTable = createJsonResourceTable<Flag>({
-  tableName: "Flag",
-  createTableSql: `
+const flagTable = (db: DB) =>
+  createJsonResourceTable<Flag>({
+    tableName: "Flag",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Flag (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseFlagJson,
-  getId: (flag) => flag.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseFlagJson,
+    getId: (flag) => flag.id,
+  });
 
-export function findFlag(id: string): Flag | undefined {
-  return flagTable.find(id);
+export function findFlag(db: DB, id: string): Flag | undefined {
+  return flagTable(db).find(id);
 }
 
-export function getFlag(id: string): Flag {
-  return flagTable.get(id);
+export function getFlag(db: DB, id: string): Flag {
+  return flagTable(db).get(id);
 }
 
-export function getAllFlags(): Flag[] {
-  return flagTable.getAll();
+export function getAllFlags(db: DB): Flag[] {
+  return flagTable(db).getAll();
 }
 
-export function cleanupFlags(): number {
-  return flagTable.cleanup();
+export function cleanupFlags(db: DB): number {
+  return flagTable(db).cleanup();
 }
 
-export function seedFlags(flags: Flag[]): number {
-  return flagTable.seed(flags);
+export function seedFlags(db: DB, flags: Flag[]): number {
+  return flagTable(db).seed(flags);
 }

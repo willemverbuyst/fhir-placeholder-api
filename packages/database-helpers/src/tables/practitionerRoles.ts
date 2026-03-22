@@ -1,10 +1,7 @@
 import { PractitionerRole } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parsePractitionerRoleJson(json: string): PractitionerRole {
   let parsed: unknown;
@@ -37,37 +34,42 @@ function parsePractitionerRoleJson(json: string): PractitionerRole {
   return parsed as unknown as PractitionerRole;
 }
 
-const practitionerRoleTable = createJsonResourceTable<PractitionerRole>({
-  tableName: "PractitionerRole",
-  createTableSql: `
+const practitionerRoleTable = (db: DB) =>
+  createJsonResourceTable<PractitionerRole>({
+    tableName: "PractitionerRole",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS PractitionerRole (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parsePractitionerRoleJson,
-  getId: (practitionerRole) => practitionerRole.id,
-});
+    getDb: () => db.getDb(),
+    parse: parsePractitionerRoleJson,
+    getId: (practitionerRole) => practitionerRole.id,
+  });
 
-export function findPractitionerRole(id: string): PractitionerRole | undefined {
-  return practitionerRoleTable.find(id);
+export function findPractitionerRole(
+  db: DB,
+  id: string,
+): PractitionerRole | undefined {
+  return practitionerRoleTable(db).find(id);
 }
 
-export function getPractitionerRole(id: string): PractitionerRole {
-  return practitionerRoleTable.get(id);
+export function getPractitionerRole(db: DB, id: string): PractitionerRole {
+  return practitionerRoleTable(db).get(id);
 }
 
-export function getAllPractitionerRoles(): PractitionerRole[] {
-  return practitionerRoleTable.getAll();
+export function getAllPractitionerRoles(db: DB): PractitionerRole[] {
+  return practitionerRoleTable(db).getAll();
 }
 
-export function cleanupPractitionerRoles(): number {
-  return practitionerRoleTable.cleanup();
+export function cleanupPractitionerRoles(db: DB): number {
+  return practitionerRoleTable(db).cleanup();
 }
 
 export function seedPractitionerRoles(
+  db: DB,
   practitionerRoles: PractitionerRole[],
 ): number {
-  return practitionerRoleTable.seed(practitionerRoles);
+  return practitionerRoleTable(db).seed(practitionerRoles);
 }

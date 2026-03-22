@@ -1,10 +1,7 @@
 import { Patient } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parsePatientJson(json: string): Patient {
   let parsed: unknown;
@@ -35,35 +32,36 @@ function parsePatientJson(json: string): Patient {
   return parsed as unknown as Patient;
 }
 
-const patientTable = createJsonResourceTable<Patient>({
-  tableName: "Patient",
-  createTableSql: `
+const patientTable = (db: DB) =>
+  createJsonResourceTable<Patient>({
+    tableName: "Patient",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Patient (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parsePatientJson,
-  getId: (patient) => patient.id,
-});
+    getDb: () => db.getDb(),
+    parse: parsePatientJson,
+    getId: (patient) => patient.id,
+  });
 
-export function findPatient(id: string): Patient | undefined {
-  return patientTable.find(id);
+export function findPatient(db: DB, id: string): Patient | undefined {
+  return patientTable(db).find(id);
 }
 
-export function getPatient(id: string): Patient {
-  return patientTable.get(id);
+export function getPatient(db: DB, id: string): Patient {
+  return patientTable(db).get(id);
 }
 
-export function getAllPatients(): Patient[] {
-  return patientTable.getAll();
+export function getAllPatients(db: DB): Patient[] {
+  return patientTable(db).getAll();
 }
 
-export function cleanupPatients(): number {
-  return patientTable.cleanup();
+export function cleanupPatients(db: DB): number {
+  return patientTable(db).cleanup();
 }
 
-export function seedPatients(patients: Patient[]): number {
-  return patientTable.seed(patients);
+export function seedPatients(db: DB, patients: Patient[]): number {
+  return patientTable(db).seed(patients);
 }

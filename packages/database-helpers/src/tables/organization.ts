@@ -1,10 +1,7 @@
 import { Organization } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseOrganizationJson(json: string): Organization {
   let parsed: unknown;
@@ -37,35 +34,39 @@ function parseOrganizationJson(json: string): Organization {
   return parsed as unknown as Organization;
 }
 
-const organizationTable = createJsonResourceTable<Organization>({
-  tableName: "Organization",
-  createTableSql: `
+const organizationTable = (db: DB) =>
+  createJsonResourceTable<Organization>({
+    tableName: "Organization",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Organization (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseOrganizationJson,
-  getId: (organization) => organization.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseOrganizationJson,
+    getId: (organization) => organization.id,
+  });
 
-export function findOrganization(id: string): Organization | undefined {
-  return organizationTable.find(id);
+export function findOrganization(db: DB, id: string): Organization | undefined {
+  return organizationTable(db).find(id);
 }
 
-export function getOrganization(id: string): Organization {
-  return organizationTable.get(id);
+export function getOrganization(db: DB, id: string): Organization {
+  return organizationTable(db).get(id);
 }
 
-export function getAllOrganizations(): Organization[] {
-  return organizationTable.getAll();
+export function getAllOrganizations(db: DB): Organization[] {
+  return organizationTable(db).getAll();
 }
 
-export function cleanupOrganizations(): number {
-  return organizationTable.cleanup();
+export function cleanupOrganizations(db: DB): number {
+  return organizationTable(db).cleanup();
 }
 
-export function seedOrganizations(organizations: Organization[]): number {
-  return organizationTable.seed(organizations);
+export function seedOrganizations(
+  db: DB,
+  organizations: Organization[],
+): number {
+  return organizationTable(db).seed(organizations);
 }

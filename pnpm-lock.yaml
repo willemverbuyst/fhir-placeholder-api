@@ -165,19 +165,9 @@ importers:
 
   apps/fhir-data:
     dependencies:
-      '@repo/config-scripts':
+      '@repo/database-helpers':
         specifier: workspace:*
-        version: link:../../packages/config-scripts
-      '@repo/dummy-data':
-        specifier: workspace:*
-        version: link:../../packages/dummy-data
-      better-sqlite3:
-        specifier: ^12.8.0
-        version: 12.8.0
-    devDependencies:
-      '@types/better-sqlite3':
-        specifier: ^7.6.13
-        version: 7.6.13
+        version: link:../../packages/database-helpers
 
   apps/fhir-server:
     dependencies:
@@ -315,6 +305,22 @@ importers:
       '@repo/dummy-data':
         specifier: workspace:*
         version: link:../dummy-data
+
+  packages/database-helpers:
+    dependencies:
+      '@repo/config-scripts':
+        specifier: workspace:*
+        version: link:../config-scripts
+      '@repo/dummy-data':
+        specifier: workspace:*
+        version: link:../dummy-data
+      better-sqlite3:
+        specifier: ^12.8.0
+        version: 12.8.0
+    devDependencies:
+      '@types/better-sqlite3':
+        specifier: ^7.6.13
+        version: 7.6.13
 
   packages/dummy-data:
     dependencies:

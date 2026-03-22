@@ -1,10 +1,7 @@
 import { Condition } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseConditionJson(json: string): Condition {
   let parsed: unknown;
@@ -37,35 +34,36 @@ function parseConditionJson(json: string): Condition {
   return parsed as unknown as Condition;
 }
 
-const conditionTable = createJsonResourceTable<Condition>({
-  tableName: "Condition",
-  createTableSql: `
+const conditionTable = (db: DB) =>
+  createJsonResourceTable<Condition>({
+    tableName: "Condition",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Condition (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseConditionJson,
-  getId: (condition) => condition.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseConditionJson,
+    getId: (condition) => condition.id,
+  });
 
-export function findCondition(id: string): Condition | undefined {
-  return conditionTable.find(id);
+export function findCondition(db: DB, id: string): Condition | undefined {
+  return conditionTable(db).find(id);
 }
 
-export function getCondition(id: string): Condition {
-  return conditionTable.get(id);
+export function getCondition(db: DB, id: string): Condition {
+  return conditionTable(db).get(id);
 }
 
-export function getAllConditions(): Condition[] {
-  return conditionTable.getAll();
+export function getAllConditions(db: DB): Condition[] {
+  return conditionTable(db).getAll();
 }
 
-export function cleanupConditions(): number {
-  return conditionTable.cleanup();
+export function cleanupConditions(db: DB): number {
+  return conditionTable(db).cleanup();
 }
 
-export function seedConditions(conditions: Condition[]): number {
-  return conditionTable.seed(conditions);
+export function seedConditions(db: DB, conditions: Condition[]): number {
+  return conditionTable(db).seed(conditions);
 }

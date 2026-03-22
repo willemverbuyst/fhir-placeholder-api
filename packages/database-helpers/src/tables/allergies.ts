@@ -1,10 +1,7 @@
 import { AllergyIntolerance } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseAllergyIntoleranceJson(json: string): AllergyIntolerance {
   let parsed: unknown;
@@ -39,35 +36,39 @@ function parseAllergyIntoleranceJson(json: string): AllergyIntolerance {
   return parsed as unknown as AllergyIntolerance;
 }
 
-const allergyIntoleranceTable = createJsonResourceTable<AllergyIntolerance>({
-  tableName: "AllergyIntolerance",
-  createTableSql: `
+const allergyIntoleranceTable = (db: DB) =>
+  createJsonResourceTable<AllergyIntolerance>({
+    tableName: "AllergyIntolerance",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS AllergyIntolerance (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseAllergyIntoleranceJson,
-  getId: (allergyIntolerance) => allergyIntolerance.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseAllergyIntoleranceJson,
+    getId: (allergyIntolerance) => allergyIntolerance.id,
+  });
 
-export function findAllergy(id: string): AllergyIntolerance | undefined {
-  return allergyIntoleranceTable.find(id);
+export function findAllergy(
+  db: DB,
+  id: string,
+): AllergyIntolerance | undefined {
+  return allergyIntoleranceTable(db).find(id);
 }
 
-export function getAllergy(id: string): AllergyIntolerance {
-  return allergyIntoleranceTable.get(id);
+export function getAllergy(db: DB, id: string): AllergyIntolerance {
+  return allergyIntoleranceTable(db).get(id);
 }
 
-export function getAllAllergies(): AllergyIntolerance[] {
-  return allergyIntoleranceTable.getAll();
+export function getAllAllergies(db: DB): AllergyIntolerance[] {
+  return allergyIntoleranceTable(db).getAll();
 }
 
-export function cleanupAllergies(): number {
-  return allergyIntoleranceTable.cleanup();
+export function cleanupAllergies(db: DB): number {
+  return allergyIntoleranceTable(db).cleanup();
 }
 
-export function seedAllergies(allergies: AllergyIntolerance[]): number {
-  return allergyIntoleranceTable.seed(allergies);
+export function seedAllergies(db: DB, allergies: AllergyIntolerance[]): number {
+  return allergyIntoleranceTable(db).seed(allergies);
 }

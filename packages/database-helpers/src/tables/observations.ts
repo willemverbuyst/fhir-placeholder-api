@@ -1,10 +1,7 @@
 import { Observation } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseObservationJson(json: string): Observation {
   let parsed: unknown;
@@ -37,35 +34,36 @@ function parseObservationJson(json: string): Observation {
   return parsed as unknown as Observation;
 }
 
-const observationTable = createJsonResourceTable<Observation>({
-  tableName: "Observation",
-  createTableSql: `
+const observationTable = (db: DB) =>
+  createJsonResourceTable<Observation>({
+    tableName: "Observation",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Observation (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseObservationJson,
-  getId: (observation) => observation.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseObservationJson,
+    getId: (observation) => observation.id,
+  });
 
-export function findObservation(id: string): Observation | undefined {
-  return observationTable.find(id);
+export function findObservation(db: DB, id: string): Observation | undefined {
+  return observationTable(db).find(id);
 }
 
-export function getObservation(id: string): Observation {
-  return observationTable.get(id);
+export function getObservation(db: DB, id: string): Observation {
+  return observationTable(db).get(id);
 }
 
-export function getAllObservations(): Observation[] {
-  return observationTable.getAll();
+export function getAllObservations(db: DB): Observation[] {
+  return observationTable(db).getAll();
 }
 
-export function cleanupObservations(): number {
-  return observationTable.cleanup();
+export function cleanupObservations(db: DB): number {
+  return observationTable(db).cleanup();
 }
 
-export function seedObservations(observations: Observation[]): number {
-  return observationTable.seed(observations);
+export function seedObservations(db: DB, observations: Observation[]): number {
+  return observationTable(db).seed(observations);
 }

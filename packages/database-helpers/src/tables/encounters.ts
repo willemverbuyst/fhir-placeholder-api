@@ -1,10 +1,7 @@
 import { Encounter } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseEncounterJson(json: string): Encounter {
   let parsed: unknown;
@@ -37,35 +34,36 @@ function parseEncounterJson(json: string): Encounter {
   return parsed as unknown as Encounter;
 }
 
-const encounterTable = createJsonResourceTable<Encounter>({
-  tableName: "Encounter",
-  createTableSql: `
+const encounterTable = (db: DB) =>
+  createJsonResourceTable<Encounter>({
+    tableName: "Encounter",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Encounter (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseEncounterJson,
-  getId: (encounter) => encounter.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseEncounterJson,
+    getId: (encounter) => encounter.id,
+  });
 
-export function findEncounter(id: string): Encounter | undefined {
-  return encounterTable.find(id);
+export function findEncounter(db: DB, id: string): Encounter | undefined {
+  return encounterTable(db).find(id);
 }
 
-export function getEncounter(id: string): Encounter {
-  return encounterTable.get(id);
+export function getEncounter(db: DB, id: string): Encounter {
+  return encounterTable(db).get(id);
 }
 
-export function getAllEncounters(): Encounter[] {
-  return encounterTable.getAll();
+export function getAllEncounters(db: DB): Encounter[] {
+  return encounterTable(db).getAll();
 }
 
-export function cleanupEncounters(): number {
-  return encounterTable.cleanup();
+export function cleanupEncounters(db: DB): number {
+  return encounterTable(db).cleanup();
 }
 
-export function seedEncounters(encounters: Encounter[]): number {
-  return encounterTable.seed(encounters);
+export function seedEncounters(db: DB, encounters: Encounter[]): number {
+  return encounterTable(db).seed(encounters);
 }

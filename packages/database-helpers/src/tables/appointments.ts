@@ -1,10 +1,7 @@
 import { Appointment } from "fhir/r5";
-import { getDb } from "../db";
-import { createJsonResourceTable } from "../jsonResourceTable";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
-}
+import { DB } from "../utils";
+import { isRecord } from "../utils/isRecord";
+import { createJsonResourceTable } from "../utils/jsonResourceTable";
 
 function parseAppointmentJson(json: string): Appointment {
   let parsed: unknown;
@@ -37,35 +34,36 @@ function parseAppointmentJson(json: string): Appointment {
   return parsed as unknown as Appointment;
 }
 
-const appointmentTable = createJsonResourceTable<Appointment>({
-  tableName: "Appointment",
-  createTableSql: `
+const appointmentTable = (db: DB) =>
+  createJsonResourceTable<Appointment>({
+    tableName: "Appointment",
+    createTableSql: `
     CREATE TABLE IF NOT EXISTS Appointment (
       id TEXT PRIMARY KEY,
       resource JSON
     )
   `,
-  getDb,
-  parse: parseAppointmentJson,
-  getId: (appointment) => appointment.id,
-});
+    getDb: () => db.getDb(),
+    parse: parseAppointmentJson,
+    getId: (appointment) => appointment.id,
+  });
 
-export function findAppointment(id: string): Appointment | undefined {
-  return appointmentTable.find(id);
+export function findAppointment(db: DB, id: string): Appointment | undefined {
+  return appointmentTable(db).find(id);
 }
 
-export function getAppointment(id: string): Appointment {
-  return appointmentTable.get(id);
+export function getAppointment(db: DB, id: string): Appointment {
+  return appointmentTable(db).get(id);
 }
 
-export function getAllAppointments(): Appointment[] {
-  return appointmentTable.getAll();
+export function getAllAppointments(db: DB): Appointment[] {
+  return appointmentTable(db).getAll();
 }
 
-export function cleanupAppointments(): number {
-  return appointmentTable.cleanup();
+export function cleanupAppointments(db: DB): number {
+  return appointmentTable(db).cleanup();
 }
 
-export function seedAppointments(appointments: Appointment[]): number {
-  return appointmentTable.seed(appointments);
+export function seedAppointments(db: DB, appointments: Appointment[]): number {
+  return appointmentTable(db).seed(appointments);
 }

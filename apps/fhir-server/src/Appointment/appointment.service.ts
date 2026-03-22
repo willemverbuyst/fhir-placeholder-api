@@ -3,8 +3,8 @@ import {
   NotFoundException,
   UnprocessableEntityException,
 } from "@nestjs/common";
+import { dummyDataConfig } from "@repo/config-scripts";
 import type { Appointment, Bundle } from "fhir/r5";
-import { dummyDataConfig } from "../../scripts/dummyDataConfig";
 import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 import { CreateAppointmentDto } from "./dto/create-appointment.dto";

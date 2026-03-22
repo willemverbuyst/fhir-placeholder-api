@@ -1,0 +1,12 @@
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "foo",
+  "password": "bar"
+}
+
+### Get users
+GET http://localhost:3000/api/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0MTgwMjExLCJleHAiOjE3NzQxODExMTF9.Fg54QyMBl2dOLRzLM64vcINjy5c4AE--mwHkQx_qzsw

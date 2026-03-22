@@ -1,4 +1,5 @@
 import HeaderNavClient from "@/components/HeaderNavClient";
+import LogoutButton from "@/components/LogoutButton";
 import {
   extractSupportedResourceTypes,
   fetchCapabilityStatementSafe,
@@ -21,6 +22,9 @@ export default async function Header() {
 
   return (
     <header className="flex w-full flex-col items-center pb-4">
+      <div className="mb-2 flex w-full justify-end">
+        <LogoutButton />
+      </div>
       <nav className="w-full max-w-[1200px] flex flex-col gap-2">
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
           <HeaderNavClient

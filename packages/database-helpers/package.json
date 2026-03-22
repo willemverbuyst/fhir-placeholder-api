@@ -23,8 +23,7 @@
   },
   "scripts": {
     "build": "bunchee",
-    "type:check": "tsc",
-    "test:unit": "vitest run"
+    "type:check": "tsc"
   },
   "dependencies": {
     "better-sqlite3": "^12.8.0",

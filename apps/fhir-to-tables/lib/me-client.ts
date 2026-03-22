@@ -1,4 +1,4 @@
-export type MeResponse = {
+type MeResponse = {
   userId: string;
   role: string;
 };

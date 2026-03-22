@@ -104,7 +104,7 @@ export default function LoginPage() {
             autoComplete="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-base"
+            className="rounded-md border border-zinc-300 px-3 py-2 text-base text-zinc-700"
             required
           />
         </label>
@@ -116,7 +116,7 @@ export default function LoginPage() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-base"
+            className="rounded-md border border-zinc-300 px-3 py-2 text-base text-zinc-700"
             required
           />
         </label>

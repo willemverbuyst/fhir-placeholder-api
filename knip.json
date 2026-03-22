@@ -30,10 +30,6 @@
         "source-map-support"
       ]
     },
-    "apps/fhir-to-spreadsheet": {
-      "entry": ["main.py"],
-      "project": ["**/*.py"]
-    },
     "packages/dummy-data": {
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
@@ -45,6 +41,10 @@
     "packages/utils": {
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
+    },
+    "services/fhir-to-spreadsheet": {
+      "entry": ["main.py"],
+      "project": ["**/*.py"]
     }
   }
 }

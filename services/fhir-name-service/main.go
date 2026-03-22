@@ -60,6 +60,6 @@ func formatName(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/format-name", formatName)
 
-	fmt.Println("Server running on http://localhost:8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	fmt.Println("Server running on http://localhost:3003")
+	log.Fatal(http.ListenAndServe(":3003", nil))
 }

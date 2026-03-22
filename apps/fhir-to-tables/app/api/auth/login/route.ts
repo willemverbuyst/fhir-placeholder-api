@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { MOCK_AUTH_TOKEN } from "@/lib/auth-mock";
+import { loginViaGateway } from "@/lib/gateway-auth-client";
 
 type LoginBody = {
   username?: unknown;
@@ -21,5 +21,17 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ token: MOCK_AUTH_TOKEN });
+  const result = await loginViaGateway({
+    username: body.username,
+    password: body.password,
+  });
+
+  if (result.success) {
+    return NextResponse.json({ token: result.token });
+  }
+
+  return NextResponse.json(
+    { error: result.errorMessage },
+    { status: result.status },
+  );
 }

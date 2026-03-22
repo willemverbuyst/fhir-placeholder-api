@@ -87,7 +87,7 @@
         },
         {
           "linkId": "3.2",
-          "text": "Do you drink alchohol?",
+          "text": "Do you drink alcohol?",
           "type": "boolean"
         }
       ]

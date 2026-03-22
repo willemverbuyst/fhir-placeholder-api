@@ -51,12 +51,6 @@ importers:
         specifier: ^4.3.6
         version: 4.3.6
 
-  apps/config-cli:
-    dependencies:
-      '@repo/config-scripts':
-        specifier: workspace:*
-        version: link:../../packages/config-scripts
-
   apps/fhir-client:
     dependencies:
       '@radix-ui/react-checkbox':
@@ -342,6 +336,12 @@ importers:
       vite:
         specifier: ^6.2.5
         version: 6.4.1(@types/node@25.5.0)(jiti@2.6.1)(less@4.2.2)(lightningcss@1.32.0)(sass@1.85.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2)
+
+  cli/config-cli:
+    dependencies:
+      '@repo/config-scripts':
+        specifier: workspace:*
+        version: link:../../packages/config-scripts
 
   packages/config-scripts:
     dependencies:

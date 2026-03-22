@@ -1,0 +1,18 @@
+[
+  {
+    "code": "F",
+    "display": "Female"
+  },
+  {
+    "code": "M",
+    "display": "Male"
+  },
+  {
+    "code": "O",
+    "display": "Other"
+  },
+  {
+    "code": "U",
+    "display": "Unknown"
+  }
+]

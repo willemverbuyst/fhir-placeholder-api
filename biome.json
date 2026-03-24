@@ -3,6 +3,7 @@
   "files": {
     "includes": [
       "**",
+      "!**/*.vue",
       "!**/dist",
       "!**/node_modules",
       "!**/.turbo",
@@ -29,17 +30,7 @@
       }
     }
   },
-  "overrides": [
-    {
-      "includes": ["**/*.vue"],
-      "formatter": {
-        "enabled": false
-      },
-      "linter": {
-        "enabled": false
-      }
-    }
-  ],
+  "overrides": [],
   "javascript": {
     "parser": {
       "unsafeParameterDecoratorsEnabled": true

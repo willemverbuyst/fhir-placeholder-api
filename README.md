@@ -2,36 +2,72 @@
 
 ## 🤔 What is this?
 
+WIP
+
 A collection of tools centered around Fhir R5 dummy data.
 
 ## Apps
 
-- [config-cli](apps/config-cli)
 - [fhir-client](apps/fhir-client)
 - [fhir-data](apps/fhir-data)
-- [fhir-name-service](apps/fhir-name-service)
 - [fhir-server](apps/fhir-server)
-- [fhir-to-spreadsheet](apps/fhir-to-spreadsheet)
 - [fhir-to-tables](apps/fhir-to-tables)
 - [patient-timeline](apps/patient-timeline)
+
+## Cli
+
+- [config-cli](cli/config-cli)
+- [monorepo-launcher](cli/monorepo-launcher/)
+
+## Services
+
+- [auth](services/auth)
+- [fhir-name-service](services/fhir-name-service)
+- [fhir-to-spreadsheet](services/fhir-to-spreadsheet)
+- [gateway](services/gateway)
+- [users](services/users)
+
 
 ## App Interactions
 
 ```mermaid
 flowchart LR
-  C@{shape: doc, label: config}
-  CS@{shape: sl-rect,label: config-cli}
-  FS@{shape: circle, label: fhir-server}
-  DB@{shape: cyl, label: fhir-data}
-  FC@{shape: rect, label: fhir-client}
-  FS --> C
-  DB --> C
+  subgraph CLI
+    ML@{shape: sl-rect, label: monorepo-launcher}
+    CS@{shape: sl-rect,label: config-cli}
+    FDC@{shape: sl-rect, label: fhir-db-cli}
+  end 
+  subgraph APPS
+    PT[patient-timeline]
+    FC@{shape: rect, label: fhir-client}
+    FTT[fhir-to-tables]
+    FS@{shape: circle, label: fhir-server}
+  end
+  subgraph SERVICES
+    A[auth]
+    U[users]
+    G[gateway]
+    FNS[fhir-name-service]
+    FTS[fhir-to-spreadsheet]
+  end
+  subgraph Data
+    C@{shape: doc, label: config}
+    DB@{shape: cyl, label: fhir-data}
+    UDB@{shape: cyl, label: user-data}
+  end
+  FS --> DB
   CS --> C
-  FC --> FS
-  FTS[fhir-to-spreadsheet] --> FS
-  FTT[fhir-to-tables] --> FS
-  PT[patient-timeline] --> FS
-  PT --> FNS[fhir-name-service]
+  FDC --> DB
+  FDC --> C
+  FC --> G
+  FTT --> G
+  PT --> G
+  G --> U
+  G --> A
+  G --> FS
+  A --> UDB
+  G --> FNS
+  
 ```
 
 ## Packages

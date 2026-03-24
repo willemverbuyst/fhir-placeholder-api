@@ -29,6 +29,17 @@
       }
     }
   },
+  "overrides": [
+    {
+      "includes": ["**/*.vue"],
+      "formatter": {
+        "enabled": false
+      },
+      "linter": {
+        "enabled": false
+      }
+    }
+  ],
   "javascript": {
     "parser": {
       "unsafeParameterDecoratorsEnabled": true

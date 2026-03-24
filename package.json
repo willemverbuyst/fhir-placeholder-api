@@ -8,6 +8,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:select": "python3 cli/monorepo-launcher/launcher.py --manifest cli/monorepo-launcher/targets.json",
     "format:check": "biome format",
     "format:fix": "biome format --write .",
     "knip:check": "knip",

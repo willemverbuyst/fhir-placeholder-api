@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1 class="header-title">Users Management</h1>
+    <h1 class="header-title">User Management</h1>
     <nav class="header-nav">
       <NuxtLink to="/" class="header-link" active-class="header-link-active"
         >Home</NuxtLink
@@ -19,9 +19,7 @@
       >
     </nav>
   </header>
-  <main>
-    <NuxtPage />
-  </main>
+  <NuxtPage />
 </template>
 
 <style>
@@ -29,10 +27,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-main {
-  padding: 2rem;
 }
 
 body {
@@ -44,7 +38,6 @@ body {
   padding: 2rem 0 1.25rem;
   box-shadow: 0 4px 20px 0 rgba(80, 110, 180, 0.07);
   color: #fff;
-  margin-bottom: 2rem;
 }
 
 .header-title {

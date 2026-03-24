@@ -1,5 +1,5 @@
 {
-  "name": "users-management",
+  "name": "user-management",
   "type": "module",
   "private": true,
   "scripts": {

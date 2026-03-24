@@ -16,7 +16,7 @@ app.use("/api", apiLimiter);
 
 // 🔐 Auth middleware
 app.use("/api", (req, res, next) => {
-  if (req.path.startsWith("/auth/login")) return next();
+  if (req.path.startsWith("/auth/sign-in")) return next();
 
   const authHeader = req.headers.authorization;
   if (!authHeader) {

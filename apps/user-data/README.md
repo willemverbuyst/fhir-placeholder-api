@@ -30,6 +30,8 @@ CREATE TABLE users (
 
 ### Bash
 
+#### Sign Up
+
 ```bash
 curl -X POST http://localhost:3001/sign-up \
   -H "Content-Type: application/json" \
@@ -39,3 +41,20 @@ curl -X POST http://localhost:3001/sign-up \
     "role": "guest"
   }'
 ```
+
+#### Sign In
+
+```bash
+curl -X POST http://localhost:3001/sign-in \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "foo",  
+    "password": "bar"
+  }'
+```
+
+## Help
+
+### Stop running postgres processes
+
+`sudo systemctl stop postgresql`

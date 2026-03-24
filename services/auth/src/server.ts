@@ -9,27 +9,21 @@ const log = logger({ service: "auth" });
 const app = express();
 app.use(express.json());
 
-// fake DB for now
-const users = [
-  {
-    id: "1",
-    username: "foo",
-    passwordHash: bcrypt.hashSync("bar", 10),
-    role: "admin",
-  },
-];
-
-app.post("/login", async (req, res) => {
-  log.info("User is attempting to login");
+app.post("/sign-in", async (req, res) => {
+  log.info("User is attempting to sign in");
   const { username, password } = req.body;
 
-  const user = users.find((u) => u.username === username);
+  const result = await pool.query(
+    "SELECT id, role, password FROM users WHERE username = $1",
+    [username],
+  );
+  const user = result.rows[0];
   if (!user) {
     log.error("User not found");
     return res.status(401).send("Invalid credentials");
   }
 
-  const valid = await bcrypt.compare(password, user.passwordHash);
+  const valid = await bcrypt.compare(password, user.password);
   if (!valid) {
     log.error("Invalid credentials");
     return res.status(401).send("Invalid credentials");
@@ -37,7 +31,7 @@ app.post("/login", async (req, res) => {
 
   const token = signToken({ userId: user.id, role: user.role });
 
-  log.info("User logged in successfully");
+  log.info("User signed in successfully");
   res.json({ token });
 });
 

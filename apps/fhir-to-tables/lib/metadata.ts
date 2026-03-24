@@ -1,8 +1,36 @@
 import { capabilityStatementResourceSchema } from "@repo/utils";
 import type { CapabilityStatement } from "fhir/r5";
+import { unstable_cache } from "next/cache";
 import { cookies } from "next/headers";
 
 const DEFAULT_GATEWAY_BASE = "http://localhost:3000";
+const METADATA_REVALIDATE_SECONDS = 60 * 60;
+
+async function loadCapabilityStatement(
+  metadataUrl: string,
+  token: string,
+): Promise<CapabilityStatement> {
+  const response = await fetch(metadataUrl, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    next: { revalidate: METADATA_REVALIDATE_SECONDS },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch metadata: ${response.status}`);
+  }
+
+  const rawData: unknown = await response.json();
+  capabilityStatementResourceSchema.parse(rawData);
+  return rawData as CapabilityStatement;
+}
+
+const getCachedCapabilityStatement = unstable_cache(
+  loadCapabilityStatement,
+  ["fhir-capability-statement"],
+  { revalidate: METADATA_REVALIDATE_SECONDS },
+);
 
 export async function fetchCapabilityStatement(): Promise<CapabilityStatement> {
   const base = process.env.GATEWAY_SERVICE_URL ?? DEFAULT_GATEWAY_BASE;
@@ -13,20 +41,7 @@ export async function fetchCapabilityStatement(): Promise<CapabilityStatement> {
     throw new Error("No token found");
   }
 
-  const response = await fetch(metadataUrl, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch metadata: ${response.status}`);
-  }
-
-  const rawData: unknown = await response.json();
-  capabilityStatementResourceSchema.parse(rawData);
-  return rawData as CapabilityStatement;
+  return getCachedCapabilityStatement(metadataUrl, token);
 }
 
 export async function fetchCapabilityStatementSafe(): Promise<CapabilityStatement | null> {

@@ -28,7 +28,8 @@
   "dependencies": {
     "@repo/auth-lib": "workspace:*",
     "http-proxy-middleware": "^3.0.5",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.6"

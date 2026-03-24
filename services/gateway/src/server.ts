@@ -1,7 +1,7 @@
 import { verifyToken } from "@repo/auth-lib";
 import express from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
 import rateLimit from "express-rate-limit";
+import { createProxyMiddleware } from "http-proxy-middleware";
 
 const app = express();
 

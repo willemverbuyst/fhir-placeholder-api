@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import DataTable from "@/components/DataTable";
 import {
@@ -8,6 +9,21 @@ import {
 type ResourceTypePageProps = {
   params: Promise<{ resourceType: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: ResourceTypePageProps): Promise<Metadata> {
+  const { resourceType } = await params;
+  const capabilityStatement = await fetchCapabilityStatement();
+  const supportedResourceTypes =
+    extractSupportedResourceTypes(capabilityStatement);
+
+  if (!supportedResourceTypes.includes(resourceType)) {
+    return {};
+  }
+
+  return { title: resourceType };
+}
 
 export default async function ResourceTypePage({
   params,

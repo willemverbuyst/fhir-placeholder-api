@@ -2,6 +2,7 @@ import { signToken } from "@repo/auth-lib";
 import bcrypt from "bcrypt";
 import express from "express";
 import { pool } from "./db";
+import { logger } from "./logger";
 
 const app = express();
 app.use(express.json());
@@ -17,7 +18,7 @@ const users = [
 ];
 
 app.post("/login", async (req, res) => {
-  console.log("login");
+  logger.info("login");
   const { username, password } = req.body;
 
   const user = users.find((u) => u.username === username);
@@ -32,7 +33,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/sign-up", async (req, res) => {
-  console.log("sign-up");
+  logger.info("sign-up");
   const { username, password, role } = req.body;
   const passwordHash = await bcrypt.hash(password, 10);
   const result = await pool.query(
@@ -44,5 +45,5 @@ app.post("/sign-up", async (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.log("Auth running on 3001");
+  logger.info("Auth running on 3001");
 });

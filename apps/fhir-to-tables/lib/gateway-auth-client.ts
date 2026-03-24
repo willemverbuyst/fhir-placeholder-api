@@ -13,7 +13,7 @@ function getGatewayMeUrl(): string {
   return `${getGatewayBaseUrl()}/api/users/me`;
 }
 
-export type LoginViaGatewayResult =
+type LoginViaGatewayResult =
   | { success: true; token: string }
   | { success: false; status: number; errorMessage: string };
 
@@ -88,7 +88,7 @@ export async function loginViaGateway(input: {
   return { success: false, status, errorMessage };
 }
 
-export type FetchMeViaGatewayResult =
+type FetchMeViaGatewayResult =
   | { success: true; userId: string; role: string }
   | { success: false; status: number; errorMessage: string };
 

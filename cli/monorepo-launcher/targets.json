@@ -1,0 +1,68 @@
+{
+  "targets": [
+    {
+      "id": "fhir-server",
+      "name": "FHIR Server app",
+      "kind": "pnpm-dev",
+      "cwd": "apps/fhir-server",
+      "command": "pnpm",
+      "args": ["dev"]
+    },
+    {
+      "id": "fhir-client",
+      "name": "FHIR Client app",
+      "kind": "pnpm-dev",
+      "cwd": "apps/fhir-client",
+      "command": "pnpm",
+      "args": ["dev"]
+    },
+    {
+      "id": "fhir-to-tables",
+      "name": "FHIR to Tables app",
+      "kind": "pnpm-dev",
+      "cwd": "apps/fhir-to-tables",
+      "command": "pnpm",
+      "args": ["dev"]
+    },
+    {
+      "id": "gateway-service",
+      "name": "Gateway service",
+      "kind": "pnpm-dev",
+      "cwd": "services/gateway",
+      "command": "pnpm",
+      "args": ["dev"]
+    },
+    {
+      "id": "auth-service",
+      "name": "Auth service",
+      "kind": "pnpm-dev",
+      "cwd": "services/auth",
+      "command": "pnpm",
+      "args": ["dev"]
+    },
+    {
+      "id": "users-service",
+      "name": "Users service",
+      "kind": "pnpm-dev",
+      "cwd": "services/users",
+      "command": "pnpm",
+      "args": ["dev"]
+    },
+    {
+      "id": "fhir-name-service",
+      "name": "FHIR Name service (Go)",
+      "kind": "command",
+      "cwd": "services/fhir-name-service",
+      "command": "go",
+      "args": ["run", "main.go"]
+    },
+    {
+      "id": "fhir-to-spreadsheet",
+      "name": "FHIR to Spreadsheet service (Python)",
+      "kind": "command",
+      "cwd": "services/fhir-to-spreadsheet",
+      "command": "python3",
+      "args": ["main.py"]
+    }
+  ]
+}

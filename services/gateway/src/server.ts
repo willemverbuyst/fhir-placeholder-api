@@ -1,7 +1,10 @@
 import { verifyToken } from "@repo/auth-lib";
+import { logger } from "@repo/logger";
 import express from "express";
 import rateLimit from "express-rate-limit";
 import { createProxyMiddleware } from "http-proxy-middleware";
+
+const log = logger({ service: "gateway" });
 
 const app = express();
 
@@ -16,11 +19,12 @@ app.use("/api", apiLimiter);
 
 // 🔐 Auth middleware
 app.use("/api", (req, res, next) => {
+  log.info("Request received", { path: req.path });
   if (req.path.startsWith("/auth/sign-in")) return next();
 
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    console.warn(`[gateway] auth rejected: no token ${req.method} ${req.url}`);
+    log.warn(`Auth rejected: no token ${req.method} ${req.url}`);
     return res.status(401).send("No token");
   }
 
@@ -34,9 +38,7 @@ app.use("/api", (req, res, next) => {
 
     next();
   } catch {
-    console.warn(
-      `[gateway] auth rejected: invalid token ${req.method} ${req.url}`,
-    );
+    log.warn(`[gateway] auth rejected: invalid token ${req.method} ${req.url}`);
     return res.status(401).send("Invalid token");
   }
 });
@@ -47,7 +49,7 @@ app.use(
   createProxyMiddleware({
     target: "http://localhost:3001",
     pathRewrite: { "^/api/auth": "" },
-    logger: console,
+    logger: log,
   }),
 );
 
@@ -56,7 +58,7 @@ app.use(
   createProxyMiddleware({
     target: "http://localhost:3002",
     pathRewrite: { "^/api/users": "" },
-    logger: console,
+    logger: log,
   }),
 );
 
@@ -65,10 +67,10 @@ app.use(
   createProxyMiddleware({
     target: "http://localhost:8080/api/v2/r5/",
     pathRewrite: { "^/api/fhir/": "" },
-    logger: console,
+    logger: log,
   }),
 );
 
 app.listen(3000, () => {
-  console.log("Gateway service on 3000");
+  log.info("Gateway service running on port 3000");
 });

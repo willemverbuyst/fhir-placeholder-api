@@ -49,5 +49,5 @@ app.post("/sign-up", async (req, res) => {
 });
 
 app.listen(3001, () => {
-  log.info("Auth running on 3001");
+  log.info("Auth service running on port 3001");
 });

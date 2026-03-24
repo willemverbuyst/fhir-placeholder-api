@@ -448,6 +448,9 @@ importers:
       '@repo/auth-lib':
         specifier: workspace:*
         version: link:../../packages/auth-lib
+      '@repo/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
       express:
         specifier: ^5.2.1
         version: 5.2.1
@@ -464,6 +467,9 @@ importers:
 
   services/users:
     dependencies:
+      '@repo/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
       express:
         specifier: ^5.2.1
         version: 5.2.1

@@ -262,9 +262,6 @@ importers:
 
   apps/fhir-to-tables:
     dependencies:
-      '@repo/auth-lib':
-        specifier: workspace:*
-        version: link:../../packages/auth-lib
       '@repo/normalizer':
         specifier: workspace:*
         version: link:../../packages/normalizer

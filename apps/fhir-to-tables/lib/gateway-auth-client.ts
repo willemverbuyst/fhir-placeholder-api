@@ -1,8 +1,16 @@
 const DEFAULT_GATEWAY_BASE = "http://localhost:3000";
 
-function getGatewayLoginUrl(): string {
+function getGatewayBaseUrl(): string {
   const base = process.env.GATEWAY_SERVICE_URL ?? DEFAULT_GATEWAY_BASE;
-  return `${base.replace(/\/$/, "")}/api/auth/login`;
+  return base.replace(/\/$/, "");
+}
+
+function getGatewayLoginUrl(): string {
+  return `${getGatewayBaseUrl()}/api/auth/login`;
+}
+
+function getGatewayMeUrl(): string {
+  return `${getGatewayBaseUrl()}/api/users/me`;
 }
 
 export type LoginViaGatewayResult =
@@ -78,4 +86,65 @@ export async function loginViaGateway(input: {
   }
 
   return { success: false, status, errorMessage };
+}
+
+export type FetchMeViaGatewayResult =
+  | { success: true; userId: string; role: string }
+  | { success: false; status: number; errorMessage: string };
+
+export async function fetchMeViaGateway(
+  token: string,
+): Promise<FetchMeViaGatewayResult> {
+  const url = getGatewayMeUrl();
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  } catch {
+    return {
+      success: false,
+      status: 502,
+      errorMessage: "Could not reach users service",
+    };
+  }
+
+  if (response.ok) {
+    const data: unknown = await response.json();
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      typeof (data as { userId?: unknown }).userId !== "string" ||
+      typeof (data as { role?: unknown }).role !== "string"
+    ) {
+      return {
+        success: false,
+        status: 502,
+        errorMessage: "Invalid response from users service",
+      };
+    }
+
+    return {
+      success: true,
+      userId: (data as { userId: string }).userId,
+      role: (data as { role: string }).role,
+    };
+  }
+
+  if (response.status === 401) {
+    return {
+      success: false,
+      status: 401,
+      errorMessage: "Unauthorized",
+    };
+  }
+
+  return {
+    success: false,
+    status: response.status,
+    errorMessage: "Users service error",
+  };
 }

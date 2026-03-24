@@ -14,23 +14,17 @@ export default function LoginPage() {
   const [checkingSession, setCheckingSession] = useState(true);
 
   const redirectIfAdmin = useCallback(async () => {
-    const token =
-      typeof window !== "undefined"
-        ? window.localStorage.getItem("token")
-        : null;
-    if (!token) {
-      setCheckingSession(false);
-      return;
-    }
-
-    const me = await fetchMe(token);
+    const me = await fetchMe();
     if (me?.role === "admin") {
       router.replace("/Organization");
       return;
     }
 
-    if (typeof window !== "undefined") {
-      window.localStorage.removeItem("token");
+    if (me) {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
     }
     setCheckingSession(false);
   }, [router]);
@@ -50,6 +44,7 @@ export default function LoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       });
 
@@ -62,19 +57,19 @@ export default function LoginPage() {
       if (
         typeof loginJson !== "object" ||
         loginJson === null ||
-        !("token" in loginJson) ||
-        typeof (loginJson as { token: unknown }).token !== "string"
+        !("ok" in loginJson) ||
+        (loginJson as { ok: unknown }).ok !== true
       ) {
         setError("Invalid login response.");
         return;
       }
 
-      const token = (loginJson as { token: string }).token;
-      window.localStorage.setItem("token", token);
-
-      const me = await fetchMe(token);
+      const me = await fetchMe();
       if (!me || me.role !== "admin") {
-        window.localStorage.removeItem("token");
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        });
         setError("Admin access required.");
         return;
       }

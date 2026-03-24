@@ -17,24 +17,23 @@ export default function AuthGuard({
     let cancelled = false;
 
     async function run() {
-      const token =
-        typeof window !== "undefined"
-          ? window.localStorage.getItem("token")
-          : null;
-
-      if (!token) {
-        router.replace("/");
-        return;
-      }
-
-      const me = await fetchMe(token);
+      const me = await fetchMe();
       if (cancelled) {
         return;
       }
 
-      if (!me || me.role !== "admin") {
-        if (typeof window !== "undefined") {
-          window.localStorage.removeItem("token");
+      if (!me) {
+        router.replace("/");
+        return;
+      }
+
+      if (me.role !== "admin") {
+        await fetch("/api/auth/logout", {
+          method: "POST",
+          credentials: "include",
+        });
+        if (cancelled) {
+          return;
         }
         router.replace("/");
         return;

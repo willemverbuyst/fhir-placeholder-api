@@ -1,25 +1,21 @@
-import { verifyToken } from "@repo/auth-lib";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-
-function getBearerToken(request: NextRequest): string | null {
-  const auth = request.headers.get("authorization");
-  if (!auth?.toLowerCase().startsWith("bearer ")) {
-    return null;
-  }
-  return auth.slice(7).trim();
-}
+import { fetchMeViaGateway } from "@/lib/gateway-auth-client";
 
 export async function GET(request: NextRequest) {
-  const token = getBearerToken(request);
+  const token = request.cookies.get("token")?.value ?? null;
   if (!token) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  try {
-    const { userId, role } = verifyToken(token);
-    return NextResponse.json({ userId, role });
-  } catch {
+  const result = await fetchMeViaGateway(token);
+  if (result.success) {
+    return NextResponse.json({ userId: result.userId, role: result.role });
+  }
+
+  if (result.status === 401) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  return NextResponse.json({ error: result.errorMessage }, { status: 502 });
 }

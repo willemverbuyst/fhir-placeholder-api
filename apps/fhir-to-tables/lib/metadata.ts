@@ -1,12 +1,23 @@
 import { capabilityStatementResourceSchema } from "@repo/utils";
 import type { CapabilityStatement } from "fhir/r5";
+import { cookies } from "next/headers";
 
-const DEFAULT_FHIR_BASE_URL = "http://localhost:8080";
-const FHIR_BASE_URL = process.env.FHIR_BASE_URL ?? DEFAULT_FHIR_BASE_URL;
+const DEFAULT_GATEWAY_BASE = "http://localhost:3000";
 
 export async function fetchCapabilityStatement(): Promise<CapabilityStatement> {
-  const response = await fetch(`${FHIR_BASE_URL}/api/v2/r5/metadata`, {
-    next: { revalidate: 60 },
+  const base = process.env.GATEWAY_SERVICE_URL ?? DEFAULT_GATEWAY_BASE;
+  const metadataUrl = `${base.replace(/\/$/, "")}/api/fhir/metadata`;
+  const token = (await cookies()).get("token")?.value;
+
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await fetch(metadataUrl, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
   });
 
   if (!response.ok) {

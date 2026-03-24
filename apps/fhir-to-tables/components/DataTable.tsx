@@ -65,6 +65,7 @@ function TableHeader({
 
 import { normalizeJSON } from "@repo/normalizer";
 import type { Bundle, Resource } from "fhir/r5";
+import { cookies } from "next/headers";
 
 type TableData = {
   headers: Set<string>;
@@ -124,11 +125,18 @@ function prepareDataForTable(data: NormalizedData): TableData {
   return tableData;
 }
 
+const DEFAULT_GATEWAY_BASE = "http://localhost:3000";
+
 async function fetchBundle(resourceType: string): Promise<Bundle<Resource>> {
-  const apiUrl = `http://localhost:8080/api/v2/r5/${resourceType}`;
+  const base = process.env.GATEWAY_SERVICE_URL ?? DEFAULT_GATEWAY_BASE;
+  const apiUrl = `${base.replace(/\/$/, "")}/api/fhir/${resourceType}`;
+  const token = (await cookies()).get("token")?.value;
 
   const response = await fetch(apiUrl, {
     cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {

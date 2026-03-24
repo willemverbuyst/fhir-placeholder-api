@@ -27,7 +27,15 @@ export async function POST(request: Request) {
   });
 
   if (result.success) {
-    return NextResponse.json({ token: result.token });
+    const response = NextResponse.json({ ok: true });
+    response.cookies.set("token", result.token, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+    return response;
   }
 
   return NextResponse.json(

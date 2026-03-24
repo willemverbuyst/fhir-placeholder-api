@@ -3,12 +3,15 @@ type MeResponse = {
   role: string;
 };
 
-export async function fetchMe(token: string): Promise<MeResponse | null> {
-  const response = await fetch("/api/users/me", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export async function fetchMe(): Promise<MeResponse | null> {
+  let response: Response;
+  try {
+    response = await fetch("/api/users/me", {
+      credentials: "include",
+    });
+  } catch {
+    return null;
+  }
 
   if (!response.ok) {
     return null;

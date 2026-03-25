@@ -2,7 +2,11 @@ import { verifyToken } from "@repo/auth-lib";
 import { logger } from "@repo/logger";
 import express from "express";
 import rateLimit from "express-rate-limit";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { createProxyServer } from "http-proxy-3";
+
+const proxy = createProxyServer({
+  // default options; we’ll pass target per request
+});
 
 const log = logger({ service: "gateway" });
 
@@ -44,32 +48,24 @@ app.use("/api", (req, res, next) => {
 });
 
 // 🔀 Routing
-app.use(
-  "/api/auth",
-  createProxyMiddleware({
-    target: "http://localhost:3001",
-    pathRewrite: { "^/api/auth": "" },
-    logger: log,
-  }),
-);
 
-app.use(
-  "/api/users",
-  createProxyMiddleware({
-    target: "http://localhost:3002",
-    pathRewrite: { "^/api/users": "" },
-    logger: log,
-  }),
-);
+app.use("/api/auth", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/auth/, "") || "/";
+  req.url = rewritten;
+  proxy.web(req, res, { target: "http://localhost:3001" });
+});
 
-app.use(
-  "/api/fhir/",
-  createProxyMiddleware({
-    target: "http://localhost:8080/api/v2/r5/",
-    pathRewrite: { "^/api/fhir/": "" },
-    logger: log,
-  }),
-);
+app.use("/api/users", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/users/, "") || "/";
+  req.url = rewritten;
+  proxy.web(req, res, { target: "http://localhost:3002" });
+});
+
+app.use("/api/fhir/", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/fhir/, "") || "/";
+  req.url = rewritten;
+  proxy.web(req, res, { target: "http://localhost:8080/api/v2/r5" });
+});
 
 app.listen(3000, () => {
   log.info("Gateway service running on port 3000");

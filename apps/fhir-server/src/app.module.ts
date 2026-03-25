@@ -1,5 +1,6 @@
 import { type MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config/dist";
+import { WinstonModule } from "nest-winston";
 import { AllergyIntoleranceModule } from "./AllergyIntolerance/allergy-intolerance.module";
 import { AppointmentModule } from "./Appointment/appointment.module";
 import { AppController } from "./app.controller";
@@ -11,6 +12,7 @@ import { DataStoreModule } from "./db/dataStore.module";
 import { EncounterModule } from "./Encounter/encounter.module";
 import { EpisodeOfCareModule } from "./EpisodeOfCare/episode-of-care.module";
 import { FlagModule } from "./Flag/flag.module";
+import { winstonConfig } from "./logger.config";
 import { MetadataModule } from "./metadata/metadata.module";
 import { LoggerMiddleware } from "./middlewares/logger.middlewares";
 import { ObservationModule } from "./Observation/observation.module";
@@ -45,6 +47,7 @@ import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
     ResourceCountsModule,
     ResourceTreeModule,
     AllergyIntoleranceModule,
+    WinstonModule.forRoot(winstonConfig),
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -4,6 +4,8 @@
 
 ### Build
 
+From the repository root:
+
 `docker compose up -d`
 
 ### Create user table
@@ -33,7 +35,7 @@ CREATE TABLE users (
 #### Sign Up
 
 ```bash
-curl -X POST http://localhost:3001/sign-up \
+curl -X POST http://localhost:3000/api/auth/sign-up \
   -H "Content-Type: application/json" \
   -d '{
     "username": "foo",  
@@ -45,7 +47,7 @@ curl -X POST http://localhost:3001/sign-up \
 #### Sign In
 
 ```bash
-curl -X POST http://localhost:3001/sign-in \
+curl -X POST http://localhost:3000/api/auth/sign-in \
   -H "Content-Type: application/json" \
   -d '{
     "username": "foo",  

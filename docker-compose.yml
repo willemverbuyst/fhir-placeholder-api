@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:15
+    container_name: auth_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: db
+    ports:
+      - "9090:8080"
+    depends_on:
+      - db
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: pnpm --filter auth-service exec tsx src/server.ts
+    environment:
+      JWT_SECRET: dev-secret
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: auth_db
+    depends_on:
+      - db
+
+  users-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: pnpm --filter user-service exec tsx src/server.ts
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: pnpm --filter gateway-service exec tsx src/server.ts
+    ports:
+      - "3000:3000"
+    environment:
+      JWT_SECRET: dev-secret
+      AUTH_SERVICE_URL: http://auth-service:3001
+      USERS_SERVICE_URL: http://users-service:3002
+      FHIR_PROXY_TARGET: http://host.docker.internal:8080/api/v2/r5
+    depends_on:
+      - auth-service
+      - users-service
+
+volumes:
+  postgres_data:

@@ -9,6 +9,10 @@ const proxy = createProxyServer({
 });
 
 const log = logger({ service: "gateway" });
+const authServiceUrl = process.env.AUTH_SERVICE_URL ?? "http://localhost:3001";
+const usersServiceUrl =
+  process.env.USERS_SERVICE_URL ?? "http://localhost:3002";
+const fhirProxyTarget = process.env.FHIR_PROXY_TARGET;
 
 const app = express();
 
@@ -52,20 +56,22 @@ app.use("/api", (req, res, next) => {
 app.use("/api/auth", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/auth/, "") || "/";
   req.url = rewritten;
-  proxy.web(req, res, { target: "http://localhost:3001" });
+  proxy.web(req, res, { target: authServiceUrl });
 });
 
 app.use("/api/users", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/users/, "") || "/";
   req.url = rewritten;
-  proxy.web(req, res, { target: "http://localhost:3002" });
+  proxy.web(req, res, { target: usersServiceUrl });
 });
 
-app.use("/api/fhir/", (req, res) => {
-  const rewritten = req.url.replace(/^\/api\/fhir/, "") || "/";
-  req.url = rewritten;
-  proxy.web(req, res, { target: "http://localhost:8080/api/v2/r5" });
-});
+if (fhirProxyTarget) {
+  app.use("/api/fhir/", (req, res) => {
+    const rewritten = req.url.replace(/^\/api\/fhir/, "") || "/";
+    req.url = rewritten;
+    proxy.web(req, res, { target: fhirProxyTarget });
+  });
+}
 
 app.listen(3000, () => {
   log.info("Gateway service running on port 3000");

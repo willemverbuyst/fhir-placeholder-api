@@ -36,16 +36,21 @@ app.post("/sign-in", async (req, res) => {
 });
 
 app.post("/sign-up", async (req, res) => {
-  log.info("User is attempting to sign up");
-  const { username, password, role } = req.body;
-  const passwordHash = await bcrypt.hash(password, 10);
-  const result = await pool.query(
-    "INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username, role, created_at",
-    [username, passwordHash, role],
-  );
-  const user = result.rows[0];
-  log.info("User signed up successfully");
-  res.json({ user });
+  try {
+    log.info("User is attempting to sign up");
+    const { username, password, role } = req.body;
+    const passwordHash = await bcrypt.hash(password, 10);
+    const result = await pool.query(
+      "INSERT INTO users (username, password, role) VALUES ($1, $2, $3) RETURNING id, username, role, created_at",
+      [username, passwordHash, role],
+    );
+    const user = result.rows[0];
+    log.info("User signed up successfully");
+    res.json({ user });
+  } catch (error) {
+    log.error("Error signing up user", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.listen(3001, () => {

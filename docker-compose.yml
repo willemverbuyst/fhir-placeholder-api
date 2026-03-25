@@ -51,10 +51,19 @@ services:
       JWT_SECRET: dev-secret
       AUTH_SERVICE_URL: http://auth-service:3001
       USERS_SERVICE_URL: http://users-service:3002
-      FHIR_PROXY_TARGET: http://host.docker.internal:8080/api/v2/r5
+      FHIR_PROXY_TARGET: http://fhir-server:8080
     depends_on:
       - auth-service
       - users-service
+      - fhir-server
+
+  fhir-server:
+    build:
+      context: .
+      dockerfile: apps/fhir-server/Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: "8080"
 
 volumes:
   postgres_data:

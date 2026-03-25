@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 import { AppModule } from "./app.module";
-import { LoggerService } from "./common/logger/logger.service";
+import { LoggingInterceptor } from "./logging/logging.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -33,7 +33,9 @@ async function bootstrap() {
     }),
   );
 
-  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  app.useLogger(logger);
+  app.useGlobalInterceptors(new LoggingInterceptor(logger));
 
   const config = new DocumentBuilder()
     .setTitle("Fhir R5 API")

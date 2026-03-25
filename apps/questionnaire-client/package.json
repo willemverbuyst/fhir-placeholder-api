@@ -9,7 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.13.6",
     "overmind": "^28.0.3",
     "overmind-react": "^29.0.5",
     "react": "^18.3.1",

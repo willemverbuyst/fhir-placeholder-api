@@ -25,8 +25,7 @@ services:
   auth-service:
     build:
       context: .
-      dockerfile: Dockerfile
-    command: pnpm --filter auth-service exec tsx src/server.ts
+      dockerfile: services/auth/Dockerfile
     environment:
       JWT_SECRET: dev-secret
       PGHOST: db
@@ -40,14 +39,12 @@ services:
   users-service:
     build:
       context: .
-      dockerfile: Dockerfile
-    command: pnpm --filter user-service exec tsx src/server.ts
+      dockerfile: services/users/Dockerfile
 
   gateway:
     build:
       context: .
-      dockerfile: Dockerfile
-    command: pnpm --filter gateway-service exec tsx src/server.ts
+      dockerfile: services/gateway/Dockerfile
     ports:
       - "3000:3000"
     environment:

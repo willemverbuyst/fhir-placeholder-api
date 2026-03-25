@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:22-slim
 
 WORKDIR /workspace
 
@@ -9,5 +9,8 @@ COPY packages ./packages
 COPY services ./services
 
 RUN pnpm install --frozen-lockfile
+RUN pnpm exec turbo run build --filter=auth-service...
 
-CMD ["pnpm", "--filter", "gateway-service", "exec", "tsx", "src/server.ts"]
+EXPOSE 3001
+
+CMD ["pnpm", "--filter", "auth-service", "start"]

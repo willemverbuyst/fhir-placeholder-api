@@ -23,7 +23,13 @@
     "sonner",
     "unrs-resolver",
     "venv",
-    "waitlist"
+    "waitlist",
+    "PGHOST",
+    "PGPORT",
+    "PGUSER",
+    "PGPASSWORD",
+    "PGDATABASE",
+    "pgcrypto"
   ],
   "ignorePaths": [
     "**/node_modules/**",

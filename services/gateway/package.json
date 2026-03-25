@@ -22,7 +22,9 @@
     }
   },
   "scripts": {
+    "build": "bunchee",
     "dev": "tsx src/server.ts",
+    "start": "node ./dist/es/index.js",
     "type:check": "tsc"
   },
   "dependencies": {

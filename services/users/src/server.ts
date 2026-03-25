@@ -10,6 +10,7 @@ app.get("/me", (req, res) => {
   const userId = req.headers["x-user-id"];
   const role = req.headers["x-user-role"];
 
+  log.info(`Data returned to user with id ${userId}`);
   res.json({
     message: "User data",
     userId,

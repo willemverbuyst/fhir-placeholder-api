@@ -66,6 +66,7 @@ app.use("/api", (req, res, next) => {
 
 app.use("/api/auth", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/auth/, "") || "/";
+  log.info(`Proxying request on ${req.url} to ${fhirProxyTarget}${rewritten}`);
   req.url = rewritten;
   proxy.web(req, res, { target: authServiceUrl });
 });
@@ -73,13 +74,17 @@ app.use("/api/auth", (req, res) => {
 app.use("/api/users", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/users/, "") || "/";
   req.url = rewritten;
+  log.info(`Proxying request on ${req.url} to ${fhirProxyTarget}${rewritten}`);
   proxy.web(req, res, { target: usersServiceUrl });
 });
 
 app.use("/api/fhir/", (req, res) => {
-  const rewritten = req.url.replace(/^\/api\/fhir/, "/api/v2/r5") || "/";
+  const rewritten = req.url.replace(/^\/api\/fhir/, "") || "/";
+  log.info(
+    `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5"${rewritten}`,
+  );
   req.url = rewritten;
-  proxy.web(req, res, { target: fhirProxyTarget });
+  proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5` });
 });
 
 app.listen(3000, () => {

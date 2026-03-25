@@ -4,11 +4,20 @@ import { AppService } from "./app.service";
 
 describe("AppController", () => {
   let appController: AppController;
+  const loggerMock = {
+    info: jest.fn(),
+  };
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        AppService,
+        {
+          provide: "winston",
+          useValue: loggerMock,
+        },
+      ],
     }).compile();
 
     appController = app.get<AppController>(AppController);

@@ -25,11 +25,15 @@
       "entry": ["src/main.ts"],
       "project": ["src/**/*.ts", "!test/**/*.e2e*.ts"],
       "ignoreDependencies": [
-        "supertest",
+        "@types/express",
         "@types/supertest",
-        "ts-loader",
-        "source-map-support"
+        "supertest",
+        "source-map-support",
+        "ts-loader"
       ]
+    },
+    "apps/user-management": {
+      "ignoreDependencies": ["vue", "vue-router"]
     },
     "packages/dummy-data": {
       "entry": ["src/index.ts"],

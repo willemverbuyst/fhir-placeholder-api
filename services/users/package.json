@@ -22,10 +22,13 @@
     }
   },
   "scripts": {
+    "build": "bunchee",
     "dev": "tsx src/server.ts",
+    "start": "node ./dist/es/index.js",
     "type:check": "tsc"
   },
   "dependencies": {
+    "@repo/logger": "workspace:*",
     "express": "^5.2.1"
   },
   "devDependencies": {

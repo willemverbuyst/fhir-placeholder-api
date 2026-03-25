@@ -3,7 +3,9 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import helmet from "helmet";
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 import { AppModule } from "./app.module";
+import { LoggingInterceptor } from "./logging/logging.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -31,6 +33,10 @@ async function bootstrap() {
     }),
   );
 
+  const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  app.useLogger(logger);
+  app.useGlobalInterceptors(new LoggingInterceptor(logger));
+
   const config = new DocumentBuilder()
     .setTitle("Fhir R5 API")
     .setDescription("Server with dummy data for FHIR R5")
@@ -42,9 +48,9 @@ async function bootstrap() {
 
   const port = app.get(ConfigService).get("PORT") || 8080;
   await app.listen(port, () => {
-    console.log(
-      `Server is running on http://localhost:${port}/api/v2/${fhirVersion}`,
-    );
+    app
+      .get(WINSTON_MODULE_NEST_PROVIDER)
+      .log(`Server is running on port ${port}`);
   });
 }
 bootstrap();

@@ -6,7 +6,7 @@ function getGatewayBaseUrl(): string {
 }
 
 function getGatewayLoginUrl(): string {
-  return `${getGatewayBaseUrl()}/api/auth/login`;
+  return `${getGatewayBaseUrl()}/api/auth/sign-in`;
 }
 
 function getGatewayMeUrl(): string {

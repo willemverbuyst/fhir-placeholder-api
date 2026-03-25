@@ -3,10 +3,13 @@
   "files": {
     "includes": [
       "**",
+      "!**/*.vue",
       "!**/dist",
       "!**/node_modules",
       "!**/.turbo",
-      "!**/.next"
+      "!**/.next",
+      "!**/.nuxt",
+      "!**/.output"
     ]
   },
   "formatter": {
@@ -29,6 +32,7 @@
       }
     }
   },
+  "overrides": [],
   "javascript": {
     "parser": {
       "unsafeParameterDecoratorsEnabled": true

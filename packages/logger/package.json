@@ -1,5 +1,5 @@
 {
-  "name": "auth-service",
+  "name": "@repo/logger",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -22,22 +22,11 @@
     }
   },
   "scripts": {
-    "build": "bunchee",
     "dev": "tsx src/server.ts",
-    "start": "node ./dist/es/index.js",
+    "build": "bunchee",
     "type:check": "tsc"
   },
   "dependencies": {
-    "@repo/api-limiter": "workspace:*",
-    "@repo/auth-lib": "workspace:*",
-    "@repo/logger": "workspace:*",
-    "bcrypt": "^6.0.0",
-    "express": "^5.2.1",
-    "pg": "^8.20.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/express": "^5.0.6",
-    "@types/pg": "^8.20.0"
+    "winston": "^3.19.0"
   }
 }

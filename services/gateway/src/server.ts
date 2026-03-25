@@ -1,26 +1,42 @@
+import { apiLimiter } from "@repo/api-limiter";
 import { verifyToken } from "@repo/auth-lib";
+import { logger } from "@repo/logger";
 import express from "express";
-import rateLimit from "express-rate-limit";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { createProxyServer } from "http-proxy-3";
+
+const proxy = createProxyServer({
+  // default options; we’ll pass target per request
+});
+
+const log = logger({ application: "gateway-service" });
+const authServiceUrl = process.env.AUTH_SERVICE_URL ?? "http://localhost:3001";
+const usersServiceUrl =
+  process.env.USERS_SERVICE_URL ?? "http://localhost:3002";
+const fhirProxyTarget =
+  process.env.FHIR_PROXY_TARGET ?? "http://localhost:8080";
 
 const app = express();
 
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+app.get("/ping", (_req, res) => {
+  log.info("Ping received");
+  res.json({ status: "ok" });
 });
 
 app.use("/api", apiLimiter);
 
 // 🔐 Auth middleware
 app.use("/api", (req, res, next) => {
-  if (req.path.startsWith("/auth/login")) return next();
+  log.info("Request received", { path: req.path });
+  if (
+    req.path.startsWith("/auth/sign-in") ||
+    req.path.startsWith("/auth/sign-up")
+  ) {
+    return next();
+  }
 
   const authHeader = req.headers.authorization;
   if (!authHeader) {
-    console.warn(`[gateway] auth rejected: no token ${req.method} ${req.url}`);
+    log.warn(`Auth rejected: no token ${req.method} ${req.url}`);
     return res.status(401).send("No token");
   }
 
@@ -34,41 +50,36 @@ app.use("/api", (req, res, next) => {
 
     next();
   } catch {
-    console.warn(
-      `[gateway] auth rejected: invalid token ${req.method} ${req.url}`,
-    );
+    log.warn(`Auth rejected: invalid token for ${req.method} ${req.url}`);
     return res.status(401).send("Invalid token");
   }
 });
 
 // 🔀 Routing
-app.use(
-  "/api/auth",
-  createProxyMiddleware({
-    target: "http://localhost:3001",
-    pathRewrite: { "^/api/auth": "" },
-    logger: console,
-  }),
-);
 
-app.use(
-  "/api/users",
-  createProxyMiddleware({
-    target: "http://localhost:3002",
-    pathRewrite: { "^/api/users": "" },
-    logger: console,
-  }),
-);
+app.use("/api/auth", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/auth/, "") || "/";
+  log.info(`Proxying request on ${req.url} to ${fhirProxyTarget}${rewritten}`);
+  req.url = rewritten;
+  proxy.web(req, res, { target: authServiceUrl });
+});
 
-app.use(
-  "/api/fhir/",
-  createProxyMiddleware({
-    target: "http://localhost:8080/api/v2/r5/",
-    pathRewrite: { "^/api/fhir/": "" },
-    logger: console,
-  }),
-);
+app.use("/api/users", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/users/, "") || "/";
+  req.url = rewritten;
+  log.info(`Proxying request on ${req.url} to ${fhirProxyTarget}${rewritten}`);
+  proxy.web(req, res, { target: usersServiceUrl });
+});
+
+app.use("/api/fhir/", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/fhir/, "") || "/";
+  log.info(
+    `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5"${rewritten}`,
+  );
+  req.url = rewritten;
+  proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5` });
+});
 
 app.listen(3000, () => {
-  console.log("Gateway service on 3000");
+  log.info("Gateway service running on port 3000");
 });

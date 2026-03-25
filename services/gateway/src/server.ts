@@ -16,6 +16,11 @@ const fhirProxyTarget = process.env.FHIR_PROXY_TARGET;
 
 const app = express();
 
+app.get("/ping", (_req, res) => {
+  log.info("Ping received");
+  res.json({ status: "ok" });
+});
+
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
@@ -46,7 +51,7 @@ app.use("/api", (req, res, next) => {
 
     next();
   } catch {
-    log.warn(`[gateway] auth rejected: invalid token ${req.method} ${req.url}`);
+    log.warn(`Auth rejected: invalid token for ${req.method} ${req.url}`);
     return res.status(401).send("Invalid token");
   }
 });

@@ -1,7 +1,7 @@
 import { logger } from "@repo/logger";
 import express from "express";
 
-const log = logger({ service: "users" });
+const log = logger({ application: "users-service" });
 
 const app = express();
 

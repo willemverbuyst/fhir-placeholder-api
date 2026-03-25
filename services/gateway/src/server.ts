@@ -8,7 +8,7 @@ const proxy = createProxyServer({
   // default options; we’ll pass target per request
 });
 
-const log = logger({ service: "gateway" });
+const log = logger({ application: "gateway-service" });
 const authServiceUrl = process.env.AUTH_SERVICE_URL ?? "http://localhost:3001";
 const usersServiceUrl =
   process.env.USERS_SERVICE_URL ?? "http://localhost:3002";

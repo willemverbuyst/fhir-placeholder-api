@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import express from "express";
 import { pool } from "./db";
 
-const log = logger({ service: "auth" });
+const log = logger({ application: "auth-service" });
 
 const app = express();
 app.use(express.json());

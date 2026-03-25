@@ -10,6 +10,6 @@ export const winstonConfig: winston.LoggerOptions = {
   ),
   transports: [new winston.transports.Console()],
   defaultMeta: {
-    service: "fhir-server",
+    application: "fhir-server",
   },
 };

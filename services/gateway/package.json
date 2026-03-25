@@ -28,10 +28,10 @@
     "type:check": "tsc"
   },
   "dependencies": {
+    "@repo/api-limiter": "workspace:*",
     "@repo/auth-lib": "workspace:*",
     "@repo/logger": "workspace:*",
     "express": "^5.2.1",
-    "express-rate-limit": "^8.3.1",
     "http-proxy-3": "^1.23.2"
   },
   "devDependencies": {

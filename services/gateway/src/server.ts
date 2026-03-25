@@ -1,7 +1,7 @@
+import { apiLimiter } from "@repo/api-limiter";
 import { verifyToken } from "@repo/auth-lib";
 import { logger } from "@repo/logger";
 import express from "express";
-import rateLimit from "express-rate-limit";
 import { createProxyServer } from "http-proxy-3";
 
 const proxy = createProxyServer({
@@ -20,13 +20,6 @@ const app = express();
 app.get("/ping", (_req, res) => {
   log.info("Ping received");
   res.json({ status: "ok" });
-});
-
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
 app.use("/api", apiLimiter);

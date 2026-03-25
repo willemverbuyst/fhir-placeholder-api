@@ -364,6 +364,12 @@ importers:
         specifier: workspace:*
         version: link:../../packages/config-scripts
 
+  packages/api-limiter:
+    dependencies:
+      express-rate-limit:
+        specifier: ^8.3.1
+        version: 8.3.1(express@5.2.1)
+
   packages/auth-lib:
     dependencies:
       jsonwebtoken:
@@ -423,6 +429,9 @@ importers:
 
   services/auth:
     dependencies:
+      '@repo/api-limiter':
+        specifier: workspace:*
+        version: link:../../packages/api-limiter
       '@repo/auth-lib':
         specifier: workspace:*
         version: link:../../packages/auth-lib
@@ -451,6 +460,9 @@ importers:
 
   services/gateway:
     dependencies:
+      '@repo/api-limiter':
+        specifier: workspace:*
+        version: link:../../packages/api-limiter
       '@repo/auth-lib':
         specifier: workspace:*
         version: link:../../packages/auth-lib
@@ -460,9 +472,6 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
-      express-rate-limit:
-        specifier: ^8.3.1
-        version: 8.3.1(express@5.2.1)
       http-proxy-3:
         specifier: ^1.23.2
         version: 1.23.2

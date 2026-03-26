@@ -50,12 +50,10 @@ def main() -> None:
   default_output_path = Path(__file__).resolve().parent / "overview.json"
   output_path = Path(os.getenv("OVERVIEW_OUTPUT_PATH", default_output_path))
   project_root = Path(__file__).resolve().parent.parent
-  overview_data = {
-    "apps": get_child_directory_descriptions(project_root / "apps"),
-    "cli": get_child_directory_descriptions(project_root / "cli"),
-    "packages": get_child_directory_descriptions(project_root / "packages"),
-    "services": get_child_directory_descriptions(project_root / "services"),
-  }
+  sections = ["apps", "cli", "packages", "services"]
+  overview_data = {}
+  for section in sections:
+    overview_data[section] = get_child_directory_descriptions(project_root / section)
 
   output_path.write_text(
     json.dumps(overview_data, indent=2) + "\n",

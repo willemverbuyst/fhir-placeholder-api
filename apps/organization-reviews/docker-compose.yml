@@ -1,0 +1,9 @@
+services:
+  organization-reviews:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/html

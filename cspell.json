@@ -29,7 +29,9 @@
     "PGUSER",
     "PGPASSWORD",
     "PGDATABASE",
-    "pgcrypto"
+    "pgcrypto",
+    "rootsecret",
+    "phpmyadmin"
   ],
   "ignorePaths": [
     "**/node_modules/**",

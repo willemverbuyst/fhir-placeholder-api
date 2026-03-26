@@ -9,7 +9,8 @@
       "!**/.turbo",
       "!**/.next",
       "!**/.nuxt",
-      "!**/.output"
+      "!**/.output",
+      "!apps/organization-reviews/vendor/**"
     ]
   },
   "formatter": {

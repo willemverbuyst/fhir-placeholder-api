@@ -2,4 +2,4 @@
 
 ## What is this?
 
-Small data base for fhir data and script to seed it.
+Small database for fhir data and script to seed it.

@@ -16,7 +16,18 @@ if ($jsonContent === false) {
     }
 }
 
-$sections = ['apps', 'packages', 'services'];
+$sections = $data !== null && is_array($data) ? array_keys($data) : [];
+if (!empty($sections)) {
+    if (count($sections) > 2) {
+        $sections_for_title = $sections; // make a copy to preserve the original
+        $last = array_pop($sections_for_title);
+        $title = "High-level view of " . implode(', ', $sections_for_title) . " and " . $last . ".";
+    } else {
+        $title = "High-level view of " . implode(' and ', $sections) . ".";
+    }
+} else {
+    $title = "No sections found.";
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -30,7 +41,7 @@ $sections = ['apps', 'packages', 'services'];
     <main class="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="mb-8">
             <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Overview</h1>
-            <p class="mt-2 text-sm text-slate-600">High-level view of available apps, packages, and services.</p>
+            <p class="mt-2 text-sm text-slate-600"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
 
         <?php if ($errorMessage !== null): ?>

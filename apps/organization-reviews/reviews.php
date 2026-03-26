@@ -8,8 +8,25 @@
 </head>
 <body class="w-screen flex flex-col items-center justify-center bg-gray-100 p-10 ">
   <?php include 'inc/header.php'; ?>
-  <main>
-    <h2 class="text-xl">reviews</h2>
+  <main class="flex flex-col items-center justify-center gap-4">
+  <?php 
+    $sql= "SELECT * FROM review";
+    $result = mysqli_query($conn, $sql);
+    $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
+  ?>
+    <h2 class="text-xl text-center">reviews</h2>
+    <?php if (empty($reviews)) : ?>
+      <p>No reviews found</p>
+    <?php else : ?>
+      <ul class="grid grid-cols-1 gap-4">
+        <?php foreach ($reviews as $review) : ?>
+          <li class="bg-white p-4 rounded-md shadow-md w-[400px]">
+            <p><?php echo $review['body']; ?></p>
+            <h3 class="text-sm text-gray-500 italic"><?php echo "by " . $review['name']; ?></h3>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
   </main>
 </body>
 </html>

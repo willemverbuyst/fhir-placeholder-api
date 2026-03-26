@@ -1,3 +1,5 @@
+<?php include 'config/database.php'; ?>
+
 <header>
   <h1 class="text-2xl font-bold text-center">Organization Reviews</h1>
   <nav class="py-4">

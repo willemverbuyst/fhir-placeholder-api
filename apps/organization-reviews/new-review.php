@@ -1,4 +1,5 @@
 <?php include 'config/database.php';
+include 'lib/organization_options.php';
 $author = $organization = $body = "";
 $author_error = $organization_error = $body_error = "";
 
@@ -8,19 +9,8 @@ $api_response = @file_get_contents("http://gateway:3000/api/public/organizations
 
 if ($api_response !== false) {
   $decoded_response = json_decode($api_response, true);
-
-  if (is_array($decoded_response) && isset($decoded_response["entry"]) && is_array($decoded_response["entry"])) {
-    foreach ($decoded_response["entry"] as $entry) {
-      if (
-        isset($entry["resource"]) &&
-        is_array($entry["resource"]) &&
-        isset($entry["resource"]["name"]) &&
-        is_string($entry["resource"]["name"]) &&
-        $entry["resource"]["name"] !== ""
-      ) {
-        $organization_options[] = $entry["resource"]["name"];
-      }
-    }
+  if (is_array($decoded_response)) {
+    $organization_options = extract_organization_options($decoded_response);
   }
 }
 

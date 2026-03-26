@@ -1,3 +1,9 @@
+<?php include 'config/database.php'; 
+  $sql= "SELECT * FROM review";
+  $result = mysqli_query($conn, $sql);
+  $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +15,6 @@
 <body class="w-screen flex flex-col items-center justify-center bg-gray-100 p-10 ">
   <?php include 'inc/header.php'; ?>
   <main class="flex flex-col items-center justify-center gap-4">
-  <?php 
-    $sql= "SELECT * FROM review";
-    $result = mysqli_query($conn, $sql);
-    $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
-  ?>
     <h2 class="text-xl text-center">reviews</h2>
     <?php if (empty($reviews)) : ?>
       <p>No reviews found</p>
@@ -21,8 +22,10 @@
       <ul class="grid grid-cols-1 gap-4">
         <?php foreach ($reviews as $review) : ?>
           <li class="bg-white p-4 rounded-md shadow-md w-[400px]">
-            <p><?php echo $review['body']; ?></p>
-            <h3 class="text-sm text-gray-500 italic"><?php echo "by " . $review['name']; ?></h3>
+            <p class="overflow-hidden text-ellipsis whitespace-nowrap"><?php echo $review['body']; ?></p>
+            <p class="text-sm text-gray-500 italic">
+              <?php echo "by " . $review['name'] . " on " . $review['date']; ?>
+            </p>
           </li>
         <?php endforeach; ?>
       </ul>

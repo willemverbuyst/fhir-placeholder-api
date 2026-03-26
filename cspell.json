@@ -2,6 +2,11 @@
   "version": "0.2",
   "language": "en",
   "words": [
+    "PGDATABASE",
+    "PGHOST",
+    "PGPASSWORD",
+    "PGPORT",
+    "PGUSER",
     "bunchee",
     "cioc",
     "codeable",
@@ -14,24 +19,20 @@
     "noshow",
     "onhold",
     "overmind",
+    "pgcrypto",
+    "phpmyadmin",
+    "phpunit",
     "preexec",
     "quuz",
     "regio",
+    "rootsecret",
     "searchset",
     "setsid",
     "sjaakie",
     "sonner",
     "unrs-resolver",
     "venv",
-    "waitlist",
-    "PGHOST",
-    "PGPORT",
-    "PGUSER",
-    "PGPASSWORD",
-    "PGDATABASE",
-    "pgcrypto",
-    "rootsecret",
-    "phpmyadmin"
+    "waitlist"
   ],
   "ignorePaths": [
     "**/node_modules/**",
@@ -45,7 +46,8 @@
     "packages/dummy-data/src/valueSets/languages-value-set.ts",
     "packages/dummy-data/src/valueSets/observation-code-value-set.ts",
     "packages/normalizer/src/normalizeJSON.spec.ts",
-    "apps/questionnaire-server/countries.json"
+    "apps/questionnaire-server/countries.json",
+    "apps/organization-reviews/vendor/"
   ],
   "dictionaries": ["typescript", "node", "html", "css", "npm"]
 }

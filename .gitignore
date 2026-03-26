@@ -43,3 +43,7 @@ __pycache__/
 
 # User configuration files
 apps/server/scripts/dummy-data-config.json
+
+# PHP test tooling artifacts
+apps/organization-reviews/vendor/
+apps/organization-reviews/.phpunit.result.cache

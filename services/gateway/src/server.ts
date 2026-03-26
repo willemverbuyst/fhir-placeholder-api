@@ -29,7 +29,8 @@ app.use("/api", (req, res, next) => {
   log.info("Request received", { path: req.path });
   if (
     req.path.startsWith("/auth/sign-in") ||
-    req.path.startsWith("/auth/sign-up")
+    req.path.startsWith("/auth/sign-up") ||
+    req.path === "/public/organizations"
   ) {
     return next();
   }
@@ -56,6 +57,19 @@ app.use("/api", (req, res, next) => {
 });
 
 // 🔀 Routing
+
+app.use("/api/public/organizations", (req, res) => {
+  if (req.method !== "GET") {
+    log.warn(`Method not allowed: ${req.method} ${req.url}`);
+    res.setHeader("Allow", "GET");
+    return res.status(405).send("Method Not Allowed");
+  }
+
+  log.info(
+    `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5/Organization/`,
+  );
+  proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5/Organization/` });
+});
 
 app.use("/api/auth", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/auth/, "") || "/";

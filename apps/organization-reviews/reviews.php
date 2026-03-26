@@ -1,5 +1,5 @@
 <?php include 'config/database.php'; 
-  $sql= "SELECT * FROM review";
+  $sql= "SELECT * FROM reviews";
   $result = mysqli_query($conn, $sql);
   $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
@@ -22,9 +22,10 @@
       <ul class="grid grid-cols-1 gap-4">
         <?php foreach ($reviews as $review) : ?>
           <li class="bg-white p-4 rounded-md shadow-md w-[400px]">
+            <h2 class="text-lg font-bold"><?php echo $review['organization']; ?></h2>
             <p class="overflow-hidden text-ellipsis whitespace-nowrap"><?php echo $review['body']; ?></p>
             <p class="text-sm text-gray-500 italic">
-              <?php echo "by " . $review['name'] . " on " . $review['date']; ?>
+              <?php echo "by " . $review['author'] . " on " . $review['date']; ?>
             </p>
           </li>
         <?php endforeach; ?>

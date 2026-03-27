@@ -8,7 +8,6 @@
     "format:php:check": "docker compose exec php vendor/bin/pint --test"
   },
   "keywords": [],
-  "author": "Willem Verbuyst",
   "license": "ISC",
   "packageManager": "pnpm@10.10.0"
 }

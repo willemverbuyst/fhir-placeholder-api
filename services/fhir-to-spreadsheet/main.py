@@ -3,6 +3,7 @@ from openpyxl import Workbook
 
 FHIR_BASE = "http://localhost:8080/api/v2/r5"
 
+
 def fetch_bundle(resource_type):
     url = f"{FHIR_BASE}/{resource_type}"
     headers = {"Accept": "application/fhir+json"}
@@ -16,6 +17,7 @@ def fetch_bundle(resource_type):
     bundle = response.json()
     return bundle.get("entry", [])
 
+
 wb = Workbook()
 
 appointment_entries = fetch_bundle("Appointment")
@@ -28,7 +30,9 @@ for entry in appointment_entries:
     appointment_id = resource.get("id", "")
     status = resource.get("status", "")
     subject = resource["subject"]["reference"].split("/")[1]
-    participants = [p["actor"]["reference"].split("/")[1] for p in resource["participant"]]
+    participants = [
+        p["actor"]["reference"].split("/")[1] for p in resource["participant"]
+    ]
 
     for p in participants:
         ws_appointment.append([appointment_id, status, subject, p])

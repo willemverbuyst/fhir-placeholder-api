@@ -1,35 +1,32 @@
 <?php
 
-$jsonPath = __DIR__ . '/overview.json';
-$jsonContent = @file_get_contents($jsonPath);
-$data = null;
+declare(strict_types=1);
+
+require __DIR__ . '/lib/overview-data.php';
+require __DIR__ . '/lib/overview-view-model.php';
+
+$defaultData = [
+    'title' => 'Overview',
+    'about' => '',
+    'created_at' => '',
+    'sections' => [],
+    'dependencies' => [],
+];
+
+$data = $defaultData;
+$sections = [];
+$title = buildSectionSubtitle($sections);
+$dependencies = [];
 $errorMessage = null;
 
-if ($jsonContent === false) {
-    $errorMessage = 'Unable to read overview.json.';
+$result = loadOverviewFile(__DIR__ . '/overview.json');
+if ($result['ok'] === false) {
+    $errorMessage = $result['error'];
 } else {
-    $decoded = json_decode($jsonContent, true);
-    if (!is_array($decoded)) {
-        $errorMessage = 'Invalid JSON in overview.json.';
-    } else {
-        $data = $decoded;
-    }
+    $viewModel = buildOverviewViewModel($result['data']);
+    $data = $viewModel['data'];
+    $sections = $viewModel['sections'];
+    $title = $viewModel['title'];
+    $dependencies = $viewModel['dependencies'];
 }
-
-$sections = $data["sections"] !== null && is_array($data["sections"]) ? array_keys($data["sections"]) : [];
-if (!empty($sections)) {
-    if (count($sections) > 2) {
-        $sections_for_title = $sections; // make a copy to preserve the original
-        $last = array_pop($sections_for_title);
-        $title = "High-level view of " . implode(', ', $sections_for_title) . " and " . $last;
-    } else {
-        $title = "High-level view of " . implode(' and ', $sections);
-    }
-} else {
-    $title = "No sections found.";
-}
-
-$dependencies = $data["dependencies"] !== null && is_array($data["dependencies"]) ? $data["dependencies"] : [];
-
-?>
-<?php require __DIR__ . '/views/overview-page.php'; ?>
+require __DIR__ . '/views/overview-page.php';

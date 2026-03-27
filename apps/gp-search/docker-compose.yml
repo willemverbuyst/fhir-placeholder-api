@@ -1,0 +1,9 @@
+services:
+  overview:
+    build:
+      context: ..
+      dockerfile: gp-search/Dockerfile
+    ports:
+      - "5176:80"
+    volumes:
+      - ./:/var/www/html

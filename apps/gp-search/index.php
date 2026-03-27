@@ -28,27 +28,35 @@ $(document).ready(function() {
   let searchTimeoutId = null;
 
   $('#search').on('keyup', function() {
-    const query = $(this).val();
+    const query = String($(this).val() ?? '').trim();
 
     if (searchTimeoutId !== null) {
       clearTimeout(searchTimeoutId);
     }
 
     searchTimeoutId = setTimeout(function() {
-      $.getJSON('search.php', { query: query }, function(data) {
+      if (query === '') {
+        $('#results').empty();
+        return;
+      }
 
-        let html = '';
+      $.getJSON('search.php', { query: query })
+        .done(function(data) {
+          let html = '';
 
-        if (data.length === 0) {
-          html = '<p>No results found</p>';
-        } else {
-          data.forEach(gp => {
-            html += `<p>${gp.name} (${gp.email})</p>`;  
-          });
-        }
+          if (data.length === 0) {
+            html = '<p>No results found</p>';
+          } else {
+            data.forEach(gp => {
+              html += `<p>${gp.name} (${gp.email})</p>`;
+            });
+          }
 
-        $('#results').html(html);
-      });
+          $('#results').html(html);
+        })
+        .fail(function() {
+          $('#results').html('<p>Search failed. Please try again.</p>');
+        });
     }, 250);
   });
 

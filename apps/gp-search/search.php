@@ -1,22 +1,36 @@
 <?php
+include 'config/database.php';
 
-$gps = [
-  ["name" => "John Doe", "email" => "john.doe@example.com"],
-  ["name" => "Jane Doe", "email" => "jane.doe@example.com"],
-  ["name" => "Jim Doe", "email" => "jim.doe@example.com"],
-  ["name" => "Jill Doe", "email" => "jill.doe@example.com"],
-];
+header('Content-Type: application/json; charset=utf-8');
 
-$query = $_GET['query'] ?? '';
+$query = trim($_GET['query'] ?? '');
 
-$results = [];
-
-if ($query) {
-  $results = array_filter($gps, function($gp) use ($query) {
-    return stripos($gp["name"], $query) !== false;
-  });
+if ($query === '') {
+  echo json_encode([]);
+  exit;
 }
 
-echo json_encode(array_values($results));
+$statement = $conn->prepare('SELECT * FROM gps WHERE name LIKE ?');
 
+if ($statement === false) {
+  http_response_code(500);
+  echo json_encode(['error' => 'Failed to prepare search query']);
+  exit;
+}
+
+$searchPattern = '%' . $query . '%';
+$statement->bind_param('s', $searchPattern);
+
+if (!$statement->execute()) {
+  http_response_code(500);
+  echo json_encode(['error' => 'Failed to execute search query']);
+  $statement->close();
+  exit;
+}
+
+$result = $statement->get_result();
+$gps = $result->fetch_all(MYSQLI_ASSOC);
+$statement->close();
+
+echo json_encode($gps);
 ?>

@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 import json
 import os
@@ -51,9 +52,14 @@ def main() -> None:
   output_path = Path(os.getenv("OVERVIEW_OUTPUT_PATH", default_output_path))
   project_root = Path(__file__).resolve().parent.parent
   sections = ["apps", "cli", "packages", "services"]
-  overview_data = {}
+  overview_data = {
+    "title": "Overview of the monorepo",
+    "sections": {},
+    "about": _extract_what_is_this_description(Path(__file__).resolve().parent / "README.md"),
+    "created_at": datetime.now().isoformat()
+  }
   for section in sections:
-    overview_data[section] = get_child_directory_descriptions(project_root / section)
+    overview_data["sections"][section] = get_child_directory_descriptions(project_root / section)
 
   output_path.write_text(
     json.dumps(overview_data, indent=2) + "\n",

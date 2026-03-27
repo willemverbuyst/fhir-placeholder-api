@@ -16,7 +16,8 @@ if ($jsonContent === false) {
     }
 }
 
-$sections = $data !== null && is_array($data) ? array_keys($data) : [];
+$has_sections = $data !== null;
+$sections = $data["sections"] !== null && is_array($data["sections"]) ? array_keys($data["sections"]) : [];
 if (!empty($sections)) {
     if (count($sections) > 2) {
         $sections_for_title = $sections; // make a copy to preserve the original
@@ -40,12 +41,13 @@ if (!empty($sections)) {
     <title>Overview</title>
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
+    <header class="mt-10">
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-center">
+            <?php echo htmlspecialchars($data["title"], ENT_QUOTES, 'UTF-8'); ?>
+        </h1>
+        <p class="mt-2 text-sm text-slate-600 text-center"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></p>
+    </header>
     <main class="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-center">Overview</h1>
-            <p class="mt-2 text-sm text-slate-600 text-center"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></p>
-        </div>
-
         <?php if ($errorMessage !== null): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-sm">
                 <?php echo htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?>
@@ -54,7 +56,7 @@ if (!empty($sections)) {
             <div class="grid gap-6 md:grid-cols-4">
                 <?php foreach ($sections as $section): ?>
                     <?php
-                    $items = array_keys($data[$section] ?? []);
+                    $items = array_keys($data["sections"][$section] ?? []);
                     ?>
                     <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                         <h2 class="mb-4 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-700">
@@ -68,7 +70,7 @@ if (!empty($sections)) {
                                 <?php foreach ($items as $item): ?>
                                     <?php if (is_string($item)): ?>
                                         <?php
-                                        $description = $data[$section][$item] ?? '';
+                                        $description = $data["sections"][$section][$item] ?? '';
                                         if (!is_string($description)) {
                                             $description = '';
                                         }
@@ -93,6 +95,9 @@ if (!empty($sections)) {
             </div>
         <?php endif; ?>
     </main>
+    <footer class="mt-10 text-sm text-slate-500 text-center italic fixed bottom-0 w-full py-2">
+        <?php echo "Created at: " . htmlspecialchars($data["created_at"], ENT_QUOTES, 'UTF-8'); ?>
+    </footer>
 
     <div id="item-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
         <div id="item-modal-backdrop" class="absolute inset-0 bg-slate-900/50"></div>

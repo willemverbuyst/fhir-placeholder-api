@@ -14,6 +14,9 @@ services:
       DB_NAME: app_db
       DB_USER: app_user
       DB_PASSWORD: secret
+    profiles:
+      - apps
+      - review
 
   organization-reviews-db:
     image: mysql:8.0
@@ -27,6 +30,9 @@ services:
       - "3307:3306"
     volumes:
       - organization_reviews_db_data:/var/lib/mysql
+    profiles:
+      - db
+      - review
 
   organization-reviews-phpmyadmin:
     image: phpmyadmin
@@ -36,6 +42,9 @@ services:
       PMA_HOST: organization-reviews-db
     depends_on:
       - organization-reviews-db
+    profiles:
+      - tools
+      - review
 
   db:
     image: postgres:15
@@ -49,6 +58,8 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    profiles:
+      - db
 
   adminer:
     image: adminer
@@ -59,6 +70,8 @@ services:
       - "9090:8080"
     depends_on:
       - db
+    profiles:
+      - tools
 
   auth-service:
     build:
@@ -73,11 +86,15 @@ services:
       PGDATABASE: auth_db
     depends_on:
       - db
+    profiles:
+      - auth-services
 
   users-service:
     build:
       context: .
       dockerfile: services/users/Dockerfile
+    profiles:
+      - auth-services
 
   gateway:
     build:
@@ -94,6 +111,8 @@ services:
       - auth-service
       - users-service
       - fhir-server
+    profiles:
+      - auth-services
 
   fhir-server:
     build:
@@ -102,6 +121,8 @@ services:
     environment:
       NODE_ENV: development
       PORT: "8080"
+    profiles:
+      - server
 
 volumes:
   postgres_data:

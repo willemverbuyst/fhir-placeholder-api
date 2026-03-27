@@ -91,7 +91,9 @@ def parse_target(item: object, repo_root: Path) -> Target:
             raise ValueError(f"Target '{field}' must be a non-empty string.")
 
     args_raw = item.get("args", [])
-    if not isinstance(args_raw, list) or any(not isinstance(arg, str) for arg in args_raw):
+    if not isinstance(args_raw, list) or any(
+        not isinstance(arg, str) for arg in args_raw
+    ):
         raise ValueError("Target 'args' must be an array of strings when provided.")
 
     env_raw = item.get("env", {})
@@ -178,7 +180,9 @@ def parse_index_selection(raw: str, max_index: int) -> List[int]:
             raise ValueError(f"Invalid index: '{stripped}'. Use numbers only.")
         index = int(stripped)
         if index < 1 or index > max_index:
-            raise ValueError(f"Index out of range: {index}. Valid range is 1-{max_index}.")
+            raise ValueError(
+                f"Index out of range: {index}. Valid range is 1-{max_index}."
+            )
         unique_indexes.add(index)
 
     if not unique_indexes:
@@ -190,20 +194,28 @@ def parse_index_selection(raw: str, max_index: int) -> List[int]:
 def validate_targets(targets: Sequence[Target]) -> None:
     for target in targets:
         if not target.cwd.exists() or not target.cwd.is_dir():
-            raise ValueError(f"[{target.id}] cwd does not exist or is not a directory: {target.cwd}")
+            raise ValueError(
+                f"[{target.id}] cwd does not exist or is not a directory: {target.cwd}"
+            )
 
         if target.shell:
             continue
 
-        if os.path.sep in target.command or (os.path.altsep and os.path.altsep in target.command):
+        if os.path.sep in target.command or (
+            os.path.altsep and os.path.altsep in target.command
+        ):
             command_path = (target.cwd / target.command).resolve()
             if not command_path.exists():
-                raise ValueError(f"[{target.id}] command path not found: {command_path}")
+                raise ValueError(
+                    f"[{target.id}] command path not found: {command_path}"
+                )
             continue
 
         resolved = shutil.which(target.command)
         if resolved is None:
-            raise ValueError(f"[{target.id}] command not found in PATH: {target.command}")
+            raise ValueError(
+                f"[{target.id}] command not found in PATH: {target.command}"
+            )
 
 
 def start_target(target: Target) -> subprocess.Popen[str]:
@@ -269,7 +281,9 @@ def stop_process(process: subprocess.Popen[str], target_name: str) -> None:
     except OSError as exc:
         if exc.errno == errno.ESRCH:
             return
-        print(f"[{target_name}] failed to terminate process group: {exc}", file=sys.stderr)
+        print(
+            f"[{target_name}] failed to terminate process group: {exc}", file=sys.stderr
+        )
 
 
 def kill_process(process: subprocess.Popen[str], target_name: str) -> None:
@@ -314,7 +328,9 @@ def run_targets(targets: Sequence[Target]) -> int:
             exit_codes = [(target, proc.poll()) for target, proc in processes]
             running_count = sum(1 for _, code in exit_codes if code is None)
 
-            failed = [(target, code) for target, code in exit_codes if code not in (None, 0)]
+            failed = [
+                (target, code) for target, code in exit_codes if code not in (None, 0)
+            ]
             if failed:
                 failed_target, failed_code = failed[0]
                 print(

@@ -10,7 +10,9 @@
       "!**/.next",
       "!**/.nuxt",
       "!**/.output",
-      "!apps/organization-reviews/vendor/**"
+      "!**/vendor",
+      "!**/composer.json",
+      "!overview/overview.json"
     ]
   },
   "formatter": {

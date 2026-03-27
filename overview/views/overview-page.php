@@ -9,38 +9,38 @@
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
     <header class="py-4">
         <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-center">
-            <?php echo htmlspecialchars($data["title"], ENT_QUOTES, 'UTF-8'); ?>
+            <?php echo htmlspecialchars($data['title'], ENT_QUOTES, 'UTF-8'); ?>
         </h1>
         <details>
             <summary class="text-lg text-slate-600 text-center py-2"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></summary>
-            <p class="text-slate-600 text-center py-2 w-[400px] mx-auto"><?php echo htmlspecialchars($data["about"], ENT_QUOTES, 'UTF-8'); ?></p>
+            <p class="text-slate-600 text-center py-2 w-[400px] mx-auto"><?php echo htmlspecialchars($data['about'], ENT_QUOTES, 'UTF-8'); ?></p>
         </details>
     </header>
     <main class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-        <?php if ($errorMessage !== null): ?>
+        <?php if ($errorMessage !== null) { ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-sm">
                 <?php echo htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?>
             </div>
-        <?php else: ?>
+        <?php } else { ?>
             <div class="grid gap-6 md:grid-cols-4">
-                <?php foreach ($sections as $section): ?>
+                <?php foreach ($sections as $section) { ?>
                     <?php
-                    $items = array_keys($data["sections"][$section] ?? []);
+                    $items = array_keys($data['sections'][$section] ?? []);
                     ?>
                     <section class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                         <h2 class="mb-4 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-slate-700">
                             <?php echo htmlspecialchars($section, ENT_QUOTES, 'UTF-8'); ?>
                         </h2>
 
-                        <?php if (count($items) === 0): ?>
+                        <?php if (count($items) === 0) { ?>
                             <p class="text-sm text-slate-500">No items found.</p>
-                        <?php else: ?>
+                        <?php } else { ?>
                             <ul class="space-y-2">
-                                <?php foreach ($items as $item): ?>
-                                    <?php if (is_string($item)): ?>
+                                <?php foreach ($items as $item) { ?>
+                                    <?php if (is_string($item)) { ?>
                                         <?php
-                                        $description = $data["sections"][$section][$item] ?? '';
-                                        if (!is_string($description)) {
+                                        $description = $data['sections'][$section][$item] ?? '';
+                                        if (! is_string($description)) {
                                             $description = '';
                                         }
                                         ?>
@@ -56,17 +56,17 @@
                                                 <?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>
                                             </button>
                                         </li>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
+                                    <?php } ?>
+                                <?php } ?>
                             </ul>
-                        <?php endif; ?>
+                        <?php } ?>
                     </section>
-                <?php endforeach; ?>
+                <?php } ?>
             </div>
-        <?php endif; ?>
+        <?php } ?>
     </main>
     <footer class="mt-10 text-sm text-slate-500 text-center italic fixed bottom-0 w-full py-2">
-        <?php echo "Created at: " . htmlspecialchars($data["created_at"], ENT_QUOTES, 'UTF-8'); ?>
+        <?php echo 'Created at: '.htmlspecialchars($data['created_at'], ENT_QUOTES, 'UTF-8'); ?>
     </footer>
 
     <div id="item-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">

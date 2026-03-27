@@ -25,7 +25,7 @@ function loadOverviewFile(string $jsonPath): array
         ];
     }
 
-    if (!is_array($decoded)) {
+    if (! is_array($decoded)) {
         return [
             'ok' => false,
             'error' => 'Invalid JSON root in overview.json.',
@@ -39,7 +39,7 @@ function loadOverviewFile(string $jsonPath): array
 }
 
 /**
- * @param array<string, mixed> $decoded
+ * @param  array<string, mixed>  $decoded
  * @return array<string, mixed>
  */
 function validateOverviewSchema(array $decoded): array
@@ -61,7 +61,7 @@ function validateOverviewSchema(array $decoded): array
 }
 
 /**
- * @param array<string, mixed> $sectionsRaw
+ * @param  array<string, mixed>  $sectionsRaw
  * @return array<string, array<string, string>>
  */
 function normalizeSections(array $sectionsRaw): array
@@ -69,13 +69,13 @@ function normalizeSections(array $sectionsRaw): array
     $sections = [];
 
     foreach ($sectionsRaw as $sectionName => $sectionItems) {
-        if (!is_string($sectionName) || !is_array($sectionItems)) {
+        if (! is_string($sectionName) || ! is_array($sectionItems)) {
             continue;
         }
 
         $sections[$sectionName] = [];
         foreach ($sectionItems as $itemName => $description) {
-            if (!is_string($itemName)) {
+            if (! is_string($itemName)) {
                 continue;
             }
 
@@ -87,7 +87,7 @@ function normalizeSections(array $sectionsRaw): array
 }
 
 /**
- * @param array<string, mixed> $dependenciesRaw
+ * @param  array<string, mixed>  $dependenciesRaw
  * @return array<string, array<string, array<int, string>>>
  */
 function normalizeDependencies(array $dependenciesRaw): array
@@ -95,14 +95,14 @@ function normalizeDependencies(array $dependenciesRaw): array
     $dependencies = [];
 
     foreach ($dependenciesRaw as $sectionName => $sectionDependencies) {
-        if (!is_string($sectionName) || !is_array($sectionDependencies)) {
+        if (! is_string($sectionName) || ! is_array($sectionDependencies)) {
             continue;
         }
 
         $dependencies[$sectionName] = [];
 
         foreach ($sectionDependencies as $itemName => $itemDependencies) {
-            if (!is_string($itemName) || !is_array($itemDependencies)) {
+            if (! is_string($itemName) || ! is_array($itemDependencies)) {
                 continue;
             }
 

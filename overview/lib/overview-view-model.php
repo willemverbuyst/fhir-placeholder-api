@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * @param array<int, string> $sectionNames
+ * @param  array<int, string>  $sectionNames
  */
 function buildSectionSubtitle(array $sectionNames): string
 {
@@ -12,13 +12,13 @@ function buildSectionSubtitle(array $sectionNames): string
     }
 
     if (count($sectionNames) <= 2) {
-        return 'High-level view of ' . implode(' and ', $sectionNames);
+        return 'High-level view of '.implode(' and ', $sectionNames);
     }
 
     $namesForTitle = $sectionNames;
     $lastSectionName = array_pop($namesForTitle);
 
-    return 'High-level view of ' . implode(', ', $namesForTitle) . ' and ' . $lastSectionName;
+    return 'High-level view of '.implode(', ', $namesForTitle).' and '.$lastSectionName;
 }
 
 /**

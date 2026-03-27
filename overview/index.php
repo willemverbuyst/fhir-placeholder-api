@@ -16,7 +16,6 @@ if ($jsonContent === false) {
     }
 }
 
-$has_sections = $data !== null;
 $sections = $data["sections"] !== null && is_array($data["sections"]) ? array_keys($data["sections"]) : [];
 if (!empty($sections)) {
     if (count($sections) > 2) {
@@ -29,6 +28,8 @@ if (!empty($sections)) {
 } else {
     $title = "No sections found.";
 }
+
+$dependencies = $data["dependencies"] !== null && is_array($data["dependencies"]) ? $data["dependencies"] : [];
 
 ?>
 
@@ -83,6 +84,7 @@ if (!empty($sections)) {
                                                 type="button"
                                                 class="w-full rounded-md bg-slate-50 px-3 py-2 text-left text-sm text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
                                                 data-modal-trigger
+                                                data-item-section="<?php echo htmlspecialchars($section, ENT_QUOTES, 'UTF-8'); ?>"
                                                 data-item-name="<?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>"
                                                 data-item-description="<?php echo htmlspecialchars($description, ENT_QUOTES, 'UTF-8'); ?>"
                                             >
@@ -122,29 +124,96 @@ if (!empty($sections)) {
                 </button>
             </div>
             <p id="item-modal-description" class="whitespace-pre-line text-sm leading-6 text-slate-700"></p>
+            <div class="mt-4 border-t border-slate-200 pt-4">
+                <h4 class="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-600">Dependencies</h4>
+                <div id="item-modal-dependencies" class="text-sm leading-6 text-slate-700"></div>
+            </div>
         </div>
     </div>
 
     <script>
+        const dependencySections = <?php echo json_encode($dependencies, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+        const dependencyMap = Object.values(dependencySections).reduce((accumulator, sectionDependencies) => {
+            if (!sectionDependencies || typeof sectionDependencies !== 'object') {
+                return accumulator;
+            }
+
+            Object.entries(sectionDependencies).forEach(([name, dependencies]) => {
+                if (Array.isArray(dependencies)) {
+                    accumulator[name] = dependencies;
+                }
+            });
+
+            return accumulator;
+        }, {});
+
         const modal = document.getElementById('item-modal');
         const modalBackdrop = document.getElementById('item-modal-backdrop');
         const modalCloseButton = document.getElementById('item-modal-close');
         const modalTitle = document.getElementById('item-modal-title');
         const modalDescription = document.getElementById('item-modal-description');
+        const modalDependencies = document.getElementById('item-modal-dependencies');
         const modalTriggers = document.querySelectorAll('[data-modal-trigger]');
         let lastFocusedElement = null;
+
+        const escapeHtml = (value) => {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        };
+
+        const renderTree = (itemName, ancestry = new Set()) => {
+            const dependencies = dependencyMap[itemName];
+            if (!Array.isArray(dependencies) || dependencies.length === 0) {
+                return '';
+            }
+
+            const branchAncestry = new Set(ancestry);
+            branchAncestry.add(itemName);
+
+            const childrenHtml = dependencies.map((dependencyName) => {
+                const safeDependencyName = escapeHtml(dependencyName);
+                if (branchAncestry.has(dependencyName)) {
+                    return `<li>${safeDependencyName} <span class="text-xs text-amber-600">(circular)</span></li>`;
+                }
+
+                return `<li>${safeDependencyName}${renderTree(dependencyName, branchAncestry)}</li>`;
+            }).join('');
+
+            return `<ul class="ml-4 border-l border-slate-300 pl-4 space-y-1">${childrenHtml}</ul>`;
+        };
+
+        const renderDependencies = (itemName, itemSection) => {
+            const sectionDependencies = dependencySections[itemSection];
+            if (!sectionDependencies || !Array.isArray(sectionDependencies[itemName]) || sectionDependencies[itemName].length === 0) {
+                modalDependencies.innerHTML = '<p class="text-slate-500">No internal dependencies.</p>';
+                return;
+            }
+
+            const safeItemName = escapeHtml(itemName);
+            modalDependencies.innerHTML = `
+                <ul class="space-y-2">
+                    <li>${safeItemName}${renderTree(itemName)}</li>
+                </ul>
+            `;
+        };
 
         const closeModal = () => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+            modalDependencies.innerHTML = '';
             if (lastFocusedElement instanceof HTMLElement) {
                 lastFocusedElement.focus();
             }
         };
 
-        const openModal = (title, description, triggerElement) => {
+        const openModal = (title, description, section, triggerElement) => {
             modalTitle.textContent = title;
             modalDescription.textContent = description || 'No description available.';
+            renderDependencies(title, section);
             lastFocusedElement = triggerElement;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -155,7 +224,8 @@ if (!empty($sections)) {
             trigger.addEventListener('click', () => {
                 const title = trigger.getAttribute('data-item-name') || '';
                 const description = trigger.getAttribute('data-item-description') || '';
-                openModal(title, description, trigger);
+                const section = trigger.getAttribute('data-item-section') || '';
+                openModal(title, description, section, trigger);
             });
         });
 

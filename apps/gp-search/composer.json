@@ -1,0 +1,6 @@
+{
+    "name": "root/html",
+    "require-dev": {
+        "laravel/pint": "^1.29"
+    }
+}

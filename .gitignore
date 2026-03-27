@@ -45,7 +45,7 @@ __pycache__/
 apps/server/scripts/dummy-data-config.json
 
 # PHP test tooling artifacts
-apps/organization-reviews/vendor/
-apps/organization-reviews/.phpunit.result.cache
+**/vendor/
+**/.phpunit.result.cache
 
 overview.json

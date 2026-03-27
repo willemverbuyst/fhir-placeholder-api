@@ -1,0 +1,11 @@
+services:
+  overview:
+    build:
+      context: ..
+      dockerfile: overview/Dockerfile
+    command: sh -c "OVERVIEW_OUTPUT_PATH=/var/www/html/overview.json python3 /workspace/overview/main.py && apache2-foreground"
+    ports:
+      - "5000:80"
+    volumes:
+      - ./:/var/www/html
+      - ../:/workspace:ro

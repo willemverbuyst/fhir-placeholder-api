@@ -327,8 +327,8 @@ importers:
         specifier: ^1.12.18
         version: 1.12.61
       survey-react-ui:
-        specifier: ^1.12.18
-        version: 1.12.61(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(survey-core@1.12.61)
+        specifier: ^2.5.17
+        version: 2.5.17(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(survey-core@1.12.61)
     devDependencies:
       '@types/react':
         specifier: ^19.0.7
@@ -7929,12 +7929,12 @@ packages:
   survey-core@1.12.61:
     resolution: {integrity: sha512-MnAZ8hK97Tj+wa5XGbFGuE8v4KyStdrpFgDvmyz353lfa68ySbsCtTiIRW9lr9ALQWk1xHJjSbmbCi4QkR+2gg==}
 
-  survey-react-ui@1.12.61:
-    resolution: {integrity: sha512-X3qu7or7Gtd6kvmgFYNDSdF2L6vIRZkpsovyn24BxQjoWxuVnL8/RWiKjpfNxZR9M+kh8HQObnkqn8qJ7CVnAQ==}
+  survey-react-ui@2.5.17:
+    resolution: {integrity: sha512-4kFx+zH23wcfahNrmtsIA1gkQNPciWZYOEizekzz0VNEV/VRtCW4bn/KsyTkKqm0p5uOX4magLDH3B22HF7nRA==}
     peerDependencies:
-      react: ^16.5.0 || ^17.0.1 || ^18.2.0 || ^19.0.0
-      react-dom: ^16.5.0 || ^17.0.1 || ^18.2.0 || ^19.0.0
-      survey-core: 1.12.61
+      react: ^16.5.0 || ^17.0.1 || ^18.1.0 || ^19.0.0
+      react-dom: ^16.5.0 || ^17.0.1 || ^18.1.0 || ^19.0.0
+      survey-core: 2.5.17
 
   svgo@4.0.1:
     resolution: {integrity: sha512-XDpWUOPC6FEibaLzjfe0ucaV0YrOjYotGJO1WpF0Zd+n6ZGEQUsSugaoLq9QkEZtAfQIxT42UChcssDVPP3+/w==}
@@ -16731,7 +16731,7 @@ snapshots:
 
   survey-core@1.12.61: {}
 
-  survey-react-ui@1.12.61(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(survey-core@1.12.61):
+  survey-react-ui@2.5.17(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(survey-core@1.12.61):
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)

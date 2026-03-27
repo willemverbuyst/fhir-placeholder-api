@@ -16,7 +16,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "survey-core": "^1.12.18",
-    "survey-react-ui": "^1.12.18"
+    "survey-react-ui": "^2.5.17"
   },
   "devDependencies": {
     "@types/react": "^19.0.7",

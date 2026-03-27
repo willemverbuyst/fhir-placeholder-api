@@ -18,14 +18,50 @@
       <input class="form-control" type="text" id="search" placeholder="Search for a GP">
   </section>
   <section class="row">
-    <label class="form-label" for="results">Results</label>
-    <div id="results" class="list-group"></div>
+    <div id="results">
+      <table class="table table-striped table-hover table-bordered align-middle">
+        <thead class="table-light">
+          <tr>
+            <th scope="col" class="text-uppercase small">Name</th>
+            <th scope="col" class="text-uppercase small">Email</th>
+            <th scope="col" class="text-uppercase small">Phone</th>
+          </tr>
+        </thead>
+        <tbody id="results-body" class="table-group-divider">
+          
+        </tbody>
+      </table>
+    </div>
   </section>
 </main>
 
 <script>
 $(document).ready(function() {
   let searchTimeoutId = null;
+  const $resultsBody = $('#results-body');
+
+  function renderRows(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+      $resultsBody.html(`
+        <tr class="table-warning">
+          <td colspan="3" class="text-muted fw-semibold">No results found.</td>
+        </tr>
+      `);
+      return;
+    }
+
+    const html = data
+      .map(gp => `
+        <tr>
+          <td class="fw-medium">${gp.name}</td>
+          <td><a class="link-primary" href="mailto:${gp.email}">${gp.email}</a></td>
+          <td>${gp.phone}</td>
+        </tr>
+      `)
+      .join('');
+
+    $resultsBody.html(html);
+  }
 
   $('#search').on('keyup', function() {
     const query = String($(this).val() ?? '').trim();
@@ -36,26 +72,20 @@ $(document).ready(function() {
 
     searchTimeoutId = setTimeout(function() {
       if (query === '') {
-        $('#results').empty();
+        $resultsBody.empty();
         return;
       }
 
       $.getJSON('search.php', { query: query })
         .done(function(data) {
-          let html = '';
-
-          if (data.length === 0) {
-            html = '<p>No results found</p>';
-          } else {
-            data.forEach(gp => {
-              html += `<p>${gp.name} (${gp.email})</p>`;
-            });
-          }
-
-          $('#results').html(html);
+          renderRows(data);
         })
         .fail(function() {
-          $('#results').html('<p>Search failed. Please try again.</p>');
+          $resultsBody.html(`
+            <tr class="table-danger">
+              <td colspan="3" class="text-danger fw-semibold">Search failed. Please try again.</td>
+            </tr>
+          `);
         });
     }, 250);
   });

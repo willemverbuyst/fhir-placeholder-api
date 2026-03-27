@@ -66,9 +66,10 @@ def _extract_internal_package_dependencies(item_directory_path: Path) -> list[st
 
 
 def main() -> None:
-    default_output_path = Path(__file__).resolve().parent / "overview.json"
+    overview_dir = Path(__file__).resolve().parent
+    project_root = overview_dir.parent
+    default_output_path = overview_dir / "overview.json"
     output_path = Path(os.getenv("OVERVIEW_OUTPUT_PATH", default_output_path))
-    project_root = Path(__file__).resolve().parent.parent
     sections = ["apps", "cli", "packages", "services"]
     overview_data = {
         "title": "Overview of the Monorepo",

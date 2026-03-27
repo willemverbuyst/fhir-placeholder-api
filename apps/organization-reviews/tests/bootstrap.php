@@ -2,4 +2,4 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../lib/organization_options.php';
+require_once __DIR__.'/../lib/organization_options.php';

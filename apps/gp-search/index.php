@@ -3,14 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>GP Search</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
 </head>
-<body>
+<body class="container p-4">
 
-<h1>GP Search</h1>
+<header>
+  <h1>GP Search</h1>
+</header>
 
-<input type="text" id="search" placeholder="Search for a GP">
-<div id="results"></div>
+<main class="container d-flex flex-column gap-4 p-4">
+  <section class="row">
+      <label class="form-label" for="search">Search</label>
+      <input class="form-control" type="text" id="search" placeholder="Search for a GP">
+  </section>
+  <section class="row">
+    <label class="form-label" for="results">Results</label>
+    <div id="results" class="list-group"></div>
+  </section>
+</main>
 
 <script>
 $(document).ready(function() {

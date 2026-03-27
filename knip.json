@@ -3,7 +3,8 @@
   "workspaces": {
     ".": {
       "entry": ["turbo.json"],
-      "project": ["**/*.{js,ts,json}"],
+      "project": ["**/*.{js,ts,json,php}"],
+      "ignore": ["overview/assets/overview.js"],
       "ignoreBinaries": ["python3"]
     },
     "apps/fhir-client": {

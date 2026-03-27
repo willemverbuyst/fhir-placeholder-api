@@ -88,7 +88,7 @@ func main() {
 	router.GET("/countries", getCountries)
 	router.GET("/gender-options", getGenderOptions)
 	router.GET("/questionnaire", getFHIRQuestionnaire)
-	err := router.Run(":8081")
+	err := router.Run(":8085")
 
 	if err != nil {
 		log.Fatal("Error when running server: ", err)

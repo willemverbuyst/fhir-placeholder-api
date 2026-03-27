@@ -9,5 +9,4 @@ Goal: convert FHIR Questionnaire Resource to a json object that can be processed
 
 If you haven't already, install go
 
-> cd server && bash server.sh
-
+> cd server && go run main.go fhirModel.go helpers.go surveyJSModel.go

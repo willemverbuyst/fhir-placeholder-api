@@ -67,7 +67,7 @@ func processItems(i Item, es *Elements) {
 
 	if i.AnswerOption != nil {
 		e.ChoicesByUrl = ChoicesByUrl{
-			Url:       "http://localhost:9090/gender-options",
+			Url:       "http://localhost:8085/gender-options",
 			ValueName: "display",
 		}
 	}

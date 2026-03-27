@@ -25,25 +25,31 @@
 
 <script>
 $(document).ready(function() {
+  let searchTimeoutId = null;
 
   $('#search').on('keyup', function() {
     const query = $(this).val();
 
-    $.getJSON('search.php', { query: query }, function(data) {
+    if (searchTimeoutId !== null) {
+      clearTimeout(searchTimeoutId);
+    }
 
-      let html = '';
+    searchTimeoutId = setTimeout(function() {
+      $.getJSON('search.php', { query: query }, function(data) {
 
-      if (data.length === 0) {
-        html = '<p>No results found</p>';
-      } else {
-        data.forEach(gp => {
-          html += `<p>${gp.name} (${gp.email})</p>`;
-        });
-      }
+        let html = '';
 
-      $('#results').html(html);
-    });
+        if (data.length === 0) {
+          html = '<p>No results found</p>';
+        } else {
+          data.forEach(gp => {
+            html += `<p>${gp.name} (${gp.email})</p>`;  
+          });
+        }
 
+        $('#results').html(html);
+      });
+    }, 250);
   });
 
 });

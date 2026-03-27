@@ -106,7 +106,7 @@ services:
       JWT_SECRET: dev-secret
       AUTH_SERVICE_URL: http://auth-service:3001
       USERS_SERVICE_URL: http://users-service:3002
-      FHIR_PROXY_TARGET: http://fhir-server:8080
+      FHIR_SERVER_URL: http://fhir-server:8080
     depends_on:
       - auth-service
       - users-service

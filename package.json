@@ -14,10 +14,10 @@
     "knip:check": "knip",
     "lint:check": "biome lint",
     "lint:fix": "biome lint --write .",
-    "spell:check": "cspell \"**/*.{ts,tsx,js,jsx,md,json,yml,yaml}\"",
+    "spell:check": "cspell \"**/*.{ts,tsx,js,jsx,md,json,yml,yaml,sql}\"",
     "test:unit": "turbo run test:unit",
     "test:e2e": "turbo run test:e2e",
-    "type:check": "turbo type:check",
+    "type:check": "turbo run type:check",
     "prepare": "husky"
   },
   "devDependencies": {

@@ -51,5 +51,5 @@
     "apps/questionnaire-server/countries.json",
     "venv/"
   ],
-  "dictionaries": ["typescript", "node", "html", "css", "npm"]
+  "dictionaries": ["typescript", "node", "html", "css", "npm", "sql"]
 }

@@ -22,9 +22,9 @@ if (!empty($sections)) {
     if (count($sections) > 2) {
         $sections_for_title = $sections; // make a copy to preserve the original
         $last = array_pop($sections_for_title);
-        $title = "High-level view of " . implode(', ', $sections_for_title) . " and " . $last . ".";
+        $title = "High-level view of " . implode(', ', $sections_for_title) . " and " . $last;
     } else {
-        $title = "High-level view of " . implode(' and ', $sections) . ".";
+        $title = "High-level view of " . implode(' and ', $sections);
     }
 } else {
     $title = "No sections found.";
@@ -41,13 +41,16 @@ if (!empty($sections)) {
     <title>Overview</title>
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
-    <header class="mt-10">
+    <header class="py-4">
         <h1 class="text-3xl font-bold tracking-tight sm:text-4xl text-center">
             <?php echo htmlspecialchars($data["title"], ENT_QUOTES, 'UTF-8'); ?>
         </h1>
-        <p class="mt-2 text-sm text-slate-600 text-center"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></p>
+        <details>
+            <summary class="text-lg text-slate-600 text-center py-2"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></summary>
+            <p class="text-slate-600 text-center py-2 w-[400px] mx-auto"><?php echo htmlspecialchars($data["about"], ENT_QUOTES, 'UTF-8'); ?></p>
+        </details>
     </header>
-    <main class="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+    <main class="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
         <?php if ($errorMessage !== null): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-sm">
                 <?php echo htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8'); ?>

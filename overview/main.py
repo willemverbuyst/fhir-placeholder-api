@@ -53,7 +53,7 @@ def main() -> None:
   project_root = Path(__file__).resolve().parent.parent
   sections = ["apps", "cli", "packages", "services"]
   overview_data = {
-    "title": "Overview of the monorepo",
+    "title": "Overview of the Monorepo",
     "sections": {},
     "about": _extract_what_is_this_description(Path(__file__).resolve().parent / "README.md"),
     "created_at": datetime.now().isoformat()

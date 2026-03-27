@@ -11,7 +11,8 @@
       "!**/.nuxt",
       "!**/.output",
       "!**/vendor",
-      "!**/composer.json"
+      "!**/composer.json",
+      "!overview/overview.json"
     ]
   },
   "formatter": {

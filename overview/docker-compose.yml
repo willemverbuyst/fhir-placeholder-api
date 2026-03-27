@@ -9,3 +9,4 @@ services:
     volumes:
       - ./:/var/www/html
       - ../:/workspace:ro
+    working_dir: /var/www/html

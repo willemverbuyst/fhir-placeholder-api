@@ -55,7 +55,17 @@ Run Composer inside the container:
 docker compose exec gp-search composer install
 ```
 
+or:
+
+```bash
+docker compose exec overview composer init --no-interaction
+```
+
 We use Laravel Pint for PHP formatting.
+
+```bash
+docker compose exec php composer require laravel/pint --dev
+```
 
 ### Format code
 

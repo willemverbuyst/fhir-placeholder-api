@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/lib/overview-data.php';
-require __DIR__ . '/lib/overview-view-model.php';
+require __DIR__.'/lib/overview-data.php';
+require __DIR__.'/lib/overview-view-model.php';
 
 $defaultData = [
     'title' => 'Overview',
@@ -19,7 +19,7 @@ $title = buildSectionSubtitle($sections);
 $dependencies = [];
 $errorMessage = null;
 
-$result = loadOverviewFile(__DIR__ . '/overview.json');
+$result = loadOverviewFile(__DIR__.'/overview.json');
 if ($result['ok'] === false) {
     $errorMessage = $result['error'];
 } else {
@@ -29,4 +29,4 @@ if ($result['ok'] === false) {
     $title = $viewModel['title'];
     $dependencies = $viewModel['dependencies'];
 }
-require __DIR__ . '/views/overview-page.php';
+require __DIR__.'/views/overview-page.php';

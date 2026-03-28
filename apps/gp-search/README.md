@@ -15,16 +15,16 @@ This PHP service runs entirely inside Docker. No local PHP or Composer installat
 
 ### 🚀 Getting Started
 
-From this directory, start the container:
+From the repository root, start the stack (app, MySQL, and optional phpMyAdmin use profile `gp-search`):
 
 ```bash
-docker compose up --build
+docker compose -f docker-compose.client.yml --profile gp-search up --build
 ```
 
-or:
+or detached:
 
 ```bash
-docker compose up -d --build
+docker compose -f docker-compose.client.yml --profile gp-search up -d --build
 ```
 
 ### Commands
@@ -52,31 +52,31 @@ In sql session
 Run Composer inside the container:
 
 ```bash
-docker compose exec gp-search composer install
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search composer install
 ```
 
 or:
 
 ```bash
-docker compose exec overview composer init --no-interaction
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search composer init --no-interaction
 ```
 
 We use Laravel Pint for PHP formatting.
 
 ```bash
-docker compose exec gp-search composer require laravel/pint --dev
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search composer require laravel/pint --dev
 ```
 
 ### Format code
 
 ```bash
-docker compose exec gp-search vendor/bin/pint
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search vendor/bin/pint
 ```
 
 ### Check formatting (CI mode)
 
 ```bash
-docker compose exec gp-search vendor/bin/pint --test
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search vendor/bin/pint --test
 ```
 
 ---
@@ -86,13 +86,13 @@ docker compose exec gp-search vendor/bin/pint --test
 To add a new PHP dependency:
 
 ```bash
-docker compose exec gp-search composer require <package>
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search composer require <package>
 ```
 
 For dev dependencies:
 
 ```bash
-docker compose exec gp-search composer require <package> --dev
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search composer require <package> --dev
 ```
 
 ---
@@ -107,21 +107,23 @@ docker compose exec gp-search composer require <package> --dev
 
 ## 🧩 Troubleshooting
 
+From the repository root unless noted otherwise.
+
 ### Container not running
 
 ```bash
-docker compose ps
-docker compose logs gp-search
+docker compose -f docker-compose.client.yml ps
+docker compose -f docker-compose.client.yml logs gp-search
 ```
 
 ### Missing dependencies
 
 ```bash
-docker compose exec gp-search composer install
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search composer install
 ```
 
 ### Formatting issues
 
 ```bash
-docker compose exec gp-search vendor/bin/pint
+docker compose -f docker-compose.client.yml --profile gp-search exec gp-search vendor/bin/pint
 ```

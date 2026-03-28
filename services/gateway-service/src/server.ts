@@ -10,8 +10,7 @@ const proxy = createProxyServer({
 
 const log = logger({ application: "gateway-service" });
 const authServiceUrl = process.env.AUTH_SERVICE_URL ?? "http://localhost:3001";
-const usersServiceUrl =
-  process.env.USERS_SERVICE_URL ?? "http://localhost:3002";
+const usersServiceUrl = process.env.USER_SERVICE_URL ?? "http://localhost:3002";
 const fhirProxyTarget = process.env.FHIR_SERVER_URL ?? "http://localhost:8080";
 
 const app = express();

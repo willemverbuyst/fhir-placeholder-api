@@ -1,8 +1,18 @@
 ### Ping
 GET http://localhost:3000/ping
 
-### Login
-POST http://localhost:3000/api/auth/login
+### Sign up
+POST http://localhost:3000/api/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "foo",
+  "password": "bar",
+  "role": "admin"
+}
+
+### Sign in
+POST http://localhost:3000/api/auth/sign-in
 Content-Type: application/json
 
 {

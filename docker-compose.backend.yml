@@ -11,8 +11,6 @@ services:
       - "5433:5432"
     volumes:
       - auth-service-db-data:/var/lib/postgresql/data
-    profiles:
-      - db
 
   auth-service-db-tool:
     image: adminer
@@ -23,8 +21,6 @@ services:
       - "9090:8080"
     depends_on:
       - auth-service-db
-    profiles:
-      - tools
 
   auth-service:
     build:
@@ -39,15 +35,11 @@ services:
       PGDATABASE: auth_db
     depends_on:
       - auth-service-db
-    profiles:
-      - auth-services
 
   user-service:
     build:
       context: .
       dockerfile: services/user-service/Dockerfile
-    profiles:
-      - auth-services
 
   gateway-service:
     build:
@@ -64,8 +56,6 @@ services:
       - auth-service
       - user-service
       - fhir-server
-    profiles:
-      - auth-services
 
   fhir-server:
     build:
@@ -74,8 +64,6 @@ services:
     environment:
       NODE_ENV: development
       PORT: "8080"
-    profiles:
-      - server
 
 volumes:
   auth-service-db-data:

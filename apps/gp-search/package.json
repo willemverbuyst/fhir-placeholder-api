@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "php:composer": "docker compose exec php composer",
-    "format:php": "docker compose exec php vendor/bin/pint",
-    "format:php:check": "docker compose exec php vendor/bin/pint --test"
+    "php:composer": "docker compose -f ../../docker-compose.client.yml --profile gp-search exec gp-search composer",
+    "format:php": "docker compose -f ../../docker-compose.client.yml --profile gp-search exec gp-search vendor/bin/pint",
+    "format:php:check": "docker compose -f ../../docker-compose.client.yml --profile gp-search exec gp-search vendor/bin/pint --test"
   },
   "keywords": [],
   "license": "ISC",

@@ -1,12 +1,10 @@
-# User Data
+# Auth Service
 
-## Commands
+## What is this?
 
-### Build
+Handles sign up and sign in with token issuing.
 
-From the repository root:
-
-`docker compose up -d`
+## Database
 
 ### Create user table
 

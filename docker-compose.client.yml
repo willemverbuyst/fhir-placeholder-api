@@ -1,0 +1,99 @@
+services:
+  organization-reviews:
+    build:
+      context: .
+      dockerfile: apps/organization-reviews/Dockerfile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./apps/organization-reviews:/var/www/html
+    depends_on:
+      - organization-reviews-db
+    environment:
+      DB_HOST: organization-reviews-db
+      DB_NAME: app_db
+      DB_USER: app_user
+      DB_PASSWORD: secret
+    profiles:
+      - apps
+      - review
+
+  organization-reviews-db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    ports:
+      - "3307:3306"
+    volumes:
+      - organization_reviews_db_data:/var/lib/mysql
+    profiles:
+      - db
+      - review
+
+  organization-reviews-phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: organization-reviews-db
+    depends_on:
+      - organization-reviews-db
+    profiles:
+      - tools
+      - review
+
+  gp-search:
+    build:
+      context: .
+      dockerfile: apps/gp-search/Dockerfile
+    ports:
+      - "5176:80"
+    volumes:
+      - ./apps/gp-search:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - gp-search-db
+    environment:
+      DB_HOST: gp-search-db
+      DB_NAME: gp_search
+      DB_USER: gp_search_user
+      DB_PASSWORD: gp_search_password
+    profiles:
+      - apps
+      - gp-search
+
+  gp-search-db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: gp_search
+      MYSQL_USER: gp_search_user
+      MYSQL_PASSWORD: gp_search_password
+      MYSQL_ROOT_PASSWORD: gp_search_root_password
+    ports:
+      - "3308:3306"
+    volumes:
+      - gp_search_data:/var/lib/mysql
+    profiles:
+      - db
+      - gp-search
+
+  gp-search-phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "8083:80"
+    environment:
+      PMA_HOST: gp-search-db
+    depends_on:
+      - gp-search-db
+    profiles:
+      - tools
+      - gp-search
+
+volumes:
+  organization_reviews_db_data:
+  gp_search_data:

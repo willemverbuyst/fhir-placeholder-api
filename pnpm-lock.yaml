@@ -300,6 +300,8 @@ importers:
         specifier: ^4
         version: 4.2.2
 
+  apps/gp-search: {}
+
   apps/patient-timeline:
     dependencies:
       effect:
@@ -424,7 +426,7 @@ importers:
         specifier: workspace:*
         version: link:../fhir-terminology
 
-  services/auth:
+  services/auth-service:
     dependencies:
       '@repo/api-limiter':
         specifier: workspace:*
@@ -455,7 +457,7 @@ importers:
         specifier: ^8.20.0
         version: 8.20.0
 
-  services/gateway:
+  services/gateway-service:
     dependencies:
       '@repo/api-limiter':
         specifier: workspace:*
@@ -477,7 +479,7 @@ importers:
         specifier: ^5.0.6
         version: 5.0.6
 
-  services/users:
+  services/user-service:
     dependencies:
       '@repo/logger':
         specifier: workspace:*

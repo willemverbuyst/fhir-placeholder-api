@@ -6,55 +6,33 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
 )
 
-const jsonplaceholderApi = "https://jsonplaceholder.typicode.com/"
+const fhirApi = "https://hapi.fhir.org/baseR4/ValueSet"
 
-type Todo struct {
-	UserId    int    `json:"userId"`
-	Id        int    `json:"id"`
-	Title     string `json:"title"`
-	Completed bool   `json:"completed"`
+type ValueSet struct {
+	ResourceType string    `json:"resourceType"`
+	Id           string    `json:"id"`
+	Expansion    Expansion `json:"expansion"`
 }
 
-type Todos []Todo
-
-type Address struct {
-	Street  string `json:"street"`
-	Suite   string `json:"suite"`
-	City    string `json:"city"`
-	ZipCode string `json:"zipcode"`
-	Geo     struct {
-		Lat string `json:"lat"`
-		Lng string `json:"lng"`
-	}
+type Expansion struct {
+	Contains []CodeableConcept `json:"contains"`
 }
 
-type Company struct {
-	Name        string `json:"name"`
-	CatchPhrase string `json:"catchPhrase"`
-	BS          string `json:"bs"`
+type CodeableConcept struct {
+	Code    string `json:"code"`
+	Display string `json:"display"`
+	System  string `json:"system"`
 }
 
-type User struct {
-	Id       int     `json:"id"`
-	Name     string  `json:"name"`
-	UserName string  `json:"username"`
-	Email    string  `json:"email"`
-	Phone    string  `json:"phone"`
-	Website  string  `json:"website"`
-	Address  Address `json:"address"`
-	Company  Company `json:"company"`
-}
+type CodeableConcepts []CodeableConcept
 
-type Users []User
-
-func GetTodos() Todos {
-	resp, err := http.Get(jsonplaceholderApi + "todos")
+func GetEncounterStatuses() CodeableConcepts {
+	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/encounter-status")
 
 	if err != nil {
 		log.Fatalln(err)
@@ -67,16 +45,16 @@ func GetTodos() Todos {
 		log.Fatalln(err)
 	}
 
-	var result Todos
+	var result ValueSet
 	if err := json.Unmarshal(body, &result); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
 
-	return result
+	return result.Expansion.Contains
 }
 
-func GetUsers() Users {
-	resp, err := http.Get(jsonplaceholderApi + "users")
+func GetObservationStatuses() CodeableConcepts {
+	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/observation-status")
 
 	if err != nil {
 		log.Fatalln(err)
@@ -89,34 +67,12 @@ func GetUsers() Users {
 		log.Fatalln(err)
 	}
 
-	var result Users
+	var result ValueSet
 	if err := json.Unmarshal(body, &result); err != nil {
 		fmt.Println("Can not unmarshal JSON")
 	}
 
-	return result
-}
-
-func GetUserByID(id int) User {
-	resp, err := http.Get(jsonplaceholderApi + "users/" + strconv.Itoa(id))
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	var result User
-	if err := json.Unmarshal(body, &result); err != nil {
-		fmt.Println("Can not unmarshal JSON")
-	}
-
-	return result
+	return result.Expansion.Contains
 }
 
 func main() {
@@ -127,33 +83,19 @@ func main() {
 		return c.Render("index", fiber.Map{})
 	})
 
-	app.Get("/todos", func(c *fiber.Ctx) error {
-		values := GetTodos()
+	app.Get("/encounter", func(c *fiber.Ctx) error {
+		values := GetEncounterStatuses()
 
-		return c.Render("todos", fiber.Map{
+		return c.Render("encounter", fiber.Map{
 			"Results": values,
 		})
 	})
 
-	app.Get("/users", func(c *fiber.Ctx) error {
-		values := GetUsers()
+	app.Get("/observation", func(c *fiber.Ctx) error {
+		values := GetObservationStatuses()
 
-		return c.Render("users", fiber.Map{
+		return c.Render("observation", fiber.Map{
 			"Results": values,
-		})
-	})
-
-	app.Get("/users/:id", func(c *fiber.Ctx) error {
-		userIDParam := c.Params("id")
-		userID, err := strconv.Atoi(userIDParam)
-		if err != nil {
-			return c.Status(http.StatusBadRequest).SendString("Invalid ID")
-		}
-
-		user := GetUserByID(userID)
-
-		return c.Render("user", fiber.Map{
-			"User": user,
 		})
 	})
 

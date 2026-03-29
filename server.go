@@ -13,25 +13,28 @@ import (
 
 const fhirApi = "https://hapi.fhir.org/baseR4/ValueSet"
 
+// ValueSet represents a FHIR R5 ValueSet resource
 type ValueSet struct {
-	ResourceType string    `json:"resourceType"`
-	Id           string    `json:"id"`
-	Expansion    Expansion `json:"expansion"`
+	ResourceType string            `json:"resourceType"`
+	Id           string            `json:"id"`
+	Expansion    ValueSetExpansion `json:"expansion"`
 }
 
-type Expansion struct {
-	Contains []CodeableConcept `json:"contains"`
+// ValueSetExpansion represents the expansion element of a ValueSet
+type ValueSetExpansion struct {
+	Contains []ExpandedConcept `json:"contains"`
 }
 
-type CodeableConcept struct {
-	Code    string `json:"code"`
-	Display string `json:"display"`
-	System  string `json:"system"`
+// ExpandedConcept represents a single concept in a ValueSet expansion
+type ExpandedConcept struct {
+	System  string `json:"system"`  // Code system URI
+	Code    string `json:"code"`    // Concept code
+	Display string `json:"display"` // Human-readable name
 }
 
-type CodeableConcepts []CodeableConcept
+type ExpandedConcepts []ExpandedConcept
 
-func GetEncounterStatuses() CodeableConcepts {
+func GetEncounterStatuses() ExpandedConcepts {
 	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/encounter-status")
 
 	if err != nil {
@@ -53,7 +56,7 @@ func GetEncounterStatuses() CodeableConcepts {
 	return result.Expansion.Contains
 }
 
-func GetObservationStatuses() CodeableConcepts {
+func GetObservationStatuses() ExpandedConcepts {
 	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/observation-status")
 
 	if err != nil {

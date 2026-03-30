@@ -302,12 +302,6 @@ importers:
 
   apps/gp-search: {}
 
-  apps/patient-timeline:
-    dependencies:
-      effect:
-        specifier: ^3.20.0
-        version: 3.21.0
-
   apps/questionnaire-client:
     dependencies:
       axios:
@@ -478,6 +472,15 @@ importers:
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
+
+  services/patient-timeline:
+    dependencies:
+      '@repo/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
+      effect:
+        specifier: ^3.20.0
+        version: 3.21.0
 
   services/user-service:
     dependencies:

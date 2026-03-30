@@ -1,4 +1,5 @@
 import http, { type IncomingMessage, type ServerResponse } from "node:http";
+import { logger } from "@repo/logger";
 import { Cause, Effect, Either, Exit } from "effect";
 import {
   FetchError,
@@ -16,6 +17,7 @@ import { getPatientTimeline } from "./services/timelineService.js";
 
 type Request = IncomingMessage;
 type Response = ServerResponse<Request>;
+const log = logger({ application: "patient-timeline" });
 
 const sendJson = (res: Response, statusCode: number, body: unknown): void => {
   const json = JSON.stringify(body);
@@ -49,9 +51,12 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
   const patientId = getPatientIdFromUrl(req.url);
 
   if (patientId === null) {
+    log.error("Invalid patient timeline URL");
     sendJson(res, 400, { error: "Invalid patient timeline URL" });
     return;
   }
+
+  log.info("Patient timeline request received", { patientId });
 
   const effect = Effect.gen(function* (_) {
     const patient = yield* _(fetchPatient(patientId));
@@ -88,6 +93,7 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
 
   void Effect.runPromiseExit(effect).then((exit) => {
     if (Exit.isSuccess(exit)) {
+      log.info("Patient timeline request completed", { patientId });
       sendJson(res, 200, exit.value);
       return;
     }
@@ -95,6 +101,7 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
     const error = Cause.squash(exit.cause);
 
     if (error instanceof PatientNotFoundError) {
+      log.error("Patient not found", { patientId });
       sendJson(res, 404, {
         error: "Patient not found",
         patientId,
@@ -106,10 +113,18 @@ const handleTimelineRequest = (req: Request, res: Response): void => {
       error instanceof FetchError ||
       error instanceof InvalidFhirStructureError
     ) {
+      log.error("Failed to fetch or parse FHIR resources", {
+        patientId,
+        error: error.message,
+      });
       sendJson(res, 502, { error: error.message });
       return;
     }
 
+    log.error("Unexpected error while building patient timeline", {
+      patientId,
+      error,
+    });
     sendJson(res, 500, { error: "Unexpected error" });
   });
 };
@@ -136,13 +151,11 @@ const serverEffect = Effect.sync(() => {
   const port = 4001;
 
   server.listen(port, () => {
-    // eslint-disable-next-line no-console
-    console.log(`Server listening on http://localhost:${port}`);
+    log.info(`Server listening on http://localhost:${port}`);
   });
 });
 
 Effect.runPromise(serverEffect).catch((error) => {
-  // eslint-disable-next-line no-console
-  console.error("Server failed to start", error);
+  log.error("Server failed to start", { error });
   process.exit(1);
 });

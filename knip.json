@@ -4,7 +4,10 @@
     ".": {
       "entry": ["turbo.json"],
       "project": ["**/*.{js,ts,json,php}"],
-      "ignore": ["overview/assets/overview.js"],
+      "ignore": [
+        "overview/assets/overview.js",
+        "apps/resource-statuses/tailwind.config.js"
+      ],
       "ignoreBinaries": ["python3"]
     },
     "apps/fhir-client": {
@@ -32,6 +35,9 @@
         "source-map-support",
         "ts-loader"
       ]
+    },
+    "apps/resource-statuses": {
+      "ignore": ["tailwind.config.js"]
     },
     "apps/user-management": {
       "ignoreDependencies": ["vue", "vue-router"]

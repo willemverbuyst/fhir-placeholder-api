@@ -12,7 +12,8 @@
       "!**/.output",
       "!**/vendor",
       "!**/composer.json",
-      "!overview/overview.json"
+      "!overview/overview.json",
+      "!apps/resource-statuses"
     ]
   },
   "formatter": {

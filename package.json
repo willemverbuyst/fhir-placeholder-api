@@ -14,7 +14,7 @@
     "knip:check": "knip",
     "lint:check": "biome lint",
     "lint:fix": "biome lint --write .",
-    "spell:check": "cspell \"**/*.{ts,tsx,js,jsx,md,json,yml,yaml,sql}\"",
+    "spell:check": "cspell \"**/*.{ts,tsx,js,jsx,md,json,yml,yaml,sql,html,go}\"",
     "test:unit": "turbo run test:unit",
     "test:e2e": "turbo run test:e2e",
     "type:check": "turbo run type:check",

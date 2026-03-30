@@ -1,0 +1,23 @@
+<div class="pt-4">
+  <div class="relative overflow-x-auto sm:rounded-lg">
+    <table class="w-full text-sm text-left text-neutral-900">
+      <thead class="uppercase bg-gray-200 text-gray-800">
+        <tr>
+          <th scope="col" class="px-6 py-4">Code</th>
+          <th scope="col" class="px-6 py-4">Display</th>
+          <th scope="col" class="px-6 py-4">System</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{range .Results}}
+        <tr class="border-b bg-gray-800 border-gray-700 hover:bg-gray-600 text-gray-200">
+          <td class="px-6 py-4">{{.Code}}</td>
+          <td class="px-6 py-4">{{.Display}}</td>
+          <td class="px-6 py-4">{{.System}}</td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -12,19 +12,25 @@ A collection of tools centered around Fhir R5 dummy data.
 - [fhir-data](apps/fhir-data)
 - [fhir-server](apps/fhir-server)
 - [fhir-to-tables](apps/fhir-to-tables)
-- [patient-timeline](apps/patient-timeline)
+- [gp-search](apps/gp-search/)
+- [organization-reviews](apps/organization-reviews/)
+- [questionnaire-client](apps/questionnaire-client/)
+- [questionnaire-server](apps/questionnaire-server/)
+- [resource-statuses](apps/resource-statuses/)
+- [user-management](apps/user-management/)
 
 ## Cli
 
 - [config-cli](cli/config-cli)
+- [fhir-to-spreadsheet](services/fhir-to-spreadsheet)
 - [monorepo-launcher](cli/monorepo-launcher/)
 
 ## Services
 
 - [auth](services/auth)
 - [fhir-name-service](services/fhir-name-service)
-- [fhir-to-spreadsheet](services/fhir-to-spreadsheet)
 - [gateway](services/gateway)
+- [patient-timeline](apps/patient-timeline)
 - [users](services/users)
 
 

@@ -54,7 +54,7 @@
       "entry": ["src/index.ts"],
       "project": ["src/**/*.ts"]
     },
-    "services/fhir-to-spreadsheet": {
+    "cli/fhir-to-spreadsheet": {
       "entry": ["main.py"],
       "project": ["**/*.py"]
     }

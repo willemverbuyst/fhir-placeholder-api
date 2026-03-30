@@ -5,3 +5,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4000:4000"
+
+  patient-timeline:
+    build:
+      context: .
+      dockerfile: services/patient-timeline/Dockerfile
+    ports:
+      - "4001:4001"
+    network_mode: "host"

@@ -2,6 +2,8 @@ FROM node:22-slim
 
 WORKDIR /app
 
+RUN corepack enable
+
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY packages ./packages
 COPY services ./services

@@ -12,11 +12,18 @@ updates:
     schedule:
       interval: weekly
       day: tuesday
-      
+
   - package-ecosystem: pip
-    directory: /spreadsheet 
+    directory: /spreadsheet
     schedule:
       interval: weekly
       day: tuesday
 
-
+  - package-ecosystem: gomod
+    directories: 
+      - "/apps/resource-statuses"
+      - "/apps/questionnaire-server"
+      - "/services/fhir-name-service"
+    schedule:
+      interval: weekly
+      day: tuesday

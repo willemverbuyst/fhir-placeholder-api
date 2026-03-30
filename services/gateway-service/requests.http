@@ -6,9 +6,9 @@ POST http://localhost:3000/api/auth/sign-up
 Content-Type: application/json
 
 {
-  "username": "foo",
+  "username": "quux",
   "password": "bar",
-  "role": "admin"
+  "role": "guest"
 }
 
 ### Sign in
@@ -16,7 +16,16 @@ POST http://localhost:3000/api/auth/sign-in
 Content-Type: application/json
 
 {
-  "username": "foo",
+  "username": "jacksparrow",
+  "password": "fooBar"
+}
+
+### Sign in
+POST http://localhost:3000/api/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "quux",
   "password": "bar"
 }
 

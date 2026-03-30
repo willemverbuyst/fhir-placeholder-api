@@ -6,27 +6,29 @@ Handles sign up and sign in with token issuing.
 
 ## Database
 
-### Create user table
+### Initialize and seed auth DB
 
-> docker exec -it auth_postgres psql -U postgres -d auth_db
+Run these commands from the project root:
 
-```sql
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+```bash
+docker compose -f docker-compose.backend.yml up -d auth-service-db
+docker exec -i auth-service-db psql -U postgres -d auth_db < services/auth-service/db/init-auth-db.sql
 ```
 
-```sql
-CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL,
-  role TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+The SQL script is at `services/auth-service/db/init-auth-db.sql`.
+It creates the `users` table (if missing) and seeds:
+
+- `username`: `jacksparrow`
+- `password`: `fooBar`
+- `role`: `admin`
+
+Note: the database stores a bcrypt hash in the `password` column, not plain text.
+
+You can verify the seeded user with:
+
+```bash
+docker exec -it auth-service-db psql -U postgres -d auth_db -c "SELECT id, username, role, created_at FROM users;"
 ```
-
-### Exit
-
-`\q`
 
 ### Bash
 

@@ -9,6 +9,6 @@ COPY services ./services
 RUN pnpm install --frozen-lockfile
 RUN pnpm exec turbo run build --filter=patient-timeline...
 
-EXPOSE 4000
+EXPOSE 4001
 
 CMD ["pnpm", "--filter", "patient-timeline", "start"]

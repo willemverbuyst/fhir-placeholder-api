@@ -6,7 +6,7 @@ type FormatNameResponse = {
   result: string;
 };
 
-const NAME_SERVICE_URL = "http://localhost:8081/format-name";
+const NAME_SERVICE_URL = "http://localhost:4000/format-name";
 
 const isFormatNameResponse = (value: unknown): value is FormatNameResponse => {
   if (typeof value !== "object" || value === null) {

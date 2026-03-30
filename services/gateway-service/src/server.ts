@@ -1,6 +1,7 @@
 import { apiLimiter } from "@repo/api-limiter";
 import { verifyToken } from "@repo/auth-lib";
 import { logger } from "@repo/logger";
+import cors from "cors";
 import express from "express";
 import { createProxyServer } from "http-proxy-3";
 
@@ -14,6 +15,14 @@ const usersServiceUrl = process.env.USER_SERVICE_URL ?? "http://localhost:3002";
 const fhirProxyTarget = process.env.FHIR_SERVER_URL ?? "http://localhost:8080";
 
 const app = express();
+
+app.use(
+  cors({
+    origin: ["http://localhost:3001"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+  }),
+);
 
 app.get("/ping", (_req, res) => {
   log.info("Ping received");

@@ -24,7 +24,7 @@ It creates the `users` table (if missing) and seeds:
 
 Note: the database stores a bcrypt hash in the `password` column, not plain text.
 
-You can verify the seeded user with:
+You can verify the seeded user(s) with:
 
 ```bash
 docker exec -it auth-service-db psql -U postgres -d auth_db -c "SELECT id, username, role, created_at FROM users;"

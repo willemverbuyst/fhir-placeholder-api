@@ -31,10 +31,12 @@
     "@repo/api-limiter": "workspace:*",
     "@repo/auth-lib": "workspace:*",
     "@repo/logger": "workspace:*",
+    "cors": "^2.8.6",
     "express": "^5.2.1",
     "http-proxy-3": "^1.23.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6"
   }
 }

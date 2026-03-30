@@ -68,12 +68,26 @@ const form = ref<SignUpForm>({
   role: "user",
 });
 
-const onSubmit = (): void => {
-  console.log({
-    username: form.value.username,
-    password: form.value.password,
-    role: form.value.role,
-  });
+const onSubmit = async (): Promise<void> => {
+  try {
+    const response = await fetch("http://localhost:3000/api/auth/sign-up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: form.value.username,
+        password: form.value.password,
+        role: form.value.role,
+      }),
+    });
+
+    const responseBody: unknown = await response.json();
+    void responseBody;
+    await navigateTo("/users");
+  } catch (error: unknown) {
+    console.error("Sign-up request failed", error);
+  }
 };
 </script>
 

@@ -68,11 +68,38 @@ const form = ref<SignUpForm>({
   role: "user",
 });
 
+const getAuthToken = (): string | null => {
+  return localStorage.getItem("authToken");
+};
+
+const getAuthHeader = (token: string): Record<string, string> => {
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+const redirectToSignIn = async (): Promise<void> => {
+  await navigateTo("/");
+};
+
+const requireAuthToken = async (): Promise<string> => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    await redirectToSignIn();
+    throw new Error("You are not signed in. Please sign in.");
+  }
+
+  return token;
+};
+
 const onSubmit = async (): Promise<void> => {
   try {
+    const token = await requireAuthToken();
+
     const response = await fetch("http://localhost:3000/api/auth/sign-up", {
       method: "POST",
       headers: {
+        ...getAuthHeader(token),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -82,6 +109,14 @@ const onSubmit = async (): Promise<void> => {
       }),
     });
 
+    if (!response.ok) {
+      if (response.status === 401) {
+        await redirectToSignIn();
+      }
+
+      throw new Error("Sign-up failed. Please try again.");
+    }
+
     const responseBody: unknown = await response.json();
     void responseBody;
     await navigateTo("/users");
@@ -89,6 +124,12 @@ const onSubmit = async (): Promise<void> => {
     console.error("Sign-up request failed", error);
   }
 };
+
+onMounted(() => {
+  if (!getAuthToken()) {
+    void redirectToSignIn();
+  }
+});
 </script>
 
 <style scoped>

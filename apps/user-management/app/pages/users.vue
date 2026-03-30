@@ -42,6 +42,30 @@ const users = ref<User[]>([]);
 const isLoading = ref<boolean>(true);
 const errorMessage = ref<string | null>(null);
 
+const getAuthToken = (): string | null => {
+  return localStorage.getItem("authToken");
+};
+
+const getAuthHeader = (token: string): Record<string, string> => {
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+const redirectToSignIn = async (): Promise<void> => {
+  await navigateTo("/");
+};
+
+const requireAuthToken = async (): Promise<string> => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    await redirectToSignIn();
+    throw new Error("You are not signed in. Please sign in.");
+  }
+
+  return token;
+};
+
 const isUser = (value: unknown): value is User => {
   if (typeof value !== "object" || value === null) {
     return false;
@@ -69,10 +93,14 @@ const fetchUsers = async (): Promise<void> => {
   try {
     isLoading.value = true;
     errorMessage.value = null;
+    const token = await requireAuthToken();
 
-    const response = await fetch("http://localhost:3000/api/auth/users/list");
+    const response = await fetch("http://localhost:3000/api/auth/users/list", {
+      headers: getAuthHeader(token),
+    });
     if (!response.ok) {
       if (response.status === 401) {
+        await redirectToSignIn();
         throw new Error(
           "You are not authorized to view users. Please sign in.",
         );
@@ -97,6 +125,11 @@ const fetchUsers = async (): Promise<void> => {
 };
 
 onMounted(() => {
+  if (!getAuthToken()) {
+    void redirectToSignIn();
+    return;
+  }
+
   void fetchUsers();
 });
 </script>

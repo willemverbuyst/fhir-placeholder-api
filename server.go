@@ -67,40 +67,45 @@ func main() {
 	app.Get("/encounter", func(c *fiber.Ctx) error {
 		values := GetStatuses("encounter-status")
 
-		return c.Render("encounter", fiber.Map{
-			"Results": values,
+		return c.Render("resource-statuses", fiber.Map{
+			"ResourceType": "Encounter",
+			"Results":      values,
 		})
 	})
 
 	app.Get("/observation", func(c *fiber.Ctx) error {
 		values := GetStatuses("observation-status")
 
-		return c.Render("observation", fiber.Map{
-			"Results": values,
+		return c.Render("resource-statuses", fiber.Map{
+			"ResourceType": "Observation",
+			"Results":      values,
 		})
 	})
 
 	app.Get("/episode-of-care", func(c *fiber.Ctx) error {
 		values := GetStatuses("episode-of-care-status")
 
-		return c.Render("episode-of-care", fiber.Map{
-			"Results": values,
+		return c.Render("resource-statuses", fiber.Map{
+			"ResourceType": "Episode of Care",
+			"Results":      values,
 		})
 	})
 
 	app.Get("/appointment", func(c *fiber.Ctx) error {
 		values := GetStatuses("appointmentstatus")
 
-		return c.Render("appointment", fiber.Map{
-			"Results": values,
+		return c.Render("resource-statuses", fiber.Map{
+			"ResourceType": "Appointment",
+			"Results":      values,
 		})
 	})
 
 	app.Get("/flag", func(c *fiber.Ctx) error {
 		values := GetStatuses("flag-status")
 
-		return c.Render("flag", fiber.Map{
-			"Results": values,
+		return c.Render("resource-statuses", fiber.Map{
+			"ResourceType": "Flag",
+			"Results":      values,
 		})
 	})
 

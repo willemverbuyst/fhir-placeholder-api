@@ -10,48 +10,110 @@
       </header>
       <div class="pt-4">
         <button
+          type="button"
           hx-get="encounter"
           hx-trigger="click"
           hx-target="#results"
-          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+          class="resource-nav-btn border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 outline-none mx-2"
         >
           Encounter
         </button>
         <button
+          type="button"
           hx-get="observation"
           hx-trigger="click"
           hx-target="#results"
-          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+          class="resource-nav-btn border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 outline-none mx-2"
         >
           Observation
         </button>
         <button
+          type="button"
           hx-get="episode-of-care"
           hx-trigger="click"
           hx-target="#results"
-          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+          class="resource-nav-btn border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 outline-none mx-2"
         >
           Episode of Care
         </button>
         <button
+          type="button"
           hx-get="appointment"
           hx-trigger="click"
           hx-target="#results"
-          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+          class="resource-nav-btn border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 outline-none mx-2"
         >
           Appointment
         </button>
         <button
+          type="button"
           hx-get="flag"
           hx-trigger="click"
           hx-target="#results"
-          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+          class="resource-nav-btn border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 outline-none mx-2"
         >
           Flag
         </button>
       </div>
-      <div hx-get="todos" hx-trigger="load" hx-target="#results"></div>
+      <div hx-get="encounter" hx-trigger="load" hx-target="#results"></div>
       <div id="results"></div>
     </div>
+    <script>
+      (function () {
+        var activeClasses = ["bg-amber-700", "border-amber-600", "text-zinc-100"];
+        var navSelector = ".resource-nav-btn";
+
+        function clearNavActive() {
+          document.querySelectorAll(navSelector).forEach(function (btn) {
+            btn.removeAttribute("aria-current");
+            activeClasses.forEach(function (c) {
+              btn.classList.remove(c);
+            });
+            if (!btn.classList.contains("hover:bg-amber-700")) {
+              btn.classList.add("hover:bg-amber-700");
+            }
+          });
+        }
+
+        function setNavActive(btn) {
+          clearNavActive();
+          btn.setAttribute("aria-current", "page");
+          activeClasses.forEach(function (c) {
+            btn.classList.add(c);
+          });
+          btn.classList.remove("hover:bg-amber-700");
+        }
+
+        function pathSegmentFromEvent(evt) {
+          var xhr = evt.detail && evt.detail.xhr;
+          if (!xhr || !xhr.responseURL) return null;
+          var path = new URL(xhr.responseURL).pathname.replace(/^\/|\/$/g, "");
+          return path.split("/")[0] || null;
+        }
+
+        document.body.addEventListener("htmx:afterSwap", function (evt) {
+          if (!evt.detail.target || evt.detail.target.id !== "results") return;
+
+          var elt = evt.detail.elt;
+          if (elt && elt.classList && elt.classList.contains("resource-nav-btn")) {
+            setNavActive(elt);
+            return;
+          }
+
+          var segment = pathSegmentFromEvent(evt);
+          if (segment) {
+            var match = document.querySelector(
+              navSelector + '[hx-get="' + segment + '"]'
+            );
+            if (match) {
+              setNavActive(match);
+              return;
+            }
+          }
+
+          clearNavActive();
+        });
+      })();
+    </script>
   </body>
 </html>

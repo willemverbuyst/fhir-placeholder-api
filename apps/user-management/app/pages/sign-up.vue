@@ -2,7 +2,10 @@
   <main class="sign-up-page">
     <section class="sign-up-card">
       <h1 class="sign-up-title">Sign Up</h1>
-      <form class="sign-up-form" @submit.prevent="onSubmit">
+      <p v-if="errorMessage" class="sign-up-message sign-up-message-error">
+        {{ errorMessage }}
+      </p>
+      <form v-if="isAuthorized" class="sign-up-form" @submit.prevent="onSubmit">
         <div class="sign-up-field">
           <label class="sign-up-label" for="username">Username</label>
           <input
@@ -62,19 +65,122 @@ type SignUpForm = {
   role: Role;
 };
 
+type CurrentUserResponse = {
+  role: string;
+};
+
 const form = ref<SignUpForm>({
   username: "",
   password: "",
   role: "user",
 });
+const isAuthorized = ref<boolean>(false);
+const errorMessage = ref<string | null>(null);
 
-const onSubmit = (): void => {
-  console.log({
-    username: form.value.username,
-    password: form.value.password,
-    role: form.value.role,
-  });
+const getAuthToken = (): string | null => {
+  return localStorage.getItem("authToken");
 };
+
+const getAuthHeader = (token: string): Record<string, string> => {
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
+
+const requireAuthToken = (): string => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    throw new Error("You are not signed in. Please sign in.");
+  }
+
+  return token;
+};
+
+const parseCurrentUserResponse = (value: unknown): CurrentUserResponse => {
+  if (typeof value !== "object" || value === null) {
+    throw new Error("Invalid API response");
+  }
+
+  const record = value as Record<string, unknown>;
+  if (typeof record.role !== "string") {
+    throw new Error("Invalid user format");
+  }
+
+  return {
+    role: record.role,
+  };
+};
+
+const validateAdminAccess = async (): Promise<void> => {
+  const token = requireAuthToken();
+  const response = await fetch("http://localhost:3000/api/auth/users/me", {
+    headers: getAuthHeader(token),
+  });
+
+  if (!response.ok) {
+    throw new Error("Unauthorized");
+  }
+
+  const responseBody: unknown = await response.json();
+  const currentUser = parseCurrentUserResponse(responseBody);
+  if (currentUser.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
+};
+
+const onSubmit = async (): Promise<void> => {
+  try {
+    errorMessage.value = null;
+    const token = requireAuthToken();
+
+    const response = await fetch("http://localhost:3000/api/auth/sign-up", {
+      method: "POST",
+      headers: {
+        ...getAuthHeader(token),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: form.value.username,
+        password: form.value.password,
+        role: form.value.role,
+      }),
+    });
+
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403) {
+        throw new Error(
+          "You are not authorized to create users. Please sign in.",
+        );
+      }
+
+      throw new Error("Sign-up failed. Please try again.");
+    }
+
+    const responseBody: unknown = await response.json();
+    void responseBody;
+    await navigateTo("/users");
+  } catch (error: unknown) {
+    console.error("Sign-up request failed", error);
+    errorMessage.value =
+      error instanceof Error
+        ? error.message
+        : "Sign-up failed. Please try again.";
+  }
+};
+
+onMounted(() => {
+  void (async () => {
+    try {
+      await validateAdminAccess();
+      isAuthorized.value = true;
+      errorMessage.value = null;
+    } catch (error: unknown) {
+      isAuthorized.value = false;
+      errorMessage.value = "Unauthorized";
+      console.error("Admin access validation failed", error);
+    }
+  })();
+});
 </script>
 
 <style scoped>
@@ -100,6 +206,14 @@ const onSubmit = (): void => {
   color: #111827;
   font-size: 1.5rem;
   font-weight: 700;
+}
+
+.sign-up-message {
+  margin: 0 0 1rem;
+}
+
+.sign-up-message-error {
+  color: #b91c1c;
 }
 
 .sign-up-form {

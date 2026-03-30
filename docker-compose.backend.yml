@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: auth_db
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - auth-service-db-data:/var/lib/postgresql/data
 
@@ -40,6 +40,14 @@ services:
     build:
       context: .
       dockerfile: services/user-service/Dockerfile
+    environment:
+      PGHOST: auth-service-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: auth_db
+    depends_on:
+      - auth-service-db
 
   gateway-service:
     build:

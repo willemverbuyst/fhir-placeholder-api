@@ -1,0 +1,2 @@
+###
+GET http://localhost:4001/patient/a81d0a99-3649-446c-b30f-dd794773be4f/timeline

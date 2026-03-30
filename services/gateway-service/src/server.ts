@@ -1,6 +1,7 @@
 import { apiLimiter } from "@repo/api-limiter";
 import { verifyToken } from "@repo/auth-lib";
 import { logger } from "@repo/logger";
+import cors from "cors";
 import express from "express";
 import { createProxyServer } from "http-proxy-3";
 
@@ -15,6 +16,14 @@ const fhirProxyTarget = process.env.FHIR_SERVER_URL ?? "http://localhost:8080";
 
 const app = express();
 
+app.use(
+  cors({
+    origin: ["http://localhost:5000", "http://localhost:5001"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+  }),
+);
+
 app.get("/ping", (_req, res) => {
   log.info("Ping received");
   res.json({ status: "ok" });
@@ -27,7 +36,6 @@ app.use("/api", (req, res, next) => {
   log.info("Request received", { path: req.path });
   if (
     req.path.startsWith("/auth/sign-in") ||
-    req.path.startsWith("/auth/sign-up") ||
     req.path === "/public/organizations"
   ) {
     return next();
@@ -67,6 +75,30 @@ app.use("/api/public/organizations", (req, res) => {
     `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5/Organization/`,
   );
   proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5/Organization/` });
+});
+
+app.use("/api/auth/users/list", (req, res) => {
+  const userRole = req.headers["x-user-role"];
+  if (userRole !== "admin") {
+    log.warn(`Auth rejected: non-admin access for ${req.method} ${req.url}`);
+    return res.status(401).send("Unauthorized");
+  }
+
+  log.info(`Proxying request on ${req.url} to ${usersServiceUrl}/users`);
+  req.url = "/users";
+  proxy.web(req, res, { target: usersServiceUrl });
+});
+
+app.use("/api/auth/sign-up", (req, res) => {
+  const userRole = req.headers["x-user-role"];
+  if (userRole !== "admin") {
+    log.warn(`Auth rejected: non-admin access for ${req.method} ${req.url}`);
+    return res.status(401).send("Unauthorized");
+  }
+
+  log.info(`Proxying request on ${req.url} to ${authServiceUrl}/sign-up`);
+  req.url = "/sign-up";
+  proxy.web(req, res, { target: authServiceUrl });
 });
 
 app.use("/api/auth", (req, res) => {

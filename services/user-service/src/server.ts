@@ -1,5 +1,7 @@
+import { apiLimiter } from "@repo/api-limiter";
 import { logger } from "@repo/logger";
 import express from "express";
+import { pool } from "./db";
 
 const log = logger({ application: "users-service" });
 
@@ -16,6 +18,18 @@ app.get("/me", (req, res) => {
     userId,
     role,
   });
+});
+
+app.get("/users", apiLimiter, async (_req, res) => {
+  try {
+    log.info("Attempting to list users");
+    const result = await pool.query("SELECT username, role FROM users");
+    log.info("Users listed successfully", { count: result.rowCount });
+    res.json({ users: result.rows });
+  } catch (error) {
+    log.error("Error listing users", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.listen(3002, () => {

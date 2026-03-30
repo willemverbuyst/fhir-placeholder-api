@@ -25,6 +25,30 @@
         >
           Observation
         </button>
+        <button
+          hx-get="episode-of-care"
+          hx-trigger="click"
+          hx-target="#results"
+          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+        >
+          Episode of Care
+        </button>
+        <button
+          hx-get="appointment"
+          hx-trigger="click"
+          hx-target="#results"
+          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+        >
+          Appointment
+        </button>
+        <button
+          hx-get="flag"
+          hx-trigger="click"
+          hx-target="#results"
+          class="border border-amber-300 text-amber-300 px-2 py-1 rounded hover:bg-amber-700 focus-within:bg-amber-700 outline-none mx-2"
+        >
+          Flag
+        </button>
       </div>
       <div hx-get="todos" hx-trigger="load" hx-target="#results"></div>
       <div id="results"></div>

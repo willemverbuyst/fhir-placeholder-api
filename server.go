@@ -34,30 +34,8 @@ type ExpandedConcept struct {
 
 type ExpandedConcepts []ExpandedConcept
 
-func GetEncounterStatuses() ExpandedConcepts {
-	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/encounter-status")
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	var result ValueSet
-	if err := json.Unmarshal(body, &result); err != nil {
-		fmt.Println("Can not unmarshal JSON")
-	}
-
-	return result.Expansion.Contains
-}
-
-func GetObservationStatuses() ExpandedConcepts {
-	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/observation-status")
+func GetStatuses(valueSet string) ExpandedConcepts {
+	resp, err := http.Get(fhirApi + "/$expand?url=http://hl7.org/fhir/ValueSet/" + valueSet)
 
 	if err != nil {
 		log.Fatalln(err)
@@ -87,7 +65,7 @@ func main() {
 	})
 
 	app.Get("/encounter", func(c *fiber.Ctx) error {
-		values := GetEncounterStatuses()
+		values := GetStatuses("encounter-status")
 
 		return c.Render("encounter", fiber.Map{
 			"Results": values,
@@ -95,9 +73,33 @@ func main() {
 	})
 
 	app.Get("/observation", func(c *fiber.Ctx) error {
-		values := GetObservationStatuses()
+		values := GetStatuses("observation-status")
 
 		return c.Render("observation", fiber.Map{
+			"Results": values,
+		})
+	})
+
+	app.Get("/episode-of-care", func(c *fiber.Ctx) error {
+		values := GetStatuses("episode-of-care-status")
+
+		return c.Render("episode-of-care", fiber.Map{
+			"Results": values,
+		})
+	})
+
+	app.Get("/appointment", func(c *fiber.Ctx) error {
+		values := GetStatuses("appointmentstatus")
+
+		return c.Render("appointment", fiber.Map{
+			"Results": values,
+		})
+	})
+
+	app.Get("/flag", func(c *fiber.Ctx) error {
+		values := GetStatuses("flag-status")
+
+		return c.Render("flag", fiber.Map{
 			"Results": values,
 		})
 	})

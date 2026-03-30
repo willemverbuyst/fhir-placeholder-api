@@ -72,6 +72,12 @@ const fetchUsers = async (): Promise<void> => {
 
     const response = await fetch("http://localhost:3000/api/auth/users/list");
     if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error(
+          "You are not authorized to view users. Please sign in.",
+        );
+      }
+
       throw new Error("Failed to fetch users");
     }
 
@@ -81,7 +87,10 @@ const fetchUsers = async (): Promise<void> => {
   } catch (error: unknown) {
     console.error("Failed to load users", error);
     users.value = [];
-    errorMessage.value = "Unable to load users. Please try again.";
+    errorMessage.value =
+      error instanceof Error
+        ? error.message
+        : "Unable to load users. Please try again.";
   } finally {
     isLoading.value = false;
   }

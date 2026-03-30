@@ -37,6 +37,7 @@ app.use("/api", (req, res, next) => {
   if (
     req.path.startsWith("/auth/sign-in") ||
     req.path.startsWith("/auth/sign-up") ||
+    req.path.startsWith("/auth/users/list") ||
     req.path === "/public/organizations"
   ) {
     return next();
@@ -76,6 +77,12 @@ app.use("/api/public/organizations", (req, res) => {
     `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5/Organization/`,
   );
   proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5/Organization/` });
+});
+
+app.use("/api/auth/users/list", (req, res) => {
+  log.info(`Proxying request on ${req.url} to ${usersServiceUrl}/users`);
+  req.url = "/users";
+  proxy.web(req, res, { target: usersServiceUrl });
 });
 
 app.use("/api/auth", (req, res) => {

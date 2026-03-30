@@ -32,29 +32,33 @@ A collection of tools centered around Fhir R5 dummy data.
 
 ```mermaid
 flowchart LR
-  subgraph CLI
-    ML@{shape: sl-rect, label: monorepo-launcher}
-    CS@{shape: sl-rect,label: config-cli}
-    FDC@{shape: sl-rect, label: fhir-db-cli}
-  end 
-  subgraph APPS
-    PT[patient-timeline]
-    FC@{shape: rect, label: fhir-client}
-    FTT[fhir-to-tables]
+    FNS[fhir-name-service]
     FS@{shape: circle, label: fhir-server}
-  end
-  subgraph SERVICES
+    PT@{shape: rect, label: patient-timeline}
     A[auth]
     U[users]
     G[gateway]
-    FNS[fhir-name-service]
-    FTS[fhir-to-spreadsheet]
-  end
-  subgraph Data
-    C@{shape: doc, label: config}
-    DB@{shape: cyl, label: fhir-data}
+  
     UDB@{shape: cyl, label: user-data}
-  end
+    DB@{shape: cyl, label: fhir-data}
+    RDB@{shape: cyl, label: review-data}
+    PDB@{shape: cyl, label: practitioner-data}
+  
+    FTS@{shape: sl-rect, label: fhir-to-spreadsheet}
+    GPS@{shape: rect, label: gp-search}
+    RS@{shape: rect, label: resource-statuses}
+    OR@{shape: rect, label: organization-reviews}
+    FC@{shape: rect, label: fhir-client}
+    FTT@{shape: rect, label: fhir-to-tables}
+    UM@{shape: rect, label: user-management}
+    
+    ML@{shape: sl-rect, label: monorepo-launcher}
+    FDC@{shape: sl-rect, label: fhir-db-cli}
+    CS@{shape: sl-rect,label: config-cli}
+    C@{shape: doc, label: config}
+  
+  
+  GPS --> PDB
   FS --> DB
   CS --> C
   FDC --> DB
@@ -62,11 +66,15 @@ flowchart LR
   FC --> G
   FTT --> G
   PT --> G
+  UM --> G
   G --> U
   G --> A
   G --> FS
   A --> UDB
+  U --> UDB
+  OR --> RDB
   G --> FNS
+  FTS -->FS
   
 ```
 

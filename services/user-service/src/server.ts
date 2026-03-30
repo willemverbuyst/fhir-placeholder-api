@@ -1,3 +1,4 @@
+import { apiLimiter } from "@repo/api-limiter";
 import { logger } from "@repo/logger";
 import express from "express";
 import { pool } from "./db";
@@ -19,7 +20,7 @@ app.get("/me", (req, res) => {
   });
 });
 
-app.get("/users", async (_req, res) => {
+app.get("/users", apiLimiter, async (_req, res) => {
   try {
     log.info("Attempting to list users");
     const result = await pool.query("SELECT username, role FROM users");

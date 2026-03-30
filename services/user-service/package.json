@@ -28,6 +28,7 @@
     "type:check": "tsc"
   },
   "dependencies": {
+    "@repo/api-limiter": "workspace:*",
     "@repo/logger": "workspace:*",
     "express": "^5.2.1",
     "pg": "^8.20.0"

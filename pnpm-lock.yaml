@@ -490,6 +490,9 @@ importers:
 
   services/user-service:
     dependencies:
+      '@repo/api-limiter':
+        specifier: workspace:*
+        version: link:../../packages/api-limiter
       '@repo/logger':
         specifier: workspace:*
         version: link:../../packages/logger

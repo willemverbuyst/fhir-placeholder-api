@@ -3,7 +3,8 @@
     <section class="users-card">
       <h1 class="users-title">Users</h1>
 
-      <p v-if="isLoading" class="users-message">Loading users...</p>
+      <p v-if="isCheckingAccess" class="users-message">Checking access...</p>
+      <p v-else-if="isLoading" class="users-message">Loading users...</p>
       <p v-else-if="errorMessage" class="users-message users-message-error">
         {{ errorMessage }}
       </p>
@@ -38,7 +39,12 @@ type UsersListResponse = {
   users: User[];
 };
 
+type CurrentUserResponse = {
+  role: string;
+};
+
 const users = ref<User[]>([]);
+const isCheckingAccess = ref<boolean>(true);
 const isLoading = ref<boolean>(true);
 const errorMessage = ref<string | null>(null);
 
@@ -52,14 +58,9 @@ const getAuthHeader = (token: string): Record<string, string> => {
   };
 };
 
-const redirectToSignIn = async (): Promise<void> => {
-  await navigateTo("/");
-};
-
-const requireAuthToken = async (): Promise<string> => {
+const requireAuthToken = (): string => {
   const token = localStorage.getItem("authToken");
   if (!token) {
-    await redirectToSignIn();
     throw new Error("You are not signed in. Please sign in.");
   }
 
@@ -89,21 +90,50 @@ const parseUsersListResponse = (value: unknown): UsersListResponse => {
   return { users: maybeUsers };
 };
 
+const parseCurrentUserResponse = (value: unknown): CurrentUserResponse => {
+  if (typeof value !== "object" || value === null) {
+    throw new Error("Invalid API response");
+  }
+
+  const record = value as Record<string, unknown>;
+  if (typeof record.role !== "string") {
+    throw new Error("Invalid user format");
+  }
+
+  return {
+    role: record.role,
+  };
+};
+
+const ensureAdminAccess = async (): Promise<void> => {
+  const token = requireAuthToken();
+  const response = await fetch("http://localhost:3000/api/auth/users/me", {
+    headers: getAuthHeader(token),
+  });
+
+  if (!response.ok) {
+    throw new Error("Unauthorized");
+  }
+
+  const responseBody: unknown = await response.json();
+  const currentUser = parseCurrentUserResponse(responseBody);
+  if (currentUser.role !== "admin") {
+    throw new Error("Unauthorized");
+  }
+};
+
 const fetchUsers = async (): Promise<void> => {
   try {
     isLoading.value = true;
     errorMessage.value = null;
-    const token = await requireAuthToken();
+    const token = requireAuthToken();
 
     const response = await fetch("http://localhost:3000/api/auth/users/list", {
       headers: getAuthHeader(token),
     });
     if (!response.ok) {
-      if (response.status === 401) {
-        await redirectToSignIn();
-        throw new Error(
-          "You are not authorized to view users. Please sign in.",
-        );
+      if (response.status === 401 || response.status === 403) {
+        throw new Error("You are not authorized to view users.");
       }
 
       throw new Error("Failed to fetch users");
@@ -125,12 +155,21 @@ const fetchUsers = async (): Promise<void> => {
 };
 
 onMounted(() => {
-  if (!getAuthToken()) {
-    void redirectToSignIn();
-    return;
-  }
-
-  void fetchUsers();
+  void (async () => {
+    try {
+      await ensureAdminAccess();
+      await fetchUsers();
+    } catch (error: unknown) {
+      users.value = [];
+      errorMessage.value =
+        error instanceof Error
+          ? error.message
+          : "Unable to load users. Please try again.";
+      isLoading.value = false;
+    } finally {
+      isCheckingAccess.value = false;
+    }
+  })();
 });
 </script>
 

@@ -7,7 +7,18 @@
         {{ errorMessage }}
       </p>
 
-      <form class="login-form" @submit.prevent="onSubmit">
+      <div v-if="isSignedIn" class="login-signed-in">
+        <p class="login-message">You are already signed in.</p>
+        <button
+          class="login-button login-signout-button"
+          type="button"
+          @click="onSignOut"
+        >
+          Sign out
+        </button>
+      </div>
+
+      <form v-else class="login-form" @submit.prevent="onSubmit">
         <div class="login-field">
           <label class="login-label" for="username">Username</label>
           <input
@@ -58,6 +69,7 @@ const form = ref<LoginForm>({
 });
 const errorMessage = ref<string | null>(null);
 const isSubmitting = ref<boolean>(false);
+const isSignedIn = ref<boolean>(false);
 
 const parseSignInResponse = (value: unknown): SignInResponse => {
   if (typeof value !== "object" || value === null) {
@@ -79,6 +91,12 @@ const resetForm = (): void => {
   };
 };
 
+const onSignOut = (): void => {
+  localStorage.removeItem("authToken");
+  isSignedIn.value = false;
+  errorMessage.value = null;
+};
+
 const onSubmit = async (): Promise<void> => {
   try {
     isSubmitting.value = true;
@@ -96,17 +114,24 @@ const onSubmit = async (): Promise<void> => {
     });
 
     if (!response.ok) {
-      throw new Error("Sign-in failed. Please check your credentials.");
+      if (response.status === 401 || response.status === 403) {
+        resetForm();
+        throw new Error(
+          "You are not authorized. Please check your credentials.",
+        );
+      }
+
+      throw new Error("Sign-in failed. Please try again.");
     }
 
     const responseBody: unknown = await response.json();
     const parsedResponse = parseSignInResponse(responseBody);
     localStorage.setItem("authToken", parsedResponse.token);
+    isSignedIn.value = true;
 
     await navigateTo("/users");
   } catch (error: unknown) {
     console.error("Sign-in request failed", error);
-    resetForm();
     errorMessage.value =
       error instanceof Error
         ? error.message
@@ -115,6 +140,10 @@ const onSubmit = async (): Promise<void> => {
     isSubmitting.value = false;
   }
 };
+
+onMounted(() => {
+  isSignedIn.value = Boolean(localStorage.getItem("authToken"));
+});
 </script>
 
 <style scoped>
@@ -146,6 +175,12 @@ const onSubmit = async (): Promise<void> => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.login-signed-in {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .login-field {
@@ -201,6 +236,10 @@ const onSubmit = async (): Promise<void> => {
 .login-button:disabled {
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+.login-signout-button {
+  margin-top: 0;
 }
 
 .login-message {

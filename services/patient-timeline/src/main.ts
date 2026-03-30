@@ -133,7 +133,7 @@ const handleRequest = (req: Request, res: Response): void => {
 
 const serverEffect = Effect.sync(() => {
   const server = http.createServer(handleRequest);
-  const port = 5175;
+  const port = 4002;
 
   server.listen(port, () => {
     // eslint-disable-next-line no-console

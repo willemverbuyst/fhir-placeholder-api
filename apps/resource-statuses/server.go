@@ -135,8 +135,8 @@ func main() {
 		return renderResourceStatuses(c, "flag-status", "Flag")
 	})
 
-	logger.Info("server listening", slog.String("addr", ":3000"))
-	if err := app.Listen(":3000"); err != nil {
+	logger.Info("server listening", slog.String("addr", ":4001"))
+	if err := app.Listen(":4001"); err != nil {
 		logger.Error("server failed", slog.Any("err", err))
 		os.Exit(1)
 	}

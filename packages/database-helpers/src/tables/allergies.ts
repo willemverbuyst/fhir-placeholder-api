@@ -42,7 +42,7 @@ const allergyIntoleranceTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS AllergyIntolerance (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -53,22 +53,25 @@ const allergyIntoleranceTable = (db: DB) =>
 export function findAllergy(
   db: DB,
   id: string,
-): AllergyIntolerance | undefined {
+): Promise<AllergyIntolerance | undefined> {
   return allergyIntoleranceTable(db).find(id);
 }
 
-export function getAllergy(db: DB, id: string): AllergyIntolerance {
+export function getAllergy(db: DB, id: string): Promise<AllergyIntolerance> {
   return allergyIntoleranceTable(db).get(id);
 }
 
-export function getAllAllergies(db: DB): AllergyIntolerance[] {
+export function getAllAllergies(db: DB): Promise<AllergyIntolerance[]> {
   return allergyIntoleranceTable(db).getAll();
 }
 
-export function cleanupAllergies(db: DB): number {
+export function cleanupAllergies(db: DB): Promise<number> {
   return allergyIntoleranceTable(db).cleanup();
 }
 
-export function seedAllergies(db: DB, allergies: AllergyIntolerance[]): number {
+export function seedAllergies(
+  db: DB,
+  allergies: AllergyIntolerance[],
+): Promise<number> {
   return allergyIntoleranceTable(db).seed(allergies);
 }

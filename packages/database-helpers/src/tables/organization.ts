@@ -40,7 +40,7 @@ const organizationTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Organization (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -48,25 +48,28 @@ const organizationTable = (db: DB) =>
     getId: (organization) => organization.id,
   });
 
-export function findOrganization(db: DB, id: string): Organization | undefined {
+export function findOrganization(
+  db: DB,
+  id: string,
+): Promise<Organization | undefined> {
   return organizationTable(db).find(id);
 }
 
-export function getOrganization(db: DB, id: string): Organization {
+export function getOrganization(db: DB, id: string): Promise<Organization> {
   return organizationTable(db).get(id);
 }
 
-export function getAllOrganizations(db: DB): Organization[] {
+export function getAllOrganizations(db: DB): Promise<Organization[]> {
   return organizationTable(db).getAll();
 }
 
-export function cleanupOrganizations(db: DB): number {
+export function cleanupOrganizations(db: DB): Promise<number> {
   return organizationTable(db).cleanup();
 }
 
 export function seedOrganizations(
   db: DB,
   organizations: Organization[],
-): number {
+): Promise<number> {
   return organizationTable(db).seed(organizations);
 }

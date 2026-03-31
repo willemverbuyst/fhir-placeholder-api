@@ -1,33 +1,31 @@
-import Database from "better-sqlite3";
-
-type SqliteDb = InstanceType<typeof Database>;
+import { Pool } from "pg";
 
 type JsonResourceTableInput<T> = {
   tableName: string;
   createTableSql: string;
-  getDb: () => SqliteDb;
+  getDb: () => Pool;
   parse: (json: string) => T;
   serialize?: (resource: T) => string;
   getId: (resource: T) => string | undefined;
 };
 
 type JsonResourceTable<T> = {
-  get: (id: string) => T;
-  find: (id: string) => T | undefined;
-  getAll: () => T[];
-  cleanup: () => number;
-  seed: (resources: T[]) => number;
+  get: (id: string) => Promise<T>;
+  find: (id: string) => Promise<T | undefined>;
+  getAll: () => Promise<T[]>;
+  cleanup: () => Promise<number>;
+  seed: (resources: T[]) => Promise<number>;
 };
 
 const initializedTables = new Set<string>();
 
-function ensureTableInitialized(input: {
+async function ensureTableInitialized(input: {
   tableName: string;
   createTableSql: string;
-  getDb: () => SqliteDb;
-}): void {
+  getDb: () => Pool;
+}): Promise<void> {
   if (initializedTables.has(input.tableName)) return;
-  input.getDb().exec(input.createTableSql);
+  await input.getDb().query(input.createTableSql);
   initializedTables.add(input.tableName);
 }
 
@@ -37,61 +35,68 @@ export function createJsonResourceTable<T>(
   const serialize =
     input.serialize ?? ((resource: T) => JSON.stringify(resource));
 
-  function init(): void {
-    ensureTableInitialized({
+  async function init(): Promise<void> {
+    await ensureTableInitialized({
       tableName: input.tableName,
       createTableSql: input.createTableSql,
       getDb: input.getDb,
     });
   }
 
-  function find(id: string): T | undefined {
-    init();
-    const row = input
+  async function find(id: string): Promise<T | undefined> {
+    await init();
+    const result = await input
       .getDb()
-      .prepare(`SELECT resource FROM ${input.tableName} WHERE id = ?`)
-      .get(id) as { resource: string } | undefined;
+      .query<{ resource: unknown }>(
+        `SELECT resource FROM ${input.tableName} WHERE id = $1`,
+        [id],
+      );
+    const row = result.rows[0];
 
     if (!row) return undefined;
-    return input.parse(row.resource);
+    const resource =
+      typeof row.resource === "string"
+        ? row.resource
+        : JSON.stringify(row.resource);
+    return input.parse(resource);
   }
 
-  function get(id: string): T {
-    const resource = find(id);
+  async function get(id: string): Promise<T> {
+    const resource = await find(id);
     if (!resource) {
       throw new Error(`${input.tableName} not found: ${id}`);
     }
     return resource;
   }
 
-  function getAll(): T[] {
-    init();
-    const rows = input
+  async function getAll(): Promise<T[]> {
+    await init();
+    const result = await input
       .getDb()
-      .prepare(`SELECT resource FROM ${input.tableName}`)
-      .all() as Array<{ resource: string }>;
+      .query<{ resource: unknown }>(`SELECT resource FROM ${input.tableName}`);
 
-    return rows.map((row) => input.parse(row.resource));
-  }
-
-  function cleanup(): number {
-    init();
-    const result = input
-      .getDb()
-      .prepare(`DELETE FROM ${input.tableName}`)
-      .run();
-    return result.changes;
-  }
-
-  function seed(resources: T[]): number {
-    init();
-    const database = input.getDb();
-    const insert = database.prepare(
-      `INSERT OR REPLACE INTO ${input.tableName} (id, resource) VALUES (?, ?)`,
+    return result.rows.map((row) =>
+      input.parse(
+        typeof row.resource === "string"
+          ? row.resource
+          : JSON.stringify(row.resource),
+      ),
     );
+  }
 
-    return database.transaction(() => {
-      let inserted = 0;
+  async function cleanup(): Promise<number> {
+    await init();
+    const result = await input.getDb().query(`DELETE FROM ${input.tableName}`);
+    return result.rowCount ?? 0;
+  }
+
+  async function seed(resources: T[]): Promise<number> {
+    await init();
+    const client = await input.getDb().connect();
+    let inserted = 0;
+
+    try {
+      await client.query("BEGIN");
 
       for (const resource of resources) {
         const id = input.getId(resource);
@@ -99,12 +104,24 @@ export function createJsonResourceTable<T>(
           throw new Error(`Seed ${input.tableName} resource is missing \`id\``);
         }
 
-        const result = insert.run(id, serialize(resource));
-        inserted += result.changes;
+        const result = await client.query(
+          `INSERT INTO ${input.tableName} (id, resource)
+           VALUES ($1, $2::jsonb)
+           ON CONFLICT (id) DO UPDATE
+           SET resource = EXCLUDED.resource`,
+          [id, serialize(resource)],
+        );
+        inserted += result.rowCount ?? 0;
       }
 
+      await client.query("COMMIT");
       return inserted;
-    })();
+    } catch (error) {
+      await client.query("ROLLBACK");
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   return { get, find, getAll, cleanup, seed };

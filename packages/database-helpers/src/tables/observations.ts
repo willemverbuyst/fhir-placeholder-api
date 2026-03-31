@@ -40,7 +40,7 @@ const observationTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Observation (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -48,22 +48,28 @@ const observationTable = (db: DB) =>
     getId: (observation) => observation.id,
   });
 
-export function findObservation(db: DB, id: string): Observation | undefined {
+export function findObservation(
+  db: DB,
+  id: string,
+): Promise<Observation | undefined> {
   return observationTable(db).find(id);
 }
 
-export function getObservation(db: DB, id: string): Observation {
+export function getObservation(db: DB, id: string): Promise<Observation> {
   return observationTable(db).get(id);
 }
 
-export function getAllObservations(db: DB): Observation[] {
+export function getAllObservations(db: DB): Promise<Observation[]> {
   return observationTable(db).getAll();
 }
 
-export function cleanupObservations(db: DB): number {
+export function cleanupObservations(db: DB): Promise<number> {
   return observationTable(db).cleanup();
 }
 
-export function seedObservations(db: DB, observations: Observation[]): number {
+export function seedObservations(
+  db: DB,
+  observations: Observation[],
+): Promise<number> {
   return observationTable(db).seed(observations);
 }

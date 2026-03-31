@@ -14,17 +14,17 @@ import {
 } from "../tables";
 import { DB } from "../utils";
 
-export function cleanupDatabase(db: DB): void {
-  cleanupAllergies(db);
-  cleanupAppointments(db);
-  cleanupCommunications(db);
-  cleanupConditions(db);
-  cleanupEncounters(db);
-  cleanupEpisodes(db);
-  cleanupFlags(db);
-  cleanupObservations(db);
-  cleanupPatients(db);
-  cleanupPractitionerRoles(db);
-  cleanupPractitioners(db);
-  cleanupOrganizations(db);
+export async function cleanupDatabase(db: DB): Promise<void> {
+  await cleanupAllergies(db);
+  await cleanupAppointments(db);
+  await cleanupCommunications(db);
+  await cleanupConditions(db);
+  await cleanupEncounters(db);
+  await cleanupEpisodes(db);
+  await cleanupFlags(db);
+  await cleanupObservations(db);
+  await cleanupPatients(db);
+  await cleanupPractitionerRoles(db);
+  await cleanupPractitioners(db);
+  await cleanupOrganizations(db);
 }

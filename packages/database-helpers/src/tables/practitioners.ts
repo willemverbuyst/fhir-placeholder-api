@@ -40,7 +40,7 @@ const practitionerTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Practitioner (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -48,25 +48,28 @@ const practitionerTable = (db: DB) =>
     getId: (practitioner) => practitioner.id,
   });
 
-export function findPractitioner(db: DB, id: string): Practitioner | undefined {
+export function findPractitioner(
+  db: DB,
+  id: string,
+): Promise<Practitioner | undefined> {
   return practitionerTable(db).find(id);
 }
 
-export function getPractitioner(db: DB, id: string): Practitioner {
+export function getPractitioner(db: DB, id: string): Promise<Practitioner> {
   return practitionerTable(db).get(id);
 }
 
-export function getAllPractitioners(db: DB): Practitioner[] {
+export function getAllPractitioners(db: DB): Promise<Practitioner[]> {
   return practitionerTable(db).getAll();
 }
 
-export function cleanupPractitioners(db: DB): number {
+export function cleanupPractitioners(db: DB): Promise<number> {
   return practitionerTable(db).cleanup();
 }
 
 export function seedPractitioners(
   db: DB,
   practitioners: Practitioner[],
-): number {
+): Promise<number> {
   return practitionerTable(db).seed(practitioners);
 }

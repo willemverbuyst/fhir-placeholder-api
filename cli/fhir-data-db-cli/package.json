@@ -1,5 +1,5 @@
 {
-  "name": "fhir-data",
+  "name": "fhir-data-db-cli",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,6 +14,10 @@
     "data:seed:db": "tsx ./src/seed.ts"
   },
   "dependencies": {
-    "@repo/database-helpers": "workspace:*"
+    "@repo/database-helpers": "workspace:*",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0"
   }
 }

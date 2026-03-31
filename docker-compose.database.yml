@@ -1,0 +1,39 @@
+services:
+  fhir-data-db:
+    image: postgres:15
+    container_name: fhir-data-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fhir_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - fhir-data-db-data:/var/lib/postgresql/data
+
+  fhir-data-db-tool:
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: fhir-data-db
+    ports:
+      - "9091:8080"
+    depends_on:
+      - fhir-data-db
+
+  fhir-data-db-cli:
+    build:
+      context: .
+      dockerfile: cli/fhir-data-db-cli/Dockerfile
+    depends_on:
+      - fhir-data-db
+    environment:
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
+
+volumes:
+  fhir-data-db-data:

@@ -356,6 +356,13 @@ importers:
       '@repo/database-helpers':
         specifier: workspace:*
         version: link:../../packages/database-helpers
+      pg:
+        specifier: ^8.20.0
+        version: 8.20.0
+    devDependencies:
+      '@types/pg':
+        specifier: ^8.20.0
+        version: 8.20.0
 
   packages/api-limiter:
     dependencies:

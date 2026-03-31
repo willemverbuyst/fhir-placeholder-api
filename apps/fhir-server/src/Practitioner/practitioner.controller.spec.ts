@@ -2,6 +2,7 @@ import { NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Practitioner } from "fhir/r5";
 import { DataStoreService } from "../db/dataStore.service";
+import type { GetPractitionerDto } from "./dto/get-practitioner.dto";
 import { PractitionerController } from "./practitioner.controller";
 import { PractitionerService } from "./practitioner.service";
 
@@ -34,10 +35,22 @@ describe("PractitionerController", () => {
   });
 
   describe("findAll", () => {
-    it("should call findAll method of PractitionerService", () => {
-      controller.findAll();
+    it("should call findAll method of PractitionerService", async () => {
+      await controller.findAll();
 
       expect(service.findAll).toHaveBeenCalledTimes(1);
+      expect(service.findAll).toHaveBeenCalledWith(undefined);
+    });
+
+    it("should forward include query to PractitionerService", async () => {
+      const query: GetPractitionerDto = {
+        _include: "PractitionerRole:practitioner",
+        "_include:iterate": "PractitionerRole:organization",
+      };
+
+      await controller.findAll(query);
+
+      expect(service.findAll).toHaveBeenCalledWith(query);
     });
   });
 

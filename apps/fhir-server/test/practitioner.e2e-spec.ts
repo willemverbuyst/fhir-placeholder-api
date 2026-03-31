@@ -27,6 +27,27 @@ describe("PractitionerController (e2e)", () => {
       });
   });
 
+  it("/Practitioner (GET) - include practitioner roles and organizations", async () => {
+    return request(app.getHttpServer())
+      .get(
+        "/Practitioner?_include=PractitionerRole:practitioner&_include:iterate=PractitionerRole:organization",
+      )
+      .expect(200)
+      .then((res) => {
+        const bundle = res.body;
+        const entries = bundle.entry ?? [];
+        const resourceTypes = entries.map(
+          (entry: { resource?: { resourceType?: string } }) =>
+            entry.resource?.resourceType,
+        );
+
+        expect(bundle).toHaveProperty("resourceType", "Bundle");
+        expect(resourceTypes).toContain("Practitioner");
+        expect(resourceTypes).toContain("PractitionerRole");
+        expect(resourceTypes).toContain("Organization");
+      });
+  });
+
   it("/Practitioner/:id (GET) - OK", async () => {
     return request(app.getHttpServer())
       .get("/Practitioner/practitioner-1")

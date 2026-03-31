@@ -15,6 +15,34 @@ describe("PractitionerService", () => {
         resourceType: "Practitioner",
       },
     ],
+    practitionerRoles: [
+      {
+        id: "role-1",
+        resourceType: "PractitionerRole",
+        practitioner: {
+          reference: "Practitioner/1",
+        },
+        organization: {
+          reference: "Organization/org-1",
+        },
+      },
+      {
+        id: "role-2",
+        resourceType: "PractitionerRole",
+        practitioner: {
+          reference: "Practitioner/2",
+        },
+        organization: {
+          reference: "Organization/org-1",
+        },
+      },
+    ],
+    organizations: [
+      {
+        id: "org-1",
+        resourceType: "Organization",
+      },
+    ],
   };
 
   beforeEach(async () => {
@@ -37,6 +65,40 @@ describe("PractitionerService", () => {
       const bundle = await service.findAll();
       expect(bundle).toBeDefined();
       expect(bundle.entry?.length).toBe(2);
+    });
+
+    it("should include practitioner roles when include query is provided", async () => {
+      const bundle = await service.findAll({
+        _include: "PractitionerRole:practitioner",
+      });
+      const resourceTypes =
+        bundle.entry?.map((entry) => entry.resource?.resourceType) ?? [];
+
+      expect(resourceTypes).toEqual([
+        "Practitioner",
+        "Practitioner",
+        "PractitionerRole",
+        "PractitionerRole",
+      ]);
+    });
+
+    it("should include organizations and deduplicate when iterate query is provided", async () => {
+      const bundle = await service.findAll({
+        _include: "PractitionerRole:practitioner",
+        "_include:iterate": "PractitionerRole:organization",
+      });
+      const resourceKeys =
+        bundle.entry?.map(
+          (entry) => `${entry.resource?.resourceType}/${entry.resource?.id}`,
+        ) ?? [];
+
+      expect(resourceKeys).toEqual([
+        "Practitioner/1",
+        "Practitioner/2",
+        "PractitionerRole/role-1",
+        "PractitionerRole/role-2",
+        "Organization/org-1",
+      ]);
     });
   });
 

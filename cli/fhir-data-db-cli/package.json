@@ -9,9 +9,7 @@
   "scripts": {
     "build": "bunchee",
     "type:check": "tsc",
-    "data:check": "tsx ./src/main.ts",
-    "data:cleanup:db": "tsx ./src/cleanup.ts",
-    "data:seed:db": "tsx ./src/seed.ts"
+    "seed:db": "tsx ./src/seed.ts"
   },
   "dependencies": {
     "@repo/database-helpers": "workspace:*",

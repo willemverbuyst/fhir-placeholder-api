@@ -9,5 +9,6 @@ COPY packages ./packages
 COPY cli ./cli
 
 RUN pnpm install --frozen-lockfile
+RUN pnpm --filter "fhir-data-db-cli..." --if-present run build
 
-CMD ["pnpm", "--filter", "fhir-data-db-cli", "run", "data:seed:db"]
+CMD ["pnpm", "--filter", "fhir-data-db-cli", "run", "seed:db"]

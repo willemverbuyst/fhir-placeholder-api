@@ -9,7 +9,6 @@ A collection of tools centered around Fhir R5 dummy data.
 ## Apps
 
 - [fhir-client](apps/fhir-client)
-- [fhir-data](apps/fhir-data)
 - [fhir-server](apps/fhir-server)
 - [fhir-to-tables](apps/fhir-to-tables)
 - [gp-search](apps/gp-search/)
@@ -22,7 +21,8 @@ A collection of tools centered around Fhir R5 dummy data.
 ## Cli
 
 - [config-cli](cli/config-cli)
-- [fhir-to-spreadsheet](services/fhir-to-spreadsheet)
+- [fhir-data-db-cli](config/fhir-data-db-cli)
+- [fhir-to-spreadsheet](config/fhir-to-spreadsheet)
 - [monorepo-launcher](cli/monorepo-launcher/)
 
 ## Services
@@ -38,44 +38,44 @@ A collection of tools centered around Fhir R5 dummy data.
 
 ```mermaid
 flowchart LR
-    FNS[fhir-name-service]
+    FNS@{shape: stadium, label: fhir-name-service}
     FS@{shape: circle, label: fhir-server}
     PT@{shape: rect, label: patient-timeline}
-    A[auth]
-    U[users]
-    G[gateway]
+    A@{shape: stadium, label: auth}
+    U@{shape: stadium, label: users}
+    G@{shape: stadium, label: gateway}
   
+    RDB@{shape: cyl, label: review-data}
     UDB@{shape: cyl, label: user-data}
     DB@{shape: cyl, label: fhir-data}
-    RDB@{shape: cyl, label: review-data}
-    PDB@{shape: cyl, label: practitioner-data}
+    C@{shape: doc, label: config}
   
-    FTS@{shape: sl-rect, label: fhir-to-spreadsheet}
     GPS@{shape: rect, label: gp-search}
-    RS@{shape: rect, label: resource-statuses}
     OR@{shape: rect, label: organization-reviews}
     FC@{shape: rect, label: fhir-client}
     FTT@{shape: rect, label: fhir-to-tables}
     UM@{shape: rect, label: user-management}
-    
-    ML@{shape: sl-rect, label: monorepo-launcher}
-    FDC@{shape: sl-rect, label: fhir-db-cli}
+    RS@{shape: rect, label: resource-statuses}
+
     CS@{shape: sl-rect,label: config-cli}
-    C@{shape: doc, label: config}
-  
-  
-  GPS --> PDB
+    ML@{shape: sl-rect, label: monorepo-launcher}
+    FTS@{shape: sl-rect, label: fhir-to-spreadsheet}
+    FDC@{shape: sl-rect, label: fhir-data-db-cli}
+
+  GPS --> DB
   FS --> DB
-  CS --> C
   FDC --> DB
+  CS --> C
   FDC --> C
   FC --> G
   FTT --> G
   PT --> G
   UM --> G
+  OR --> G
   G --> U
   G --> A
   G --> FS
+  G --> SS
   A --> UDB
   U --> UDB
   OR --> RDB

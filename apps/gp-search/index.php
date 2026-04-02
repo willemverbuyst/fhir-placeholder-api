@@ -53,9 +53,9 @@ $(document).ready(function() {
     const html = data
       .map(gp => `
         <tr>
-          <td class="fw-medium">${gp.name}</td>
-          <td><a class="link-primary" href="mailto:${gp.email}">${gp.email}</a></td>
-          <td>${gp.phone}</td>
+          <td class="fw-medium">${JSON.stringify(JSON.parse(gp.resource)?.name)}</td>
+          <td>${JSON.stringify(JSON.parse(gp.resource)?.telecom)}</td>
+          <td>${JSON.stringify(JSON.parse(gp.resource)?.address)}</td>
         </tr>
       `)
       .join('');
@@ -78,6 +78,7 @@ $(document).ready(function() {
 
       $.getJSON('search.php', { query: query })
         .done(function(data) {
+          console.log('data', data);
           renderRows(data);
         })
         .fail(function() {

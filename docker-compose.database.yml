@@ -8,9 +8,12 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: fhir_db
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - fhir-data-db-data:/var/lib/postgresql/data
+    profiles:
+      - fhir-db
+      - search
 
   fhir-data-db-tool:
     image: adminer
@@ -21,19 +24,9 @@ services:
       - "9091:8080"
     depends_on:
       - fhir-data-db
-
-  fhir-data-db-cli:
-    build:
-      context: .
-      dockerfile: cli/fhir-data-db-cli/Dockerfile
-    depends_on:
-      - fhir-data-db
-    environment:
-      PGHOST: fhir-data-db
-      PGPORT: "5432"
-      PGUSER: postgres
-      PGPASSWORD: password
-      PGDATABASE: fhir_db
+    profiles:
+      - fhir-db
+      - search
 
 volumes:
   fhir-data-db-data:

@@ -11,26 +11,53 @@ if ($query === '') {
     exit;
 }
 
-$statement = $conn->prepare('SELECT * FROM gps WHERE name LIKE ?');
-
-if ($statement === false) {
+try {
+    // $statement = $pdo->prepare('SELECT * FROM practitioner WHERE id::text LIKE ?');
+    $statement = $pdo->prepare(<<<'SQL'
+    SELECT *
+    FROM practitioner p
+    WHERE (
+      SELECT LOWER(
+        string_agg(
+          TRIM(
+            COALESCE(name->>'family', '') || ' ' ||
+            COALESCE(
+              array_to_string(
+                ARRAY(
+                  SELECT jsonb_array_elements_text(
+                    COALESCE(name->'given', '[]'::jsonb)
+                  )
+                ),
+                ' '
+              ),
+              ''
+            )
+          ),
+          ' '
+        )
+      )
+      FROM jsonb_array_elements(
+        COALESCE(p.resource->'name', '[]'::jsonb)
+      ) AS name
+    ) ILIKE :search;
+    SQL
+    );
+} catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Failed to prepare search query']);
     exit;
 }
 
 $searchPattern = '%'.$query.'%';
-$statement->bind_param('s', $searchPattern);
 
-if (! $statement->execute()) {
+try {
+    $statement->execute([$searchPattern]);
+} catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Failed to execute search query']);
-    $statement->close();
     exit;
 }
 
-$result = $statement->get_result();
-$gps = $result->fetch_all(MYSQLI_ASSOC);
-$statement->close();
+$gps = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($gps);

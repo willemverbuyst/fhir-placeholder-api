@@ -56,44 +56,16 @@ services:
       - ./apps/gp-search:/var/www/html
     working_dir: /var/www/html
     depends_on:
-      - gp-search-db
+      - fhir-data-db-cli
     environment:
-      DB_HOST: gp-search-db
-      DB_NAME: gp_search
-      DB_USER: gp_search_user
-      DB_PASSWORD: gp_search_password
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
     profiles:
       - apps
-      - gp-search
-
-  gp-search-db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: gp_search
-      MYSQL_USER: gp_search_user
-      MYSQL_PASSWORD: gp_search_password
-      MYSQL_ROOT_PASSWORD: gp_search_root_password
-    ports:
-      - "3308:3306"
-    volumes:
-      - gp_search_data:/var/lib/mysql
-    profiles:
-      - db
-      - gp-search
-
-  gp-search-phpmyadmin:
-    image: phpmyadmin
-    ports:
-      - "8083:80"
-    environment:
-      PMA_HOST: gp-search-db
-    depends_on:
-      - gp-search-db
-    profiles:
-      - tools
-      - gp-search
+      - search
 
 volumes:
   organization_reviews_db_data:
-  gp_search_data:

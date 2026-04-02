@@ -59,4 +59,29 @@ try {
 
 $gps = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-echo json_encode($gps);
+// $gp_resources = array_map(function($gp) {
+//     return json_decode($gp['resource']);
+// }, $gps);
+
+$formatted_gps = array_map(function($gp) {
+    $resource = json_decode($gp['resource']);
+    $names = $resource->name ?? [];
+    $formattedNames = array_map(function($name) {
+        $family = trim((string) ($name->family ?? ''));
+        $given = implode(' ', $name->given ?? []);
+
+        return trim($family.' '.$given);
+    }, $names);
+    $displayName = implode(', ', array_filter($formattedNames));
+    $emails = array_filter($resource->telecom ?? [], function($t) { return $t->system === 'email'; });
+    $phones = array_filter($resource->telecom ?? [], function($t) { return $t->system === 'phone'; });
+
+    return [
+      'name' => $displayName,
+      'email' => implode(', ',  array_map(function($t) { return $t->value; }, $emails)),
+      'phone' => implode(', ',  array_map(futnction($t) { return $t->value; }, $phones)),
+    ];
+}, $gps);
+
+
+echo json_encode($formatted_gps);

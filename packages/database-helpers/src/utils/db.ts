@@ -1,23 +1,13 @@
-import Database from "better-sqlite3";
+import { Pool } from "pg";
 
 export class DB {
-  private db: InstanceType<typeof Database> | null = null;
-  private dbFilePath: string | null = null;
+  private readonly pool: Pool;
 
-  constructor(dbFilePath: string) {
-    this.dbFilePath = dbFilePath;
+  constructor(pool: Pool) {
+    this.pool = pool;
   }
 
-  getDb(): InstanceType<typeof Database> {
-    if (!this.dbFilePath) {
-      throw new Error("DB file path is not set");
-    }
-
-    if (this.db) {
-      return this.db;
-    }
-
-    this.db = new Database(this.dbFilePath);
-    return this.db;
+  getDb(): Pool {
+    return this.pool;
   }
 }

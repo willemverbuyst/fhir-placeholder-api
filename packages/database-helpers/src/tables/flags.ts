@@ -38,7 +38,7 @@ const flagTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Flag (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -46,22 +46,22 @@ const flagTable = (db: DB) =>
     getId: (flag) => flag.id,
   });
 
-export function findFlag(db: DB, id: string): Flag | undefined {
+export function findFlag(db: DB, id: string): Promise<Flag | undefined> {
   return flagTable(db).find(id);
 }
 
-export function getFlag(db: DB, id: string): Flag {
+export function getFlag(db: DB, id: string): Promise<Flag> {
   return flagTable(db).get(id);
 }
 
-export function getAllFlags(db: DB): Flag[] {
+export function getAllFlags(db: DB): Promise<Flag[]> {
   return flagTable(db).getAll();
 }
 
-export function cleanupFlags(db: DB): number {
+export function cleanupFlags(db: DB): Promise<number> {
   return flagTable(db).cleanup();
 }
 
-export function seedFlags(db: DB, flags: Flag[]): number {
+export function seedFlags(db: DB, flags: Flag[]): Promise<number> {
   return flagTable(db).seed(flags);
 }

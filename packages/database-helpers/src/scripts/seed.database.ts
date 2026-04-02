@@ -31,17 +31,17 @@ const {
   organizations,
 } = generateResources(defaultConfig);
 
-export function seedDatabase(db: DB): void {
-  seedAllergies(db, allergies);
-  seedAppointments(db, appointments);
-  seedConditions(db, conditions);
-  seedEncounters(db, encounters);
-  seedEpisodes(db, episodes);
-  seedObservations(db, observations);
-  seedFlags(db, flags);
-  seedCommunications(db, communications);
-  seedPatients(db, patients);
-  seedPractitionerRoles(db, practitionerRoles);
-  seedPractitioners(db, practitioners);
-  seedOrganizations(db, organizations);
+export async function seedDatabase(db: DB): Promise<void> {
+  await seedAllergies(db, allergies);
+  await seedAppointments(db, appointments);
+  await seedConditions(db, conditions);
+  await seedEncounters(db, encounters);
+  await seedEpisodes(db, episodes);
+  await seedObservations(db, observations);
+  await seedFlags(db, flags);
+  await seedCommunications(db, communications);
+  await seedPatients(db, patients);
+  await seedPractitionerRoles(db, practitionerRoles);
+  await seedPractitioners(db, practitioners);
+  await seedOrganizations(db, organizations);
 }

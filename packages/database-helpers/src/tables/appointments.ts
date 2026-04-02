@@ -40,7 +40,7 @@ const appointmentTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Appointment (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -48,22 +48,28 @@ const appointmentTable = (db: DB) =>
     getId: (appointment) => appointment.id,
   });
 
-export function findAppointment(db: DB, id: string): Appointment | undefined {
+export function findAppointment(
+  db: DB,
+  id: string,
+): Promise<Appointment | undefined> {
   return appointmentTable(db).find(id);
 }
 
-export function getAppointment(db: DB, id: string): Appointment {
+export function getAppointment(db: DB, id: string): Promise<Appointment> {
   return appointmentTable(db).get(id);
 }
 
-export function getAllAppointments(db: DB): Appointment[] {
+export function getAllAppointments(db: DB): Promise<Appointment[]> {
   return appointmentTable(db).getAll();
 }
 
-export function cleanupAppointments(db: DB): number {
+export function cleanupAppointments(db: DB): Promise<number> {
   return appointmentTable(db).cleanup();
 }
 
-export function seedAppointments(db: DB, appointments: Appointment[]): number {
+export function seedAppointments(
+  db: DB,
+  appointments: Appointment[],
+): Promise<number> {
   return appointmentTable(db).seed(appointments);
 }

@@ -40,7 +40,7 @@ const episodeOfCareTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS EpisodeOfCare (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -51,22 +51,25 @@ const episodeOfCareTable = (db: DB) =>
 export function findEpisodeOfCare(
   db: DB,
   id: string,
-): EpisodeOfCare | undefined {
+): Promise<EpisodeOfCare | undefined> {
   return episodeOfCareTable(db).find(id);
 }
 
-export function getEpisodeOfCare(db: DB, id: string): EpisodeOfCare {
+export function getEpisodeOfCare(db: DB, id: string): Promise<EpisodeOfCare> {
   return episodeOfCareTable(db).get(id);
 }
 
-export function getAllEpisodeOfCares(db: DB): EpisodeOfCare[] {
+export function getAllEpisodeOfCares(db: DB): Promise<EpisodeOfCare[]> {
   return episodeOfCareTable(db).getAll();
 }
 
-export function cleanupEpisodes(db: DB): number {
+export function cleanupEpisodes(db: DB): Promise<number> {
   return episodeOfCareTable(db).cleanup();
 }
 
-export function seedEpisodes(db: DB, episodes: EpisodeOfCare[]): number {
+export function seedEpisodes(
+  db: DB,
+  episodes: EpisodeOfCare[],
+): Promise<number> {
   return episodeOfCareTable(db).seed(episodes);
 }

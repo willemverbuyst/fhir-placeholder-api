@@ -4,6 +4,7 @@ import type { Practitioner } from "fhir/r5";
 import { IdGenerator } from "../idGenerator";
 import { createAddress } from "./address";
 import { createEmail, createPhone } from "./contactPoint";
+import { createHumanNames } from "./helpers";
 
 export function createPractitioner({
   id,
@@ -18,7 +19,7 @@ export function createPractitioner({
   return {
     id,
     resourceType: "Practitioner",
-    name: [{ family: lastName, given: [firstName] }],
+    name: createHumanNames({ firstName, lastName }),
     active: true,
     birthDate: faker.date
       .between({ from: startDate, to: Date.now() })

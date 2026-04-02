@@ -11,26 +11,77 @@ if ($query === '') {
     exit;
 }
 
-$statement = $conn->prepare('SELECT * FROM gps WHERE name LIKE ?');
-
-if ($statement === false) {
+try {
+    $statement = $pdo->prepare(<<<'SQL'
+    SELECT *
+    FROM practitioner p
+    WHERE (
+      SELECT LOWER(
+        string_agg(
+          TRIM(
+            COALESCE(name->>'family', '') || ' ' ||
+            COALESCE(
+              array_to_string(
+                ARRAY(
+                  SELECT jsonb_array_elements_text(
+                    COALESCE(name->'given', '[]'::jsonb)
+                  )
+                ),
+                ' '
+              ),
+              ''
+            )
+          ),
+          ' '
+        )
+      )
+      FROM jsonb_array_elements(
+        COALESCE(p.resource->'name', '[]'::jsonb)
+      ) AS name
+    ) ILIKE :search;
+    SQL
+    );
+} catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Failed to prepare search query']);
     exit;
 }
 
 $searchPattern = '%'.$query.'%';
-$statement->bind_param('s', $searchPattern);
 
-if (! $statement->execute()) {
+try {
+    $statement->execute([$searchPattern]);
+} catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Failed to execute search query']);
-    $statement->close();
     exit;
 }
 
-$result = $statement->get_result();
-$gps = $result->fetch_all(MYSQLI_ASSOC);
-$statement->close();
+$gps = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-echo json_encode($gps);
+// $gp_resources = array_map(function($gp) {
+//     return json_decode($gp['resource']);
+// }, $gps);
+
+$formatted_gps = array_map(function($gp) {
+    $resource = json_decode($gp['resource']);
+    $names = $resource->name ?? [];
+    $formattedNames = array_map(function($name) {
+        $family = trim((string) ($name->family ?? ''));
+        $given = implode(' ', $name->given ?? []);
+
+        return trim($family.' '.$given);
+    }, $names);
+    $displayName = implode(', ', array_filter($formattedNames));
+    $emails = array_filter($resource->telecom ?? [], function($t) { return $t->system === 'email'; });
+    $phones = array_filter($resource->telecom ?? [], function($t) { return $t->system === 'phone'; });
+
+    return [
+      'name' => $displayName,
+      'email' => implode(', ',  array_map(function($t) { return $t->value; }, $emails)),
+      'phone' => implode(', ',  array_map(function($t) { return $t->value; }, $phones)),
+    ];
+}, $gps);
+
+
+echo json_encode($formatted_gps);

@@ -38,7 +38,7 @@ const patientTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Patient (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -46,22 +46,22 @@ const patientTable = (db: DB) =>
     getId: (patient) => patient.id,
   });
 
-export function findPatient(db: DB, id: string): Patient | undefined {
+export function findPatient(db: DB, id: string): Promise<Patient | undefined> {
   return patientTable(db).find(id);
 }
 
-export function getPatient(db: DB, id: string): Patient {
+export function getPatient(db: DB, id: string): Promise<Patient> {
   return patientTable(db).get(id);
 }
 
-export function getAllPatients(db: DB): Patient[] {
+export function getAllPatients(db: DB): Promise<Patient[]> {
   return patientTable(db).getAll();
 }
 
-export function cleanupPatients(db: DB): number {
+export function cleanupPatients(db: DB): Promise<number> {
   return patientTable(db).cleanup();
 }
 
-export function seedPatients(db: DB, patients: Patient[]): number {
+export function seedPatients(db: DB, patients: Patient[]): Promise<number> {
   return patientTable(db).seed(patients);
 }

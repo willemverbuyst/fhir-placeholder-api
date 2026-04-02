@@ -158,6 +158,10 @@ export class MetadataController {
             {
               type: "Practitioner",
               interaction: [{ code: "read" }, { code: "search-type" }],
+              searchInclude: [
+                "PractitionerRole:practitioner",
+                "PractitionerRole:organization",
+              ],
             },
             {
               type: "PractitionerRole",

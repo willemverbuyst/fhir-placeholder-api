@@ -53,9 +53,9 @@ $(document).ready(function() {
     const html = data
       .map(gp => `
         <tr>
-          <td class="fw-medium">${gp.name}</td>
-          <td><a class="link-primary" href="mailto:${gp.email}">${gp.email}</a></td>
-          <td>${gp.phone}</td>
+          <td class="fw-medium">${gp?.name}</td>
+          <td>${gp?.email}</td>
+          <td>${gp?.phone}</td>
         </tr>
       `)
       .join('');

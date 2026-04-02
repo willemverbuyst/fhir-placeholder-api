@@ -40,7 +40,7 @@ const encounterTable = (db: DB) =>
     createTableSql: `
     CREATE TABLE IF NOT EXISTS Encounter (
       id TEXT PRIMARY KEY,
-      resource JSON
+      resource JSONB
     )
   `,
     getDb: () => db.getDb(),
@@ -48,22 +48,28 @@ const encounterTable = (db: DB) =>
     getId: (encounter) => encounter.id,
   });
 
-export function findEncounter(db: DB, id: string): Encounter | undefined {
+export function findEncounter(
+  db: DB,
+  id: string,
+): Promise<Encounter | undefined> {
   return encounterTable(db).find(id);
 }
 
-export function getEncounter(db: DB, id: string): Encounter {
+export function getEncounter(db: DB, id: string): Promise<Encounter> {
   return encounterTable(db).get(id);
 }
 
-export function getAllEncounters(db: DB): Encounter[] {
+export function getAllEncounters(db: DB): Promise<Encounter[]> {
   return encounterTable(db).getAll();
 }
 
-export function cleanupEncounters(db: DB): number {
+export function cleanupEncounters(db: DB): Promise<number> {
   return encounterTable(db).cleanup();
 }
 
-export function seedEncounters(db: DB, encounters: Encounter[]): number {
+export function seedEncounters(
+  db: DB,
+  encounters: Encounter[],
+): Promise<number> {
   return encounterTable(db).seed(encounters);
 }

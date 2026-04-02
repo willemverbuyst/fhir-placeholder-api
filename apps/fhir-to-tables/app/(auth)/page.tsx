@@ -16,7 +16,7 @@ export default function LoginPage() {
   const redirectIfAdmin = useCallback(async () => {
     const me = await fetchMe();
     if (me?.role === "admin") {
-      router.replace("/Organization");
+      router.replace("/tables?resource-type=Organization");
       return;
     }
 
@@ -74,7 +74,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.replace("/Organization");
+      router.replace("/tables?resource-type=Organization");
     } finally {
       setSubmitting(false);
     }

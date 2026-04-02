@@ -15,7 +15,7 @@ export default async function Header() {
 
   const links: NavLink[] = [
     ...resourceTypes.map((resourceType) => ({
-      href: `/${resourceType}`,
+      href: `/tables?resource-type=${resourceType}`,
       label: resourceType,
     })),
   ];

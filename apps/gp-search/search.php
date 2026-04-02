@@ -79,7 +79,7 @@ $formatted_gps = array_map(function($gp) {
     return [
       'name' => $displayName,
       'email' => implode(', ',  array_map(function($t) { return $t->value; }, $emails)),
-      'phone' => implode(', ',  array_map(futnction($t) { return $t->value; }, $phones)),
+      'phone' => implode(', ',  array_map(function($t) { return $t->value; }, $phones)),
     ];
 }, $gps);
 

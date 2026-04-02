@@ -12,7 +12,6 @@ if ($query === '') {
 }
 
 try {
-    // $statement = $pdo->prepare('SELECT * FROM practitioner WHERE id::text LIKE ?');
     $statement = $pdo->prepare(<<<'SQL'
     SELECT *
     FROM practitioner p

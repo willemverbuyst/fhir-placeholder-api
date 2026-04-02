@@ -15,35 +15,11 @@ This PHP service runs entirely inside Docker. No local PHP or Composer installat
 
 ### 🚀 Getting Started
 
-From the repository root, start the stack (app, MySQL, and optional phpMyAdmin use profile `gp-search`):
+From the repository root, start the stack (db, cli & app use profile `search`):
 
 ```bash
-docker compose -f docker-compose.client.yml --profile gp-search up --build
+docker compose -f docker-compose.database.yml -f docker-compose.cli.yml -f docker-compose.client.yml --profile search up
 ```
-
-or detached:
-
-```bash
-docker compose -f docker-compose.client.yml --profile gp-search up -d --build
-```
-
-### Commands
-
-Get container name
-
-> docker ps
-
-Open bash session
-
-> docker exec -it \<mysql-container\> bash
-
-Start sql session
-
-> mysql -u root -p
-
-In sql session
-
-> USE your_database_name
 
 ## 🎨 Code Formatting
 

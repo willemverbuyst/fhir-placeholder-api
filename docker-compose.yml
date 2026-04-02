@@ -107,23 +107,23 @@ services:
     depends_on:
       - fhir-data-db
 
-  fhir-name-service:
-    build:
-      context: ./services/fhir-name-service
-      dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
+  # fhir-name-service:
+  #   build:
+  #     context: ./services/fhir-name-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "4000:4000"
 
-  patient-timeline:
-    build:
-      context: .
-      dockerfile: services/patient-timeline/Dockerfile
-    ports:
-      - "4001:4001"
-    depends_on:
-      - fhir-data-db
-      - fhir-name-service
-      - fhir-server
+  # patient-timeline:
+  #   build:
+  #     context: .
+  #     dockerfile: services/patient-timeline/Dockerfile
+  #   ports:
+  #     - "4001:4001"
+  #   depends_on:
+  #     - fhir-data-db
+  #     - fhir-name-service
+  #     - fhir-server
 
 volumes:
   fhir-data-db-data:

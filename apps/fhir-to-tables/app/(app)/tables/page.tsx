@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import DataTable from "@/components/DataTable";
+import ResourceTypeTabs from "@/components/ResourceTypeTabs";
+import { TabsContent } from "@/components/ui/tabs";
 import {
   extractSupportedResourceTypes,
   fetchCapabilityStatement,
@@ -74,14 +76,13 @@ export default async function TablesPage({ searchParams }: TablesPageProps) {
   }
 
   return (
-    <>
-      <h1 className="text-2xl font-bold text-center">{selectedResourceType}</h1>
-
-      <section>
-        <div className="overflow-x-auto rounded-lg border border-zinc-200">
-          <DataTable resourceType={selectedResourceType} />
-        </div>
-      </section>
-    </>
+    <ResourceTypeTabs
+      resourceTypes={supportedResourceTypes}
+      selectedResourceType={selectedResourceType}
+    >
+      <TabsContent value={selectedResourceType}>
+        <DataTable resourceType={selectedResourceType} />
+      </TabsContent>
+    </ResourceTypeTabs>
   );
 }

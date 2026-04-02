@@ -1,12 +1,13 @@
 const styling = {
-  table: "min-w-full divide-y divide-zinc-300 bg-slate-900",
-  caption: "text-left p-4 bg-slate-900 text-xl text-zinc-300",
-  footer: "bg-slate-900",
-  thead: "bg-slate-900",
-  tbody: "bg-slate-700 divide-y divide-zinc-300",
+  table: "min-w-full divide-y bg-muted rounded-bl-lg rounded-br-lg",
+  caption:
+    "text-left p-4 text-xl bg-muted font-semibold rounded-tl-lg rounded-tr-lg",
+  footer: "text-sm text-muted-foreground",
+  thead: "bg-muted text-muted-foreground",
+  tbody: "divide-y",
   tr: "",
-  th: "text-nowrap px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-200",
-  td: "break-words px-4 py-2 text-left align-top text-zinc-300 border-r border-zinc-300 max-w-[200px] truncate",
+  th: "text-nowrap px-4 py-2 text-left align-top",
+  td: "break-words px-4 py-2 text-left align-top max-w-[200px] truncate",
 };
 
 function Table({ children }: { children: React.ReactNode }) {
@@ -167,7 +168,7 @@ export default async function DataTable({
 
   return (
     <Table>
-      <TableCaption>{`${resourceType}s`}</TableCaption>
+      <TableCaption>{resourceType}</TableCaption>
       <TableHead>
         <TableRow>
           {Array.from(tableData.headers).map((header) => (

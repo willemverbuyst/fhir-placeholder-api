@@ -1,16 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Roboto } from "next/font/google";
+
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: {
@@ -26,13 +23,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className="flex min-h-screen flex-col justify-center font-sans p-16">
-          {children}
-        </div>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "antialiased",
+        roboto.variable,
+        "font-mono",
+        geistMono.variable,
+      )}
+    >
+      <body className="p-6">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

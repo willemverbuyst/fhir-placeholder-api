@@ -1,5 +1,5 @@
 import AuthGuard from "@/components/AuthGuard";
-import Header from "@/components/Header";
+import { Header } from "@/components/header/Header";
 
 export default function AppLayout({
   children,

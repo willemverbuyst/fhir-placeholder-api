@@ -3,6 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import LoadingOverlay from "@/components/LoadingOverlay";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { fetchMe } from "@/lib/me-client";
 
 export default function LoginPage() {
@@ -16,7 +19,7 @@ export default function LoginPage() {
   const redirectIfAdmin = useCallback(async () => {
     const me = await fetchMe();
     if (me?.role === "admin") {
-      router.replace("/tables?resource-type=Organization");
+      router.replace("/capabilityStatement");
       return;
     }
 
@@ -74,7 +77,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.replace("/tables?resource-type=Organization");
+      router.replace("/capabilityStatement");
     } finally {
       setSubmitting(false);
     }
@@ -89,44 +92,32 @@ export default function LoginPage() {
       <h1 className="text-center text-2xl font-semibold">Sign in</h1>
       <form
         onSubmit={(e) => void handleSubmit(e)}
-        className="flex flex-col gap-4 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
+        className="flex flex-col gap-4 rounded-lg border bg-muted p-6"
       >
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700">Username</span>
-          <input
-            name="username"
-            type="text"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-base text-zinc-700"
-            required
-          />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-zinc-700">Password</span>
-          <input
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-zinc-300 px-3 py-2 text-base text-zinc-700"
-            required
-          />
-        </label>
+        <Label>Username</Label>
+        <Input
+          name="username"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <Label>Password</Label>
+        <Input
+          name="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         {error ? (
           <p className="text-sm text-red-600" role="alert">
             {error}
           </p>
         ) : null}
-        <button
-          type="submit"
-          disabled={submitting}
-          className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-        >
+        <Button type="submit" disabled={submitting}>
           {submitting ? "Signing in…" : "Sign in"}
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,6 +1,4 @@
-import type { Resource } from "fhir/r5";
-import type React from "react";
-import { useCallback, useState } from "react";
+import { Card } from "@/components/ui/card";
 import type { Filter } from "@/interfaces/filter";
 import type { MappedResource } from "@/interfaces/mapped-resource";
 import type { PropsWithChildrenFunction } from "@/interfaces/props-with-children-function";
@@ -8,6 +6,9 @@ import type { Sorter } from "@/interfaces/sorter";
 import { genericFilter } from "@/lib/filter";
 import { genericSearch } from "@/lib/search";
 import { genericSort } from "@/lib/sort";
+import type { Resource } from "fhir/r5";
+import type React from "react";
+import { useCallback, useState } from "react";
 import { Filters } from "./filters";
 import { SearchInput } from "./search-input";
 import { Sorters } from "./sorters";
@@ -49,38 +50,40 @@ export function Cockpit<T extends MappedResource<Resource>>(
 
   return (
     <section className="flex flex-col gap-6 items-center pb-10">
-      <section className="flex gap-2 w-[800px] items-end">
-        <SearchInput
-          searchQuery={""}
-          setSearchQuery={useCallback(
-            (searchQuery) =>
-              setSearchSortAndFilterState((prev) => ({
-                ...prev,
-                searchQuery,
-              })),
-            [],
-          )}
-        />
-        <Sorters<T>
-          sortKeys={sortKeys}
-          setSortProperty={(sortProperty): void => {
-            setSearchSortAndFilterState({
-              ...searchSortAndFilterState,
-              sortProperty,
-            });
-          }}
-        />
-        <Filters<T>
-          filterKeys={filterKeys}
-          filterProperties={filterProperties}
-          setFilterProperties={(filterProperties): void => {
-            setSearchSortAndFilterState({
-              ...searchSortAndFilterState,
-              filterProperties,
-            });
-          }}
-        />
-      </section>
+      <Card className="bg-muted px-20">
+        <section className="flex gap-2 items-end">
+          <SearchInput
+            searchQuery={""}
+            setSearchQuery={useCallback(
+              (searchQuery) =>
+                setSearchSortAndFilterState((prev) => ({
+                  ...prev,
+                  searchQuery,
+                })),
+              [],
+            )}
+          />
+          <Sorters<T>
+            sortKeys={sortKeys}
+            setSortProperty={(sortProperty): void => {
+              setSearchSortAndFilterState({
+                ...searchSortAndFilterState,
+                sortProperty,
+              });
+            }}
+          />
+          <Filters<T>
+            filterKeys={filterKeys}
+            filterProperties={filterProperties}
+            setFilterProperties={(filterProperties): void => {
+              setSearchSortAndFilterState({
+                ...searchSortAndFilterState,
+                filterProperties,
+              });
+            }}
+          />
+        </section>
+      </Card>
 
       <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4">
         {children &&

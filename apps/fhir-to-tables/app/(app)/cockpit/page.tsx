@@ -1,5 +1,3 @@
-import { hasKey } from "@repo/utils";
-import { notFound, redirect } from "next/navigation";
 import ResourceTypeTabs from "@/components/resource-type-tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import { FHIR_RESOURCES } from "@/config/fhir-resources";
@@ -7,6 +5,8 @@ import {
   extractSupportedResourceTypes,
   fetchCapabilityStatement,
 } from "@/lib/metadata";
+import { hasKey } from "@repo/utils";
+import { notFound, redirect } from "next/navigation";
 import { CockpitResourceCards } from "./cockpit-resource-cards";
 
 function getResourceTypeFromSearchParams(

@@ -1,5 +1,5 @@
 const styling = {
-  table: "min-w-full divide-y bg-muted rounded-bl-lg rounded-br-lg",
+  table: "w-full divide-y bg-muted rounded-bl-lg rounded-br-lg",
   caption:
     "text-left p-4 text-xl bg-muted font-semibold rounded-tl-lg rounded-tr-lg",
   footer: "text-sm text-muted-foreground",
@@ -7,7 +7,7 @@ const styling = {
   tbody: "divide-y",
   tr: "",
   th: "text-nowrap px-4 py-2 text-left align-top",
-  td: "break-words px-4 py-2 text-left align-top max-w-[200px] truncate",
+  td: "break-words px-4 py-2 text-left align-top truncate",
 };
 
 function Table({ children }: { children: React.ReactNode }) {

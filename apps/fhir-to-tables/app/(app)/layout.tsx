@@ -9,7 +9,7 @@ export default function AppLayout({
   return (
     <AuthGuard>
       <Header />
-      <main className="w-screen grid items-center overflow-auto">
+      <main className="justify-self-center w-full max-w-[min(100%,2560px)] p-4">
         {children}
       </main>
     </AuthGuard>

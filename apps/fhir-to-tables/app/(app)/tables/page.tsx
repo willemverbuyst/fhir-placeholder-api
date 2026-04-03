@@ -1,11 +1,12 @@
-import { notFound, redirect } from "next/navigation";
 import DataTable from "@/components/data-table";
 import ResourceTypeTabs from "@/components/resource-type-tabs";
+import { Card } from "@/components/ui/card";
 import { TabsContent } from "@/components/ui/tabs";
 import {
   extractSupportedResourceTypes,
   fetchCapabilityStatement,
 } from "@/lib/metadata";
+import { notFound, redirect } from "next/navigation";
 
 type TablesPageProps = {
   searchParams: Promise<{ "resource-type"?: string | string[] }>;
@@ -53,13 +54,17 @@ export default async function TablesPage({ searchParams }: TablesPageProps) {
   }
 
   return (
-    <ResourceTypeTabs
-      resourceTypes={supportedResourceTypes}
-      selectedResourceType={selectedResourceType}
-    >
-      <TabsContent value={selectedResourceType}>
-        <DataTable resourceType={selectedResourceType} />
-      </TabsContent>
-    </ResourceTypeTabs>
+    <div className="mx-auto overflow-x-auto">
+      <ResourceTypeTabs
+        resourceTypes={supportedResourceTypes}
+        selectedResourceType={selectedResourceType}
+      >
+        <Card className="bg-muted min-w-0 sm:w-full lg:w-full 2xl:w-full overflow-x-auto">
+          <TabsContent value={selectedResourceType}>
+            <DataTable resourceType={selectedResourceType} />
+          </TabsContent>
+        </Card>
+      </ResourceTypeTabs>
+    </div>
   );
 }

@@ -1,8 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import type { Resource } from "fhir/r5";
-import type React from "react";
 import { ErrorAlert } from "@/components/alert/error-alert";
 import { InfoAlert } from "@/components/alert/info-alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +9,9 @@ import { getFilterKeys } from "@/lib/filter";
 import { getSearchProperties } from "@/lib/search";
 import { getInitialSortProperty, getSortKeys } from "@/lib/sort";
 import { createResourcesQueryOptions } from "@/query/resources.query";
+import { useQuery } from "@tanstack/react-query";
+import type { Resource } from "fhir/r5";
+import type React from "react";
 import { CardsRendererSkeleton } from "./cards-renderer-skeleton";
 import { Cockpit } from "./cockpit";
 
@@ -37,7 +37,7 @@ export function CardsRenderer<T extends Resource>(props: {
         initialSortProperty={getInitialSortProperty<T>(cardRows)}
       >
         {(resource): React.JSX.Element => (
-          <Card key={String(resource.id)}>
+          <Card key={String(resource.id)} className="bg-muted">
             <CardHeader>
               <CardTitle className="uppercase">{resource.id}</CardTitle>
             </CardHeader>

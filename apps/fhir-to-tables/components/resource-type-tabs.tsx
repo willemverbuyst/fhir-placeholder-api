@@ -25,7 +25,7 @@ export default function ResourceTypeTabs({
         });
       }}
     >
-      <TabsList>
+      <TabsList className="mx-auto">
         {resourceTypes.map((resourceType) => (
           <TabsTrigger key={resourceType} value={resourceType}>
             {resourceType}

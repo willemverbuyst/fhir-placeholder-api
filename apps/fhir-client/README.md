@@ -1,5 +1,5 @@
-# Resource Graph
+# Fhir to Tables
 
 ## What is this?
 
-Overview for the data returned by the [fhir placeholder api](https://github.com/willemverbuyst/fhir-placeholder-api).
+This app displays Fhir data as structured database tables.

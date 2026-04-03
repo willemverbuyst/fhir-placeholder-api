@@ -24,9 +24,17 @@ export function createResourceTreeQueryOptions() {
 }
 
 async function fetchResourceTree(): Promise<ResourceTreeSchema> {
-  const response = await fetch("http://localhost:3000/api/fhir/$resource-tree");
+  const response = await fetch("/api/fhir/$resource-tree");
 
-  return await response.json();
+  if (response.status === 401) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch resource tree: ${response.status}`);
+  }
+
+  return (await response.json()) as ResourceTreeSchema;
 }
 
 async function getResourceTree(): Promise<ResourceTreeSchema> {

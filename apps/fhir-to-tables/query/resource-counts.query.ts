@@ -24,11 +24,17 @@ export function createResourceCountQueryOptions() {
 }
 
 async function fetchResourceCounts(): Promise<ResourceCountsSchema> {
-  const response = await fetch(
-    "http://localhost:3000/api/fhir/$resource-counts",
-  );
+  const response = await fetch("/api/fhir/$resource-counts");
 
-  return await response.json();
+  if (response.status === 401) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch resource counts: ${response.status}`);
+  }
+
+  return (await response.json()) as ResourceCountsSchema;
 }
 
 async function getResourceCounts(): Promise<ResourceCountsSchema> {

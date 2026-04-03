@@ -27,9 +27,17 @@ export function createResourcesQueryOptions<T extends Resource>({
 async function fetchResources<T extends Resource>(
   url: string,
 ): Promise<Bundle<T> | T> {
-  const response = await fetch(`http://localhost:3000/api/fhir/${url}`);
+  const response = await fetch(`/api/fhir/${url}`);
 
-  return await response.json();
+  if (response.status === 401) {
+    throw new Error("Unauthorized");
+  }
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch resources: ${response.status}`);
+  }
+
+  return (await response.json()) as Bundle<T> | T;
 }
 
 async function getResources<T extends Resource>(

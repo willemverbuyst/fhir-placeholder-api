@@ -3,14 +3,11 @@ export const postData = async (
   resourceType: string,
 ): Promise<{ data: unknown; status: number }> => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  const response = await fetch(
-    `http://localhost:3000/api/fhir/${resourceType}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newData),
-    },
-  );
+  const response = await fetch(`/api/fhir/${resourceType}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newData),
+  });
 
   const text = await response.text();
 

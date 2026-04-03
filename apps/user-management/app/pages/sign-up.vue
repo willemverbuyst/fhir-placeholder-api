@@ -113,7 +113,7 @@ const parseCurrentUserResponse = (value: unknown): CurrentUserResponse => {
 
 const validateAdminAccess = async (): Promise<void> => {
   const token = requireAuthToken();
-  const response = await fetch("http://localhost:3000/api/auth/users/me", {
+  const response = await fetch("http://localhost:3000/api/users/me", {
     headers: getAuthHeader(token),
   });
 

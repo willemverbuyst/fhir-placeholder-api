@@ -77,7 +77,7 @@ app.use("/api/public/organizations", (req, res) => {
   proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5/Organization/` });
 });
 
-app.use("/api/auth/users/list", (req, res) => {
+app.use("/api/users/list", (req, res) => {
   const userRole = req.headers["x-user-role"];
   if (userRole !== "admin") {
     log.warn(`Auth rejected: non-admin access for ${req.method} ${req.url}`);
@@ -86,6 +86,13 @@ app.use("/api/auth/users/list", (req, res) => {
 
   log.info(`Proxying request on ${req.url} to ${usersServiceUrl}/users`);
   req.url = "/users";
+  proxy.web(req, res, { target: usersServiceUrl });
+});
+
+app.use("/api/users", (req, res) => {
+  const rewritten = req.url.replace(/^\/api\/users/, "") || "/";
+  log.info(`Proxying request on ${req.url} to ${usersServiceUrl}${rewritten}`);
+  req.url = rewritten;
   proxy.web(req, res, { target: usersServiceUrl });
 });
 
@@ -103,22 +110,15 @@ app.use("/api/auth/sign-up", (req, res) => {
 
 app.use("/api/auth", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/auth/, "") || "/";
-  log.info(`Proxying request on ${req.url} to ${fhirProxyTarget}${rewritten}`);
+  log.info(`Proxying request on ${req.url} to ${authServiceUrl}${rewritten}`);
   req.url = rewritten;
   proxy.web(req, res, { target: authServiceUrl });
-});
-
-app.use("/api/users", (req, res) => {
-  const rewritten = req.url.replace(/^\/api\/users/, "") || "/";
-  req.url = rewritten;
-  log.info(`Proxying request on ${req.url} to ${fhirProxyTarget}${rewritten}`);
-  proxy.web(req, res, { target: usersServiceUrl });
 });
 
 app.use("/api/fhir/", (req, res) => {
   const rewritten = req.url.replace(/^\/api\/fhir/, "") || "/";
   log.info(
-    `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5"${rewritten}`,
+    `Proxying request on ${req.url} to ${fhirProxyTarget}/api/v2/r5${rewritten}`,
   );
   req.url = rewritten;
   proxy.web(req, res, { target: `${fhirProxyTarget}/api/v2/r5` });

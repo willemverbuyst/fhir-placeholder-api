@@ -1,0 +1,129 @@
+services:
+  fhir-data-db:
+    image: postgres:15
+    container_name: fhir-data-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fhir_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - fhir-data-db-data:/var/lib/postgresql/data
+
+  fhir-data-db-cli:
+    build:
+      context: .
+      dockerfile: cli/fhir-data-db-cli/Dockerfile
+    depends_on:
+      - fhir-data-db
+    environment:
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
+
+  fhir-data-db-tool:
+    image: adminer
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: fhir-data-db
+    ports:
+      - "9091:8080"
+    depends_on:
+      - fhir-data-db
+
+  gp-search:
+    build:
+      context: .
+      dockerfile: apps/gp-search/Dockerfile
+    ports:
+      - "5176:80"
+    volumes:
+      - ./apps/gp-search:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - fhir-data-db-cli
+    environment:
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: services/auth-service/Dockerfile
+    environment:
+      JWT_SECRET: dev-secret
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
+    depends_on:
+      - fhir-data-db
+
+  user-service:
+    build:
+      context: .
+      dockerfile: services/user-service/Dockerfile
+    environment:
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
+    depends_on:
+      - fhir-data-db
+
+  gateway-service:
+    build:
+      context: .
+      dockerfile: services/gateway-service/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      JWT_SECRET: dev-secret
+      AUTH_SERVICE_URL: http://auth-service:3001
+      USER_SERVICE_URL: http://user-service:3002
+      FHIR_SERVER_URL: http://fhir-server:8080
+    depends_on:
+      - fhir-data-db
+      - auth-service
+      - user-service
+      - fhir-server
+
+  fhir-server:
+    build:
+      context: .
+      dockerfile: apps/fhir-server/Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: "8080"
+    depends_on:
+      - fhir-data-db
+
+  # fhir-name-service:
+  #   build:
+  #     context: ./services/fhir-name-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "4000:4000"
+
+  # patient-timeline:
+  #   build:
+  #     context: .
+  #     dockerfile: services/patient-timeline/Dockerfile
+  #   ports:
+  #     - "4001:4001"
+  #   depends_on:
+  #     - fhir-data-db
+  #     - fhir-name-service
+  #     - fhir-server
+
+volumes:
+  fhir-data-db-data:

@@ -11,7 +11,8 @@ Content-Type: application/json
   "role": "guest"
 }
 
-### Sign in
+### Sign in (jacksparrow)
+# @name signInJack
 POST http://localhost:3000/api/auth/sign-in
 Content-Type: application/json
 
@@ -31,7 +32,12 @@ Content-Type: application/json
 
 ### Get users
 GET http://localhost:3000/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0MTgwMjExLCJleHAiOjE3NzQxODExMTF9.Fg54QyMBl2dOLRzLM64vcINjy5c4AE--mwHkQx_qzsw
+Authorization: Bearer {{signInJack.response.body.$.token}}
 
-### Get users list via auth route (no token yet)
-GET http://localhost:3000/api/auth/users/list
+### Get users list via auth route
+GET http://localhost:3000/api/users/list
+Authorization: Bearer {{signInJack.response.body.$.token}}
+
+### Get organizations via api route
+GET http://localhost:3000/api/fhir/Organization
+Authorization: Bearer {{signInJack.response.body.$.token}}

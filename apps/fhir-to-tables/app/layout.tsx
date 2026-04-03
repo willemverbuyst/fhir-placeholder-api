@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Roboto } from "next/font/google";
-
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
+import { QueryProvider } from "@/providers/query-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 const roboto = Roboto({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -11,10 +11,10 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: {
-    default: "Json to Tables | Login",
-    template: "Json to Tables | %s",
+    default: "Fhir Placeholder Api",
+    template: "Fhir Placeholder Api | %s",
   },
-  description: "Fhir JSON conversion to tables",
+  description: "Fhir Placeholder Api",
 };
 
 export default function RootLayout({
@@ -33,8 +33,10 @@ export default function RootLayout({
         geistMono.variable,
       )}
     >
-      <body className="p-6">
-        <ThemeProvider>{children}</ThemeProvider>
+      <body className="p-4">
+        <QueryProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

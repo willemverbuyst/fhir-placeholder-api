@@ -15,7 +15,7 @@ function NavigationItems() {
     <>
       <NavigationMenuItem>
         <NavigationMenuLink asChild>
-          <Link href="/capabilityStatement">CapabilityStatement</Link>
+          <Link href="/capability-statement">CapabilityStatement</Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
       <NavigationMenuItem>

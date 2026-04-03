@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import DataTable from "@/components/DataTable";
-import ResourceTypeTabs from "@/components/ResourceTypeTabs";
+import DataTable from "@/components/data-table";
+import ResourceTypeTabs from "@/components/resource-type-tabs";
 import { TabsContent } from "@/components/ui/tabs";
 import {
   extractSupportedResourceTypes,
@@ -28,28 +27,6 @@ function getDefaultResourceType(resourceTypes: string[]): string | undefined {
   }
 
   return resourceTypes[0];
-}
-
-export async function generateMetadata({
-  searchParams,
-}: TablesPageProps): Promise<Metadata> {
-  const { "resource-type": resourceTypeValue } = await searchParams;
-  const selectedResourceType =
-    getResourceTypeFromSearchParams(resourceTypeValue);
-
-  if (!selectedResourceType) {
-    return {};
-  }
-
-  const capabilityStatement = await fetchCapabilityStatement();
-  const supportedResourceTypes =
-    extractSupportedResourceTypes(capabilityStatement);
-
-  if (!supportedResourceTypes.includes(selectedResourceType)) {
-    return {};
-  }
-
-  return { title: selectedResourceType };
 }
 
 export default async function TablesPage({ searchParams }: TablesPageProps) {

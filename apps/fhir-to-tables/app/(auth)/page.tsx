@@ -19,7 +19,7 @@ export default function LoginPage() {
   const redirectIfAdmin = useCallback(async () => {
     const me = await fetchMe();
     if (me?.role === "admin") {
-      router.replace("/capabilityStatement");
+      router.replace("/capability-statement");
       return;
     }
 
@@ -77,7 +77,7 @@ export default function LoginPage() {
         return;
       }
 
-      router.replace("/capabilityStatement");
+      router.replace("/capability-statement");
     } finally {
       setSubmitting(false);
     }

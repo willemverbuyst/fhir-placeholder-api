@@ -42,9 +42,6 @@
             required
           >
             <option value="admin">admin</option>
-            <option value="super admin">super admin</option>
-            <option value="manager">manager</option>
-            <option value="editor">editor</option>
             <option value="user">user</option>
             <option value="guest">guest</option>
           </select>
@@ -57,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-type Role = "admin" | "super admin" | "manager" | "editor" | "user" | "guest";
+type Role = "admin" | "user" | "guest";
 
 type SignUpForm = {
   username: string;

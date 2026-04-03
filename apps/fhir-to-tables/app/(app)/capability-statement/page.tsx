@@ -36,7 +36,7 @@ export default function CapabilityStatementPage() {
                 className="grid grid-cols-1 2xl:grid-cols-2 gap-4"
               >
                 {i.resource?.map((r) => (
-                  <Card key={r.type}>
+                  <Card key={r.type} className="bg-muted">
                     <CardHeader>
                       <CardTitle className="uppercase">{r.type}</CardTitle>
                     </CardHeader>

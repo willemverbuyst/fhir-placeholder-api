@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, LabelList, ResponsiveContainer, XAxis } from "recharts";
 import { ErrorAlert } from "@/components/alert/error-alert";
 import { InfoAlert } from "@/components/alert/info-alert";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { Spinner } from "@/components/ui/spinner";
 import { createResourceCountQueryOptions } from "@/query/resource-counts.query";
 
 export default function DashboardPage() {
@@ -12,7 +12,7 @@ export default function DashboardPage() {
     createResourceCountQueryOptions(),
   );
 
-  if (isPending) return <LoadingSpinner />;
+  if (isPending) return <Spinner />;
   if (isError) return <ErrorAlert error={error} />;
   if (!data) return <InfoAlert title="...no data" />;
 

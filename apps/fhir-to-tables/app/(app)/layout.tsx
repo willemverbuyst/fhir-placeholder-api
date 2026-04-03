@@ -9,7 +9,7 @@ export default function AppLayout({
   return (
     <AuthGuard>
       <Header />
-      <main className="flex min-h-screen w-full flex-col gap-4">
+      <main className="w-screen grid items-center overflow-auto">
         {children}
       </main>
     </AuthGuard>

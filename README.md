@@ -10,7 +10,6 @@ A collection of tools centered around Fhir R5 dummy data.
 
 - [fhir-client](apps/fhir-client)
 - [fhir-server](apps/fhir-server)
-- [fhir-to-tables](apps/fhir-to-tables)
 - [gp-search](apps/gp-search/)
 - [organization-reviews](apps/organization-reviews/)
 - [questionnaire-client](apps/questionnaire-client/)
@@ -51,25 +50,24 @@ flowchart LR
     GPS@{shape: rect, label: gp-search}
     OR@{shape: rect, label: organization-reviews}
     FC@{shape: rect, label: fhir-client}
-    FTT@{shape: rect, label: fhir-to-tables}
     UM@{shape: rect, label: user-management}
     RS@{shape: rect, label: resource-statuses}
 
-    CS@{shape: sl-rect,label: config-cli}
     ML@{shape: sl-rect, label: monorepo-launcher}
     FTS@{shape: sl-rect, label: fhir-to-spreadsheet}
     FDC@{shape: sl-rect, label: fhir-data-db-cli}
+    CS@{shape: sl-rect,label: config-cli}
 
   
-  CS --> C
   FDC --> C
+  CS --> C
   FC --> G
-  FTT --> G
-  PT --> G
   UM --> G
   OR --> G
+  G --> PT
   G --> U
   G --> A
+  G --> FNS
   G --> FS
   GPS --> FDB
   FS --> FDB
@@ -77,7 +75,6 @@ flowchart LR
   A --> FDB
   U --> FDB
   OR --> RDB
-  G --> FNS
   FTS -->FS
   
 ```

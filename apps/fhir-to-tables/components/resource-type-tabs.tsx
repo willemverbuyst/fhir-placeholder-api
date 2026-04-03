@@ -20,7 +20,7 @@ export default function ResourceTypeTabs({
     <Tabs
       value={selectedResourceType}
       onValueChange={(value) => {
-        router.replace(`/tables?resource-type=${encodeURIComponent(value)}`, {
+        router.replace(`?resource-type=${encodeURIComponent(value)}`, {
           scroll: false,
         });
       }}

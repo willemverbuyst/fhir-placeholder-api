@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ErrorAlert } from "@/components/alert/error-alert";
 import { InfoAlert } from "@/components/alert/info-alert";
-import { CardsSkeleton } from "@/components/skeleton/card-skeleton";
+import { CardsSkeleton } from "@/components/skeleton/cards-skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createMetadataQueryOptions } from "@/query/metadata.query";
 

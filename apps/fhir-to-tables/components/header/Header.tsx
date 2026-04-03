@@ -1,5 +1,6 @@
 import LogoutButton from "../LogoutButton";
 import { Navigation } from "./Navigation";
+import { ThemeToggle } from "./theme-toggle";
 
 export function Header() {
   return (
@@ -10,7 +11,8 @@ export function Header() {
       <div className="justify-self-center">
         <Navigation />
       </div>
-      <div className="justify-self-end">
+      <div className="justify-self-end flex items-center gap-2">
+        <ThemeToggle />
         <LogoutButton />
       </div>
     </header>

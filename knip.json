@@ -11,19 +11,8 @@
       "ignoreBinaries": ["python3"]
     },
     "apps/fhir-client": {
-      "entry": ["index.html"],
-      "project": ["src/**/*.{ts,tsx}", "**/*.config.{js,ts}"],
-      "ignore": ["src/components/ui/**"],
-      "ignoreDependencies": [
-        "tailwindcss",
-        "globals",
-        "tw-animate-css",
-        "@testing-library/jest-dom",
-        "@testing-library/react"
-      ]
-    },
-    "apps/fhir-to-tables": {
-      "ignoreDependencies": ["postcss"]
+      "ignoreDependencies": [],
+      "ignore": ["components/ui/*.tsx"]
     },
     "apps/fhir-server": {
       "entry": ["src/main.ts"],

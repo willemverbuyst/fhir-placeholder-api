@@ -44,14 +44,6 @@ export async function fetchCapabilityStatement(): Promise<CapabilityStatement> {
   return getCachedCapabilityStatement(metadataUrl, token);
 }
 
-export async function fetchCapabilityStatementSafe(): Promise<CapabilityStatement | null> {
-  try {
-    return await fetchCapabilityStatement();
-  } catch {
-    return null;
-  }
-}
-
 export function extractSupportedResourceTypes(
   capabilityStatement: CapabilityStatement,
 ): string[] {

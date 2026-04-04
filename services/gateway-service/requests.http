@@ -46,8 +46,8 @@ Authorization: Bearer {{signInJack.response.body.$.token}}
 GET http://localhost:3000/api/fhir/Organization/5debcd22-6065-401c-9e84-4b9954a33cb8
 Authorization: Bearer {{signInJack.response.body.$.token}}
 
-### Get PractitionerRole with Practitioner id
-GET http://localhost:3000/api/fhir/PractitionerRole
+### Get PractitionerRole with Organization id
+GET http://localhost:3000/api/fhir/PractitionerRole?organization=02f1da17-87ea-4d5e-a01d-dc8f882b9449
 Authorization: Bearer {{signInJack.response.body.$.token}}
 
 ### Get Patients via api route

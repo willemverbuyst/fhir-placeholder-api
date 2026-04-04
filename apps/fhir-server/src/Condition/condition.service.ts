@@ -27,6 +27,14 @@ export class ConditionService {
     //   );
     // }
 
+    if (query?.patient) {
+      const resources: { resource: TCondition }[] = await this.repo.query(
+        `SELECT resource FROM condition WHERE resource->'subject'->>'reference' = $1`,
+        [`Patient/${query.patient}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
     const resources = await this.repo
       .find()
       .then((entities) => entities.map((entity) => entity.resource));

@@ -36,6 +36,24 @@ export class PractitionerRoleService {
     //   );
     // }
 
+    if (query?.practitioner) {
+      const resources: { resource: TPractitionerRole }[] =
+        await this.repo.query(
+          `SELECT resource FROM practitioner_role WHERE resource->'practitioner'->>'reference' = $1`,
+          [`Practitioner/${query.practitioner}`],
+        );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.organization) {
+      const resources: { resource: TPractitionerRole }[] =
+        await this.repo.query(
+          `SELECT resource FROM practitioner_role WHERE resource->'organization'->>'reference' = $1`,
+          [`Organization/${query.organization}`],
+        );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
     const resources = await this.repo
       .find()
       .then((entities) => entities.map((entity) => entity.resource));

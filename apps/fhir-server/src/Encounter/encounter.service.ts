@@ -36,6 +36,33 @@ export class EncounterService {
     //   );
     // }
 
+    if (query?.patient && query?.["episode-of-care"]) {
+      const resources: { resource: TEncounter }[] = await this.repo.query(
+        `SELECT resource FROM encounter WHERE resource->'subject'->>'reference' LIKE $1 AND resource->'episodeOfCare' @> $2`,
+        [
+          `Patient/${query.patient}`,
+          `[{"reference": "EpisodeOfCare/${query["episode-of-care"]}"}]`,
+        ],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.patient) {
+      const resources: { resource: TEncounter }[] = await this.repo.query(
+        `SELECT resource FROM encounter WHERE resource->'subject'->>'reference' LIKE $1`,
+        [`Patient/${query.patient}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.["episode-of-care"]) {
+      const resources: { resource: TEncounter }[] = await this.repo.query(
+        `SELECT resource FROM encounter WHERE resource->'episodeOfCare' @> $1`,
+        [`[{"reference": "EpisodeOfCare/${query["episode-of-care"]}"}]`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
     const resources = await this.repo
       .find()
       .then((entities) => entities.map((entity) => entity.resource));

@@ -42,6 +42,30 @@ export class FlagService {
     //   );
     // }
 
+    if (query?.patient && query?.encounter) {
+      const resources: { resource: TFlag }[] = await this.repo.query(
+        `SELECT resource FROM flag WHERE resource->'subject'->>'reference' LIKE $1 AND resource->'encounter'->>'reference' LIKE $2`,
+        [`Patient/${query.patient}`, `Encounter/${query.encounter}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.patient) {
+      const resources: { resource: TFlag }[] = await this.repo.query(
+        `SELECT resource FROM flag WHERE resource->'subject'->>'reference' LIKE $1`,
+        [`Patient/${query.patient}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.encounter) {
+      const resources: { resource: TFlag }[] = await this.repo.query(
+        `SELECT resource FROM flag WHERE resource->'encounter'->>'reference' LIKE $1`,
+        [`Encounter/${query.encounter}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
     const resources = await this.repo
       .find()
       .then((entities) => entities.map((entity) => entity.resource));

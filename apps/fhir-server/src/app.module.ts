@@ -64,6 +64,7 @@ import { Practitioner } from "./Practitioner/practitioner.entity";
     TypeOrmModule.forRoot({
       type: "postgres",
       host: "fhir-data-db",
+      // host: process.env.DB_HOST || "localhost",
       port: 5432,
       username: "postgres",
       password: "password",

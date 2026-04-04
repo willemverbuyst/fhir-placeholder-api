@@ -41,6 +41,35 @@ export class EpisodeOfCareService {
     //   );
     // }
 
+    if (query?.patient && query?.["diagnosis-reference"]) {
+      const resources: { resource: TEpisodeOfCare }[] = await this.repo.query(
+        `SELECT resource FROM episode_of_care WHERE resource->'patient'->>'reference' LIKE $1 AND resource->'diagnosis' @> $2`,
+        [
+          `Patient/${query.patient}`,
+          `[{"condition": [{"reference": "Condition/${query["diagnosis-reference"]}"}]}]`,
+        ],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.patient) {
+      const resources: { resource: TEpisodeOfCare }[] = await this.repo.query(
+        `SELECT resource FROM episode_of_care WHERE resource->'patient'->>'reference' LIKE $1`,
+        [`Patient/${query.patient}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.["diagnosis-reference"]) {
+      const resources: { resource: TEpisodeOfCare }[] = await this.repo.query(
+        `SELECT resource FROM episode_of_care WHERE resource->'diagnosis' @> $1`,
+        [
+          `[{"condition": [{"reference": "Condition/${query["diagnosis-reference"]}"}]}]`,
+        ],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
     const resources = await this.repo
       .find()
       .then((entities) => entities.map((entity) => entity.resource));

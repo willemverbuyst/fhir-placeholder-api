@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import type { Bundle, Patient as TPatient } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 import { Patient } from "./patient.entity";
 import { Repository } from "typeorm/repository/Repository";
@@ -38,6 +37,22 @@ export class PatientService {
     //     ),
     //   );
     // }
+
+    if (query?.organization) {
+      const resources: { resource: TPatient }[] = await this.repo.query(
+        `SELECT resource FROM patient WHERE resource->'managingOrganization'->>'reference' LIKE $1`,
+        [`%${query.organization}`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
+
+    if (query?.["general-practitioner"]) {
+      const resources: { resource: TPatient }[] = await this.repo.query(
+        "SELECT resource FROM patient WHERE resource->'generalPractitioner' @> $1",
+        [`[{"reference": "Practitioner/${query["general-practitioner"]}"}]`],
+      );
+      return wrapInBundle(resources.map((r) => r.resource));
+    }
 
     const resources = await this.repo
       .find()

@@ -1,7 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Condition } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
 import { ConditionController } from "./condition.controller";
 import { ConditionService } from "./condition.service";
 
@@ -20,7 +19,6 @@ describe("ConditionsController", () => {
             findOne: jest.fn(),
           },
         },
-        DataStoreService,
       ],
     }).compile();
 

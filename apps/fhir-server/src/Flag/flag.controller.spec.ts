@@ -1,5 +1,4 @@
 import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
 import { FlagController } from "./flag.controller";
 import { FlagService } from "./flag.service";
 
@@ -17,7 +16,6 @@ describe("FlagController", () => {
             findAll: jest.fn(),
           },
         },
-        DataStoreService,
       ],
     }).compile();
 

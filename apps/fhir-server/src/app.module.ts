@@ -2,39 +2,37 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config/dist";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { WinstonModule } from "nest-winston";
+import { AllergyIntolerance } from "./AllergyIntolerance/allergy-intolerance.entity";
 import { AllergyIntoleranceModule } from "./AllergyIntolerance/allergy-intolerance.module";
+import { Appointment } from "./Appointment/appointment.entity";
 import { AppointmentModule } from "./Appointment/appointment.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
+import { Communication } from "./Communication/communication.entity";
 import { CommunicationModule } from "./Communication/communication.module";
+import { Condition } from "./Condition/condition.entity";
 import { ConditionModule } from "./Condition/condition.module";
 import configuration from "./config/configuration";
-import { DataStoreModule } from "./db/dataStore.module";
+import { Encounter } from "./Encounter/encounter.entity";
 import { EncounterModule } from "./Encounter/encounter.module";
+import { EpisodeOfCare } from "./EpisodeOfCare/episode-of-care.entity";
 import { EpisodeOfCareModule } from "./EpisodeOfCare/episode-of-care.module";
+import { Flag } from "./Flag/flag.entity";
 import { FlagModule } from "./Flag/flag.module";
 import { winstonConfig } from "./logging/logging.config";
 import { MetadataModule } from "./metadata/metadata.module";
+import { Observation } from "./Observation/observation.entity";
 import { ObservationModule } from "./Observation/observation.module";
+import { Organization } from "./Organization/organization.entity";
 import { OrganizationModule } from "./Organization/organization.module";
+import { Patient } from "./Patient/patient.entity";
 import { PatientModule } from "./Patient/patient.module";
+import { Practitioner } from "./Practitioner/practitioner.entity";
 import { PractitionerModule } from "./Practitioner/practitioner.module";
+import { PractitionerRole } from "./PractitionerRole/practitioner-role.entity";
 import { PractitionerRoleModule } from "./PractitionerRole/practitioner-role.module";
 import { ResourceCountsModule } from "./ResourceCounts/resource-counts.module";
 import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
-import { DataSource } from "typeorm";
-import { Organization } from "./Organization/organization.entity";
-import { AllergyIntolerance } from "./AllergyIntolerance/allergy-intolerance.entity";
-import { Patient } from "./Patient/patient.entity";
-import { Appointment } from "./Appointment/appointment.entity";
-import { Communication } from "./Communication/communication.entity";
-import { Condition } from "./Condition/condition.entity";
-import { Encounter } from "./Encounter/encounter.entity";
-import { EpisodeOfCare } from "./EpisodeOfCare/episode-of-care.entity";
-import { Flag } from "./Flag/flag.entity";
-import { Observation } from "./Observation/observation.entity";
-import { PractitionerRole } from "./PractitionerRole/practitioner-role.entity";
-import { Practitioner } from "./Practitioner/practitioner.entity";
 
 @Module({
   imports: [
@@ -49,7 +47,6 @@ import { Practitioner } from "./Practitioner/practitioner.entity";
     PractitionerModule,
     ConditionModule,
     EpisodeOfCareModule,
-    DataStoreModule,
     MetadataModule,
     EncounterModule,
     ObservationModule,
@@ -90,6 +87,4 @@ import { Practitioner } from "./Practitioner/practitioner.entity";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {}
-}
+export class AppModule {}

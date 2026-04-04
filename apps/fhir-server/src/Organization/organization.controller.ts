@@ -21,30 +21,30 @@ import { OrganizationService } from "./organization.service";
 export class OrganizationController {
   constructor(private readonly organizationsService: OrganizationService) {}
 
-  @ApiOkResponse({
-    description: "The organization is created successfully",
-    example: organizationExample,
-  })
-  @Post()
-  async create(
-    @Body(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization> {
-    const name = sanitizeHtml(createOrganizationDto.name, {
-      allowedTags: [],
-      allowedAttributes: {},
-    });
-    return this.organizationsService.create({
-      name,
-      active: createOrganizationDto.active,
-    });
-  }
+  // @ApiOkResponse({
+  //   description: "The organization is created successfully",
+  //   example: organizationExample,
+  // })
+  // @Post()
+  // async create(
+  //   @Body(
+  //     new ValidationPipe({
+  //       transform: true,
+  //       whitelist: true,
+  //       forbidNonWhitelisted: true,
+  //     }),
+  //   )
+  //   createOrganizationDto: CreateOrganizationDto,
+  // ): Promise<Organization> {
+  //   const name = sanitizeHtml(createOrganizationDto.name, {
+  //     allowedTags: [],
+  //     allowedAttributes: {},
+  //   });
+  //   return this.organizationsService.create({
+  //     name,
+  //     active: createOrganizationDto.active,
+  //   });
+  // }
 
   @ApiOkResponse({
     description: "All organizations",
@@ -71,32 +71,32 @@ export class OrganizationController {
     return organization;
   }
 
-  @ApiOkResponse({
-    description: "The organization is updated successfully",
-    example: organizationExample,
-  })
-  @ApiNotFoundResponse({
-    description: "Organization not found",
-  })
-  @Patch(":id")
-  async update(
-    @Param("id") id: string,
-    @Body(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    updateOrganizationDto: UpdateOrganizationDto,
-  ): Promise<Organization> {
-    const organization = await this.organizationsService.update(
-      id,
-      updateOrganizationDto,
-    );
-    if (!organization) {
-      throw new NotFoundException("organization not found");
-    }
-    return organization;
-  }
+  // @ApiOkResponse({
+  //   description: "The organization is updated successfully",
+  //   example: organizationExample,
+  // })
+  // @ApiNotFoundResponse({
+  //   description: "Organization not found",
+  // })
+  // @Patch(":id")
+  // async update(
+  //   @Param("id") id: string,
+  //   @Body(
+  //     new ValidationPipe({
+  //       transform: true,
+  //       whitelist: true,
+  //       forbidNonWhitelisted: true,
+  //     }),
+  //   )
+  //   updateOrganizationDto: UpdateOrganizationDto,
+  // ): Promise<Organization> {
+  //   const organization = await this.organizationsService.update(
+  //     id,
+  //     updateOrganizationDto,
+  //   );
+  //   if (!organization) {
+  //     throw new NotFoundException("organization not found");
+  //   }
+  //   return organization;
+  // }
 }

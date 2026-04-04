@@ -36,9 +36,9 @@ function parsePractitionerRoleJson(json: string): PractitionerRole {
 
 const practitionerRoleTable = (db: DB) =>
   createJsonResourceTable<PractitionerRole>({
-    tableName: "PractitionerRole",
+    tableName: "practitioner_role",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS PractitionerRole (
+    CREATE TABLE IF NOT EXISTS practitioner_role (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

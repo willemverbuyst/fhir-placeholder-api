@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
-import { DataStoreModule } from "../db/dataStore.module";
 import { PatientController } from "./patient.controller";
 import { PatientService } from "./patient.service";
+import { Patient } from "./patient.entity";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
-  imports: [DataStoreModule],
+  imports: [TypeOrmModule.forFeature([Patient])],
   controllers: [PatientController],
   providers: [PatientService],
 })

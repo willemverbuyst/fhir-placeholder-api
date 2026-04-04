@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
-import { DataStoreModule } from "../db/dataStore.module";
 import { EpisodeOfCareController } from "./episode-of-care.controller";
 import { EpisodeOfCareService } from "./episode-of-care.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { EpisodeOfCare } from "./episode-of-care.entity";
 
 @Module({
-  imports: [DataStoreModule],
+  imports: [TypeOrmModule.forFeature([EpisodeOfCare])],
   controllers: [EpisodeOfCareController],
   providers: [EpisodeOfCareService],
 })

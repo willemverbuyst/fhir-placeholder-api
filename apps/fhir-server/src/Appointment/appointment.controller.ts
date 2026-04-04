@@ -19,30 +19,30 @@ import { appointmentExample } from "./examples/appointment.example";
 export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
-  @ApiOkResponse({
-    description: "The organization is created successfully",
-    example: appointmentExample,
-  })
-  @Post()
-  async create(
-    @Body(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    createAppointmentDto: CreateAppointmentDto,
-  ): Promise<Appointment> {
-    const subject = sanitizeHtml(createAppointmentDto.subject, {
-      allowedTags: [],
-      allowedAttributes: {},
-    });
-    return this.appointmentService.create({
-      status: createAppointmentDto.status,
-      subject,
-    });
-  }
+  // @ApiOkResponse({
+  //   description: "The organization is created successfully",
+  //   example: appointmentExample,
+  // })
+  // @Post()
+  // async create(
+  //   @Body(
+  //     new ValidationPipe({
+  //       transform: true,
+  //       whitelist: true,
+  //       forbidNonWhitelisted: true,
+  //     }),
+  //   )
+  //   createAppointmentDto: CreateAppointmentDto,
+  // ): Promise<Appointment> {
+  //   const subject = sanitizeHtml(createAppointmentDto.subject, {
+  //     allowedTags: [],
+  //     allowedAttributes: {},
+  //   });
+  //   return this.appointmentService.create({
+  //     status: createAppointmentDto.status,
+  //     subject,
+  //   });
+  // }
 
   @ApiOkResponse({
     description: "All appointments",

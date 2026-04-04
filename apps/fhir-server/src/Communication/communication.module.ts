@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
-import { DataStoreModule } from "../db/dataStore.module";
 import { CommunicationController } from "./communication.controller";
 import { CommunicationService } from "./communication.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Communication } from "./communication.entity";
 
 @Module({
-  imports: [DataStoreModule],
+  imports: [TypeOrmModule.forFeature([Communication])],
   controllers: [CommunicationController],
   providers: [CommunicationService],
 })

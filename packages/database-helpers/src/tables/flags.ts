@@ -34,9 +34,9 @@ function parseFlagJson(json: string): Flag {
 
 const flagTable = (db: DB) =>
   createJsonResourceTable<Flag>({
-    tableName: "Flag",
+    tableName: "flag",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Flag (
+    CREATE TABLE IF NOT EXISTS flag (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

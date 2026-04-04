@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config/dist";
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { WinstonModule } from "nest-winston";
 import { AllergyIntoleranceModule } from "./AllergyIntolerance/allergy-intolerance.module";
 import { AppointmentModule } from "./Appointment/appointment.module";
@@ -21,6 +22,19 @@ import { PractitionerModule } from "./Practitioner/practitioner.module";
 import { PractitionerRoleModule } from "./PractitionerRole/practitioner-role.module";
 import { ResourceCountsModule } from "./ResourceCounts/resource-counts.module";
 import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
+import { DataSource } from "typeorm";
+import { Organization } from "./Organization/organization.entity";
+import { AllergyIntolerance } from "./AllergyIntolerance/allergy-intolerance.entity";
+import { Patient } from "./Patient/patient.entity";
+import { Appointment } from "./Appointment/appointment.entity";
+import { Communication } from "./Communication/communication.entity";
+import { Condition } from "./Condition/condition.entity";
+import { Encounter } from "./Encounter/encounter.entity";
+import { EpisodeOfCare } from "./EpisodeOfCare/episode-of-care.entity";
+import { Flag } from "./Flag/flag.entity";
+import { Observation } from "./Observation/observation.entity";
+import { PractitionerRole } from "./PractitionerRole/practitioner-role.entity";
+import { Practitioner } from "./Practitioner/practitioner.entity";
 
 @Module({
   imports: [
@@ -47,8 +61,34 @@ import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
     ResourceTreeModule,
     AllergyIntoleranceModule,
     WinstonModule.forRoot(winstonConfig),
+    TypeOrmModule.forRoot({
+      type: "postgres",
+      host: "fhir-data-db",
+      port: 5432,
+      username: "postgres",
+      password: "password",
+      database: "fhir_db",
+      autoLoadEntities: true,
+      synchronize: true, // ⚠️ only for dev
+      entities: [
+        AllergyIntolerance,
+        Appointment,
+        Communication,
+        Condition,
+        Encounter,
+        EpisodeOfCare,
+        Flag,
+        Observation,
+        Organization,
+        Patient,
+        Practitioner,
+        PractitionerRole,
+      ],
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}

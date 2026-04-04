@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { AllergyIntolerance as TAllergyIntolerance, Bundle } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
 import { wrapInBundle } from "../utils/bundle";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AllergyIntolerance } from "./allergy-intolerance.entity";
@@ -14,10 +13,8 @@ export class AllergyIntoleranceService {
   ) {}
 
   async findAll(): Promise<Bundle<TAllergyIntolerance>> {
-    const resources = await this.repo
-      .find()
-      .then((entities) => entities.map((entity) => entity.resource));
-
+    const entities = await this.repo.find();
+    const resources = entities.map((e) => e.resource);
     return wrapInBundle(resources);
   }
 }

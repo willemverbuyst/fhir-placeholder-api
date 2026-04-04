@@ -8,7 +8,6 @@ import {
 } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse, ApiQuery } from "@nestjs/swagger";
 import type { Bundle, Practitioner, Resource } from "fhir/r5";
-import { GetPractitionerDto } from "./dto/get-practitioner.dto";
 import { practitionerExample } from "./examples/practitioner.example";
 import { practitionerBundleExample } from "./examples/practitioner-bundle.example";
 import { PractitionerService } from "./practitioner.service";
@@ -21,31 +20,9 @@ export class PractitionerController {
     description: "All practitioners",
     example: practitionerBundleExample,
   })
-  @ApiQuery({
-    name: "_include",
-    required: false,
-    description: "Include PractitionerRole resources by practitioner reference",
-    type: String,
-  })
-  @ApiQuery({
-    name: "_include:iterate",
-    required: false,
-    description:
-      "Include Organization resources via PractitionerRole references",
-    type: String,
-  })
   @Get()
-  async findAll(
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    query?: GetPractitionerDto,
-  ): Promise<Bundle<Resource>> {
-    return await this.practitionersService.findAll(query);
+  async findAll(): Promise<Bundle<Resource>> {
+    return await this.practitionersService.findAll();
   }
 
   @ApiOkResponse({

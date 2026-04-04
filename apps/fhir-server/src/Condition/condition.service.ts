@@ -13,36 +13,23 @@ export class ConditionService {
   ) {}
 
   async findAll(query?: { patient?: string }): Promise<Bundle<TCondition>> {
-    // let resources = this.repo.conditions;
-
-    // if (!query) {
-    //   return wrapInBundle(resources);
-    // }
-
-    // const { patient } = query;
-
-    // if (patient) {
-    //   resources = this.repo.conditions.filter((c) =>
-    //     c.subject.reference?.endsWith(patient),
-    //   );
-    // }
-
     if (query?.patient) {
-      const resources: { resource: TCondition }[] = await this.repo.query(
+      const entities: { resource: TCondition }[] = await this.repo.query(
         `SELECT resource FROM condition WHERE resource->'subject'->>'reference' = $1`,
         [`Patient/${query.patient}`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
-    const resources = await this.repo
-      .find()
-      .then((entities) => entities.map((entity) => entity.resource));
-
+    const entities = await this.repo.find();
+    const resources = entities.map((entity) => entity.resource);
     return wrapInBundle(resources);
   }
 
   async findOne(id: string): Promise<TCondition | undefined> {
-    return this.repo.findOneBy({ id }).then((entity) => entity?.resource);
+    const entity = await this.repo.findOneBy({ id });
+    const resource = entity?.resource;
+    return resource;
   }
 }

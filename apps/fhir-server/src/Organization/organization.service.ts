@@ -13,14 +13,14 @@ export class OrganizationService {
   ) {}
 
   async findAll(): Promise<Bundle<TOrganization>> {
-    const resources = await this.repo
-      .find()
-      .then((entities) => entities.map((entity) => entity.resource));
-
+    const entities = await this.repo.find();
+    const resources = entities.map((entity) => entity.resource);
     return wrapInBundle(resources);
   }
 
   async findOne(id: string): Promise<TOrganization | undefined> {
-    return await this.repo.findOneBy({ id }).then((org) => org?.resource);
+    const entity = await this.repo.findOneBy({ id });
+    const resource = entity?.resource;
+    return resource;
   }
 }

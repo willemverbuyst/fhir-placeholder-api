@@ -13,31 +13,17 @@ export class AppointmentService {
   ) {}
 
   async findAll(query?: { patient?: string }): Promise<Bundle<TAppointment>> {
-    // let resources = this.repo.appointments;
-
-    // if (!query) {
-    //   return wrapInBundle(resources);
-    // }
-
-    // const { patient } = query;
-
-    // if (patient) {
-    //   resources = resources.filter((e) =>
-    //     e.subject?.reference?.endsWith(patient),
-    //   );
-    // }
-
     if (query?.patient) {
-      const resources: { resource: TAppointment }[] = await this.repo.query(
+      const entities: { resource: TAppointment }[] = await this.repo.query(
         `SELECT * FROM appointment WHERE resource->'subject'->>'reference' = $1`,
         [`Patient/${query.patient}`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((e) => e.resource);
+      return wrapInBundle(resources);
     }
 
-    const resources = await this.repo
-      .find()
-      .then((entities) => entities.map((entity) => entity.resource));
+    const entities = await this.repo.find();
+    const resources = entities.map((e) => e.resource);
 
     return wrapInBundle(resources);
   }

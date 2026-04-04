@@ -16,58 +16,35 @@ export class ObservationService {
     patient?: string;
     encounter?: string;
   }): Promise<Bundle<TObservation>> {
-    // let resources = this.repo.observations;
-
-    // if (!query) {
-    //   return wrapInBundle(resources);
-    // }
-
-    // const { patient, encounter } = query;
-
-    // if (patient && encounter) {
-    //   resources = this.repo.observations.filter(
-    //     (o) =>
-    //       o.subject?.reference?.endsWith(patient) &&
-    //       o.encounter?.reference?.endsWith(encounter),
-    //   );
-    // } else if (patient) {
-    //   resources = this.repo.observations.filter((o) =>
-    //     o.subject?.reference?.endsWith(patient),
-    //   );
-    // } else if (encounter) {
-    //   resources = this.repo.observations.filter((o) =>
-    //     o.encounter?.reference?.endsWith(encounter),
-    //   );
-    // }
-
     if (query?.patient && query?.encounter) {
-      const resources: { resource: TObservation }[] = await this.repo.query(
+      const entities: { resource: TObservation }[] = await this.repo.query(
         `SELECT resource FROM observation WHERE resource->'subject'->>'reference' LIKE $1 AND resource->'encounter'->>'reference' LIKE $2`,
         [`Patient/${query.patient}`, `Encounter/${query.encounter}`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
     if (query?.patient) {
-      const resources: { resource: TObservation }[] = await this.repo.query(
+      const entities: { resource: TObservation }[] = await this.repo.query(
         `SELECT resource FROM observation WHERE resource->'subject'->>'reference' LIKE $1`,
         [`Patient/${query.patient}`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
     if (query?.encounter) {
-      const resources: { resource: TObservation }[] = await this.repo.query(
+      const entities: { resource: TObservation }[] = await this.repo.query(
         `SELECT resource FROM observation WHERE resource->'encounter'->>'reference' LIKE $1`,
         [`Encounter/${query.encounter}`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
-    const resources = await this.repo
-      .find()
-      .then((entities) => entities.map((entity) => entity.resource));
-
+    const entities = await this.repo.find();
+    const resources = entities.map((entity) => entity.resource);
     return wrapInBundle(resources);
   }
 }

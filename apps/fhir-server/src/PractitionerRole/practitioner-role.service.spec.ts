@@ -1,53 +1,25 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import { Repository } from "typeorm";
+import { wrapInBundle } from "../utils/bundle";
+import { PractitionerRole } from "./practitioner-role.entity";
 import { PractitionerRoleService } from "./practitioner-role.service";
+
+jest.mock("../utils/bundle", () => ({
+  wrapInBundle: jest.fn(),
+}));
 
 describe("PractitionerRoleService", () => {
   let service: PractitionerRoleService;
-  const mockDataStore = {
-    practitionerRoles: [
-      {
-        id: "1",
-        resourceType: "PractitionerRole",
-        organization: {
-          reference: "Organization/1",
-        },
-        practitioner: {
-          reference: "Practitioner/1",
-        },
-      },
-      {
-        id: "2",
-        resourceType: "PractitionerRole",
-        organization: {
-          reference: "Organization/1",
-        },
-        practitioner: {
-          reference: "Practitioner/2",
-        },
-      },
-      {
-        id: "3",
-        resourceType: "PractitionerRole",
-        organization: {
-          reference: "Organization/2",
-        },
-        practitioner: {
-          reference: "Practitioner/3",
-        },
-      },
-    ],
+
+  const repo = {
+    find: jest.fn(),
+    findOneBy: jest.fn(),
+    query: jest.fn(),
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PractitionerRoleService,
-        { provide: DataStoreService, useValue: mockDataStore },
-      ],
-    }).compile();
-
-    service = module.get<PractitionerRoleService>(PractitionerRoleService);
+    service = new PractitionerRoleService(
+      repo as unknown as Repository<PractitionerRole>,
+    );
   });
 
   it("should be defined", () => {
@@ -55,31 +27,57 @@ describe("PractitionerRoleService", () => {
   });
 
   describe("findAll", () => {
-    it("should return all practitioner roles", async () => {
-      const bundle = await service.findAll();
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(3);
+    beforeEach(() => {
+      repo.find.mockReset();
+      repo.query.mockReset();
     });
 
-    it("should return all practitioner roles filtered by organization", async () => {
-      const bundle = await service.findAll({ organization: "Organization/1" });
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(2);
+    it("should query by organization and wrap results", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.query.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll({ organization: "123" });
+
+      expect(repo.query).toHaveBeenCalledWith(
+        expect.stringContaining("resource->'organization'->>'reference'"),
+        ["Organization/123"],
+      );
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
     });
 
-    it("should return all practitioner roles filtered by practitioner", async () => {
-      const bundle = await service.findAll({ practitioner: "1" });
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(1);
+    it("should query by practitioner and wrap results", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.query.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll({ practitioner: "123" });
+
+      expect(repo.query).toHaveBeenCalledWith(
+        expect.stringContaining("resource->'practitioner'->>'reference'"),
+        ["Practitioner/123"],
+      );
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
     });
 
-    it("should return all practitioner roles filtered by practitioner & organization", async () => {
-      const bundle = await service.findAll({
-        practitioner: "3",
-        organization: "2",
-      });
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(1);
+    it("should map all resources when there is no organization and practitioner and wrap them", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.find.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll();
+
+      expect(repo.find).toHaveBeenCalled();
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
     });
   });
 });

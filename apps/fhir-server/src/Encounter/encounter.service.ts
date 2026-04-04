@@ -16,57 +16,38 @@ export class EncounterService {
     patient?: string;
     "episode-of-care"?: string;
   }): Promise<Bundle<TEncounter>> {
-    // let resources = this.repo.encounters;
-
-    // if (!query) {
-    //   return wrapInBundle(resources);
-    // }
-
-    // const { patient, "episode-of-care": episodeOfCare } = query;
-
-    // if (patient) {
-    //   resources = resources.filter((e) =>
-    //     e.subject?.reference?.endsWith(patient),
-    //   );
-    // }
-
-    // if (episodeOfCare) {
-    //   resources = resources.filter((e) =>
-    //     e.episodeOfCare?.some((eoc) => eoc.reference?.endsWith(episodeOfCare)),
-    //   );
-    // }
-
     if (query?.patient && query?.["episode-of-care"]) {
-      const resources: { resource: TEncounter }[] = await this.repo.query(
+      const entities: { resource: TEncounter }[] = await this.repo.query(
         `SELECT resource FROM encounter WHERE resource->'subject'->>'reference' LIKE $1 AND resource->'episodeOfCare' @> $2`,
         [
           `Patient/${query.patient}`,
           `[{"reference": "EpisodeOfCare/${query["episode-of-care"]}"}]`,
         ],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
     if (query?.patient) {
-      const resources: { resource: TEncounter }[] = await this.repo.query(
+      const entities: { resource: TEncounter }[] = await this.repo.query(
         `SELECT resource FROM encounter WHERE resource->'subject'->>'reference' LIKE $1`,
         [`Patient/${query.patient}`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
     if (query?.["episode-of-care"]) {
-      const resources: { resource: TEncounter }[] = await this.repo.query(
+      const entities: { resource: TEncounter }[] = await this.repo.query(
         `SELECT resource FROM encounter WHERE resource->'episodeOfCare' @> $1`,
         [`[{"reference": "EpisodeOfCare/${query["episode-of-care"]}"}]`],
       );
-      return wrapInBundle(resources.map((r) => r.resource));
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
-    const resources = await this.repo
-      .find()
-      .then((entities) => entities.map((entity) => entity.resource));
-
+    const entities = await this.repo.find();
+    const resources = entities.map((entity) => entity.resource);
     return wrapInBundle(resources);
   }
 }

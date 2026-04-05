@@ -37,7 +37,12 @@
 
 </section>
   <section class="row">
-      <input class="form-control" type="text" id="search" placeholder="Search for a GP">
+      <div class="input-group">
+          <input class="form-control" type="text" id="search" placeholder="Search for a GP">
+          <div class="input-group-append">
+              <span class="input-group-text" id="clear">Clear</span>
+          </div>
+      </div>
   </section>
   <section class="row">
     <div id="results">
@@ -57,13 +62,32 @@
         </tbody>
       </table>
     </div>
+    <div class="d-flex justify-content-end gap-2" id="pagination-container">
+      <nav aria-label="table pagination">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link disabled" href="#" aria-label="Previous" id="prev-page">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li class="page-item">
+            <a class="page-link disabled" href="#" aria-label="Next" id="next-page">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </section>
 </main>
 
 <script>
 $(document).ready(function() {
-  let searchTimeoutId = null;
   const $resultsBody = $('#results-body');
+  const $paginationContainer = $('#pagination-container');
+  let searchTimeoutId = null;
+  let page = 1;
 
   function renderRows(data) {
     console.log('Search results:', data);
@@ -90,6 +114,34 @@ $(document).ready(function() {
     $resultsBody.html(html);
   }
 
+  function cleanUpPagination() {
+    $paginationContainer.find('.page-item:not(:first-child):not(:last-child)').remove();
+    $('#prev-page').addClass('disabled');
+    $('#next-page').addClass('disabled');
+  }
+
+  function renderPagination(currentPage, totalPages) {
+    if (typeof totalPages !== 'number' || totalPages <= 1) {
+      cleanUpPagination();
+      return;
+    }
+    
+    $nextPageLink = $('#next-page');
+    $prevPageLink = $('#prev-page');
+    $prevPageLink.toggleClass('disabled', currentPage <= 1);
+    $nextPageLink.toggleClass('disabled', currentPage >= totalPages);
+
+    const pageLinks = Array.from({ length: totalPages }, (_, i) => {
+      const pageNum = i + 1;
+      return `<li class="page-item ${pageNum === currentPage ? 'active' : ''}">
+                <a class="page-link" href="#" data-page="${pageNum}">${pageNum}</a>
+              </li>`;
+    }).join('');
+
+    $paginationContainer.find('.page-item:not(:first-child):not(:last-child)').remove();
+    $prevPageLink.parent().after(pageLinks);
+  }
+
   $('#search').on('keyup', function() {
     const query = String($(this).val() ?? '').trim();
 
@@ -105,9 +157,10 @@ $(document).ready(function() {
 
       const criterion = $('input[name="searchBy"]:checked').val() || 'name';
 
-      $.getJSON('search.php', { query: query, criterion: criterion })
-        .done(function(data) {
-          renderRows(data);
+      $.getJSON('search.php', { query: query, criterion: criterion, page: page })
+        .done(function(gp_with_page_count) {
+          renderRows(gp_with_page_count.data);
+          renderPagination(page, gp_with_page_count.totalPages);
         })
         .fail(function() {
           $resultsBody.html(`
@@ -119,6 +172,35 @@ $(document).ready(function() {
     }, 250);
   });
 
+  $('input[name="searchBy"]').on('change', function() {
+    $('#search').val('');
+    $resultsBody.empty();
+    cleanUpPagination();
+  });
+
+  $('#clear').on('click', function() {
+    $('#search').val('');
+    $resultsBody.empty();
+    cleanUpPagination();});
+
+  $('#prev-page').on('click', function() {
+    page--;
+    $('#search').trigger('keyup');
+  });
+
+  $('#next-page').on('click', function() {
+    page++;
+    $('#search').trigger('keyup');
+  });
+
+  $paginationContainer.on('click', '.page-link', function(e) {
+    e.preventDefault();
+    const selectedPage = parseInt($(this).data('page'), 10);
+    if (!isNaN(selectedPage)) {
+      page = selectedPage;
+      $('#search').trigger('keyup');
+    }
+  });
 });
 </script>
 

@@ -13,8 +13,30 @@
 </header>
 
 <main class="container d-flex flex-column gap-4 p-4">
+<section>
+  <fieldset>
+    <legend>Search by</legend>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="name" name="searchBy" value="name" checked />
+        <label for="name">Name</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="email" name="searchBy" value="email" />
+        <label for="email">Email</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="phone" name="searchBy" value="phone" />
+        <label for="phone">Phone</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input type="radio" id="organization" name="searchBy" value="organization" />
+        <label for="organization">Organization</label>
+      </div>
+  </fieldset>
+</section>
+
+</section>
   <section class="row">
-      <label class="form-label" for="search">Search</label>
       <input class="form-control" type="text" id="search" placeholder="Search for a GP">
   </section>
   <section class="row">
@@ -29,7 +51,9 @@
           </tr>
         </thead>
         <tbody id="results-body" class="table-group-divider">
-          
+          <tr class="table-info">
+            <td colspan="4" class="text-muted fw-semibold">No results yet.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -46,7 +70,7 @@ $(document).ready(function() {
     if (!Array.isArray(data) || data.length === 0) {
       $resultsBody.html(`
         <tr class="table-warning">
-          <td colspan="3" class="text-muted fw-semibold">No results found.</td>
+          <td colspan="4" class="text-muted fw-semibold">No results found.</td>
         </tr>
       `);
       return;
@@ -79,14 +103,16 @@ $(document).ready(function() {
         return;
       }
 
-      $.getJSON('search.php', { query: query })
+      const criterion = $('input[name="searchBy"]:checked').val() || 'name';
+
+      $.getJSON('search.php', { query: query, criterion: criterion })
         .done(function(data) {
           renderRows(data);
         })
         .fail(function() {
           $resultsBody.html(`
             <tr class="table-danger">
-              <td colspan="3" class="text-danger fw-semibold">Search failed. Please try again.</td>
+              <td colspan="4" class="text-danger fw-semibold">Search failed. Please try again.</td>
             </tr>
           `);
         });

@@ -2,10 +2,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { createInterface } from "node:readline";
 import { pathToFileURL } from "node:url";
-import {
-  CONFIG_FILE_PATH,
-  type UserDummyDataConfig,
-} from "@repo/config-scripts";
+import type { UserDummyDataConfig } from "../interfaces";
+import { CONFIG_FILE_PATH } from "./configPresets";
 import { resolveSetupConfigFlow } from "./setupConfig.core";
 
 type RunSetupConfigCliInput = {

@@ -1,11 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
 import type { DummyDataConfig } from "@repo/dummy-data";
-import {
-  CONFIG_EXPIRY_MS,
-  CONFIG_FILE_PATH,
-  type UserDummyDataConfig,
-} from "./configPresets";
-import { defaultConfig } from "./defaultConfig";
+import { CONFIG_EXPIRY_MS, CONFIG_FILE_PATH } from "../../config/configPresets";
+import type { UserDummyDataConfig } from "../../interfaces";
+import { defaultSeedConfig } from "./defaultSeedConfig";
 import { isConfigExpired, toDummyDataConfig } from "./dummyDataConfig.core";
 
 function loadUserConfig(): UserDummyDataConfig | null {
@@ -52,7 +49,7 @@ function loadUserConfig(): UserDummyDataConfig | null {
 
 function buildDummyDataConfig(): DummyDataConfig {
   if (process.env.NODE_ENV === "test") {
-    return defaultConfig;
+    return defaultSeedConfig;
   }
 
   const userConfig = loadUserConfig();
@@ -67,7 +64,7 @@ function buildDummyDataConfig(): DummyDataConfig {
 
   // Fallback to hardcoded defaults
   console.log("📋 Using default hardcoded configuration for dummy data");
-  return defaultConfig;
+  return defaultSeedConfig;
 }
 
 export const dummyDataConfig: DummyDataConfig = buildDummyDataConfig();

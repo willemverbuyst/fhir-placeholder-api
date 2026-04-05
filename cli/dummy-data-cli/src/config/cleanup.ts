@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { existsSync, unlinkSync } from "node:fs";
-import { CONFIG_FILE_PATH } from "@repo/config-scripts";
+import { CONFIG_FILE_PATH } from "./configPresets";
 
 type RunCleanupCliInput = {
   configFilePath?: string;

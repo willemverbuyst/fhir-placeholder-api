@@ -1,27 +1,4 @@
-export interface UserDummyDataConfig {
-  preset?: "small" | "medium" | "large" | "custom";
-  organizations: number;
-  practitionerRolesPerOrganization: number;
-  practitionersPerOrganization: number;
-  patientsPerPractitioner: number;
-  appointmentsPerPatient: number;
-  allergiesPerPatient: number;
-  episodesPerPatient: number;
-  conditionsPerPatient: number;
-  encountersPerPatient: number;
-  observationsPerEncounter: number;
-  flagsPerEncounter: number;
-  communicationsPerEncounter: number;
-  idStrategy: "sequential" | "uuid";
-  startDate: `${number}-${number}-${number}`;
-  createdAt: string; // ISO timestamp for expiry
-}
-
-interface ConfigPreset {
-  name: string;
-  description: string;
-  config: Omit<UserDummyDataConfig, "createdAt" | "preset">;
-}
+import type { ConfigPreset } from "../interfaces";
 
 export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
   small: {
@@ -86,7 +63,6 @@ export const CONFIG_PRESETS: Record<string, ConfigPreset> = {
   },
 };
 
-export const CONFIG_FILE_PATH =
-  "../../cli/fhir-data-db-cli/src/dummy-data-config.json";
+export const CONFIG_FILE_PATH = "./dummy-data-config.json";
 // Config expiry (2 days in milliseconds)
 export const CONFIG_EXPIRY_MS = 2 * 24 * 60 * 60 * 1000;

@@ -281,14 +281,11 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4(@vue/compiler-sfc@3.5.31)(vue@3.5.31(typescript@5.9.3))
 
-  cli/config-cli:
+  cli/dummy-data-cli:
     dependencies:
-      '@repo/config-scripts':
+      '@repo/dummy-data':
         specifier: workspace:*
-        version: link:../../packages/config-scripts
-
-  cli/fhir-data-db-cli:
-    dependencies:
+        version: link:../../packages/dummy-data
       pg:
         specifier: ^8.20.0
         version: 8.20.0
@@ -312,12 +309,6 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.10
         version: 9.0.10
-
-  packages/config-scripts:
-    dependencies:
-      '@repo/dummy-data':
-        specifier: workspace:*
-        version: link:../dummy-data
 
   packages/dummy-data:
     dependencies:

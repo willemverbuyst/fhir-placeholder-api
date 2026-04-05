@@ -1,5 +1,5 @@
 {
-  "name": "@repo/config-scripts",
+  "name": "dummy-data-cli",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -22,11 +22,17 @@
     }
   },
   "scripts": {
-    "build": "bunchee",
     "type:check": "tsc",
-    "test:unit": "vitest run"
+    "config:cleanup": "tsx ./src/config/cleanup.ts",
+    "config:create": "tsx ./src/config/setupConfig.ts",
+    "seed:db": "tsx ./src/data/seed.ts",
+    "test:integration": "vitest run tests"
   },
   "dependencies": {
-    "@repo/dummy-data": "workspace:*"
+    "@repo/dummy-data": "workspace:*",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0"
   }
 }

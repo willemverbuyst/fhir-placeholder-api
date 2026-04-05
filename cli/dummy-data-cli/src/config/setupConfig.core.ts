@@ -1,4 +1,5 @@
-import { CONFIG_PRESETS, type UserDummyDataConfig } from "@repo/config-scripts";
+import type { UserDummyDataConfig } from "../interfaces";
+import { CONFIG_PRESETS } from "./configPresets";
 
 type PromptFn = (question: string) => Promise<string>;
 type LogFn = (message: string) => void;

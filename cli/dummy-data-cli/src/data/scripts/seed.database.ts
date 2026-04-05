@@ -1,4 +1,3 @@
-import { defaultConfig } from "@repo/config-scripts";
 import { generateResources } from "@repo/dummy-data";
 import {
   seedAllergies,
@@ -15,10 +14,11 @@ import {
   seedPractitioners,
 } from "../tables";
 import { DB } from "../utils";
+import { defaultSeedConfig } from "./defaultSeedConfig";
 
 export async function seedDatabase(
   db: DB,
-  config = defaultConfig,
+  config = defaultSeedConfig,
 ): Promise<void> {
   const {
     allergies,

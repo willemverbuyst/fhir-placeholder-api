@@ -1,5 +1,5 @@
-import type { DummyDataConfig } from "@repo/dummy-data";
-import { CONFIG_PRESETS } from "./configPresets";
+import { DummyDataConfig } from "@repo/dummy-data";
+import { CONFIG_PRESETS } from "../../config/configPresets";
 
 const {
   organizations,
@@ -32,7 +32,7 @@ const numberOfAllergies = numberOfPatients * allergiesPerPatient;
 const numberOfFlags = numberOfEncounters * flagsPerEncounter;
 const numberOfCommunications = numberOfEncounters * communicationsPerEncounter;
 
-export const defaultConfig: DummyDataConfig = {
+export const defaultSeedConfig: DummyDataConfig = {
   numberOfAllergies,
   numberOfAppointments,
   numberOfConditions,

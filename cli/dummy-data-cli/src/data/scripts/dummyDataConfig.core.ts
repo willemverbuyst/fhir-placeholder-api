@@ -1,5 +1,5 @@
 import type { DummyDataConfig } from "@repo/dummy-data";
-import type { UserDummyDataConfig } from "./configPresets";
+import type { UserDummyDataConfig } from "../../interfaces";
 
 export function isConfigExpired(input: {
   createdAt: string;

@@ -8,7 +8,7 @@ import {
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { runSetupConfigCli } from "../src/setupConfig";
+import { runSetupConfigCli } from "../setupConfig";
 
 const fixedNow = new Date("2026-03-19T10:00:00.000Z");
 

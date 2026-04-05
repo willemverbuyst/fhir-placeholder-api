@@ -1,5 +1,5 @@
-import type { UserDummyDataConfig } from "@repo/config-scripts";
 import { describe, expect, it } from "vitest";
+import type { UserDummyDataConfig } from "../interfaces";
 import {
   buildSummary,
   resolveSetupConfigFlow,

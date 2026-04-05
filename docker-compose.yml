@@ -12,10 +12,10 @@ services:
     volumes:
       - fhir-data-db-data:/var/lib/postgresql/data
 
-  fhir-data-db-cli:
+  dummy-data-cli:
     build:
       context: .
-      dockerfile: cli/fhir-data-db-cli/Dockerfile
+      dockerfile: cli/dummy-data-cli/Dockerfile
     depends_on:
       - fhir-data-db
     environment:
@@ -45,7 +45,7 @@ services:
       - ./apps/gp-search:/var/www/html
     working_dir: /var/www/html
     depends_on:
-      - fhir-data-db-cli
+      - dummy-data-cli
     environment:
       PGHOST: fhir-data-db
       PGPORT: "5432"

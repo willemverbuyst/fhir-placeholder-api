@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { UserDummyDataConfig } from "./configPresets";
+import type { UserDummyDataConfig } from "../../interfaces";
 import { isConfigExpired, toDummyDataConfig } from "./dummyDataConfig.core";
 
 describe("toDummyDataConfig", () => {

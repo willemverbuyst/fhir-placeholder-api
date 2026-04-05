@@ -1,6 +1,7 @@
 import { pool } from "./db";
-import config from "./dummy-data-config.json";
 import { cleanupDatabase, seedDatabase } from "./scripts";
+import { defaultSeedConfig } from "./scripts/defaultSeedConfig";
+import { dummyDataConfig } from "./scripts/dummyDataConfig";
 import { DB } from "./utils";
 
 const db = new DB(pool);
@@ -30,6 +31,8 @@ async function addAdminUser(): Promise<void> {
   `);
 }
 
+const configToUse = dummyDataConfig ?? defaultSeedConfig;
+
 await cleanupDatabase(db);
 await addAdminUser();
-await seedDatabase(db, config);
+await seedDatabase(db, configToUse);

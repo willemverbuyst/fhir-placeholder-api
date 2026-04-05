@@ -1,0 +1,38 @@
+{
+  "name": "dummy-data-cli",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/es/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/es/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/es/index.d.ts",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "type:check": "tsc",
+    "config:cleanup": "tsx ./src/config/cleanup.ts",
+    "config:create": "tsx ./src/config/setupConfig.ts",
+    "seed:db": "tsx ./src/data/seed.ts",
+    "test:integration": "vitest run tests"
+  },
+  "dependencies": {
+    "@repo/dummy-data": "workspace:*",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0"
+  }
+}

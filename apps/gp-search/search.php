@@ -5,62 +5,209 @@ include 'config/database.php';
 header('Content-Type: application/json; charset=utf-8');
 
 $query = trim($_GET['query'] ?? '');
+$criterion = $_GET['criterion'] ?? 'name';
 
 if ($query === '') {
     echo json_encode([]);
     exit;
 }
 
-try {
-    $statement = $pdo->prepare(<<<'SQL'
-    SELECT *
-    FROM practitioner p
-    WHERE (
-      SELECT LOWER(
-        string_agg(
-          TRIM(
-            COALESCE(name->>'family', '') || ' ' ||
-            COALESCE(
-              array_to_string(
-                ARRAY(
-                  SELECT jsonb_array_elements_text(
-                    COALESCE(name->'given', '[]'::jsonb)
-                  )
-                ),
-                ' '
+function get_practitioner_by_name() {
+    global $pdo, $query;
+
+    try {
+        $statement = $pdo->prepare(<<<'SQL'
+        SELECT *
+        FROM practitioner p
+        WHERE (
+          SELECT LOWER(
+            string_agg(
+              TRIM(
+                COALESCE(name->>'family', '') || ' ' ||
+                COALESCE(
+                  array_to_string(
+                    ARRAY(
+                      SELECT jsonb_array_elements_text(
+                        COALESCE(name->'given', '[]'::jsonb)
+                      )
+                    ),
+                    ' '
+                  ),
+                  ''
+                )
               ),
-              ''
+              ' '
             )
-          ),
-          ' '
-        )
-      )
-      FROM jsonb_array_elements(
-        COALESCE(p.resource->'name', '[]'::jsonb)
-      ) AS name
-    ) ILIKE :search;
-    SQL
-    );
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to prepare search query']);
-    exit;
+          )
+          FROM jsonb_array_elements(
+            COALESCE(p.resource->'name', '[]'::jsonb)
+          ) AS name
+        ) ILIKE :search;
+        SQL
+        );
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to prepare name search query']);
+        return [];
+    }
+
+    $searchPattern = '%'.$query.'%';
+
+    try {
+        $statement->execute([$searchPattern]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to execute name search query']);
+        return [];
+    }
+
+    $gps = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($gps) {
+        return $gps;
+    }
+
+    return [];
 }
 
-$searchPattern = '%'.$query.'%';
+function get_practitioner_by_email() {
+    global $pdo, $query;
 
-try {
-    $statement->execute([$searchPattern]);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to execute search query']);
-    exit;
+    try {
+        $statement = $pdo->prepare(<<<'SQL'
+        SELECT *
+        FROM practitioner p
+        WHERE (
+          SELECT LOWER(
+            string_agg(
+              TRIM(
+                COALESCE(telecom->>'value', '') || ' ' ||  ''
+                ),
+              ' '
+              )
+            )
+          FROM jsonb_array_elements(
+            COALESCE(p.resource->'telecom', '[]'::jsonb)
+          ) AS telecom
+          WHERE telecom->>'system' = 'email'
+        ) ILIKE :search;
+        SQL
+        );
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to prepare email search query']);
+        return [];
+    }
+
+    $searchPattern = '%'.$query.'%';
+
+    try {
+        $statement->execute([$searchPattern]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to execute email search query']);
+        return [];
+    }
+
+    $gps = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($gps) {
+        return $gps;
+    }
+
+    return [];
 }
 
-$gps = $statement->fetchAll(PDO::FETCH_ASSOC);
+function get_practitioner_by_phone() {
+    global $pdo, $query;
+
+    try {
+        $statement = $pdo->prepare(<<<'SQL'
+        SELECT *
+        FROM practitioner p
+        WHERE (
+          SELECT LOWER(
+            string_agg(
+              TRIM(
+                COALESCE(telecom->>'value', '') || ' ' ||  ''
+                ),
+              ' '
+              )
+            )
+          FROM jsonb_array_elements(
+            COALESCE(p.resource->'telecom', '[]'::jsonb)
+          ) AS telecom
+          WHERE telecom->>'system' = 'phone'
+        ) ILIKE :search;
+        SQL
+        );
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to prepare phone search query']);
+        return [];
+    }
+
+    $searchPattern = '%'.$query.'%';
+
+    try {
+        $statement->execute([$searchPattern]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to execute phone search query']);
+        return [];
+    }
+
+    $gps = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($gps) {
+        return $gps;
+    }
+
+    return [];
+}
+
+function get_practitioner_by_organization() {
+    global $pdo, $query;
+
+    try {
+        $statement = $pdo->prepare(<<<'SQL'
+        SELECT p.resource, p.id
+        FROM organization o
+        JOIN practitioner_role pr
+        ON o.id = split_part(pr.resource #>> '{organization,reference}', '/', 2)::uuid
+        JOIN practitioner p
+        ON p.id = split_part(pr.resource #>> '{practitioner,reference}', '/', 2)::uuid
+        WHERE LOWER(o.resource->>'name') ILIKE :search;
+        SQL
+        );
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to prepare organization search query']);
+        return [];
+    }
+
+    $searchPattern = '%'.$query.'%';
+
+    try {
+        $statement->execute([$searchPattern]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to execute organization search query']);
+        return [];
+    }
+
+    $gps = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($gps) {
+        return $gps;
+    }
+
+    return [];
+}
 
 function get_organization_name_by_practitioner_id($practitioner_id) {
     global $pdo;
+
     try {
         $orgStatement = $pdo->prepare(<<<'SQL'
         SELECT o.resource  AS organization
@@ -75,7 +222,6 @@ function get_organization_name_by_practitioner_id($practitioner_id) {
         echo json_encode(['error' => 'Failed to prepare search query']);
         return null;
     }
-
     
     try {
         $orgStatement->execute(['id' => "Practitioner/".$practitioner_id]);
@@ -93,6 +239,24 @@ function get_organization_name_by_practitioner_id($practitioner_id) {
     }
 
     return null;
+}
+
+$gps = [];
+
+if ($criterion === 'name') {
+    $gps = get_practitioner_by_name();
+}
+
+if ($criterion === 'email') {
+    $gps = get_practitioner_by_email();
+}
+
+if ($criterion === 'phone') {
+    $gps = get_practitioner_by_phone();
+}
+
+if ($criterion === 'organization') {
+    $gps = get_practitioner_by_organization();
 }
 
 $formatted_gps = array_map(function($gp) {

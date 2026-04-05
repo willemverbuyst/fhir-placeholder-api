@@ -19,8 +19,7 @@ A collection of tools centered around Fhir R5 dummy data.
 
 ## Cli
 
-- [config-cli](cli/config-cli)
-- [fhir-data-db-cli](config/fhir-data-db-cli)
+- [dummy-data-cli](cli/dummy-data-cli)
 - [fhir-to-spreadsheet](config/fhir-to-spreadsheet)
 - [monorepo-launcher](cli/monorepo-launcher/)
 
@@ -55,12 +54,11 @@ flowchart LR
 
     ML@{shape: sl-rect, label: monorepo-launcher}
     FTS@{shape: sl-rect, label: fhir-to-spreadsheet}
-    FDC@{shape: sl-rect, label: fhir-data-db-cli}
-    CS@{shape: sl-rect,label: config-cli}
+    DDC@{shape: sl-rect, label: dummy-data-cli}
 
   
-  FDC --> C
-  CS --> C
+  DDC --> C
+  DDC --> FDB
   FC --> G
   UM --> G
   OR --> G
@@ -71,7 +69,6 @@ flowchart LR
   G --> FS
   GPS --> FDB
   FS --> FDB
-  FDC --> FDB
   A --> FDB
   U --> FDB
   OR --> RDB

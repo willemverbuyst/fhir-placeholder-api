@@ -36,9 +36,9 @@ function parseEpisodeOfCareJson(json: string): EpisodeOfCare {
 
 const episodeOfCareTable = (db: DB) =>
   createJsonResourceTable<EpisodeOfCare>({
-    tableName: "EpisodeOfCare",
+    tableName: "episode_of_care",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS EpisodeOfCare (
+    CREATE TABLE IF NOT EXISTS episode_of_care (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

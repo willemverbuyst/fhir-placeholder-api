@@ -36,9 +36,9 @@ function parseCommunicationJson(json: string): Communication {
 
 const communicationTable = (db: DB) =>
   createJsonResourceTable<Communication>({
-    tableName: "Communication",
+    tableName: "communication",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Communication (
+    CREATE TABLE IF NOT EXISTS communication (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

@@ -2,7 +2,10 @@
 GET http://localhost:8080/api/v2/r5/PractitionerRole
 
 ###
-GET http://localhost:8080/api/v2/r5/PractitionerRole?organization=organization-1
+GET http://localhost:8080/api/v2/r5/PractitionerRole?organization=12613074-a4a3-430c-ae1a-9dce3a3a8217
 
 ###
-GET http://localhost:8080/api/v2/r5/PractitionerRole?practitioner=practitioner-1
+GET http://localhost:8080/api/v2/r5/PractitionerRole?practitioner=0f225b11-41d7-428a-925d-f262328d761e
+
+###
+GET http://localhost:8080/api/v2/r5/PractitionerRole?practitioner=0f225b11-41d7-428a-925d-f262328d761e&_include=Organization:organization

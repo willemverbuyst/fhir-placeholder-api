@@ -158,10 +158,6 @@ export class MetadataController {
             {
               type: "Practitioner",
               interaction: [{ code: "read" }, { code: "search-type" }],
-              searchInclude: [
-                "PractitionerRole:practitioner",
-                "PractitionerRole:organization",
-              ],
             },
             {
               type: "PractitionerRole",
@@ -184,6 +180,7 @@ export class MetadataController {
                     "The identity of the organization the practitioner represents / acts on behalf of",
                 },
               ],
+              searchInclude: ["PractitionerRole:organization"],
             },
           ],
         },

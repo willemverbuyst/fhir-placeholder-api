@@ -11,5 +11,3 @@ ignoredBuiltDependencies:
   - esbuild
   - sharp
   - unrs-resolver
-onlyBuiltDependencies:
-  - better-sqlite3

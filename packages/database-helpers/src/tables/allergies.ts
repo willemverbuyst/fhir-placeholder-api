@@ -38,9 +38,9 @@ function parseAllergyIntoleranceJson(json: string): AllergyIntolerance {
 
 const allergyIntoleranceTable = (db: DB) =>
   createJsonResourceTable<AllergyIntolerance>({
-    tableName: "AllergyIntolerance",
+    tableName: "allergy_intolerance",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS AllergyIntolerance (
+    CREATE TABLE IF NOT EXISTS allergy_intolerance (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

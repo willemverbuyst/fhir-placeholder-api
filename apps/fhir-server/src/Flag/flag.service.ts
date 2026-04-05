@@ -1,7 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import type { Bundle, Flag } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
+import { InjectRepository } from "@nestjs/typeorm";
+import type { Bundle, Flag as TFlag } from "fhir/r5";
+import { Repository } from "typeorm";
 import { wrapInBundle } from "../utils/bundle";
+import { Flag } from "./flag.entity";
 
 type FindAllFlagQuery = {
   patient?: string;
@@ -10,33 +12,41 @@ type FindAllFlagQuery = {
 
 @Injectable()
 export class FlagService {
-  constructor(private readonly repo: DataStoreService) {}
+  constructor(
+    @InjectRepository(Flag)
+    private repo: Repository<Flag>,
+  ) {}
 
-  async findAll(query?: FindAllFlagQuery): Promise<Bundle<Flag>> {
-    let resources = this.repo.flags;
-
-    if (!query) {
+  async findAll(query?: FindAllFlagQuery): Promise<Bundle<TFlag>> {
+    if (query?.patient && query?.encounter) {
+      const entities: { resource: TFlag }[] = await this.repo.query(
+        `SELECT resource FROM flag WHERE resource->'subject'->>'reference' LIKE $1 AND resource->'encounter'->>'reference' LIKE $2`,
+        [`Patient/${query.patient}`, `Encounter/${query.encounter}`],
+      );
+      const resources = entities.map((entity) => entity.resource);
       return wrapInBundle(resources);
     }
 
-    const { patient, encounter } = query;
-
-    if (patient && encounter) {
-      resources = this.repo.flags.filter(
-        (flag) =>
-          flag.subject?.reference?.endsWith(patient) &&
-          flag.encounter?.reference?.endsWith(encounter),
+    if (query?.patient) {
+      const entities: { resource: TFlag }[] = await this.repo.query(
+        `SELECT resource FROM flag WHERE resource->'subject'->>'reference' LIKE $1`,
+        [`Patient/${query.patient}`],
       );
-    } else if (patient) {
-      resources = this.repo.flags.filter((flag) =>
-        flag.subject?.reference?.endsWith(patient),
-      );
-    } else if (encounter) {
-      resources = this.repo.flags.filter((flag) =>
-        flag.encounter?.reference?.endsWith(encounter),
-      );
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
+    if (query?.encounter) {
+      const entities: { resource: TFlag }[] = await this.repo.query(
+        `SELECT resource FROM flag WHERE resource->'encounter'->>'reference' LIKE $1`,
+        [`Encounter/${query.encounter}`],
+      );
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
+    }
+
+    const entities = await this.repo.find();
+    const resources = entities.map((entity) => entity.resource);
     return wrapInBundle(resources);
   }
 }

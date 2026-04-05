@@ -36,9 +36,9 @@ function parseAppointmentJson(json: string): Appointment {
 
 const appointmentTable = (db: DB) =>
   createJsonResourceTable<Appointment>({
-    tableName: "Appointment",
+    tableName: "appointment",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Appointment (
+    CREATE TABLE IF NOT EXISTS appointment (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

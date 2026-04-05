@@ -1,7 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { Organization } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
 import { OrganizationController } from "./organization.controller";
 import { OrganizationService } from "./organization.service";
 
@@ -18,11 +17,8 @@ describe("OrganizationController", () => {
           useValue: {
             findAll: jest.fn(),
             findOne: jest.fn(),
-            create: jest.fn(),
-            update: jest.fn(),
           },
         },
-        DataStoreService,
       ],
     }).compile();
 
@@ -60,38 +56,6 @@ describe("OrganizationController", () => {
         NotFoundException,
       );
       expect(service.findOne).toHaveBeenCalledWith("unknown");
-    });
-  });
-
-  describe("create", () => {
-    it("should call create with organization dto", async () => {
-      const dto = { name: "test organization", active: true };
-      await controller.create(dto);
-      expect(service.create).toHaveBeenCalledWith(dto);
-    });
-  });
-
-  describe("update", () => {
-    it("should call update method of OrganizationService", async () => {
-      const mockOrganization: Organization = {
-        id: "1",
-        resourceType: "Organization",
-      };
-      const dto = { name: "Updated organization" };
-      jest.spyOn(service, "update").mockResolvedValue(mockOrganization);
-      const result = await controller.update("1", dto);
-      expect(result).toEqual(mockOrganization);
-      expect(service.update).toHaveBeenCalledWith("1", dto);
-    });
-
-    it("should throw an error if organization with id is not found", async () => {
-      const dto = { name: "updated organization" };
-      jest.spyOn(service, "update").mockResolvedValue(undefined);
-
-      await expect(controller.update("unknown", dto)).rejects.toThrow(
-        NotFoundException,
-      );
-      expect(service.update).toHaveBeenCalledWith("unknown", dto);
     });
   });
 });

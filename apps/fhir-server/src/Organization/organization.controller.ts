@@ -1,18 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Param,
-  Patch,
-  Post,
-  ValidationPipe,
-} from "@nestjs/common";
+import { Controller, Get, NotFoundException, Param } from "@nestjs/common";
 import { ApiNotFoundResponse, ApiOkResponse } from "@nestjs/swagger";
 import type { Bundle, Organization } from "fhir/r5";
-import * as sanitizeHtml from "sanitize-html";
-import { CreateOrganizationDto } from "./dto/create-organization.dto";
-import { UpdateOrganizationDto } from "./dto/update-organization.dto";
 import { organizationBundleExample } from "./examples/organization-bundle.example";
 import { organizationExample } from "./examples/organization.example";
 import { OrganizationService } from "./organization.service";
@@ -20,31 +8,6 @@ import { OrganizationService } from "./organization.service";
 @Controller("Organization")
 export class OrganizationController {
   constructor(private readonly organizationsService: OrganizationService) {}
-
-  @ApiOkResponse({
-    description: "The organization is created successfully",
-    example: organizationExample,
-  })
-  @Post()
-  async create(
-    @Body(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    createOrganizationDto: CreateOrganizationDto,
-  ): Promise<Organization> {
-    const name = sanitizeHtml(createOrganizationDto.name, {
-      allowedTags: [],
-      allowedAttributes: {},
-    });
-    return this.organizationsService.create({
-      name,
-      active: createOrganizationDto.active,
-    });
-  }
 
   @ApiOkResponse({
     description: "All organizations",
@@ -65,35 +28,6 @@ export class OrganizationController {
   @Get(":id")
   async findOne(@Param("id") id: string): Promise<Organization> {
     const organization = await this.organizationsService.findOne(id);
-    if (!organization) {
-      throw new NotFoundException("organization not found");
-    }
-    return organization;
-  }
-
-  @ApiOkResponse({
-    description: "The organization is updated successfully",
-    example: organizationExample,
-  })
-  @ApiNotFoundResponse({
-    description: "Organization not found",
-  })
-  @Patch(":id")
-  async update(
-    @Param("id") id: string,
-    @Body(
-      new ValidationPipe({
-        transform: true,
-        whitelist: true,
-        forbidNonWhitelisted: true,
-      }),
-    )
-    updateOrganizationDto: UpdateOrganizationDto,
-  ): Promise<Organization> {
-    const organization = await this.organizationsService.update(
-      id,
-      updateOrganizationDto,
-    );
     if (!organization) {
       throw new NotFoundException("organization not found");
     }

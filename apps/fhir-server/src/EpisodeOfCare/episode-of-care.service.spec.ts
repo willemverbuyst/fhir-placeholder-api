@@ -1,51 +1,24 @@
-import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
+import { Repository } from "typeorm";
+import { wrapInBundle } from "../utils/bundle";
+import { EpisodeOfCare } from "./episode-of-care.entity";
 import { EpisodeOfCareService } from "./episode-of-care.service";
+
+jest.mock("../utils/bundle", () => ({
+  wrapInBundle: jest.fn(),
+}));
 
 describe("EpisodeOfCareService", () => {
   let service: EpisodeOfCareService;
-  const mockDataStore = {
-    episodes: [
-      {
-        id: "1",
-        resourceType: "EpisodeOfCare",
-        status: "active",
-        patient: { reference: "Patient/1" },
-        diagnosis: [
-          { condition: [{ reference: { reference: "condition/2" } }] },
-        ],
-      },
-      {
-        id: "2",
-        resourceType: "EpisodeOfCare",
-        status: "active",
-        patient: { reference: "Patient/2" },
-        diagnosis: [
-          { condition: [{ reference: { reference: "condition/2" } }] },
-          { condition: [{ reference: { reference: "condition/3" } }] },
-        ],
-      },
-      {
-        id: "3",
-        resourceType: "EpisodeOfCare",
-        status: "active",
-        patient: { reference: "Patient/1" },
-        diagnosis: [
-          { condition: [{ reference: { reference: "condition/4" } }] },
-        ],
-      },
-    ],
+  const repo = {
+    find: jest.fn(),
+    findOneBy: jest.fn(),
+    query: jest.fn(),
   };
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        EpisodeOfCareService,
-        { provide: DataStoreService, useValue: mockDataStore },
-      ],
-    }).compile();
-
-    service = module.get<EpisodeOfCareService>(EpisodeOfCareService);
+    service = new EpisodeOfCareService(
+      repo as unknown as Repository<EpisodeOfCare>,
+    );
   });
 
   it("should be defined", () => {
@@ -53,40 +26,124 @@ describe("EpisodeOfCareService", () => {
   });
 
   describe("findAll", () => {
-    it("should return all episodes in a Bundle", async () => {
-      const bundle = await service.findAll();
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(3);
+    beforeEach(() => {
+      repo.find.mockReset();
+      repo.query.mockReset();
     });
 
-    it("should return all episodes filtered by patient", async () => {
-      const bundle = await service.findAll({ patient: "1" });
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(2);
+    it("should query by patient and wrap results", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.query.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll({ patient: "123" });
+
+      expect(repo.query).toHaveBeenCalledWith(
+        expect.stringContaining("resource->'patient'->>'reference'"),
+        ["Patient/123"],
+      );
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
     });
 
-    it("should return all episodes filtered by condition", async () => {
-      const bundle = await service.findAll({ "diagnosis-reference": "2" });
-      expect(bundle).toBeDefined();
-      expect(bundle.entry?.length).toBe(2);
+    it("should query by diagnosis and wrap results", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.query.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll({ "diagnosis-reference": "456" });
+
+      expect(repo.query).toHaveBeenCalledWith(
+        expect.stringContaining("resource->'diagnosis' @>"),
+        ['[{"condition": [{"reference": "Condition/456"}]}]'],
+      );
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
+    });
+
+    it("should query by diagnosis and patient and wrap results", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.query.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll({
+        patient: "123",
+        "diagnosis-reference": "456",
+      });
+      const [queryString, params] = repo.query.mock.calls[0];
+
+      expect(queryString).toEqual(
+        expect.stringContaining("resource->'patient'->>'reference' LIKE $1"),
+      );
+      expect(queryString).toEqual(
+        expect.stringContaining("resource->'diagnosis' @> $2"),
+      );
+      expect(params).toEqual([
+        "Patient/123",
+        '[{"condition": [{"reference": "Condition/456"}]}]',
+      ]);
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
+    });
+
+    it("should call find and wrap all resources when no patient or diagnosis is provided", async () => {
+      const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
+      const wrapped = { bundle: true };
+
+      repo.find.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll();
+
+      expect(repo.find).toHaveBeenCalled();
+      expect(repo.query).not.toHaveBeenCalled();
+      expect(wrapInBundle).toHaveBeenCalledWith([{ id: "1" }, { id: "2" }]);
+      expect(result).toBe(wrapped);
+    });
+
+    it("should not use query when patient and diagnosis are undefined", async () => {
+      repo.find.mockResolvedValue([]);
+      (wrapInBundle as jest.Mock).mockReturnValue({});
+
+      await service.findAll({});
+
+      expect(repo.query).not.toHaveBeenCalled();
+      expect(repo.find).toHaveBeenCalled();
     });
   });
 
   describe("findOne", () => {
-    it("should return an episode by id", async () => {
-      const episode = await service.findOne("1");
-      expect(episode).toBeDefined();
-
-      if (!episode) {
-        throw new Error("Expected episode to be defined in test");
-      }
-      expect(episode.id).toBe("1");
-      expect(episode.resourceType).toBe("EpisodeOfCare");
+    beforeEach(() => {
+      repo.findOneBy.mockReset();
     });
 
-    it("should return undefined for an episode that doesn't exist", async () => {
-      const episode = await service.findOne("unknown");
-      expect(episode).toBeUndefined();
+    it("should return the resource when entity is found", async () => {
+      const entity = {
+        id: "123",
+        resource: { resourceType: "EpisodeOfCare", id: "123" },
+      };
+
+      repo.findOneBy.mockResolvedValue(entity);
+
+      const result = await service.findOne("123");
+
+      expect(repo.findOneBy).toHaveBeenCalledWith({ id: "123" });
+      expect(result).toEqual(entity.resource);
+    });
+
+    it("should return undefined when entity is not found", async () => {
+      repo.findOneBy.mockResolvedValue(undefined);
+
+      const result = await service.findOne("123");
+
+      expect(repo.findOneBy).toHaveBeenCalledWith({ id: "123" });
+      expect(result).toBeUndefined();
     });
   });
 });

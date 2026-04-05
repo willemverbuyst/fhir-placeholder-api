@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
-import { DataStoreModule } from "../db/dataStore.module";
 import { FlagController } from "./flag.controller";
 import { FlagService } from "./flag.service";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Flag } from "./flag.entity";
 
 @Module({
-  imports: [DataStoreModule],
+  imports: [TypeOrmModule.forFeature([Flag])],
   controllers: [FlagController],
   providers: [FlagService],
 })

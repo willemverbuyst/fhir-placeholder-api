@@ -36,9 +36,9 @@ function parseConditionJson(json: string): Condition {
 
 const conditionTable = (db: DB) =>
   createJsonResourceTable<Condition>({
-    tableName: "Condition",
+    tableName: "condition",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Condition (
+    CREATE TABLE IF NOT EXISTS condition (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

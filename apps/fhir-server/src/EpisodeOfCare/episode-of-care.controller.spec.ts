@@ -1,7 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { Test, type TestingModule } from "@nestjs/testing";
 import type { EpisodeOfCare } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
 import { EpisodeOfCareController } from "./episode-of-care.controller";
 import { EpisodeOfCareService } from "./episode-of-care.service";
 
@@ -20,7 +19,6 @@ describe("EpisodeOfCareController", () => {
             findOne: jest.fn(),
           },
         },
-        DataStoreService,
       ],
     }).compile();
 

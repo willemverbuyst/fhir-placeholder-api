@@ -1,5 +1,4 @@
 import { Test, type TestingModule } from "@nestjs/testing";
-import { DataStoreService } from "../db/dataStore.service";
 import { CommunicationController } from "./communication.controller";
 import { CommunicationService } from "./communication.service";
 
@@ -17,7 +16,6 @@ describe("CommunicationController", () => {
             findAll: jest.fn(),
           },
         },
-        DataStoreService,
       ],
     }).compile();
 

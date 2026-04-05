@@ -1,10 +1,11 @@
 import { Module } from "@nestjs/common";
-import { DataStoreModule } from "../db/dataStore.module";
 import { ObservationController } from "./observation.controller";
 import { ObservationService } from "./observation.service";
+import { Observation } from "./observation.entity";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
-  imports: [DataStoreModule],
+  imports: [TypeOrmModule.forFeature([Observation])],
   controllers: [ObservationController],
   providers: [ObservationService],
 })

@@ -36,9 +36,9 @@ function parseEncounterJson(json: string): Encounter {
 
 const encounterTable = (db: DB) =>
   createJsonResourceTable<Encounter>({
-    tableName: "Encounter",
+    tableName: "encounter",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Encounter (
+    CREATE TABLE IF NOT EXISTS encounter (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

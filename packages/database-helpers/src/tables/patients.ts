@@ -34,9 +34,9 @@ function parsePatientJson(json: string): Patient {
 
 const patientTable = (db: DB) =>
   createJsonResourceTable<Patient>({
-    tableName: "Patient",
+    tableName: "patient",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Patient (
+    CREATE TABLE IF NOT EXISTS patient (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

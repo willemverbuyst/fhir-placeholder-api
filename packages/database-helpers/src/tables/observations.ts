@@ -36,9 +36,9 @@ function parseObservationJson(json: string): Observation {
 
 const observationTable = (db: DB) =>
   createJsonResourceTable<Observation>({
-    tableName: "Observation",
+    tableName: "observation",
     createTableSql: `
-    CREATE TABLE IF NOT EXISTS Observation (
+    CREATE TABLE IF NOT EXISTS observation (
       id TEXT PRIMARY KEY,
       resource JSONB
     )

@@ -1,42 +1,47 @@
 import { Injectable } from "@nestjs/common";
-import type { Bundle, Patient } from "fhir/r5";
-import { DataStoreService } from "../db/dataStore.service";
+import { InjectRepository } from "@nestjs/typeorm/dist/common/typeorm.decorators";
+import type { Bundle, Patient as TPatient } from "fhir/r5";
+import { Repository } from "typeorm/repository/Repository";
 import { wrapInBundle } from "../utils/bundle";
+import { Patient } from "./patient.entity";
 
 @Injectable()
 export class PatientService {
-  constructor(private readonly repo: DataStoreService) {}
+  constructor(
+    @InjectRepository(Patient)
+    private repo: Repository<Patient>,
+  ) {}
 
   async findAll(query?: {
     organization?: string;
     "general-practitioner"?: string;
-  }): Promise<Bundle<Patient>> {
-    let resources = this.repo.patients;
-
-    if (!query) {
+  }): Promise<Bundle<TPatient>> {
+    if (query?.organization) {
+      const entities: { resource: TPatient }[] = await this.repo.query(
+        `SELECT resource FROM patient WHERE resource->'managingOrganization'->>'reference' LIKE $1`,
+        [`Organization/${query.organization}`],
+      );
+      const resources = entities.map((entity) => entity.resource);
       return wrapInBundle(resources);
     }
 
-    const { organization, "general-practitioner": generalPractitioner } = query;
-
-    if (organization) {
-      resources = resources.filter((p) =>
-        p.managingOrganization?.reference?.endsWith(organization),
+    if (query?.["general-practitioner"]) {
+      const entities: { resource: TPatient }[] = await this.repo.query(
+        "SELECT resource FROM patient WHERE resource->'generalPractitioner' @> $1",
+        [`[{"reference": "Practitioner/${query["general-practitioner"]}"}]`],
       );
+      const resources = entities.map((entity) => entity.resource);
+      return wrapInBundle(resources);
     }
 
-    if (generalPractitioner) {
-      resources = resources.filter((p) =>
-        p.generalPractitioner?.some((g) =>
-          g.reference?.endsWith(generalPractitioner),
-        ),
-      );
-    }
-
+    const entities = await this.repo.find();
+    const resources = entities.map((entity) => entity.resource);
     return wrapInBundle(resources);
   }
 
-  async findOne(id: string): Promise<Patient | undefined> {
-    return this.repo.patients.find((patient) => patient.id === id);
+  async findOne(id: string): Promise<TPatient | undefined> {
+    const entity = await this.repo.findOneBy({ id });
+    const resource = entity?.resource;
+    return resource;
   }
 }

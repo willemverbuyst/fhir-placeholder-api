@@ -1,5 +1,7 @@
-import { cleanupDatabase, DB, seedDatabase } from "@repo/database-helpers";
 import { pool } from "./db";
+import config from "./dummy-data-config.json";
+import { cleanupDatabase, seedDatabase } from "./scripts";
+import { DB } from "./utils";
 
 const db = new DB(pool);
 
@@ -30,4 +32,4 @@ async function addAdminUser(): Promise<void> {
 
 await cleanupDatabase(db);
 await addAdminUser();
-await seedDatabase(db);
+await seedDatabase(db, config);

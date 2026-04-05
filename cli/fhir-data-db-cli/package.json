@@ -12,7 +12,6 @@
     "seed:db": "tsx ./src/seed.ts"
   },
   "dependencies": {
-    "@repo/database-helpers": "workspace:*",
     "pg": "^8.20.0"
   },
   "devDependencies": {

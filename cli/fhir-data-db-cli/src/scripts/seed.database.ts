@@ -16,22 +16,25 @@ import {
 } from "../tables";
 import { DB } from "../utils";
 
-const {
-  allergies,
-  appointments,
-  conditions,
-  encounters,
-  episodes,
-  observations,
-  flags,
-  communications,
-  patients,
-  practitionerRoles,
-  practitioners,
-  organizations,
-} = generateResources(defaultConfig);
+export async function seedDatabase(
+  db: DB,
+  config = defaultConfig,
+): Promise<void> {
+  const {
+    allergies,
+    appointments,
+    conditions,
+    encounters,
+    episodes,
+    observations,
+    flags,
+    communications,
+    patients,
+    practitionerRoles,
+    practitioners,
+    organizations,
+  } = generateResources(config);
 
-export async function seedDatabase(db: DB): Promise<void> {
   await seedAllergies(db, allergies);
   await seedAppointments(db, appointments);
   await seedConditions(db, conditions);

@@ -60,8 +60,7 @@ import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
     WinstonModule.forRoot(winstonConfig),
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: "fhir-data-db",
-      // host: process.env.DB_HOST || "localhost",
+      host: process.env.DB_HOST || "localhost",
       port: 5432,
       username: "postgres",
       password: "password",

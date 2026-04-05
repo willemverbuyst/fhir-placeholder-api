@@ -32,6 +32,40 @@ describe("PractitionerRoleService", () => {
       repo.query.mockReset();
     });
 
+    it("should query by practitioner and include organization and wrap results", async () => {
+      const entities = [
+        {
+          practitioner_role: { id: "1" },
+          organization: { id: "org1" },
+        },
+        {
+          practitioner_role: { id: "2" },
+          organization: { id: "org2" },
+        },
+      ];
+      const wrapped = { bundle: true };
+
+      repo.query.mockResolvedValue(entities);
+      (wrapInBundle as jest.Mock).mockReturnValue(wrapped);
+
+      const result = await service.findAll({
+        practitioner: "123",
+        _include: "Organization:organization",
+      });
+
+      expect(repo.query).toHaveBeenCalledWith(
+        expect.stringContaining("JOIN organization o"),
+        ["Practitioner/123"],
+      );
+      expect(wrapInBundle).toHaveBeenCalledWith([
+        { id: "1" },
+        { id: "2" },
+        { id: "org1" },
+        { id: "org2" },
+      ]);
+      expect(result).toBe(wrapped);
+    });
+
     it("should query by organization and wrap results", async () => {
       const entities = [{ resource: { id: "1" } }, { resource: { id: "2" } }];
       const wrapped = { bundle: true };

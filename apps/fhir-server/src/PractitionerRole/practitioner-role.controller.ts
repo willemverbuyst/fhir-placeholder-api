@@ -1,6 +1,10 @@
 import { Controller, Get, Query, ValidationPipe } from "@nestjs/common";
 import { ApiOkResponse, ApiQuery } from "@nestjs/swagger";
-import type { Bundle, PractitionerRole } from "fhir/r5";
+import type {
+  Bundle,
+  Organization as TOrganization,
+  PractitionerRole as TPractitionerRole,
+} from "fhir/r5";
 import { GetPractitionerRoleDto } from "./dto/get-practitioner-role.dto";
 import { practitionerRoleBundleExample } from "./examples/practitioner-role-bundle.example";
 import { PractitionerRoleService } from "./practitioner-role.service";
@@ -37,7 +41,7 @@ export class PractitionerRoleController {
       }),
     )
     query?: GetPractitionerRoleDto,
-  ): Promise<Bundle<PractitionerRole>> {
+  ): Promise<Bundle<TPractitionerRole | TOrganization>> {
     return await this.practitionerRoleService.findAll(query);
   }
 }

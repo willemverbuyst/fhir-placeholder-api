@@ -180,6 +180,7 @@ export class MetadataController {
                     "The identity of the organization the practitioner represents / acts on behalf of",
                 },
               ],
+              searchInclude: ["PractitionerRole:organization"],
             },
           ],
         },

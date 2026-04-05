@@ -15,7 +15,8 @@ if ($query === '') {
     exit;
 }
 
-function get_practitioner_by_name($search, $limit, $offset) {
+function get_practitioner_by_name($search, $limit, $offset)
+{
     global $pdo;
 
     try {
@@ -52,6 +53,7 @@ function get_practitioner_by_name($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to prepare name search query']);
+
         return [];
     }
 
@@ -62,6 +64,7 @@ function get_practitioner_by_name($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to execute name search query']);
+
         return [];
     }
 
@@ -74,7 +77,8 @@ function get_practitioner_by_name($search, $limit, $offset) {
     return [];
 }
 
-function get_practitioner_by_email($search, $limit, $offset) {
+function get_practitioner_by_email($search, $limit, $offset)
+{
     global $pdo;
 
     try {
@@ -95,6 +99,7 @@ function get_practitioner_by_email($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to prepare email search query']);
+
         return [];
     }
 
@@ -105,6 +110,7 @@ function get_practitioner_by_email($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to execute email search query']);
+
         return [];
     }
 
@@ -117,7 +123,8 @@ function get_practitioner_by_email($search, $limit, $offset) {
     return [];
 }
 
-function get_practitioner_by_phone($search, $limit, $offset) {
+function get_practitioner_by_phone($search, $limit, $offset)
+{
     global $pdo;
 
     try {
@@ -144,6 +151,7 @@ function get_practitioner_by_phone($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to prepare phone search query']);
+
         return [];
     }
 
@@ -154,6 +162,7 @@ function get_practitioner_by_phone($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to execute phone search query']);
+
         return [];
     }
 
@@ -166,7 +175,8 @@ function get_practitioner_by_phone($search, $limit, $offset) {
     return [];
 }
 
-function get_practitioner_by_organization($search, $limit, $offset) {
+function get_practitioner_by_organization($search, $limit, $offset)
+{
     global $pdo;
 
     try {
@@ -184,6 +194,7 @@ function get_practitioner_by_organization($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to prepare organization search query']);
+
         return [];
     }
 
@@ -194,6 +205,7 @@ function get_practitioner_by_organization($search, $limit, $offset) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to execute organization search query']);
+
         return [];
     }
 
@@ -206,7 +218,8 @@ function get_practitioner_by_organization($search, $limit, $offset) {
     return [];
 }
 
-function get_organization_name_by_practitioner_id($practitioner_id) {
+function get_organization_name_by_practitioner_id($practitioner_id)
+{
     global $pdo;
 
     try {
@@ -221,14 +234,16 @@ function get_organization_name_by_practitioner_id($practitioner_id) {
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to prepare search query']);
+
         return null;
     }
-    
+
     try {
-        $orgStatement->execute(['id' => "Practitioner/".$practitioner_id]);
+        $orgStatement->execute(['id' => 'Practitioner/'.$practitioner_id]);
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(['error' => 'Failed to prepare search query']);
+
         return null;
     }
 
@@ -236,6 +251,7 @@ function get_organization_name_by_practitioner_id($practitioner_id) {
 
     if ($org) {
         $orgResource = json_decode($org['organization'], true);
+
         return $orgResource['name'] ?? null;
     }
 
@@ -260,34 +276,42 @@ if ($criterion === 'organization') {
     $gps = get_practitioner_by_organization($query, $limit, $offset);
 }
 
-$formatted_gps = array_map(function($gp) {
+$formatted_gps = array_map(function ($gp) {
     global $limit;
 
     $resource = json_decode($gp['resource']);
     $id = $gp['id'];
     $organization_name = get_organization_name_by_practitioner_id($id);
     $names = $resource->name ?? [];
-    $formattedNames = array_map(function($name) {
+    $formattedNames = array_map(function ($name) {
         $family = trim((string) ($name->family ?? ''));
         $given = implode(' ', $name->given ?? []);
 
         return trim($family.' '.$given);
     }, $names);
     $displayName = implode(', ', array_filter($formattedNames));
-    $emails = array_filter($resource->telecom ?? [], function($t) { return $t->system === 'email'; });
-    $phones = array_filter($resource->telecom ?? [], function($t) { return $t->system === 'phone'; });
+    $emails = array_filter($resource->telecom ?? [], function ($t) {
+        return $t->system === 'email';
+    });
+    $phones = array_filter($resource->telecom ?? [], function ($t) {
+        return $t->system === 'phone';
+    });
 
     return [
-      'id' => $id,
-      'name' => $displayName,
-      'email' => implode(', ',  array_map(function($t) { return $t->value; }, $emails)),
-      'phone' => implode(', ',  array_map(function($t) { return $t->value; }, $phones)),
-      'organization' => $organization_name,
+        'id' => $id,
+        'name' => $displayName,
+        'email' => implode(', ', array_map(function ($t) {
+            return $t->value;
+        }, $emails)),
+        'phone' => implode(', ', array_map(function ($t) {
+            return $t->value;
+        }, $phones)),
+        'organization' => $organization_name,
     ];
 }, $gps);
 
 $gps_with_page_count = [
     'data' => $formatted_gps,
-    'totalPages' => isset($gps[0]['total_count']) ? ceil($gps[0]['total_count'] / $limit) : null
+    'totalPages' => isset($gps[0]['total_count']) ? ceil($gps[0]['total_count'] / $limit) : null,
 ];
 echo json_encode($gps_with_page_count);

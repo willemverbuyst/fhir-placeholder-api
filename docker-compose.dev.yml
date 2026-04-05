@@ -34,5 +34,24 @@ services:
       - "9091:8080"
     depends_on:
       - fhir-data-db
+
+  gp-search:
+    build:
+      context: .
+      dockerfile: apps/gp-search/Dockerfile
+    ports:
+      - "5176:80"
+    volumes:
+      - ./apps/gp-search:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - fhir-data-db-cli
+    environment:
+      PGHOST: fhir-data-db
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: password
+      PGDATABASE: fhir_db
+
 volumes:
   fhir-data-db-data:

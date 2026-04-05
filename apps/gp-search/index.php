@@ -25,6 +25,7 @@
             <th scope="col" class="text-uppercase small">Name</th>
             <th scope="col" class="text-uppercase small">Email</th>
             <th scope="col" class="text-uppercase small">Phone</th>
+            <th scope="col" class="text-uppercase small">Organization</th>
           </tr>
         </thead>
         <tbody id="results-body" class="table-group-divider">
@@ -41,6 +42,7 @@ $(document).ready(function() {
   const $resultsBody = $('#results-body');
 
   function renderRows(data) {
+    console.log('Search results:', data);
     if (!Array.isArray(data) || data.length === 0) {
       $resultsBody.html(`
         <tr class="table-warning">
@@ -56,6 +58,7 @@ $(document).ready(function() {
           <td class="fw-medium">${gp?.name}</td>
           <td>${gp?.email}</td>
           <td>${gp?.phone}</td>
+          <td>${gp?.organization}</td>
         </tr>
       `)
       .join('');

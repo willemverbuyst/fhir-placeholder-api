@@ -37,7 +37,12 @@
 
 </section>
   <section class="row">
-      <input class="form-control" type="text" id="search" placeholder="Search for a GP">
+      <div class="input-group">
+          <input class="form-control" type="text" id="search" placeholder="Search for a GP">
+          <div class="input-group-append">
+              <span class="input-group-text" id="clear">Clear</span>
+          </div>
+      </div>
   </section>
   <section class="row">
     <div id="results">
@@ -119,6 +124,14 @@ $(document).ready(function() {
     }, 250);
   });
 
+  $('input[name="searchBy"]').on('change', function() {
+    $('#search').trigger('keyup');
+  });
+
+  $('#clear').on('click', function() {
+    $('#search').val('');
+    $resultsBody.empty();
+  });
 });
 </script>
 

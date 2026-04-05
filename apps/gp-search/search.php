@@ -118,6 +118,53 @@ function get_practitioner_by_email() {
     return [];
 }
 
+function get_practitioner_by_phone() {
+    global $pdo, $query;
+
+    try {
+        $statement = $pdo->prepare(<<<'SQL'
+        SELECT *
+        FROM practitioner p
+        WHERE (
+          SELECT LOWER(
+            string_agg(
+              TRIM(
+                COALESCE(telecom->>'value', '') || ' ' ||  ''
+                ),
+              ' '
+              )
+            )
+          FROM jsonb_array_elements(
+            COALESCE(p.resource->'telecom', '[]'::jsonb)
+          ) AS telecom
+          WHERE telecom->>'system' = 'phone'
+        ) ILIKE :search;
+        SQL
+        );
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to prepare phone search query']);
+        return [];
+    }
+
+    $searchPattern = '%'.$query.'%';
+
+    try {
+        $statement->execute([$searchPattern]);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Failed to execute phone search query']);
+        return [];
+    }
+
+    $gps = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($gps) {
+        return $gps;
+    }
+
+    return [];
+}
 
 function get_organization_name_by_practitioner_id($practitioner_id) {
     global $pdo;
@@ -163,6 +210,10 @@ if ($criterion === 'name') {
 
 if ($criterion === 'email') {
     $gps = get_practitioner_by_email();
+}
+
+if ($criterion === 'phone') {
+    $gps = get_practitioner_by_phone();
 }
 
 $formatted_gps = array_map(function($gp) {

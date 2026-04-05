@@ -55,7 +55,6 @@
     "packages/dummy-data/src/valueSets/languages-value-set.ts",
     "packages/dummy-data/src/valueSets/observation-code-value-set.ts",
     "packages/normalizer/src/normalizeJSON.spec.ts",
-    "apps/questionnaire-server/countries.json",
     "venv/"
   ],
   "dictionaries": ["typescript", "node", "html", "css", "npm", "sql"]

@@ -12,8 +12,6 @@ A collection of tools centered around Fhir R5 dummy data.
 - [fhir-server](apps/fhir-server)
 - [gp-search](apps/gp-search/)
 - [organization-reviews](apps/organization-reviews/)
-- [questionnaire-client](apps/questionnaire-client/)
-- [questionnaire-server](apps/questionnaire-server/)
 - [resource-statuses](apps/resource-statuses/)
 - [user-management](apps/user-management/)
 

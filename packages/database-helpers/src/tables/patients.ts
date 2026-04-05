@@ -46,18 +46,6 @@ const patientTable = (db: DB) =>
     getId: (patient) => patient.id,
   });
 
-export function findPatient(db: DB, id: string): Promise<Patient | undefined> {
-  return patientTable(db).find(id);
-}
-
-export function getPatient(db: DB, id: string): Promise<Patient> {
-  return patientTable(db).get(id);
-}
-
-export function getAllPatients(db: DB): Promise<Patient[]> {
-  return patientTable(db).getAll();
-}
-
 export function cleanupPatients(db: DB): Promise<number> {
   return patientTable(db).cleanup();
 }

@@ -10,9 +10,6 @@ type JsonResourceTableInput<T> = {
 };
 
 type JsonResourceTable<T> = {
-  get: (id: string) => Promise<T>;
-  find: (id: string) => Promise<T | undefined>;
-  getAll: () => Promise<T[]>;
   cleanup: () => Promise<number>;
   seed: (resources: T[]) => Promise<number>;
 };
@@ -41,47 +38,6 @@ export function createJsonResourceTable<T>(
       createTableSql: input.createTableSql,
       getDb: input.getDb,
     });
-  }
-
-  async function find(id: string): Promise<T | undefined> {
-    await init();
-    const result = await input
-      .getDb()
-      .query<{ resource: unknown }>(
-        `SELECT resource FROM ${input.tableName} WHERE id = $1`,
-        [id],
-      );
-    const row = result.rows[0];
-
-    if (!row) return undefined;
-    const resource =
-      typeof row.resource === "string"
-        ? row.resource
-        : JSON.stringify(row.resource);
-    return input.parse(resource);
-  }
-
-  async function get(id: string): Promise<T> {
-    const resource = await find(id);
-    if (!resource) {
-      throw new Error(`${input.tableName} not found: ${id}`);
-    }
-    return resource;
-  }
-
-  async function getAll(): Promise<T[]> {
-    await init();
-    const result = await input
-      .getDb()
-      .query<{ resource: unknown }>(`SELECT resource FROM ${input.tableName}`);
-
-    return result.rows.map((row) =>
-      input.parse(
-        typeof row.resource === "string"
-          ? row.resource
-          : JSON.stringify(row.resource),
-      ),
-    );
   }
 
   async function cleanup(): Promise<number> {
@@ -124,5 +80,5 @@ export function createJsonResourceTable<T>(
     }
   }
 
-  return { get, find, getAll, cleanup, seed };
+  return { cleanup, seed };
 }

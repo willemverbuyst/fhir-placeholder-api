@@ -48,21 +48,6 @@ const communicationTable = (db: DB) =>
     getId: (communication) => communication.id,
   });
 
-export function findCommunication(
-  db: DB,
-  id: string,
-): Promise<Communication | undefined> {
-  return communicationTable(db).find(id);
-}
-
-export function getCommunication(db: DB, id: string): Promise<Communication> {
-  return communicationTable(db).get(id);
-}
-
-export function getAllCommunications(db: DB): Promise<Communication[]> {
-  return communicationTable(db).getAll();
-}
-
 export function cleanupCommunications(db: DB): Promise<number> {
   return communicationTable(db).cleanup();
 }

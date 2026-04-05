@@ -48,21 +48,6 @@ const organizationTable = (db: DB) =>
     getId: (organization) => organization.id,
   });
 
-export function findOrganization(
-  db: DB,
-  id: string,
-): Promise<Organization | undefined> {
-  return organizationTable(db).find(id);
-}
-
-export function getOrganization(db: DB, id: string): Promise<Organization> {
-  return organizationTable(db).get(id);
-}
-
-export function getAllOrganizations(db: DB): Promise<Organization[]> {
-  return organizationTable(db).getAll();
-}
-
 export function cleanupOrganizations(db: DB): Promise<number> {
   return organizationTable(db).cleanup();
 }

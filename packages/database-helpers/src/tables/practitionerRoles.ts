@@ -48,24 +48,6 @@ const practitionerRoleTable = (db: DB) =>
     getId: (practitionerRole) => practitionerRole.id,
   });
 
-export function findPractitionerRole(
-  db: DB,
-  id: string,
-): Promise<PractitionerRole | undefined> {
-  return practitionerRoleTable(db).find(id);
-}
-
-export function getPractitionerRole(
-  db: DB,
-  id: string,
-): Promise<PractitionerRole> {
-  return practitionerRoleTable(db).get(id);
-}
-
-export function getAllPractitionerRoles(db: DB): Promise<PractitionerRole[]> {
-  return practitionerRoleTable(db).getAll();
-}
-
 export function cleanupPractitionerRoles(db: DB): Promise<number> {
   return practitionerRoleTable(db).cleanup();
 }

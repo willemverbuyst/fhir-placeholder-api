@@ -48,21 +48,6 @@ const observationTable = (db: DB) =>
     getId: (observation) => observation.id,
   });
 
-export function findObservation(
-  db: DB,
-  id: string,
-): Promise<Observation | undefined> {
-  return observationTable(db).find(id);
-}
-
-export function getObservation(db: DB, id: string): Promise<Observation> {
-  return observationTable(db).get(id);
-}
-
-export function getAllObservations(db: DB): Promise<Observation[]> {
-  return observationTable(db).getAll();
-}
-
 export function cleanupObservations(db: DB): Promise<number> {
   return observationTable(db).cleanup();
 }

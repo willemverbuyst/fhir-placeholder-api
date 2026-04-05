@@ -50,21 +50,6 @@ const allergyIntoleranceTable = (db: DB) =>
     getId: (allergyIntolerance) => allergyIntolerance.id,
   });
 
-export function findAllergy(
-  db: DB,
-  id: string,
-): Promise<AllergyIntolerance | undefined> {
-  return allergyIntoleranceTable(db).find(id);
-}
-
-export function getAllergy(db: DB, id: string): Promise<AllergyIntolerance> {
-  return allergyIntoleranceTable(db).get(id);
-}
-
-export function getAllAllergies(db: DB): Promise<AllergyIntolerance[]> {
-  return allergyIntoleranceTable(db).getAll();
-}
-
 export function cleanupAllergies(db: DB): Promise<number> {
   return allergyIntoleranceTable(db).cleanup();
 }

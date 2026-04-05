@@ -48,21 +48,6 @@ const episodeOfCareTable = (db: DB) =>
     getId: (episodeOfCare) => episodeOfCare.id,
   });
 
-export function findEpisodeOfCare(
-  db: DB,
-  id: string,
-): Promise<EpisodeOfCare | undefined> {
-  return episodeOfCareTable(db).find(id);
-}
-
-export function getEpisodeOfCare(db: DB, id: string): Promise<EpisodeOfCare> {
-  return episodeOfCareTable(db).get(id);
-}
-
-export function getAllEpisodeOfCares(db: DB): Promise<EpisodeOfCare[]> {
-  return episodeOfCareTable(db).getAll();
-}
-
 export function cleanupEpisodes(db: DB): Promise<number> {
   return episodeOfCareTable(db).cleanup();
 }

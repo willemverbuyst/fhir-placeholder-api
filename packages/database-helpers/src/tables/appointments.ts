@@ -48,21 +48,6 @@ const appointmentTable = (db: DB) =>
     getId: (appointment) => appointment.id,
   });
 
-export function findAppointment(
-  db: DB,
-  id: string,
-): Promise<Appointment | undefined> {
-  return appointmentTable(db).find(id);
-}
-
-export function getAppointment(db: DB, id: string): Promise<Appointment> {
-  return appointmentTable(db).get(id);
-}
-
-export function getAllAppointments(db: DB): Promise<Appointment[]> {
-  return appointmentTable(db).getAll();
-}
-
 export function cleanupAppointments(db: DB): Promise<number> {
   return appointmentTable(db).cleanup();
 }

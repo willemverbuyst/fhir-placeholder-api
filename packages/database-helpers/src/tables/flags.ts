@@ -46,18 +46,6 @@ const flagTable = (db: DB) =>
     getId: (flag) => flag.id,
   });
 
-export function findFlag(db: DB, id: string): Promise<Flag | undefined> {
-  return flagTable(db).find(id);
-}
-
-export function getFlag(db: DB, id: string): Promise<Flag> {
-  return flagTable(db).get(id);
-}
-
-export function getAllFlags(db: DB): Promise<Flag[]> {
-  return flagTable(db).getAll();
-}
-
 export function cleanupFlags(db: DB): Promise<number> {
   return flagTable(db).cleanup();
 }

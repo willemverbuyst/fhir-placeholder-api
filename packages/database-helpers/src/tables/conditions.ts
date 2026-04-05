@@ -48,21 +48,6 @@ const conditionTable = (db: DB) =>
     getId: (condition) => condition.id,
   });
 
-export function findCondition(
-  db: DB,
-  id: string,
-): Promise<Condition | undefined> {
-  return conditionTable(db).find(id);
-}
-
-export function getCondition(db: DB, id: string): Promise<Condition> {
-  return conditionTable(db).get(id);
-}
-
-export function getAllConditions(db: DB): Promise<Condition[]> {
-  return conditionTable(db).getAll();
-}
-
 export function cleanupConditions(db: DB): Promise<number> {
   return conditionTable(db).cleanup();
 }

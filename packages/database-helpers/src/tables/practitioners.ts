@@ -48,21 +48,6 @@ const practitionerTable = (db: DB) =>
     getId: (practitioner) => practitioner.id,
   });
 
-export function findPractitioner(
-  db: DB,
-  id: string,
-): Promise<Practitioner | undefined> {
-  return practitionerTable(db).find(id);
-}
-
-export function getPractitioner(db: DB, id: string): Promise<Practitioner> {
-  return practitionerTable(db).get(id);
-}
-
-export function getAllPractitioners(db: DB): Promise<Practitioner[]> {
-  return practitionerTable(db).getAll();
-}
-
 export function cleanupPractitioners(db: DB): Promise<number> {
   return practitionerTable(db).cleanup();
 }

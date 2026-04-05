@@ -48,21 +48,6 @@ const encounterTable = (db: DB) =>
     getId: (encounter) => encounter.id,
   });
 
-export function findEncounter(
-  db: DB,
-  id: string,
-): Promise<Encounter | undefined> {
-  return encounterTable(db).find(id);
-}
-
-export function getEncounter(db: DB, id: string): Promise<Encounter> {
-  return encounterTable(db).get(id);
-}
-
-export function getAllEncounters(db: DB): Promise<Encounter[]> {
-  return encounterTable(db).getAll();
-}
-
 export function cleanupEncounters(db: DB): Promise<number> {
   return encounterTable(db).cleanup();
 }

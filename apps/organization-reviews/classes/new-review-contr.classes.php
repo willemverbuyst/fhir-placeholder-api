@@ -4,8 +4,10 @@ class NewReviewContr extends NewReview {
   private $organization;
   private $review;
   private $author;
+  private $title;
 
-  public function __construct($organization, $review, $author) {
+  public function __construct($title, $organization, $review, $author) {
+    $this->title = $title;
     $this->organization = $organization;
     $this->review = $review;
     $this->author = $author;
@@ -17,12 +19,12 @@ class NewReviewContr extends NewReview {
       exit();
     }
     
-    $this->saveReview($this->organization, $this->review, $this->author);
+    $this->saveReview($this->title, $this->organization, $this->review, $this->author);
   }
 
   private function emptyInput() {
     $result = null;
-    if (empty($this->organization) || empty($this->review)) {
+    if (empty($this->title) || empty($this->organization) || empty($this->review)) {
       $result = true;
     } else {
       $result = false;

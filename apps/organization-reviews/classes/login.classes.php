@@ -1,5 +1,4 @@
 <?php
-
 class Login extends Dbh {
 
   protected function getUser($uid, $pwd) {
@@ -33,11 +32,9 @@ class Login extends Dbh {
         }
 
         $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        session_start();
         $_SESSION["userid"] = $user[0]["users_id"];
         $_SESSION["useruid"] = $user[0]["users_uid"];
         $stmt = null;
       }
-
   }
 }

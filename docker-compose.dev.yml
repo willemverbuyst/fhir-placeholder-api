@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: apps/organization-reviews/Dockerfile
     ports:
-      - "8081:80"
+      - "5002:80"
     volumes:
       - ./apps/organization-reviews:/var/www/html
     depends_on:

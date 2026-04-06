@@ -1,7 +1,12 @@
-<?php include 'config/database.php';
-$sql = 'SELECT * FROM reviews';
-$result = mysqli_query($conn, $sql);
-$reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
+<?php
+
+include "./classes/dbh.classes.php";
+include "./classes/reviews.classes.php";
+include "./classes/reviews-contr.classes.php";
+
+$reviewsContr = new ReviewsContr();
+$reviews = $reviewsContr->showReviews();
+
 ?>
 
 <!DOCTYPE html>
@@ -20,14 +25,17 @@ $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <?php if (empty($reviews)) { ?>
       <p>No reviews found</p>
     <?php } else { ?>
-      <ul class="list-group d-flex flex-column gap-4">
+      <ul class="list-group d-flex flex-column gap-4 mx-auto">
         <?php foreach ($reviews as $review) { ?>
-          <li class="list-group-item">
-            <h2 class="text-lg font-bold"><?php echo $review['organization']; ?></h2>
-            <p class="overflow-hidden text-ellipsis whitespace-nowrap"><?php echo $review['body']; ?></p>
-            <p class="text-sm text-gray-500 italic">
-              <?php echo 'by '.$review['author'].' on '.$review['date']; ?>
-            </p>
+          <li class="card p-3" style="width: 400px;">
+            <div class="card-body">
+              <h5 class="card-title"><?php echo $review['reviews_title']; ?></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><?php echo $review['reviews_organization']; ?></h6>
+              <p class="card-text"><?php echo $review['reviews_review']; ?></p>
+              <p class="card-text text-italic"><em>
+                <?php echo 'by '.$review['users_uid'].' on '.$review['reviews_date']; ?>
+              </em></p>
+            </div>
           </li>
         <?php } ?>
       </ul>

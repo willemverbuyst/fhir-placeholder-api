@@ -20,6 +20,10 @@ if ($api_response !== false) {
 
 <form class="col-4 mx-auto border p-4 rounded" action="/includes/new-review.inc.php" method="POST">
   <div class="mb-3">
+    <label for="title" class="form-label" >Title</label>
+    <input type="text" class="form-control" name="title" id="title">
+  </div>
+  <div class="mb-3">
     <label for="organization" class="form-label" >Organization</label>
     <select class="form-select" name="organization" id="organization" <?php echo empty($organization_options) ? 'disabled' : ''; ?>>
       <option value="">

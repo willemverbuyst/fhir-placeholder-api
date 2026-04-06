@@ -11,9 +11,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/new-review.php">Add a Review</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/about.php">About</a>
-      </li>
     </ul>
   </nav>
 </header>

@@ -30,7 +30,7 @@ class SignupContr extends Signup {
     }
 
     if ($this->pwdMatch() == false) {
-      header("location: ../index.php?error=passwordsmatch");
+      header("location: ../index.php?error=passwordsdontmatch");
       exit();
     }
 

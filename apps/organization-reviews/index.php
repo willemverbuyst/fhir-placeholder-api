@@ -10,6 +10,8 @@
 <body class="container p-4">
   <?php include 'inc/header.php'; ?>
   <main class="container d-flex flex-column gap-4 p-4">
+    
+    
     <h1 class="text-center">sign in or sign up</h1>
     <form class="col-4 mx-auto border p-4 rounded" action="/includes/login.inc.php" method="POST">
       <div class="mb-3">
@@ -22,6 +24,17 @@
       </div>
       <button type="submit" name="submit" class="btn btn-primary w-100">LOGIN</button>
     </form>
+    <?php
+      if (isset($_GET["error"])) {
+        if ($_GET["error"] == "emptyinput") {
+          echo "<p class='text-center text-danger'>Please fill in all fields!</p>";
+        } elseif ($_GET["error"] == "stmtfailed") {
+          echo "<p class='text-center text-danger'>Something went wrong, try again!</p>";
+        } elseif ($_GET["error"] == "usernotfound") {
+          echo "<p class='text-center text-danger'>Incorrect login information!</p>";
+        } 
+      }
+    ?>
     <form class="col-4 mx-auto border p-4 rounded" action="/includes/signup.inc.php" method="POST">
       <div class="mb-3">
         <label for="uid" class="form-label">Username</label>
@@ -41,6 +54,23 @@
       </div>
       <button type="submit" name="submit" class="btn btn-primary w-100">SIGN UP</button>
     </form>
+    <?php
+      if (isset($_GET["error"])) {
+        if ($_GET["error"] == "emptyinput") {
+          echo "<p class='text-center text-danger'>Please fill in all fields!</p>";
+        } elseif ($_GET["error"] == "stmtfailed") {
+          echo "<p class='text-center text-danger'>Something went wrong, try again!</p>";
+        } elseif ($_GET["error"] == "usernametaken") {
+          echo "<p class='text-center text-danger'>Username or email already taken!</p>";
+        } elseif ($_GET["error"] == "passwordsdontmatch") {
+          echo "<p class='text-center text-danger'>Passwords don't match!</p>";
+        } elseif ($_GET["error"] == "email") {
+          echo "<p class='text-center text-danger'>Invalid email address!</p>";
+        } elseif ($_GET["error"] == "none") {
+          echo "<p class='text-center text-success'>You have successfully signed up!</p>";
+        }
+      }
+    ?>
   </main>
 </body>
 </html>

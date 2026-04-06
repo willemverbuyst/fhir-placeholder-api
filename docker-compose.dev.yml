@@ -1,57 +1,41 @@
 services:
-  fhir-data-db:
-    image: postgres:15
-    container_name: fhir-data-db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: fhir_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - fhir-data-db-data:/var/lib/postgresql/data
-
-  dummy-data-cli:
+  organization-reviews:
     build:
       context: .
-      dockerfile: cli/dummy-data-cli/Dockerfile
+      dockerfile: apps/organization-reviews/Dockerfile
+    ports:
+      - "8081:80"
+    volumes:
+      - ./apps/organization-reviews:/var/www/html
     depends_on:
-      - fhir-data-db
+      - organization-reviews-db
     environment:
-      PGHOST: fhir-data-db
-      PGPORT: "5432"
-      PGUSER: postgres
-      PGPASSWORD: password
-      PGDATABASE: fhir_db
+      DB_HOST: organization-reviews-db
+      DB_NAME: app_db
+      DB_USER: app_user
+      DB_PASSWORD: secret
 
-  fhir-data-db-tool:
-    image: adminer
+  organization-reviews-db:
+    image: mysql:8.0
     restart: always
     environment:
-      ADMINER_DEFAULT_SERVER: fhir-data-db
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
     ports:
-      - "9091:8080"
-    depends_on:
-      - fhir-data-db
-
-  gp-search:
-    build:
-      context: .
-      dockerfile: apps/gp-search/Dockerfile
-    ports:
-      - "5176:80"
+      - "3307:3306"
     volumes:
-      - ./apps/gp-search:/var/www/html
-    working_dir: /var/www/html
-    depends_on:
-      - dummy-data-cli
+      - organization_reviews_db_data:/var/lib/mysql
+
+  organization-reviews-phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "9092:80"
     environment:
-      PGHOST: fhir-data-db
-      PGPORT: "5432"
-      PGUSER: postgres
-      PGPASSWORD: password
-      PGDATABASE: fhir_db
+      PMA_HOST: organization-reviews-db
+    depends_on:
+      - organization-reviews-db
 
 volumes:
-  fhir-data-db-data:
+  organization_reviews_db_data:

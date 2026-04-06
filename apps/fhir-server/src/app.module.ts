@@ -60,11 +60,11 @@ import { ResourceTreeModule } from "./ResourceTree/resource-tree.module";
     WinstonModule.forRoot(winstonConfig),
     TypeOrmModule.forRoot({
       type: "postgres",
-      host: process.env.DB_HOST || "localhost",
-      port: 5432,
-      username: "postgres",
-      password: "password",
-      database: "fhir_db",
+      host: process.env.PGHOST || "localhost",
+      port: parseInt(process.env.PGPORT ?? "5432", 10) || 5432,
+      username: process.env.PGUSER || "postgres",
+      password: process.env.PGPASSWORD || "password",
+      database: process.env.PGDATABASE || "fhir_db",
       autoLoadEntities: true,
       synchronize: true, // ⚠️ only for dev
       entities: [

@@ -1,7 +1,12 @@
-<?php include 'config/database.php';
-$sql = 'SELECT * FROM reviews';
-$result = mysqli_query($conn, $sql);
-$reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
+<?php
+
+include "./classes/dbh.classes.php";
+include "./classes/reviews.classes.php";
+include "./classes/reviews-contr.classes.php";
+
+$reviewsContr = new ReviewsContr();
+$reviews = $reviewsContr->showReviews();
+
 ?>
 
 <!DOCTYPE html>
@@ -9,24 +14,28 @@ $reviews = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organization Reviews</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss-browser/4.1.13/index.global.js" integrity="sha512-RAOoTi4JqATUmfyj+oyxwAo3JtUeZwLsBpNisDcY5VzvXZARuuaE5zfwUCDVa2LBBUax70uBlO4+eZA1Y/tk0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <title>Org Reviews | Reviews</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
 </head>
-<body class="w-screen flex flex-col items-center justify-center bg-gray-100 p-10 ">
+<body class="container p-4">
   <?php include 'inc/header.php'; ?>
-  <main class="flex flex-col items-center justify-center gap-4">
-    <h2 class="text-xl text-center">reviews</h2>
+  <main class="container d-flex flex-column gap-4 p-4">
+    <h1 class="text-center">reviews</h1>
     <?php if (empty($reviews)) { ?>
       <p>No reviews found</p>
     <?php } else { ?>
-      <ul class="grid grid-cols-1 gap-4">
+      <ul class="list-group d-flex flex-column gap-4 mx-auto">
         <?php foreach ($reviews as $review) { ?>
-          <li class="bg-white p-4 rounded-md shadow-md w-[400px]">
-            <h2 class="text-lg font-bold"><?php echo $review['organization']; ?></h2>
-            <p class="overflow-hidden text-ellipsis whitespace-nowrap"><?php echo $review['body']; ?></p>
-            <p class="text-sm text-gray-500 italic">
-              <?php echo 'by '.$review['author'].' on '.$review['date']; ?>
-            </p>
+          <li class="card p-3" style="width: 400px;">
+            <div class="card-body">
+              <h5 class="card-title"><?php echo $review['reviews_title']; ?></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><?php echo $review['reviews_organization']; ?></h6>
+              <p class="card-text"><?php echo $review['reviews_review']; ?></p>
+              <p class="card-text text-italic"><em>
+                <?php echo 'by '.$review['users_uid'].' on '.$review['reviews_date']; ?>
+              </em></p>
+            </div>
           </li>
         <?php } ?>
       </ul>

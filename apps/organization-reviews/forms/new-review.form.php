@@ -16,40 +16,6 @@ if ($api_response !== false) {
     // Handle API request failure (e.g., log the error, show a message, etc.)
     error_log('Failed to fetch organization data from API.');
 }
-
-// if (isset($_POST['submit'])) {
-//     if (empty($_POST['author'])) {
-//         $author_error = 'Name is required';
-//     } else {
-//         $author = filter_input(INPUT_POST, 'author', FILTER_SANITIZE_SPECIAL_CHARS);
-//     }
-
-//     if (empty($_POST['body'])) {
-//         $body_error = 'Review is required';
-//     } else {
-//         $body = filter_input(INPUT_POST, 'body', FILTER_SANITIZE_SPECIAL_CHARS);
-//     }
-
-//     if (empty($_POST['organization'])) {
-//         $organization_error = 'Organization is required';
-//     } else {
-//         $organization = filter_input(INPUT_POST, 'organization', FILTER_SANITIZE_SPECIAL_CHARS);
-//     }
-
-//     if (
-//         empty($author_error) &&
-//         empty($body_error) &&
-//         empty($organization_error)
-//     ) {
-//         $sql = "INSERT INTO reviews (author, organization, body) VALUES ('{$author}', '{$organization}', '{$body}')";
-//         if (mysqli_query($conn, $sql)) {
-//             header('Location: reviews.php');
-//             exit();
-//         } else {
-//             echo 'Error: '.$sql.'<br>'.mysqli_error($conn);
-//         }
-//     }
-// }
 ?>
 
 <form class="col-4 mx-auto border p-4 rounded" action="/includes/new-review.inc.php" method="POST">

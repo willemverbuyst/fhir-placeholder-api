@@ -3,10 +3,12 @@
 class NewReviewContr extends NewReview {
   private $organization;
   private $review;
+  private $author;
 
-  public function __construct($organization, $review) {
+  public function __construct($organization, $review, $author) {
     $this->organization = $organization;
     $this->review = $review;
+    $this->author = $author;
   }
 
   public function submitReview() {
@@ -15,7 +17,7 @@ class NewReviewContr extends NewReview {
       exit();
     }
     
-    $this->saveReview($this->organization, $this->review);
+    $this->saveReview($this->organization, $this->review, $this->author);
   }
 
   private function emptyInput() {

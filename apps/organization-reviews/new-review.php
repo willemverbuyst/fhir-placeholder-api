@@ -1,3 +1,7 @@
+<?php
+session_start();
+$isLoggedIn = isset($_SESSION["useruid"]);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +14,13 @@
 <body class="container p-4">
   <?php include 'inc/header.php'; ?>
   <main class="container d-flex flex-column gap-4 p-4">
-    <h1 class="text-center">new review</h1>
-    <?php include 'forms/review.form.php'; ?>
+    <?php if ($isLoggedIn): ?>
+      <h1 class="text-center">new review</h1>
+      <?php include 'forms/new-review.form.php'; ?>
+    <?php else: ?>
+      <h1 class="text-center">login or sign up</h1>
+    <?php endif; ?>
+    
   </main>
 </body>
 </html>

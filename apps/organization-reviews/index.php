@@ -11,35 +11,35 @@
   <?php include 'inc/header.php'; ?>
   <main class="container d-flex flex-column gap-4 p-4">
     <h1 class="text-center">sign in or sign up</h1>
-    <form class="col-4 mx-auto border p-4 rounded">
+    <form class="col-4 mx-auto border p-4 rounded" action="/includes/login.inc.php" method="POST">
       <div class="mb-3">
-        <label for="formUsername" class="form-label">Username</label>
-        <input type="text" class="form-control" id="formUsername" placeholder="Enter your username">
+        <label for="uid" class="form-label">Username</label>
+        <input type="text" class="form-control" name="uid" placeholder="Enter your username">
       </div>
       <div class="mb-3">
-        <label for="formPassword" class="form-label">Password</label>
-        <input type="password" class="form-control" id="formPassword" placeholder="Enter your password">
+        <label for="pwd" class="form-label">Password</label>
+        <input type="password" class="form-control" name="pwd" placeholder="Enter your password">
       </div>
-      <button type="submit" class="btn btn-primary w-100">Sign In</button>
+      <button type="submit" name="submit" class="btn btn-primary w-100">LOGIN</button>
     </form>
-    <form class="col-4 mx-auto border p-4 rounded">
+    <form class="col-4 mx-auto border p-4 rounded" action="/includes/signup.inc.php" method="POST">
       <div class="mb-3">
-        <label for="formUsername" class="form-label">Username</label>
-        <input type="text" class="form-control" id="formUsername" placeholder="Enter your username">
+        <label for="uid" class="form-label">Username</label>
+        <input type="text" class="form-control" name="uid" placeholder="Enter your username">
       </div>
       <div class="mb-3">
-        <label for="formEmail" class="form-label">Email</label>
-        <input type="email" class="form-control" id="formEmail" placeholder="Enter your email">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" placeholder="Enter your email">
       </div>
       <div class="mb-3">
-        <label for="formPassword" class="form-label">Password</label>
-        <input type="password" class="form-control" id="formPassword" placeholder="Enter your password">
+        <label for="pwd" class="form-label">Password</label>
+        <input type="password" class="form-control" name="pwd" placeholder="Enter your password">
       </div>
       <div class="mb-3">
-        <label for="formPassword" class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" id="formConfirmPassword" placeholder="Confirm your password">
+        <label for="pwdconfirm" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" name="pwdconfirm" placeholder="Confirm your password">
       </div>
-      <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+      <button type="submit" name="submit" class="btn btn-primary w-100">SIGN UP</button>
     </form>
   </main>
 </body>

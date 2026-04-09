@@ -17,19 +17,43 @@ class InvoiceController
 
     private function processResourceRequest(string $method, string $id): void
     {
+        $invoice = $this->gateway->get($id);
+        
+        if (!$invoice) {
+            http_response_code(404);
+            echo json_encode(['message' => 'Invoice not found']);
+            return;
+        }
+
         switch ($method) {
             case 'GET':
-                $this->getInvoice($id);
+                echo json_encode($invoice);
                 break;
-            case 'PUT':
-                $this->updateInvoice($id);
+            case 'PATCH':
+                $data = (array) json_decode(file_get_contents('php://input'), true);
+                $errors = $this->getValidationErrors($data, false);
+
+                if (!empty($errors)) {
+                    http_response_code(422);
+                    echo json_encode(['errors' => $errors]);
+                    return;
+                }
+
+                $rows = $this->gateway->update($invoice, $data);
+
+                echo json_encode([
+                    'message' => "Invoice $id updated", 
+                    'rows' => $rows
+                    ]);
+
                 break;
-            // case 'DELETE':
-            //     $this->deleteInvoice($id);
-            //     break;
+            case 'DELETE':
+                $rows = $this->gateway->delete($id);
+                echo json_encode(['message' => "Invoice $id deleted", 'rows' => $rows]);
+                break;
             default:
                 http_response_code(405);
-                header('Allow: GET, PUT, DELETE');
+                header('Allow: GET, PATCH, DELETE');
         }
     }
 
@@ -64,7 +88,7 @@ class InvoiceController
         }
     }
 
-    private function getValidationErrors(array $data): array
+    private function getValidationErrors(array $data, bool $is_new = true): array
     {
         $errors = [];
 
@@ -72,8 +96,12 @@ class InvoiceController
             $errors[] = "Status is required and must be a string.";
         }
 
-        if (!isset($data['totalGross_value']) || !is_numeric($data['totalGross_value'])) {
+        if ($is_new && (!isset($data['totalGross_value']) || !is_numeric($data['totalGross_value']))) {
             $errors[] = "Total gross value is required and must be a number.";
+        }
+
+        if (!$is_new && isset($data['totalGross_value'])) {
+            $errors[] = "You cannot update the total gross value.";
         }
 
         return $errors;

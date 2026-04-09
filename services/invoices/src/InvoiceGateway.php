@@ -33,4 +33,43 @@ class InvoiceGateway
 
         return $this->conn->lastInsertId();
     }
+
+    public function get(string $id): array | false
+    {
+        $sql = "SELECT * FROM invoice WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data) {
+            $data["totalGross_value"] = (float) $data["totalGross_value"];
+        }
+
+        return $data;
+    }
+
+    public function update(array $current, array $new): int
+    {
+        $sql = "UPDATE invoice SET status = :status, totalGross_value = :totalGross_value WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $current['id'], PDO::PARAM_INT);
+        $stmt->bindValue(':status', $new['status'] ?? $current['status'], PDO::PARAM_STR);
+        $stmt->bindValue(':totalGross_value', $new['totalGross_value'] ?? $current['totalGross_value'], PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
+    public function delete(string $id): int
+    {
+        $sql = "DELETE FROM invoice WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+     
+        return $stmt->rowCount();
+    }
 }

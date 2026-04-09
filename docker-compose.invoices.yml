@@ -1,0 +1,41 @@
+services:
+  invoice-service:
+    build:
+      context: .
+      dockerfile: services/invoices/Dockerfile
+    ports:
+      - "3006:80"
+    volumes:
+      - ./services/invoices:/var/www/html
+    # depends_on:
+    #   - invoices-db
+    environment:
+      DB_HOST: invoices-db
+      DB_NAME: app_db
+      DB_USER: app_user
+      DB_PASSWORD: secret
+
+  invoices-db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    ports:
+      - "3306:3306"
+    volumes:
+      - invoices_db_data:/var/lib/mysql
+
+  invoices-phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - "9092:80"
+    environment:
+      PMA_HOST: invoices-db
+    depends_on:
+      - invoices-db
+
+volumes:
+  invoices_db_data:

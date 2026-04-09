@@ -22,4 +22,15 @@ class InvoiceGateway
 
         return $data;
     }
+
+    public function create(array $data): string
+    {
+        $sql = "INSERT INTO invoice (status, totalGross_value) VALUES (:status, :totalGross_value)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':status', $data['status'], PDO::PARAM_STR);
+        $stmt->bindValue(':totalGross_value', $data['totalGross_value'], PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $this->conn->lastInsertId();
+    }
 }

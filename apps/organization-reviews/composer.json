@@ -4,7 +4,7 @@
   "type": "project",
   "require-dev": {
     "laravel/pint": "^1.29",
-    "phpunit/phpunit": "^11.0"
+    "phpunit/phpunit": "^12.5"
   },
   "scripts": {
     "test": "phpunit --configuration phpunit.xml"
